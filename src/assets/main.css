@@ -1,5 +1,6 @@
 @import "tailwindcss";
 @theme {
   --color-hot-red: #d6270a;
-  --color-base-color: #231815;
+  --color-base-heavy: #3e3937;
+  --color-base-light: #666463ff;
 }

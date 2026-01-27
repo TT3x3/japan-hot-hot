@@ -2,7 +2,7 @@
   <header class="w-full">
     <div class="mx-auto max-w-7xl flex justify-between items-center py-16">
       <img src="../assets/images/logo-s.png" alt="logo-small" class="w-[140px]">
-        <ul class="flex flex-col gap-8 [writing-mode:vertical-rl] text-base-color">
+        <ul class="flex flex-col gap-8 [writing-mode:vertical-rl] text-base-heavy">
           <li v-if="signIn===false">登入 / 註冊</li>
           <li v-if="signIn===true">登出</li>
           <li v-if="signIn===true">會員中心</li>
