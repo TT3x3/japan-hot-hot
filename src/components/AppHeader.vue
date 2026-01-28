@@ -1,14 +1,16 @@
 <template>
   <header class="w-full">
     <div class="mx-auto max-w-[80%] h-[218px] flex justify-between items-center py-16 tracking-widest">
-      <img src="../assets/images/logo-s.png" alt="logo-small" class="w-[160px]">
-      <!-- <h1 class="font-bold [writing-mode:vertical-rl]">標題</h1> -->
-      <ul class="flex flex-col gap-8 [writing-mode:vertical-rl] text-base-heavy">
+      <router-link to="/">
+        <img src="../assets/images/logo-s.png" alt="logo-small" class="w-[160px]">
+      </router-link>
+      <h1 class="text-xl [writing-mode:vertical-rl]">{{ pageTitle }}</h1>
+      <ul class="flex flex-col gap-3 [writing-mode:vertical-rl] text-base-heavy">
         <li v-if="signIn === false">登入 / 註冊</li>
         <li v-if="signIn === true">登出</li>
         <li v-if="signIn === true">會員中心</li>
         <li>關於我</li>
-        <li>行程</li>
+        <router-link to="/tour" class="hover:text-gray-400">行程</router-link>
         <li>機票</li>
       </ul>
     </div>
@@ -22,6 +24,11 @@ export default {
     return {
       signIn: false,
     };
+  },
+  computed:{
+    pageTitle() {
+      return this.$route.meta.title;
+    }
   }
 }
 </script>
