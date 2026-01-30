@@ -4,7 +4,6 @@
       <router-link to="/">
         <img src="../assets/images/logo-s.png" alt="logo-small" class="w-[160px]">
       </router-link>
-      <h1 class="text-xl [writing-mode:vertical-rl]">{{ pageTitle }}</h1>
       <ul class="flex flex-col gap-3 [writing-mode:vertical-rl] text-base-heavy">
         <li v-if="signIn === false">登入 / 註冊</li>
         <li v-if="signIn === true">登出</li>
