@@ -4,6 +4,7 @@ import Router from "vue-router";
 // import 頁面
 import AppHome from "@/pages/AppHome.vue";
 import TourPage from "@/pages/TourPage.vue";
+import AppLogin from "@/pages/AppLogin.vue";
 
 Vue.use(Router);
 
@@ -14,17 +15,16 @@ export default new Router({
       path: "/",
       name: "home",
       component: AppHome,
-      meta: {
-        title: null,
-      },
     },
     {
       path: "/tour",
       name: "tour",
       component: TourPage,
-      meta: {
-        title: "行程",
-      },
+    },
+    {
+      path: "/login",
+      name: "login",
+      component: AppLogin,
     },
   ],
 });

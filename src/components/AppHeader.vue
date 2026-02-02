@@ -5,7 +5,7 @@
         <img src="../assets/images/logo-s.png" alt="logo-small" class="w-[160px]">
       </router-link>
       <ul class="flex flex-col gap-3 [writing-mode:vertical-rl] text-base-heavy">
-        <li v-if="signIn === false">登入 / 註冊</li>
+        <router-link v-if="signIn === false" to="/login" class="hover:text-gray-400">登入 / 註冊</router-link>
         <li v-if="signIn === true">登出</li>
         <li v-if="signIn === true">會員中心</li>
         <li>關於我</li>
@@ -24,11 +24,6 @@ export default {
       signIn: false,
     };
   },
-  computed:{
-    pageTitle() {
-      return this.$route.meta.title;
-    }
-  }
 }
 </script>
 
