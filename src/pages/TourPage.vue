@@ -79,8 +79,8 @@
                     </div>
                 </li>
             </ul>
-            <button
-                class="self-center px-10 py-3 bg-gray-300 text-white  hover:bg-gray-200 transition-colors">查看更多</button>
+            <button type="button"
+                class="self-center px-10 py-3 bg-gray-400 text-white  hover:bg-gray-300 active:bg-gray-500 transition-colors">查看更多</button>
         </div>
         <div></div>
     </div>
