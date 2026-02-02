@@ -27,8 +27,8 @@
         </div>
 
         <!-- 行程分類 -->
-        <div class="flex justify-center">
-            <div class="max-w-[80%] w-full flex gap-8">
+        <div class="max-w-[80%] w-full mx-auto">
+            <div class="flex gap-8">
                 <div class="relative bg-gray-500 flex-1 h-40 overflow-hidden">
                     <img src="../assets/images/carousel-1.jpg" alt="" class="object-cover w-full h-full">
                     <h2 class="absolute left-5 bottom-5 font-black text-white">日本本州</h2>
@@ -45,34 +45,42 @@
                     <img src="../assets/images/carousel-4.jpg" alt="" class="object-cover w-full h-full">
                     <h2 class="absolute left-5 bottom-5 font-black text-white">沖繩</h2>
                 </div>
+
             </div>
         </div>
 
         <!-- 活動banner -->
-        <div class="flex justify-center">
-            <div class="max-w-[80%] w-full flex flex-wrap">
-
+        <div class="max-w-[80%] w-full mx-auto flex flex-col gap-12">
+            <ul class="flex flex-wrap gap-x-6 gap-y-12">
                 <!-- 卡片 -->
-                <div v-for=" (item,index) in new Array(6)" :key="index" class="w-1/3 px-2 py-3">
-                    <div class="flex flex-col gap-2 h-[450px] border border-gray-300">
-                        <div class="flex-1 h-10 overflow-hidden">
-                            <img src="../assets/images/carousel-1.jpg" alt="" class="object-cover w-full h-full">
+                <li v-for="(item, key) in journey.slice(0, 9)" :key="key"
+                    class="flex-[0_0_calc(33.333%-1rem)] cursor-pointer group">
+                    <div class="flex flex-col h-[450px] border border-gray-200">
+                        <div class="relative h-72 overflow-hidden">
+                            <img :src="item.imgSrc" alt="" class="object-cover w-full h-full">
+                            <div
+                                class="absolute inset-0 bg-white/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ">
+                            </div>
+                            <!-- 收藏 -->
+                            <button @click="item.isCollected = !item.isCollected"
+                                class="absolute top-3 right-3 p-2  text-white/65 hover:text-red-500 transition-colors duration-200 ">
+                                <i v-if="item.isCollected" class="fa-solid fa-heart fa-xl text-red-500"></i>
+                                <i v-else class="fa-regular fa-heart fa-xl"></i>
+                            </button>
                         </div>
-                        <div class="p-4">
+                        <div class="flex flex-col flex-1 p-5">
                             <div class="flex gap-2 mb-3">
-                                <p class="text-sm px-2 inline-block border border-gray-300 text-gray-400">一日遊</p>
-                                <p class="text-sm px-2 inline-block border border-gray-300 text-gray-400">大阪</p>
+                                <p class="text-sm px-2 inline-block border border-gray-300 text-gray-400">{{ item.type }}</p>
+                                <p class="text-sm px-2 inline-block border border-gray-300 text-gray-400">{{ item.location }}</p>
                             </div>
-                            <p class="font-bold text-base-heavy">水色之際：伊根與天橋立的一日拾光 | 舟屋、海色、天之橋</p>
-                            <div class="flex justify-end items-center">
-                                <p class="font-bold text-lg text-hot-red">$ 12,000</p>
-                            </div>
-    
+                            <p class="font-bold line-clamp-2 text-base-heavy">{{ item.title }}</p>
+                            <p class="font-bold text-lg text-hot-red mt-auto text-end">$ {{ item.price.toLocaleString() }}</p>
                         </div>
                     </div>
-                </div>
-
-            </div>
+                </li>
+            </ul>
+            <button
+                class="self-center px-10 py-3 bg-gray-300 text-white  hover:bg-gray-200 transition-colors">查看更多</button>
         </div>
         <div></div>
     </div>
@@ -83,6 +91,80 @@ export default {
     name: 'TourPage',
     data() {
         return {
+            journey: [
+                {
+                    type: '一日遊',
+                    location: '大阪',
+                    title: '水色之際：伊根與天橋立的一日拾光',
+                    price: 12000,
+                    imgSrc: require('../assets/images/carousel-2.jpg'),
+                    isCollected: false,
+                },
+                {
+                    type: '一日遊',
+                    location: '東京',
+                    title: '東京迪士尼樂園一日遊',
+                    price: 15000,
+                    imgSrc: require('../assets/images/carousel-1.jpg'),
+                    isCollected: false,
+                },
+                {
+                    type: '二日遊',
+                    location: '京都',
+                    title: '京都文化深度之旅京都文化深度之旅京都文化深度之旅京都文化深度之旅京都文化深度之旅',
+                    price: 25000,
+                    imgSrc: require('../assets/images/carousel-3.jpg'),
+                    isCollected: false,
+                },
+                {
+                    type: '一日遊',
+                    location: '東京',
+                    title: '東京迪士尼樂園一日遊東京迪士尼樂園一日遊東京迪士尼樂園一日遊東京迪士尼樂園一日遊東京迪士尼樂園一日遊',
+                    price: 15000,
+                    imgSrc: require('../assets/images/carousel-1.jpg'),
+                    isCollected: false,
+                },
+                {
+                    type: '二日遊',
+                    location: '京都',
+                    title: '京都文化深度之旅',
+                    price: 25000,
+                    imgSrc: require('../assets/images/carousel-3.jpg'),
+                    isCollected: false,
+                },
+                {
+                    type: '一日遊',
+                    location: '東京',
+                    title: '東京迪士尼樂園一日遊',
+                    price: 15000,
+                    imgSrc: require('../assets/images/carousel-1.jpg'),
+                    isCollected: false,
+                },
+                {
+                    type: '二日遊',
+                    location: '京都',
+                    title: '京都文化深度之旅',
+                    price: 25000,
+                    imgSrc: require('../assets/images/carousel-3.jpg'),
+                    isCollected: false,
+                },
+                {
+                    type: '一日遊',
+                    location: '東京',
+                    title: '東京迪士尼樂園一日遊',
+                    price: 15000,
+                    imgSrc: require('../assets/images/carousel-1.jpg'),
+                    isCollected: false,
+                },
+                {
+                    type: '二日遊',
+                    location: '京都',
+                    title: '京都文化深度之旅',
+                    price: 25000,
+                    imgSrc: require('../assets/images/carousel-3.jpg'),
+                    isCollected: false,
+                },
+            ],
         };
     },
     methods: {
