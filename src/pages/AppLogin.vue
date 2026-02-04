@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="flex justify-center items-center py-8">
-            <h1 class="text-3xl text-center tracking-[2rem] text-base-heavy">歡迎回來</h1>
+            <h1 class="text-3xl text-center tracking-[2rem] pl-[2rem] text-base-heavy">歡迎回來</h1>
         </div>
         <!-- top -->
         <div class="relative h-80 overflow-hidden">

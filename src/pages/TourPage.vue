@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col gap-32 w-full">
         <div class="flex justify-center items-center pt-8">
-            <h1 class="text-3xl text-center tracking-[2rem] text-base-heavy">行程</h1>
+            <h1 class="text-3xl text-center tracking-[2rem] pl-[2rem] text-base-heavy">行程</h1>
         </div>
 
 
