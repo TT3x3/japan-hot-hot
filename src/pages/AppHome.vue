@@ -37,6 +37,7 @@
         <img src="../assets/images/about-img-1.jpg" alt="about-img-1" class="max-w-[30%] w-full h-auto">
       </div>
     </div>
+
   </div>
 </template>
 
