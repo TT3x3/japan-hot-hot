@@ -53,7 +53,7 @@
         <div class="max-w-[80%] w-full mx-auto flex flex-col gap-12">
             <ul class="flex flex-wrap gap-x-6 gap-y-12">
                 <!-- 卡片 -->
-                <li v-for="(item, key) in journey.slice(0, 9)" :key="key"
+                <router-link to="/tour-detail" v-for="(item, key) in journey.slice(0, 9)" :key="key"
                     class="flex-[0_0_calc(33.333%-1rem)] cursor-pointer group">
                     <div class="flex flex-col h-[450px] border border-gray-200">
                         <div class="relative h-72 overflow-hidden">
@@ -77,7 +77,7 @@
                             <p class="font-bold text-lg text-hot-red mt-auto text-end">$ {{ item.price.toLocaleString() }}</p>
                         </div>
                     </div>
-                </li>
+                </router-link>
             </ul>
             <button type="button"
                 class="self-center px-10 py-3 bg-gray-400 text-white  hover:bg-gray-300 active:bg-gray-500 transition-colors">查看更多</button>
