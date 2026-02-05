@@ -1,6 +1,6 @@
 <template>
-    <div>
-        <div class="flex justify-center items-center py-8">
+    <div class="flex flex-col gap-32 w-full">
+        <div class="flex justify-center items-center pt-8">
             <h1 class="text-3xl text-center tracking-[2rem] pl-[2rem] text-base-heavy">加入日頭</h1>
         </div>
         <!-- top -->
