@@ -2,11 +2,11 @@
     <div class="flex flex-col gap-32 w-full">
         <div class="max-w-[80%] w-full mx-auto flex flex-col gap-12">
             <div class=" flex flex-col gap-4">
-                <h1 class="font-black text-2xl text-base-heavy">高雄往返關西，極簡商務選航</h1>
+                <h1 class="font-black text-2xl text-base-heavy">{{ detail.title }}</h1>
                 <div class="flex gap-2">
-                    <p class="text-sm px-2 inline-block bg-gray-400 text-white">快桃航空</p>
-                    <p class="text-sm px-2 inline-block border border-gray-300 text-gray-400">早去午回</p>
-                    <p class="text-sm px-2 inline-block border border-gray-300 text-gray-400">高雄出發</p>
+                    <p class="text-sm px-2 inline-block bg-gray-400 text-white">{{ detail.airplane }}</p>
+                    <p class="text-sm px-2 inline-block border border-gray-300 text-gray-400">{{ detail.timeType }}</p>
+                    <p class="text-sm px-2 inline-block border border-gray-300 text-gray-400">{{ detail.location }}</p>
                 </div>
             </div>
             <div class="h-[720px] overflow-hidden">
@@ -18,15 +18,15 @@
                     <div class="flex md:gap-12 gap-4">
                         <div class="flex flex-col justify-center items-center gap-6 text-gray-400">
                             <i class="fa-solid fa-plane fa-2xl"></i>
-                            <p class="text-sm">2小時45分～3小時10分</p>
+                            <p class="text-sm">{{ detail.timeLong }}</p>
                         </div>
                         <div class="flex flex-col justify-center items-center gap-6 text-gray-400">
                             <i class="fa-solid fa-suitcase fa-2xl"></i>
-                            <p class="text-sm">不含行李重量</p>
+                            <p class="text-sm">{{ detail.luggage ? '含行李重量' : '不含行李重量' }}</p>
                         </div>
                     </div>
                     <div class="flex flex-row justify-center items-center gap-4">
-                        <p class="font-bold text-3xl text-hot-red">$1,688～</p>
+                        <p class="font-bold text-3xl text-hot-red">{{ detail.price | numberFilter }}～</p>
                         <button @click.prevent="scrollToBooking()"
                             class="bg-hot-red text-white px-10 py-3 hover:bg-red-400 active:bg-red-700">立即購票</button>
                     </div>
@@ -48,34 +48,36 @@
                         </tr>
                         <tr>
                             <td class="px-6 py-4 table-fixed w-36 text-base-light bg-gray-100">出發時間</td>
-                            <td class="pl-4 py-4 text-base-heavy">07:30AM<br />
+                            <td class="pl-4 py-4 text-base-heavy">{{ detail.departureTime }}<br />
                                 <span class="text-xs text-gray-400">*航空公司保有航班異動時間，正確航班時間請依航空公司官網公告為準</span>
                             </td>
                         </tr>
                         <tr>
                             <td class="px-6 py-4 table-fixed w-36 text-base-light bg-gray-100">到達機場</td>
-                            <td class="pl-4 py-4  text-base-heavy">關西機場</td>
+                            <td class="pl-4 py-4  text-base-heavy">{{ detail.arriveAirport }}</td>
                         </tr>
                         <tr>
                             <td class="px-6 py-4 table-fixed w-36 text-base-light bg-gray-100">航行時長</td>
-                            <td class="pl-4 py-4 text-base-heavy">約2小時45分～3小時10分<br />
+                            <td class="pl-4 py-4 text-base-heavy">{{ detail.timeLong }}<br />
                                 <span class="text-xs text-gray-400">*以實際航行時間為準</span>
                             </td>
                         </tr>
                         <tr>
-                            <td class="px-6 py-4 table-fixed w-36 text-base-light bg-gray-100">行李重量</td>
-                            <td class="pl-4 py-4 text-base-heavy">不含行李重量，需額外加購</td>
+                            <td class="px-6 py-4 table-fixed w-36 text-base-light bg-gray-100">行李相關</td>
+                            <td class="pl-4 py-4 text-base-heavy">{{ detail.luggageInfo }}<br />
+                                <span class="text-xs text-gray-400">* 請留意各家航空公司對行李重量、尺寸及內容物的規定</span>
+                            </td>
                         </tr>
                         <tr>
                             <td class="px-6 py-4 table-fixed w-36 text-base-light bg-gray-100">提供住宿</td>
-                            <td class="pl-4 py-4 text-base-heavy">提供住宿，關西大飯店</td>
+                            <td class="pl-4 py-4 text-base-heavy">{{ detail.stayInfo }}</td>
                         </tr>
                         <tr>
                             <td class="px-6 py-4 table-fixed w-36 text-base-light bg-gray-100">機場接駁</td>
-                            <td class="pl-4 py-4 text-base-heavy">有機場專車接駁至飯店，如欲自行前往請搭乘JR至「你給我站」</td>
+                            <td class="pl-4 py-4 text-base-heavy">{{ detail.connect }}</td>
                         </tr>
                         <tr>
-                            <td class="px-6 py-4 table-fixed w-36 text-base-light bg-gray-100">護照相關</td>
+                            <td class="px-6 py-4 table-fixed w-36 text-base-light bg-gray-100">重要須知</td>
                             <td class="pl-4 py-4 text-base-heavy">請務必填寫與護照相同之資料並攜帶有效護照，確保護照在行程結束後至少還有6個月的有效期限。
                             </td>
                         </tr>
@@ -97,36 +99,42 @@
                 :class="highlighted ? 'border-red-500' : 'border-red-500/0'">
                 <div class="flex flex-col gap-2">
                     <p class="text-sm text-gray-500">購買機票</p>
-                    <p class="font-bold">高雄往返關西，極簡商務選航</p>
+                    <p class="font-bold">{{ detail.title }}</p>
                 </div>
                 <div class="flex flex-col gap-2">
                     <p class="text-sm text-gray-500">去回程時間</p>
-                    <div class="relative border" :class="range.outOfRange ? 'border-red-500' : 'border-none'">
+                    <div class="relative border" :class="isError.date ? 'border-red-500' : 'border-none'">
                         <v-date-picker v-model="range.rangeDate" @focus.prevent="range.outOfRange = false" :columns="2"
-                            :min-date="minDate" :max-date="maxDate" is-range color="red" 
+                            :min-date="minDate" :max-date="maxDate" is-range color="red"
                             :popover="{ visibility: 'click', placement: 'bottom-start', appendTo: 'self' }"
                             :masks="{ input: 'YYYY / MM / DD' }">
                             <template #default="{ togglePopover }">
                                 <input type="text" :value="rangeText" readonly @click="togglePopover"
+                                    @focus="isError.date = false"
                                     class="border border-gray-300 bg-white px-8 py-6 w-[100%] cursor-pointer"
                                     placeholder="請選擇日期" />
                             </template>
                         </v-date-picker>
                     </div>
-                    <p v-if="range.outOfRange" class="text-xs text-red-700">{{ range.errorMessage }}</p>
+                    <p v-if="isError.date" class="text-xs text-red-700">{{ isError.dateErrMsg }}</p>
                     <p class="text-xs text-gray-500">* 僅可訂購1個月後至6個月以內的機票。</p>
                 </div>
                 <div class="flex flex-col gap-2">
                     <p class="text-sm text-gray-500">選擇數量</p>
-                    <div class="flex flex-row justify-between items-center gap-12 bg-white px-8 py-6 text-base-heavy">
-                        <p class="text-base-heavy">每人<span class="text-sm text-gray-400">（NT$ 16,888/人）</span></p>
+                    <div class="flex flex-row justify-between items-center gap-12 bg-white px-8 py-6 text-base-heavy"
+                        :class="isError.peopleCount ? 'border border-red-500' : 'border-none'">
+                        <p class="text-base-heavy">每張<span class="text-sm text-gray-400">（{{ detail.price |
+                            numberFilter }} / 張）</span>
+                        </p>
                         <div class="flex flex-row gap-12 items-center">
-                            <i class="fa-solid fa-minus fa-lg hover:text-gray-400 active:text-gray-900"></i>
-                            <p class="text-xl">2</p>
-                            <i class="fa-solid fa-plus fa-lg hover:text-gray-400 active:text-gray-900"></i>
-
+                            <i class="fa-solid fa-minus fa-lg hover:text-gray-400 active:text-gray-900"
+                                @click="subCount()"></i>
+                            <p class="text-xl">{{ detail.peopleCount }}</p>
+                            <i class="fa-solid fa-plus fa-lg hover:text-gray-400 active:text-gray-900"
+                                @click="addCount()"></i>
                         </div>
                     </div>
+                    <p v-if="isError.peopleCount" class="text-xs text-red-700">{{ isError.countErrMsg }}</p>
                 </div>
 
                 <div class="flex flex-col gap-2">
@@ -136,9 +144,9 @@
                 </div>
                 <div class="flex flex-col gap-2">
                     <p class="text-sm text-gray-500">總金額</p>
-                    <p class="font-bold text-xl">$16,888</p>
+                    <p class="font-bold text-xl">{{ detail.price * detail.peopleCount | numberFilter }}</p>
                 </div>
-                <button
+                <button @click.prevent="confirmBooking()"
                     class="bg-hot-red self-end text-white px-10 py-3 hover:bg-red-400 active:bg-red-700">確認購買</button>
             </div>
             <div class="flex flex-col gap-4">
@@ -178,7 +186,37 @@ export default {
                 maxRange: 30,
                 outOfRange: false,
                 errorMessage: '',
-            }
+            },
+            date: null,
+            peopleCount: 1,
+            tourPrice: 2433,
+            tourInfo: {
+                ageLimit: '無年齡限制',
+                peopleLimit: 4,
+                timeLong: '120～240',
+                description: ''
+            },
+            isError: {
+                date: false,
+                dateErrMsg: '',
+                peopleCount: false,
+                countErrMsg: '',
+            },
+            detail: {
+                title: '高雄往返關西，極簡商務選航',
+                airplane: '快桃航空',
+                timeType: '早去午回',
+                location: '高雄出發',
+                departureTime: '07:30 AM',
+                timeLong: '2小時45分～3小時10分',
+                arriveAirport: '關西機場',
+                luggage: false,
+                luggageInfo: '不含行李重量，需額外加購',
+                price: 16888,
+                stayInfo: '提供住宿，關西大飯店',
+                connect: '有機場專車接駁至飯店，如欲自行前往請搭乘JR至「你給我站」',
+                peopleCount: 1,
+            },
         }
     },
     components: {
@@ -207,7 +245,40 @@ export default {
                 this.range.outOfRange = true
                 this.range.rangeDate = null
             }
-        }
+        },
+        addCount() {
+            if (this.detail.peopleCount >= 20) {
+                this.isError.peopleCount = true;
+                this.isError.countErrMsg = `* 最多只能選擇 20 張`;
+            } else {
+                this.detail.peopleCount++;
+                this.isError.peopleCount = false;
+            }
+        },
+        subCount() {
+            if (this.detail.peopleCount <= 1) {
+                this.isError.peopleCount = true;
+                this.isError.countErrMsg = `* 最少需選擇 1 人`;
+            } else {
+                this.detail.peopleCount--;
+                this.isError.peopleCount = false;
+            }
+        },
+        confirmBooking() {
+            if (!this.date) {
+                this.isError.date = true;
+                this.isError.dateErrMsg = '* 請選擇日期';
+                return;
+            }
+            if (this.detail.peopleCount <= 0 || this.detail.peopleCount > 20) {
+                this.isError.peopleCount = true;
+                this.isError.countErrMsg = `* 人數錯誤，請選擇 1~20 人`;
+                return;
+            }
+            if (this.isError.peopleCount || this.isError.date) {
+                return;
+            }
+        },
     },
     computed: {
         minDate() {

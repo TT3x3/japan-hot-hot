@@ -4,6 +4,7 @@ import VCalendar from 'v-calendar';
 import './assets/main.css'
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import router from './router';
+import './utils/filter';
 
 Vue.config.productionTip = false
 Vue.use(VCalendar)

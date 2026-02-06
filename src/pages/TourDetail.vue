@@ -2,10 +2,10 @@
     <div class="flex flex-col gap-32 w-full">
         <div class="max-w-[80%] w-full mx-auto flex flex-col gap-12">
             <div class=" flex flex-col gap-4">
-                <h1 class="font-black text-2xl text-base-heavy">水色之際：伊根與天橋立的一日拾光</h1>
+                <h1 class="font-black text-2xl text-base-heavy">{{ detail.title }}</h1>
                 <div class="flex gap-2">
-                    <p class="text-sm px-2 inline-block border border-gray-300 text-gray-400">半日遊</p>
-                    <p class="text-sm px-2 inline-block border border-gray-300 text-gray-400">大阪京都</p>
+                    <p class="text-sm px-2 inline-block border border-gray-300 text-gray-400">{{ detail.type }}</p>
+                    <p class="text-sm px-2 inline-block border border-gray-300 text-gray-400">{{ detail.location }}</p>
                 </div>
             </div>
             <div class="h-[720px] overflow-hidden">
@@ -17,19 +17,19 @@
                     <div class="flex md:gap-12 gap-4">
                         <div class="flex flex-col justify-center items-center gap-6 text-gray-400">
                             <i class="fa-solid fa-user fa-2xl"></i>
-                            <p class="text-sm">無年齡限制</p>
+                            <p class="text-sm">{{ tourInfo.ageLimit }}</p>
                         </div>
                         <div class="flex flex-col justify-center items-center gap-6 text-gray-400">
                             <i class="fa-regular fa-clock fa-2xl"></i>
-                            <p class="text-sm">120～240分鐘</p>
+                            <p class="text-sm">{{ tourInfo.timeLong }} 分鐘</p>
                         </div>
                         <div class="flex flex-col justify-center items-center gap-6 text-gray-400">
                             <i class="fa-solid fa-people-pulling fa-2xl"></i>
-                            <p class="text-sm">1～4人</p>
+                            <p class="text-sm">最多 {{ tourInfo.peopleLimit }} 人</p>
                         </div>
                     </div>
                     <div class="flex flex-row justify-center items-center gap-4">
-                        <p class="font-bold text-3xl text-hot-red">$1,688～</p>
+                        <p class="font-bold text-3xl text-hot-red">{{ tourPrice | numberFilter }} ～</p>
                         <button @click.prevent="scrollToBooking()"
                             class="bg-hot-red text-white px-10 py-3 hover:bg-red-400 active:bg-red-700">立即預訂</button>
                     </div>
@@ -48,35 +48,35 @@
                     <tbody class="border border-gray-200 divide-y divide-gray-200 text-sm">
                         <tr>
                             <td class="px-6 py-4 table-fixed w-36 text-base-light bg-gray-100">交通</td>
-                            <td class="pl-4 py-4 text-base-heavy">接駁巴士、輪船</td>
+                            <td class="pl-4 py-4 text-base-heavy">{{ detail.traffic }}</td>
                         </tr>
                         <tr>
                             <td class="px-6 py-4 table-fixed w-36 text-base-light bg-gray-100">語言</td>
-                            <td class="pl-4 py-4  text-base-heavy">日語、簡單英文會話</td>
+                            <td class="pl-4 py-4  text-base-heavy">{{ detail.language }}</td>
                         </tr>
                         <tr>
                             <td class="px-6 py-4 table-fixed w-36 text-base-light bg-gray-100">集合時間</td>
-                            <td class="pl-4 py-4 text-base-heavy">07:30AM</td>
+                            <td class="pl-4 py-4 text-base-heavy">{{ detail.gatheringTime }}</td>
                         </tr>
                         <tr>
                             <td class="px-6 py-4 table-fixed w-36 text-base-light bg-gray-100">導覽類型</td>
-                            <td class="pl-4 py-4 text-base-heavy">私人導覽</td>
+                            <td class="pl-4 py-4 text-base-heavy">{{ detail.guideType }}</td>
                         </tr>
                         <tr>
                             <td class="px-6 py-4 table-fixed w-36 text-base-light bg-gray-100">餐食安排</td>
-                            <td class="pl-4 py-4 text-base-heavy">無</td>
+                            <td class="pl-4 py-4 text-base-heavy">{{ detail.meal }}</td>
                         </tr>
                         <tr>
                             <td class="px-6 py-4 table-fixed w-36 text-base-light bg-gray-100">季節限定</td>
-                            <td class="pl-4 py-4 text-base-heavy">伊根冬季限定的出初式與噴水慶典</td>
+                            <td class="pl-4 py-4 text-base-heavy">{{ detail.season }}</td>
                         </tr>
                         <tr>
                             <td class="px-6 py-4 table-fixed w-36 text-base-light bg-gray-100">觀光類型</td>
-                            <td class="pl-4 py-4 text-base-heavy">文化歷史、自然風光</td>
+                            <td class="pl-4 py-4 text-base-heavy">{{ detail.tourType }}</td>
                         </tr>
                         <tr>
                             <td class="px-6 py-4 table-fixed w-36 text-base-light bg-gray-100">當日衣著</td>
-                            <td class="pl-4 py-4 text-base-heavy">輕便為主，冬日請攜帶禦寒衣物</td>
+                            <td class="pl-4 py-4 text-base-heavy">{{ detail.dress }}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -105,34 +105,41 @@
                 :class="highlighted ? 'border-red-500' : 'border-red-500/0'">
                 <div class="flex flex-col gap-2">
                     <p class="text-sm text-gray-500">預定行程</p>
-                    <p class="font-bold">水色之際：伊根與天橋立的一日拾光</p>
+                    <p class="font-bold">{{ detail.title }}</p>
                 </div>
                 <div class="flex flex-col gap-2">
                     <p class="text-sm text-gray-500">行程時間</p>
-                    <div class="relative">
+                    <div class="relative" :class="isError.date ? 'border border-red-500' : 'border-none'">
                         <v-date-picker v-model="date" :columns="2" :min-date="minDate" :max-date="maxDate" color="red"
                             :popover="{ visibility: 'click', placement: 'bottom-start', appendTo: 'self' }"
                             :masks="{ input: 'YYYY / MM / DD' }">
                             <template #default="{ inputValue, togglePopover }">
                                 <input type="text" :value="inputValue" readonly @click="togglePopover"
+                                    @focus="isError.date = false"
                                     class="border border-gray-300 bg-white px-8 py-6 w-[100%] cursor-pointer"
                                     placeholder="請選擇日期" />
                             </template>
                         </v-date-picker>
                     </div>
+                    <p v-if="isError.date" class="text-xs text-red-700">{{ isError.dateErrMsg }}</p>
                     <p class="text-xs text-gray-500">* 僅可訂購7日後至6個月以內的行程。</p>
                 </div>
                 <div class="flex flex-col gap-2">
                     <p class="text-sm text-gray-500">選擇數量</p>
-                    <div class="flex flex-row justify-between items-center gap-12 bg-white px-8 py-6 text-base-heavy">
-                        <p class="text-base-heavy">每人<span class="text-sm text-gray-400">（NT$ 789/人）</span></p>
+                    <div class="flex flex-row justify-between items-center gap-12 bg-white px-8 py-6 text-base-heavy"
+                        :class="isError.peopleCount ? 'border border-red-500' : 'border-none'">
+                        <p class="text-base-heavy">每人<span class="text-sm text-gray-400">（{{ tourPrice | numberFilter }}
+                                / 人）</span>
+                        </p>
                         <div class="flex flex-row gap-12 items-center">
-                            <i class="fa-solid fa-minus fa-lg hover:text-gray-400 active:text-gray-900"></i>
-                            <p class="text-xl">3</p>
-                            <i class="fa-solid fa-plus fa-lg hover:text-gray-400 active:text-gray-900"></i>
-
+                            <i @click="subCount()" @focus="isError.peopleCount = false"
+                                class="fa-solid fa-minus fa-lg hover:text-gray-400 active:text-gray-900"></i>
+                            <p class="text-xl">{{ peopleCount }}</p>
+                            <i @click="addCount()" @focus="isError.peopleCount = false"
+                                class="fa-solid fa-plus fa-lg hover:text-gray-400 active:text-gray-900"></i>
                         </div>
                     </div>
+                    <p v-if="isError.peopleCount" class="text-xs text-red-700">{{ isError.countErrMsg }}</p>
                 </div>
 
                 <div class="flex flex-col gap-2">
@@ -142,9 +149,9 @@
                 </div>
                 <div class="flex flex-col gap-2">
                     <p class="text-sm text-gray-500">總金額</p>
-                    <p class="font-bold text-xl">$2,064</p>
+                    <p class="font-bold text-xl">{{ peopleCount * tourPrice | numberFilter }} </p>
                 </div>
-                <button
+                <button @click.prevent="confirmBooking()"
                     class="bg-hot-red self-end text-white px-10 py-3 hover:bg-red-400 active:bg-red-700">確認預約</button>
             </div>
             <div class="flex flex-col gap-2">
@@ -181,12 +188,39 @@
 </template>
 
 <script>
-
 export default {
     name: 'TourDetail',
     data() {
         return {
             highlighted: false,
+            date: null,
+            peopleCount: 1,
+            tourPrice: 2433,
+            tourInfo: {
+                ageLimit: '無年齡限制',
+                peopleLimit: 4,
+                timeLong: '120～240',
+                description: ''
+            },
+            isError: {
+                date: false,
+                dateErrMsg: '',
+                peopleCount: false,
+                countErrMsg: '',
+            },
+            detail: {
+                title: '水色之際：伊根與天橋立的一日拾光',
+                type: '半日遊',
+                location: '大阪京都',
+                traffic: '接駁巴士、輪船',
+                language: '日語、簡單英文會話',
+                gatheringTime: '07:30AM',
+                guideType: '私人導覽',
+                meal: '無',
+                season: '伊根冬季限定的出初式與噴水慶典',
+                tourType: '文化歷史、自然風光',
+                dress: '輕便為主，冬日請攜帶禦寒衣物',
+            }
         }
     },
     components: {
@@ -201,7 +235,40 @@ export default {
                     this.highlighted = false;
                 }, 3000);
             }
-        }
+        },
+        addCount() {
+            if (this.peopleCount >= this.tourInfo.peopleLimit) {
+                this.isError.peopleCount = true;
+                this.isError.countErrMsg = `* 最多只能選擇 ${this.tourInfo.peopleLimit} 人`;
+            } else {
+                this.peopleCount++;
+                this.isError.peopleCount = false;
+            }
+        },
+        subCount() {
+            if (this.peopleCount <= 1) {
+                this.isError.peopleCount = true;
+                this.isError.countErrMsg = `* 最少需選擇 1 人`;
+            } else {
+                this.peopleCount--;
+                this.isError.peopleCount = false;
+            }
+        },
+        confirmBooking() {
+            if (!this.date) {
+                this.isError.date = true;
+                this.isError.dateErrMsg = '* 請選擇日期';
+                return;
+            }
+            if (this.detail.peopleCount <= 0 || this.detail.peopleCount > 20) {
+                this.isError.peopleCount = true;
+                this.isError.countErrMsg = `* 人數錯誤，請選擇 1~20 人`;
+                return;
+            }
+            if (this.isError.peopleCount || this.isError.date) {
+                return;
+            }
+        },
     },
     computed: {
         minDate() {
