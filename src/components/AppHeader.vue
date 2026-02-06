@@ -9,8 +9,8 @@
         <li v-if="signIn === true">登出</li>
         <li v-if="signIn === true">會員中心</li>
         <li>關於我</li>
-        <router-link to="/tour" class="hover:text-gray-400">行程</router-link>
-        <li>機票</li>
+        <router-link to="/tours" class="hover:text-gray-400">行程</router-link>
+        <router-link to="/tickets" class="hover:text-gray-400">機票</router-link>
       </ul>
     </div>
   </header>

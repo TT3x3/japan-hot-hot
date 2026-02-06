@@ -88,7 +88,7 @@
 
 <script>
 export default {
-    name: 'TourPage',
+    name: 'ToursPage',
     data() {
         return {
             journey: [
