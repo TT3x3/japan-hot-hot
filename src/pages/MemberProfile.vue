@@ -126,12 +126,12 @@
                             <div class="flex flex-col gap-1 px-4">
                                 <div class="flex flex-row w-full items-center">
                                     <label for="phoneInput"
-                                        class="inline-block w-28 font-bold text-base-light">連絡電話<span
+                                        class="inline-block w-28 font-bold text-base-light">手機號碼<span
                                             class="text-red-500">*</span></label>
                                     <input id="phoneInput" type="tel" v-model.trim="userInfo.phone"
                                         @focus="isError.phone = ''"
                                         class="w-full border border-gray-300 px-2 py-1 text-base-heavy"
-                                        :class="{ 'border-hot-red': isError.phone }" placeholder="請輸入連絡電話">
+                                        :class="{ 'border-hot-red': isError.phone }" placeholder="請輸入手機號碼">
                                 </div>
                                 <small v-if="isError.phone" class="text-sm text-end text-hot-red">{{
                                     isError.phone }}</small>
@@ -278,11 +278,11 @@ export default {
 
             const phoneRule = /^09[0-9]{8}$/;
             if (this.userInfo.phone.trim() === '') {
-                this.isError.phone = '*請輸入連絡電話';
+                this.isError.phone = '*請輸入手機號碼';
                 this.isFormValid = false;
             }
             if (!phoneRule.test(this.userInfo.phone)) {
-                this.isError.phone = '*請輸入正確的連絡電話';
+                this.isError.phone = '*請輸入正確的手機號碼';
                 this.isFormValid = false;
             }
 

@@ -75,12 +75,12 @@
                                 <div class="flex flex-col gap-1 px-4">
                                     <div class="flex flex-row w-full items-center">
                                         <label for="phoneInput"
-                                            class="inline-block w-24 font-bold text-base-light">連絡電話</label>
+                                            class="inline-block w-24 font-bold text-base-light">手機號碼</label>
                                         <input id="phoneInput" type="tel" v-model.trim="userInfo.phone"
                                             @focus="errorInfo.phone = ''"
                                             class="w-full border border-gray-300 px-2 py-1 text-base-heavy"
                                             :class="{'border-hot-red':errorInfo.phone}"
-                                            placeholder="請輸入連絡電話">
+                                            placeholder="請輸入手機號碼">
                                     </div>
                                     <small v-if="errorInfo.phone" class="text-sm text-end text-hot-red">{{
                                         errorInfo.phone }}</small>
@@ -177,12 +177,12 @@ export default {
                 this.errorInfo.username = '*會員名稱長度需介於2到10個字元';
             }
 
-            const phoneRule = /^\d{10}$/;
+            const phoneRule = /^09[0-9]{8}$/;
             if (this.userInfo.phone.trim() === '') {
-                this.errorInfo.phone = '*請輸入連絡電話';
+                this.errorInfo.phone = '*請輸入手機號碼';
             }
             if (!phoneRule.test(this.userInfo.phone)) {
-                this.errorInfo.phone = '*請輸入正確的連絡電話';
+                this.errorInfo.phone = '*請輸入正確的手機號碼';
             }
 
             if (this.userInfo.address.trim() === '') {
