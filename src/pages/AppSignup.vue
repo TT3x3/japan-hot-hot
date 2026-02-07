@@ -1,13 +1,13 @@
 <template>
-    <div class="flex flex-col gap-32 w-full">
-        <div class="flex justify-center items-center pt-8">
-            <h1 class="text-3xl text-center tracking-[2rem] pl-[2rem] text-base-heavy">加入日頭</h1>
-        </div>
+    <div class="flex flex-col gap-32 w-full bg-gray-100">
         <!-- top -->
         <div class="relative h-80 overflow-hidden">
-            <img src="../assets/images/tour-banner.jpg" alt="tour-banner" class=" w-full h-full object-cover">
+            <img src="../assets/images/carousel-5.jpg" alt="" class=" w-full h-full object-cover">
         </div>
-        <div class="bg-gray-200">
+        <div>
+            <div class="flex justify-center items-center">
+                <h1 class="text-3xl text-center tracking-[2rem] pl-[2rem] text-base-heavy">加入日頭</h1>
+            </div>
             <div class="mx-auto max-w-[80%] flex justify-between items-center">
                 <div class="flex flex-col gap-32 w-full justify-center">
                     <div></div>
@@ -22,8 +22,7 @@
                                         <input id="emailInput" type="email" v-model.trim="userInfo.email"
                                             @focus="errorInfo.email = ''"
                                             class="w-full border border-gray-300 px-2 py-1 text-base-heavy"
-                                            :class="{ 'border-hot-red': errorInfo.email }"
-                                            placeholder="請輸入Email">
+                                            :class="{ 'border-hot-red': errorInfo.email }" placeholder="請輸入Email">
                                     </div>
                                     <small v-if="errorInfo.email" class="text-sm text-end text-hot-red">{{
                                         errorInfo.email }}</small>
@@ -36,8 +35,7 @@
                                         <input id="passwordInput" type="password" v-model.trim="userInfo.password"
                                             @focus="errorInfo.password = ''"
                                             class="w-full border border-gray-300 px-2 py-1 text-base-heavy"
-                                            :class="{'border-hot-red':errorInfo.password}"
-                                            placeholder="請輸入密碼">
+                                            :class="{ 'border-hot-red': errorInfo.password }" placeholder="請輸入密碼">
                                     </div>
                                     <small v-if="errorInfo.password" class="text-sm text-end text-hot-red">{{
                                         errorInfo.password }}</small>
@@ -51,8 +49,7 @@
                                             v-model.trim="userInfo.confirmPassword"
                                             @focus="errorInfo.confirmPassword = ''"
                                             class="w-full border border-gray-300 px-2 py-1 text-base-heavy"
-                                            :class="{'border-hot-red':errorInfo.confirmPassword}"
-                                            placeholder="請輸入確認密碼">
+                                            :class="{ 'border-hot-red': errorInfo.confirmPassword }" placeholder="請輸入確認密碼">
                                     </div>
                                     <small v-if="errorInfo.confirmPassword" class="text-sm text-end text-hot-red">{{
                                         errorInfo.confirmPassword }}</small>
@@ -65,8 +62,7 @@
                                         <input id="usernameInput" type="text" v-model.trim="userInfo.username"
                                             @focus="errorInfo.username = ''"
                                             class="w-full border border-gray-300 px-2 py-1 text-base-heavy"
-                                            :class="{'border-hot-red':errorInfo.username}"
-                                            placeholder="請輸入會員名稱">
+                                            :class="{ 'border-hot-red': errorInfo.username }" placeholder="請輸入會員名稱">
                                     </div>
                                     <small v-if="errorInfo.username" class="text-sm text-end text-hot-red">{{
                                         errorInfo.username }}</small>
@@ -79,8 +75,7 @@
                                         <input id="phoneInput" type="tel" v-model.trim="userInfo.phone"
                                             @focus="errorInfo.phone = ''"
                                             class="w-full border border-gray-300 px-2 py-1 text-base-heavy"
-                                            :class="{'border-hot-red':errorInfo.phone}"
-                                            placeholder="請輸入手機號碼">
+                                            :class="{ 'border-hot-red': errorInfo.phone }" placeholder="請輸入手機號碼">
                                     </div>
                                     <small v-if="errorInfo.phone" class="text-sm text-end text-hot-red">{{
                                         errorInfo.phone }}</small>
@@ -93,8 +88,7 @@
                                         <input id="addressInput" type="text" v-model.trim="userInfo.address"
                                             @focus="errorInfo.address = ''"
                                             class="w-full border border-gray-300 px-2 py-1 text-base-heavy"
-                                            :class="{'border-hot-red':errorInfo.address}"
-                                            placeholder="請輸入地址">
+                                            :class="{ 'border-hot-red': errorInfo.address }" placeholder="請輸入地址">
                                     </div>
                                     <small v-if="errorInfo.address" class="text-sm text-end text-hot-red">{{
                                         errorInfo.address }}</small>

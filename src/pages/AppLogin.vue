@@ -1,13 +1,13 @@
 <template>
-    <div class="flex flex-col gap-32 w-full">
-        <div class="flex justify-center items-center pt-8">
-            <h1 class="text-3xl text-center tracking-[2rem] pl-[2rem] text-base-heavy">歡迎回來</h1>
-        </div>
+    <div class="flex flex-col gap-32 w-full bg-gray-100">
         <!-- top -->
         <div class="relative h-80 overflow-hidden">
-            <img src="../assets/images/tour-banner.jpg" alt="tour-banner" class=" w-full h-full object-cover">
+            <img src="../assets/images/carousel-5.jpg" alt="" class=" w-full h-full object-cover">
         </div>
-        <div class="bg-gray-200">
+        <div>
+            <div class="flex justify-center items-center">
+                <h1 class="text-3xl text-center tracking-[2rem] pl-[2rem] text-base-heavy">歡迎回來</h1>
+            </div>
             <div class="mx-auto max-w-[80%] flex justify-between items-center">
                 <div class="flex flex-col gap-32 w-full justify-center">
                     <div></div>
