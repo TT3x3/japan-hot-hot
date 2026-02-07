@@ -72,13 +72,12 @@
                                 <p class="text-sm px-2 inline-block bg-gray-400 text-white">{{
                                     item.airPlane }}</p>
                                 <p class="text-sm px-2 inline-block border border-gray-300 text-gray-400">{{ item.type
-                                    }}</p>
+                                }}</p>
                                 <p class="text-sm px-2 inline-block border border-gray-300 text-gray-400">{{
                                     item.location }}</p>
                             </div>
                             <p class="font-bold line-clamp-2 text-base-heavy">{{ item.title }}</p>
-                            <p class="font-bold text-lg text-hot-red mt-auto text-end">$ {{ item.price.toLocaleString()
-                            }}</p>
+                            <p class="font-bold text-lg text-hot-red mt-auto text-end">{{ item.price.toLocaleString() | dollarSign | currency }}</p>
                         </div>
                     </div>
                 </router-link>

@@ -26,7 +26,7 @@
                         </div>
                     </div>
                     <div class="flex flex-row justify-center items-center gap-4">
-                        <p class="font-bold text-3xl text-hot-red">{{ detail.price | numberFilter }}～</p>
+                        <p class="font-bold text-3xl text-hot-red">{{ detail.price | dollarSign | currency }}～</p>
                         <button @click.prevent="scrollToBooking()"
                             class="bg-hot-red text-white px-10 py-3 hover:bg-red-400 active:bg-red-700">立即購票</button>
                     </div>
@@ -124,7 +124,7 @@
                     <div class="flex flex-row justify-between items-center gap-12 bg-white px-8 py-6 text-base-heavy"
                         :class="isError.peopleCount ? 'border border-red-500' : 'border-none'">
                         <p class="text-base-heavy">每張<span class="text-sm text-gray-400">（{{ detail.price |
-                            numberFilter }} / 張）</span>
+                            dollarSign | currency }} / 張）</span>
                         </p>
                         <div class="flex flex-row gap-12 items-center">
                             <i class="fa-solid fa-minus fa-lg hover:text-gray-400 active:text-gray-900"
@@ -144,7 +144,7 @@
                 </div>
                 <div class="flex flex-col gap-2">
                     <p class="text-sm text-gray-500">總金額</p>
-                    <p class="font-bold text-xl">{{ detail.price * detail.peopleCount | numberFilter }}</p>
+                    <p class="font-bold text-xl">{{ detail.price * detail.peopleCount | dollarSign | currency }}</p>
                 </div>
                 <button @click.prevent="confirmBooking()"
                     class="bg-hot-red self-end text-white px-10 py-3 hover:bg-red-400 active:bg-red-700">確認購買</button>

@@ -9,6 +9,7 @@ import ToursPage from "@/pages/ToursPage.vue";
 import TourDetail from "@/pages/TourDetail.vue";
 import TicketsPage from "@/pages/TicketsPage.vue";
 import TicketDetail from "@/pages/TicketDetail.vue";
+import MemberCenter from "@/pages/MemberCenter.vue";
 
 Vue.use(Router);
 
@@ -29,6 +30,11 @@ export default new Router({
       path: "/signup",
       name: "signup",
       component: AppSignup,
+    },
+    {
+      path: "/member-center",
+      name: "member-center",
+      component: MemberCenter,
     },
     {
       path: "/tours",
