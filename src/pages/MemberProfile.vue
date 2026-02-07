@@ -153,7 +153,7 @@
                         <div class="flex gap-4 justify-center items-center">
                             <button type="submit" @click.prevent="validateForm()"
                                 class="w-36 cursor-pointer bg-hot-red text-white py-3  hover:bg-red-500 active:bg-red-700 transition-colors">確認變更</button>
-                            <router-link to="/login"
+                            <router-link to="/member"
                                 class="w-36 cursor-pointer bg-gray-400 text-white text-center py-3  hover:bg-gray-300 active:bg-gray-500 transition-colors">返回</router-link>
                         </div>
                         <div class="w-full h-px bg-gray-100"></div>
