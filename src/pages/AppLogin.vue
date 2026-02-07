@@ -16,7 +16,7 @@
                         <form class="bg-white px-10 py-18 w-full max-w-3xl flex flex-col gap-6 justify-center">
                             <div class="flex flex-col gap-4">
                                 <div class="flex flex-col gap-1 px-4">
-                                    <div class="flex flex-row w-full">
+                                    <div class="flex flex-row w-full items-center">
                                         <label for="emailInput"
                                             class="inline-block w-24 font-bold text-base-light">Email</label>
                                         <input id="emailInput" type="email" v-model.trim="userInfo.email"
@@ -29,7 +29,7 @@
                                 </div>
                                 <div class="w-full h-px bg-gray-100"></div>
                                 <div class="flex flex-col gap-1 px-4">
-                                    <div class="flex flex-row w-full">
+                                    <div class="flex flex-row w-full items-center">
                                         <label for="passwordInput"
                                             class="inline-block w-24 font-bold text-base-light">密碼</label>
                                         <input id="passwordInput" type="password" v-model.trim="userInfo.password"
@@ -43,9 +43,9 @@
                             </div>
                             <div class="flex gap-4 justify-center items-center">
                                 <button type="submit" @click.prevent="validateForm()"
-                                    class="w-36 cursor-pointer bg-hot-red text-white px-10 py-3  hover:bg-red-500 active:bg-red-700 transition-colors">登入</button>
+                                    class="w-36 cursor-pointer bg-hot-red text-center text-white py-3  hover:bg-red-500 active:bg-red-700 transition-colors">登入</button>
                                 <router-link to="/signup"
-                                    class="w-36 cursor-pointer bg-gray-400 text-white px-10 py-3  hover:bg-gray-300 active:bg-gray-500 transition-colors">加入日頭</router-link>
+                                    class="w-36 cursor-pointer bg-gray-400 text-center text-white py-3  hover:bg-gray-300 active:bg-gray-500 transition-colors">加入日頭</router-link>
                             </div>
                             <!-- <p class="text-center text-sm px-4 cursor-pointer text-base-light">忘記密碼了嗎？</p> -->
                             <div class="w-full h-px bg-gray-100"></div>

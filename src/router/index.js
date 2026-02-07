@@ -10,6 +10,7 @@ import TourDetail from "@/pages/TourDetail.vue";
 import TicketsPage from "@/pages/TicketsPage.vue";
 import TicketDetail from "@/pages/TicketDetail.vue";
 import MemberCenter from "@/pages/MemberCenter.vue";
+import MemberProfile from "@/pages/MemberProfile.vue";
 
 Vue.use(Router);
 
@@ -32,9 +33,14 @@ export default new Router({
       component: AppSignup,
     },
     {
-      path: "/member-center",
-      name: "member-center",
+      path: "/member",
+      name: "member",
       component: MemberCenter,
+    },
+    {
+      path: "/member/profile",
+      name: "profile",
+      component: MemberProfile,
     },
     {
       path: "/tours",
@@ -42,19 +48,19 @@ export default new Router({
       component: ToursPage,
     },
     {
-      path:"/tour-detail",
-      name:"tour-detail",
+      path: "/tour-detail",
+      name: "tour-detail",
       component: TourDetail,
     },
     {
-      path:"/tickets",
-      name:"tickets",
-      component: TicketsPage, 
+      path: "/tickets",
+      name: "tickets",
+      component: TicketsPage,
     },
     {
-      path:"/ticket-detail",
-      name:"ticket-detail",
+      path: "/ticket-detail",
+      name: "ticket-detail",
       component: TicketDetail,
-    }
+    },
   ],
 });
