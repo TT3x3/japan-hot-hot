@@ -11,6 +11,7 @@ import TicketsPage from "@/pages/TicketsPage.vue";
 import TicketDetail from "@/pages/TicketDetail.vue";
 import MemberCenter from "@/pages/MemberCenter.vue";
 import MemberProfile from "@/pages/MemberProfile.vue";
+import MemberOrders from "@/pages/MemberOrders.vue";
 
 Vue.use(Router);
 
@@ -41,6 +42,11 @@ export default new Router({
       path: "/member/profile",
       name: "profile",
       component: MemberProfile,
+    },
+        {
+      path: "/member/orders",
+      name: "orders",
+      component: MemberOrders,
     },
     {
       path: "/tours",

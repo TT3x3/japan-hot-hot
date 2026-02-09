@@ -24,7 +24,7 @@
                     <div class="w-full h-px bg-gray-100 "></div>
                     <p class="text-sm text-gray-400 pl-0 md:px-3">可變更目前使用的密碼。</p>
                 </router-link>
-                <router-link to="" class="flex flex-col gap-4 cursor-pointer px-2 py-8 hover:bg-gray-50 active:bg-gray-100 w-[80%] md:w-1/5">
+                <router-link to="/member/orders" class="flex flex-col gap-4 cursor-pointer px-2 py-8 hover:bg-gray-50 active:bg-gray-100 w-[80%] md:w-1/5">
                     <p class="font-bold text-lg text-base-heavy pl-0 md:px-3">查看訂單</p>
                     <div class="w-full h-px bg-gray-100"></div>
                     <p class="text-sm text-gray-400 pl-0 md:px-3">可查看目前訂單及歷史訂單。</p>

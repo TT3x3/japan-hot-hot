@@ -49,7 +49,8 @@
                                             v-model.trim="userInfo.confirmPassword"
                                             @focus="errorInfo.confirmPassword = ''"
                                             class="w-full border border-gray-300 px-2 py-1 text-base-heavy"
-                                            :class="{ 'border-hot-red': errorInfo.confirmPassword }" placeholder="請輸入確認密碼">
+                                            :class="{ 'border-hot-red': errorInfo.confirmPassword }"
+                                            placeholder="請輸入確認密碼">
                                     </div>
                                     <small v-if="errorInfo.confirmPassword" class="text-sm text-end text-hot-red">{{
                                         errorInfo.confirmPassword }}</small>
@@ -79,19 +80,6 @@
                                     </div>
                                     <small v-if="errorInfo.phone" class="text-sm text-end text-hot-red">{{
                                         errorInfo.phone }}</small>
-                                </div>
-                                <div class="w-full h-px bg-gray-100"></div>
-                                <div class="flex flex-col gap-1 px-4">
-                                    <div class="flex flex-row w-full items-center">
-                                        <label for="addressInput"
-                                            class="inline-block w-24 font-bold text-base-light">地址</label>
-                                        <input id="addressInput" type="text" v-model.trim="userInfo.address"
-                                            @focus="errorInfo.address = ''"
-                                            class="w-full border border-gray-300 px-2 py-1 text-base-heavy"
-                                            :class="{ 'border-hot-red': errorInfo.address }" placeholder="請輸入地址">
-                                    </div>
-                                    <small v-if="errorInfo.address" class="text-sm text-end text-hot-red">{{
-                                        errorInfo.address }}</small>
                                 </div>
                             </div>
                             <div class="flex gap-4 justify-center items-center">
@@ -126,7 +114,6 @@ export default {
                 confirmPassword: '',
                 username: '',
                 phone: '',
-                address: '',
             },
             errorInfo: {
                 email: '',
@@ -134,7 +121,6 @@ export default {
                 confirmPassword: '',
                 username: '',
                 phone: '',
-                address: '',
             },
         };
     }, methods: {
@@ -177,10 +163,6 @@ export default {
             }
             if (!phoneRule.test(this.userInfo.phone)) {
                 this.errorInfo.phone = '*請輸入正確的手機號碼';
-            }
-
-            if (this.userInfo.address.trim() === '') {
-                this.errorInfo.address = '*請輸入地址';
             }
         },
     }

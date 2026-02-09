@@ -29,7 +29,7 @@
                         </div>
                     </div>
                     <div class="flex flex-row justify-center items-center gap-4">
-                        <p class="font-bold text-3xl text-hot-red">{{ tourPrice |  dollarSign | currency }} ～</p>
+                        <p class="font-bold text-3xl text-hot-red">{{ tourPrice | dollarSign | currency }} ～</p>
                         <button @click.prevent="scrollToBooking()"
                             class="bg-hot-red text-white px-10 py-3 hover:bg-red-400 active:bg-red-700">立即預訂</button>
                     </div>
@@ -83,21 +83,7 @@
                 <div class="max-w-[960px] flex flex-col gap-2 justify-center mx-auto leading-6.5 text-base-heavy">
                     <p class="font-black">【 海之京都 】天橋立與伊根：被時光溫柔留下的藍</p>
                     <img src="../assets/images/tour-detail-01.jpg" alt="">
-                    <p>在京都往北的盡頭，行政區劃的邊界逐漸模糊，取而代之的是一片深邃而沈靜的「丹後之藍」。這裡沒有古都熱鬧的祇園祭，也沒有堆疊的紅柱金瓦，只有純粹的風、長青的松，以及與海共生百年的木造建築。</p>
-                    <br />
-                    <p class="font-black">1.天橋立：橫跨海天的綠色絲帶</p>
-                    <img src="../assets/images/tour-detail-02.jpg" alt="">
-                    <p>天橋立不僅是「日本三景」之一，更像是一件大自然隨手揮灑的藝術品。這條全長約 3.6 公里 的沙洲，在宮津灣中劃出一道優雅的弧線。<br />
-                        天鏡之美：當你登上傘松公園，嘗試日本傳承百年的「股のぞき（倒著看）」，原本平臥海上的沙洲將化作一條直衝雲霄的青龍，連結著人間與彼岸的雲端。</p><br />
-                    <p class="font-black">2.伊根舟屋：海上漂浮的極簡生活</p>
-                    <img src="../assets/images/tour-detail-03.jpg" alt="">
-                    <p>白砂青松的禪意：八千棵松樹在海風中挺拔，一側是湛藍的宮津灣，另一側是波光粼粼的阿蘇海。漫步其中，除了松針落地的聲響，剩下的只有遠處海浪拍打沙灘的規律脈動。</p><br />
-                    <img src="../assets/images/tour-detail-04.jpg" alt="">
-                    <p>若天橋立是壯闊的景致，伊根則是溫潤的生活。這座被群山環抱的小漁村，沿著海灣構築了 230 棟 獨特的「舟屋」。<br />
-                        與海共生的建築哲學：舟屋的一樓是讓船舶棲息的港口與整理漁網的工作場，二樓則是日常起居。這種建築消弭了陸地與海洋的邊界，讓屋主一睜眼，看見的就是海水的起伏。</p><br />
-                    <img src="../assets/images/tour-detail-05.jpg" alt="">
-                    <p>寂靜的藍調：這裡的海水幾乎沒有浪花，平靜得像是一面深藍色的鏡子。墨褐色的木造牆面與海面的倒影交織出一種「侘寂」（Wabi-sabi）的美感。在伊根，時間的流速被刻意調慢了，甚至能聽見水流鑽進舟屋下方的迴響。
-                    </p>
+                    <p>{{ detail.description }}</p>
                 </div>
             </div>
             <div ref="bookingSection"
@@ -128,7 +114,8 @@
                     <p class="text-sm text-gray-500">選擇數量</p>
                     <div class="flex flex-row justify-between items-center gap-12 bg-white px-8 py-6 text-base-heavy"
                         :class="isError.peopleCount ? 'border border-red-500' : 'border-none'">
-                        <p class="text-base-heavy">每人<span class="text-sm text-gray-400">（{{ tourPrice |  dollarSign | currency }}
+                        <p class="text-base-heavy">每人<span class="text-sm text-gray-400">（{{ tourPrice | dollarSign |
+                            currency }}
                                 / 人）</span>
                         </p>
                         <div class="flex flex-row gap-12 items-center">
@@ -149,7 +136,7 @@
                 </div>
                 <div class="flex flex-col gap-2">
                     <p class="text-sm text-gray-500">總金額</p>
-                    <p class="font-bold text-xl">{{ peopleCount * tourPrice |  dollarSign | currency }} </p>
+                    <p class="font-bold text-xl">{{ peopleCount * tourPrice | dollarSign | currency }} </p>
                 </div>
                 <button @click.prevent="confirmBooking()"
                     class="bg-hot-red self-end text-white px-10 py-3 hover:bg-red-400 active:bg-red-700">確認預約</button>
@@ -220,6 +207,7 @@ export default {
                 season: '伊根冬季限定的出初式與噴水慶典',
                 tourType: '文化歷史、自然風光',
                 dress: '輕便為主，冬日請攜帶禦寒衣物',
+                description: '在京都往北的盡頭，行政區劃的邊界逐漸模糊，取而代之的是一片深邃而沈靜的「丹後之藍」。這裡沒有古都熱鬧的祇園祭，也沒有堆疊的紅柱金瓦，只有純粹的風、長青的松，以及與海共生百年的木造建築。天橋立不僅是「日本三景」之一，更像是一件大自然隨手揮灑的藝術品。這條全長約 3.6 公里 的沙洲，在宮津灣中劃出一道優雅的弧線。天鏡之美：當你登上傘松公園，嘗試日本傳承百年的「股のぞき（倒著看）」，原本平臥海上的沙洲將化作一條直衝雲霄的青龍，連結著人間與彼岸的雲端。白砂青松的禪意：八千棵松樹在海風中挺拔，一側是湛藍的宮津灣，另一側是波光粼粼的阿蘇海。漫步其中，除了松針落地的聲響，剩下的只有遠處海浪拍打沙灘的規律脈動。若天橋立是壯闊的景致，伊根則是溫潤的生活。這座被群山環抱的小漁村，沿著海灣構築了 230 棟 獨特的「舟屋」。D與海共生的建築哲學：舟屋的一樓是讓船舶棲息的港口與整理漁網的工作場，二樓則是日常起居。這種建築消弭了陸地與海洋的邊界，讓屋主一睜眼，看見的就是海水的起伏。寂靜的藍調：這裡的海水幾乎沒有浪花，平靜得像是一面深藍色的鏡子。墨褐色的木造牆面與海面的倒影交織出一種「侘寂」（Wabi- sabi）的美感。在伊根，時間的流速被刻意調慢了，甚至能聽見水流鑽進舟屋下方的迴響。'
             }
         }
     },
@@ -260,9 +248,9 @@ export default {
                 this.isError.dateErrMsg = '* 請選擇日期';
                 return;
             }
-            if (this.detail.peopleCount <= 0 || this.detail.peopleCount > 20) {
+            if (this.detail.peopleCount <= 0 || this.detail.peopleCount > this.tourInfo.peopleLimit) {
                 this.isError.peopleCount = true;
-                this.isError.countErrMsg = `* 人數錯誤，請選擇 1~20 人`;
+                this.isError.countErrMsg = `* 人數錯誤，請選擇 1~${this.tourInfo.peopleLimit} 人`;
                 return;
             }
             if (this.isError.peopleCount || this.isError.date) {
