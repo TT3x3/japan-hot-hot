@@ -8,7 +8,7 @@
                     :class="{ disabled: currentPage === 1 }">
                     <i class="fa-solid fa-angle-left"></i>
                 </li>
-                <li @click="changePages(page)" v-for="p in totalPages" :key="p" aria-current="page"
+                <li v-for="p in totalPages" :key="p" @click="changePages(p)"
                     class="relative inline-flex items-center px-4 py-2 text-gray-400"
                     :class="{ 'bg-hot-red text-white': currentPage === p }">{{ p }}</li>
                 <li @click="changePages(currentPage + 1)"
