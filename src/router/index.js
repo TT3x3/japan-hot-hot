@@ -12,6 +12,7 @@ import TicketDetail from "@/pages/TicketDetail.vue";
 import MemberCenter from "@/pages/MemberCenter.vue";
 import MemberProfile from "@/pages/MemberProfile.vue";
 import MemberOrders from "@/pages/MemberOrders.vue";
+import MemberOrderDetail from "@/pages/MemberOrderDetail.vue";
 
 Vue.use(Router);
 
@@ -43,10 +44,15 @@ export default new Router({
       name: "profile",
       component: MemberProfile,
     },
-        {
+    {
       path: "/member/orders",
       name: "orders",
       component: MemberOrders,
+    },
+    {
+      path: "/member/orders/detail",
+      name: "orders-detail",
+      component: MemberOrderDetail,
     },
     {
       path: "/tours",

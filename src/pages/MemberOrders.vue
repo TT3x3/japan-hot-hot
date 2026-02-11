@@ -37,8 +37,8 @@
                                 <p>{{ order.id }}</p>
                                 <p class="block md:hidden truncate font-bold">{{ order.title }}</p>
                             </div>
-                            <button type="button"
-                                class="hidden md:block bg-gray-200 px-4 py-1 text-sm text-gray-500 hover:bg-gray-100 active:bg-gray-400">查看訂單</button>
+                            <router-link to="/member/orders/detail"
+                                class="hidden md:block bg-gray-200 px-4 py-1 text-sm text-gray-500 hover:bg-gray-100 active:bg-gray-400">查看訂單</router-link>
                         </div>
                         <div class="bg-white flex justify-between md:items-center md:px-10 px-6 md-py-6 py-4">
                             <div class="flex md:flex-row flex-col md:gap-4 gap-1">
@@ -55,8 +55,8 @@
                                     order.isUsed ?
                                         '已使用' : '未使用' }}</p>
                             </div>
-                            <button type="button"
-                                class="inline-block self-end md:hidden bg-gray-200 md:px-4 px-6 md:py-2 py-3 md:text-xs text-base text-gray-500 hover:bg-gray-100 active:bg-gray-400">查看訂單</button>
+                            <router-link to="/member/orders/detail"
+                                class="z-10 inline-block self-end md:hidden bg-gray-200 md:px-4 px-6 md:py-2 py-3 md:text-xs text-base text-gray-500 hover:bg-gray-100 active:bg-gray-400">查看訂單</router-link>
                         </div>
                     </div>
 
