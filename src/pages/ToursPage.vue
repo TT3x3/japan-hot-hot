@@ -9,8 +9,6 @@
         <div class="relative h-80 overflow-hidden">
             <img src="../assets/images/tour-banner.jpg" alt="tour-banner" class=" w-full h-full object-cover">
         </div>
-        <!-- <h1 class="text-3xl absolute bottom-0 left-1/2 transform -translate-x-1/2 px-10 py-4 tracking-widest text-center text-base-heavy bg-white">行程</h1> -->
-
 
         <!-- 搜尋框 -->
         <div class="flex justify-center items-center">

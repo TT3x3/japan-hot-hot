@@ -2,18 +2,20 @@
     <!-- Pagination -->
     <div class="flex flex-1 items-center justify-center">
         <div>
-            <ul aria-label="Pagination" class="isolate inline-flex gap-2 -space-x-px">
+            <ul aria-label="Pagination" class="isolate inline-flex gap-2 -space-x-px\">
                 <li @click="changePages(currentPage - 1)"
-                    class="relative inline-flex items-center px-4 py-2 text-gray-400"
-                    :class="{ disabled: currentPage === 1 }">
+                    class="relative inline-flex items-center px-4 py-2 text-gray-400" :class="currentPage === 1
+                        ? 'cursor-default opacity-50'
+                        : 'cursor-pointer'">
                     <i class="fa-solid fa-angle-left"></i>
                 </li>
                 <li v-for="p in totalPages" :key="p" @click="changePages(p)"
-                    class="relative inline-flex items-center px-4 py-2 text-gray-400"
+                    class="relative inline-flex items-center px-4 py-2 text-gray-400 cursor-pointer"
                     :class="{ 'bg-hot-red text-white': currentPage === p }">{{ p }}</li>
                 <li @click="changePages(currentPage + 1)"
-                    class="relative inline-flex items-center px-4 py-2 text-gray-400"
-                    :class="{ disabled: currentPage === totalPages }">
+                    class="relative inline-flex items-center px-4 py-2 text-gray-400" :class="currentPage === totalPages
+                        ? 'cursor-default opacity-50'
+                        : 'cursor-pointer'">
                     <i class="fa-solid fa-angle-right"></i>
                 </li>
             </ul>
