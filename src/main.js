@@ -5,9 +5,11 @@ import './assets/main.css'
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import router from './router';
 import './utils/filter';
+import CustomPagination from './components/CustomPagination.vue'
 
 Vue.config.productionTip = false
 Vue.use(VCalendar)
+Vue.component('CustomPagination', CustomPagination)
 
 router.beforeEach((to, from, next) => {
   document.body.scrollTop = 0;

@@ -9,12 +9,24 @@
         </div>
         <div class="max-w-[80%] mx-auto flex flex-col gap-8">
             <div class="text-base-heavy">
-                <div class="flex flex-row gap-4 ps-2 pb-4 items-center">
-                    <i class="fa-solid fa-clipboard-list"></i>
-                    <p class="font-bold text-lg text-base-heavy">訂單總覽</p>
+                <div class="flex justify-between items-center pb-4">
+                    <div class="flex flex-row gap-4 items-center">
+                        <i class="fa-solid fa-clipboard-list"></i>
+                        <p class="font-bold text-lg text-base-heavy">訂單總覽</p>
+                    </div>
+                    <div class="flex gap-2 items-center">
+                        <label for="numberSelect" class="text-base-light md:text-base text-sm">每頁顯示</label>
+                        <select id="numberSelect" v-model.number="perPage"
+                            class="border border-gray-300 bg-white px-3 py-1">
+                            <option v-for="num in selectNum" :key="num" :value="num">{{
+                                num }}</option>
+                        </select>
+                    </div>
                 </div>
+
+                <!-- orders list -->
                 <div class="flex flex-col gap-6 justify-center text-base-heavy">
-                    <div v-for="(order) in orders" :key="order.id"
+                    <div v-for="(order) in paginationPages" :key="order.id"
                         class="hover:shadow-md transition-shadow duration-200">
                         <div
                             class="bg-gray-300 flex md:flex-row flex-col justify-between md:items-center md:gap-4 gap-1 md:px-10 px-6 py-4 text-base-light">
@@ -32,17 +44,23 @@
                             <div class="flex md:flex-row flex-col md:gap-4 gap-1">
                                 <p class="block md:hidden self-start bg-gray-400 text-white px-2 py-1">{{
                                     typeTranslate[order.type] }}</p>
-                                <p class="hidden md:block w-64 line-clamp-1 font-bold">{{ order.title }}</p>
+                                <p
+                                    class="hidden md:block w-64 font-bold whitespace-nowrap overflow-hidden text-ellipsis line-clamp-1">
+                                    {{ order.title }}</p>
                                 <p class="w-30">{{ order.price | dollarSign | currency }}</p>
-                                <p class="w-14" :class="{ 'text-hot-red': order.isPaid === false }">{{ order.isPaid ?
-                                    '已付款' : '未付款' }}</p>
-                                <p class="w-14" :class="{ 'text-hot-red': order.isUsed === false }">{{ order.isUsed ?
-                                    '已使用' : '未使用' }}</p>
+                                <p class="w-14 text-green-700" :class="{ 'text-hot-red': order.isPaid === false }">{{
+                                    order.isPaid ?
+                                        '已付款' : '未付款' }}</p>
+                                <p class="w-14 text-green-700" :class="{ 'text-hot-red': order.isUsed === false }">{{
+                                    order.isUsed ?
+                                        '已使用' : '未使用' }}</p>
                             </div>
                             <button type="button"
                                 class="inline-block self-end md:hidden bg-gray-200 md:px-4 px-6 md:py-2 py-3 md:text-xs text-base text-gray-500 hover:bg-gray-100 active:bg-gray-400">查看訂單</button>
                         </div>
                     </div>
+
+                    <CustomPagination :totalPages="totalPages" :currentPage.sync="currentPage" />
                 </div>
             </div>
         </div>
@@ -212,7 +230,10 @@ export default {
                     isPaid: true,
                     isUsed: true,
                 },
-            ]
+            ],
+            selectNum: [5, 10, 20, 40],
+            currentPage: 1,
+            perPage: 10,
         }
     },
     methods: {
@@ -223,6 +244,22 @@ export default {
                 tour: '行程',
                 ticket: '機票',
             }
+        },
+        totalPages() {
+            return Math.ceil(this.orders.length / this.perPage);
+        },
+        paginationPages() {
+            const start = (this.currentPage - 1) * this.perPage;
+            const end = start + this.perPage;
+            return this.orders.slice(start, end);
+        }
+    },
+    watch: {
+        currentPage() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        },
+        perPage() {
+            this.currentPage = 1;
         }
     }
 }
