@@ -76,7 +76,7 @@
                                 <p class="text-sm px-2 inline-block border border-gray-300 text-gray-400">{{
                                     item.location }}</p>
                             </div>
-                            <p class="font-bold line-clamp-2 text-base-heavy">{{ item.title }}</p>
+                            <p class="font-bold line-clamp-1 text-base-heavy">{{ item.title }}</p>
                             <p class="font-bold text-lg text-hot-red mt-auto text-end">{{ item.price.toLocaleString() | dollarSign | currency }}</p>
                         </div>
                     </div>

@@ -13,6 +13,7 @@ import MemberCenter from "@/pages/MemberCenter.vue";
 import MemberProfile from "@/pages/MemberProfile.vue";
 import MemberOrders from "@/pages/MemberOrders.vue";
 import MemberOrderDetail from "@/pages/MemberOrderDetail.vue";
+import MemberLikes from "@/pages/MemberLikes.vue"
 
 Vue.use(Router);
 
@@ -53,6 +54,11 @@ export default new Router({
       path: "/member/orders/detail",
       name: "orders-detail",
       component: MemberOrderDetail,
+    },
+    {
+      path: "/member/likes",
+      name: "likes",
+      component: MemberLikes,
     },
     {
       path: "/tours",

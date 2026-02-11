@@ -51,9 +51,9 @@
                                 <p class="w-14 text-green-700" :class="{ 'text-hot-red': order.isPaid === false }">{{
                                     order.isPaid ?
                                         '已付款' : '未付款' }}</p>
-                                <p class="w-14 text-green-700" :class="{ 'text-hot-red': order.isUsed === false }">{{
-                                    order.isUsed ?
-                                        '已使用' : '未使用' }}</p>
+                                <p class="w-14 text-green-700" :class="{ 'text-hot-red': order.isShipped === false }">{{
+                                    order.isShipped ?
+                                        '已出貨' : '未出貨' }}</p>
                             </div>
                             <router-link to="/member/orders/detail"
                                 class="z-10 inline-block self-end md:hidden bg-gray-200 md:px-4 px-6 md:py-2 py-3 md:text-xs text-base text-gray-500 hover:bg-gray-100 active:bg-gray-400">查看訂單</router-link>
@@ -82,7 +82,7 @@ export default {
                     title: '水色之際：伊根與天橋立的一日拾光伊根',
                     price: 4866,
                     isPaid: false,
-                    isUsed: false,
+                    isShipped: false,
                 },
                 {
                     id: 123456789,
@@ -91,7 +91,7 @@ export default {
                     title: '高雄往返關西，極簡商務選航',
                     price: 444866,
                     isPaid: true,
-                    isUsed: true,
+                    isShipped: true,
                 },
                 {
                     id: 123456787,
@@ -100,7 +100,7 @@ export default {
                     title: '水色之際：伊根與天橋立的一日拾光伊根水色之際：伊根與天橋立的一日拾光伊根',
                     price: 4866,
                     isPaid: false,
-                    isUsed: false,
+                    isShipped: false,
                 },
                 {
                     id: 123456786,
@@ -109,7 +109,7 @@ export default {
                     title: '高雄往返關西，極簡商務選航',
                     price: 444866,
                     isPaid: true,
-                    isUsed: true,
+                    isShipped: true,
                 }, {
                     id: 123456785,
                     date: ' 2026/12/25',
@@ -117,7 +117,7 @@ export default {
                     title: '水色之際：伊根與天橋立的一日拾光伊根',
                     price: 4866,
                     isPaid: false,
-                    isUsed: false,
+                    isShipped: false,
                 },
                 {
                     id: 123456784,
@@ -126,7 +126,7 @@ export default {
                     title: '高雄往返關西，極簡商務選航',
                     price: 444866,
                     isPaid: true,
-                    isUsed: true,
+                    isShipped: true,
                 }, {
                     id: 123456783,
                     date: ' 2026/12/25',
@@ -134,7 +134,7 @@ export default {
                     title: '水色之際：伊根與天橋立的一日拾光伊根',
                     price: 4866,
                     isPaid: false,
-                    isUsed: false,
+                    isShipped: false,
                 },
                 {
                     id: 123456782,
@@ -143,7 +143,7 @@ export default {
                     title: '高雄往返關西，極簡商務選航',
                     price: 444866,
                     isPaid: true,
-                    isUsed: true,
+                    isShipped: true,
                 }, {
                     id: 123456781,
                     date: ' 2026/12/25',
@@ -151,7 +151,7 @@ export default {
                     title: '水色之際：伊根與天橋立的一日拾光伊根',
                     price: 4866,
                     isPaid: false,
-                    isUsed: false,
+                    isShipped: false,
                 },
                 {
                     id: 123456780,
@@ -160,7 +160,7 @@ export default {
                     title: '高雄往返關西，極簡商務選航',
                     price: 444866,
                     isPaid: true,
-                    isUsed: true,
+                    isShipped: true,
                 }, {
                     id: 123456799,
                     date: ' 2026/12/25',
@@ -168,7 +168,7 @@ export default {
                     title: '水色之際：伊根與天橋立的一日拾光伊根',
                     price: 4866,
                     isPaid: false,
-                    isUsed: false,
+                    isShipped: false,
                 },
                 {
                     id: 123456798,
@@ -177,7 +177,7 @@ export default {
                     title: '高雄往返關西，極簡商務選航',
                     price: 444866,
                     isPaid: true,
-                    isUsed: true,
+                    isShipped: true,
                 }, {
                     id: 123456797,
                     date: ' 2026/12/25',
@@ -185,7 +185,7 @@ export default {
                     title: '水色之際：伊根與天橋立的一日拾光伊根',
                     price: 4866,
                     isPaid: false,
-                    isUsed: false,
+                    isShipped: false,
                 },
                 {
                     id: 123456796,
@@ -194,7 +194,7 @@ export default {
                     title: '高雄往返關西，極簡商務選航',
                     price: 444866,
                     isPaid: true,
-                    isUsed: true,
+                    isShipped: true,
                 }, {
                     id: 123456795,
                     date: ' 2026/12/25',
@@ -202,7 +202,7 @@ export default {
                     title: '水色之際：伊根與天橋立的一日拾光伊根',
                     price: 4866,
                     isPaid: false,
-                    isUsed: false,
+                    isShipped: false,
                 },
                 {
                     id: 123456794,
@@ -211,7 +211,7 @@ export default {
                     title: '高雄往返關西，極簡商務選航',
                     price: 444866,
                     isPaid: true,
-                    isUsed: true,
+                    isShipped: true,
                 }, {
                     id: 123456793,
                     date: ' 2026/12/25',
@@ -219,7 +219,7 @@ export default {
                     title: '水色之際：伊根與天橋立的一日拾光伊根',
                     price: 4866,
                     isPaid: false,
-                    isUsed: false,
+                    isShipped: false,
                 },
                 {
                     id: 123456792,
@@ -228,7 +228,7 @@ export default {
                     title: '高雄往返關西，極簡商務選航',
                     price: 444866,
                     isPaid: true,
-                    isUsed: true,
+                    isShipped: true,
                 },
             ],
             selectNum: [5, 10, 20, 40],
