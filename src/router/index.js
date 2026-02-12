@@ -13,7 +13,9 @@ import MemberCenter from "@/pages/MemberCenter.vue";
 import MemberProfile from "@/pages/MemberProfile.vue";
 import MemberOrders from "@/pages/MemberOrders.vue";
 import MemberOrderDetail from "@/pages/MemberOrderDetail.vue";
-import MemberLikes from "@/pages/MemberLikes.vue"
+import MemberLikes from "@/pages/MemberLikes.vue";
+import CheckoutPage from "@/pages/Checkout.vue";
+import CheckoutPassport from "@/pages/CheckoutPassport.vue";
 
 Vue.use(Router);
 
@@ -79,6 +81,16 @@ export default new Router({
       path: "/ticket-detail",
       name: "ticket-detail",
       component: TicketDetail,
+    },
+    {
+      path: "/checkout",
+      name: "checkout",
+      component: CheckoutPage,
+    },
+        {
+      path: "/checkout/passport",
+      name: "checkoutPassport",
+      component: CheckoutPassport,
     },
   ],
 });

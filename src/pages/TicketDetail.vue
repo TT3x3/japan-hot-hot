@@ -155,8 +155,8 @@
                     <p class="text-sm text-gray-500">總金額</p>
                     <p class="font-bold text-xl">{{ detail.price * detail.ticketCount | dollarSign | currency }}</p>
                 </div>
-                <button @click.prevent="confirmBooking()"
-                    class="bg-hot-red self-end text-white px-10 py-3 hover:bg-red-400 active:bg-red-700">確認購買</button>
+                <router-link to="/checkout" @click.prevent="confirmBooking()"
+                    class="bg-hot-red self-end text-white px-10 py-3 hover:bg-red-400 active:bg-red-700">確認購買</router-link>
             </div>
             <div class="flex flex-col gap-4">
                 <p class="font-bold text-xl">注意事項</p>
