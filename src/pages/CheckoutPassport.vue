@@ -46,36 +46,38 @@
                                     <label for="firstNameInput"
                                         class="inline-block  w-20 font-bold text-base-light">姓氏</label>
                                     <input id="firstNameInput" type="text" v-model.trim="people.firstName"
-                                        @focus="errorInfo.firstName = ''"
+                                        @focus="errorInfo[index].firstName = ''"
                                         class="w-full bg-white border border-gray-300 px-2 py-1 "
-                                        :class="{ 'border-hot-red': errorInfo.firstName }" placeholder="請輸入護照姓氏">
+                                        :class="{ 'border-hot-red': errorInfo[index].firstName }" placeholder="請輸入護照姓氏">
                                 </div>
-                                <small v-if="errorInfo.firstName" class="text-sm text-end text-hot-red">{{
-                                    errorInfo.firstName }}</small>
+                                <small v-if="errorInfo[index].firstName" class="text-sm text-end text-hot-red">{{
+                                    errorInfo[index].firstName }}</small>
                             </div>
                             <div class="flex flex-col gap-1 px-4 w-full">
                                 <div class="flex flex-row  items-center">
                                     <label for="secondNameInput"
                                         class="inline-block  w-20 font-bold text-base-light">名字</label>
                                     <input id="secondNameInput" type="text" v-model.trim="people.secondName"
-                                        @focus="errorInfo.secondName = ''"
+                                        @focus="errorInfo[index].secondName = ''"
                                         class="w-full bg-white border border-gray-300 px-2 py-1 "
-                                        :class="{ 'border-hot-red': errorInfo.secondName }" placeholder="請輸入護照名稱">
+                                        :class="{ 'border-hot-red': errorInfo[index].secondName }"
+                                        placeholder="請輸入護照名稱">
                                 </div>
-                                <small v-if="errorInfo.secondName" class="text-sm text-end text-hot-red">{{
-                                    errorInfo.secondName }}</small>
+                                <small v-if="errorInfo[index].secondName" class="text-sm text-end text-hot-red">{{
+                                    errorInfo[index].secondName }}</small>
                             </div>
                         </div>
                         <div class="w-full h-px bg-gray-100"></div>
                         <div class="flex flex-col gap-1 px-4">
                             <div class="flex flex-row w-full items-center">
                                 <label for="idInput" class="inline-block w-20 font-bold text-base-light">身分證</label>
-                                <input id="idInput" type="text" v-model.trim="people.id" @focus="errorInfo.id = ''"
+                                <input id="idInput" type="text" v-model.trim="people.id"
+                                    @focus="errorInfo[index].id = ''"
                                     class="w-full bg-white border border-gray-300 px-2 py-1 "
-                                    :class="{ 'border-hot-red': errorInfo.id }" placeholder="請輸入身分證">
+                                    :class="{ 'border-hot-red': errorInfo[index].id }" placeholder="請輸入身分證">
                             </div>
-                            <small v-if="errorInfo.id" class="text-sm text-end text-hot-red">{{
-                                errorInfo.id }}</small>
+                            <small v-if="errorInfo[index].id" class="text-sm text-end text-hot-red">{{
+                                errorInfo[index].id }}</small>
                         </div>
                         <div class="w-full h-px bg-gray-100"></div>
                         <div class="flex flex-col gap-1 px-4">
@@ -83,44 +85,45 @@
                                 <label for="passportCodeInput"
                                     class="inline-block w-20 font-bold text-base-light">護照號碼</label>
                                 <input id="passportCodeInput" type="text" v-model.trim="people.passportCode"
-                                    @focus="errorInfo.passportCode = ''"
+                                    @focus="errorInfo[index].passportCode = ''"
                                     class="w-full bg-white border border-gray-300 px-2 py-1 "
-                                    :class="{ 'border-hot-red': errorInfo.passportCode }" placeholder="請輸入護照號碼">
+                                    :class="{ 'border-hot-red': errorInfo[index].passportCode }" placeholder="請輸入護照號碼">
                             </div>
-                            <small v-if="errorInfo.passportCode" class="text-sm text-end text-hot-red">{{
-                                errorInfo.passportCode }}</small>
+                            <small v-if="errorInfo[index].passportCode" class="text-sm text-end text-hot-red">{{
+                                errorInfo[index].passportCode }}</small>
                         </div>
                         <div class="w-full h-px bg-gray-100"></div>
                         <div class="flex flex-col gap-1 px-4">
                             <div class="flex flex-row w-full items-center">
                                 <label for="dateInput" class="inline-block w-20 font-bold text-base-light">證件效期</label>
                                 <div class="relative w-full"
-                                    :class="errorInfo.exp ? 'border border-red-500' : 'border-none'" id="dateInput">
+                                    :class="errorInfo[index].exp ? 'border border-red-500' : 'border-none'"
+                                    id="dateInput">
                                     <v-date-picker v-model="people.exp" :columns="2" :min-date="minDate"
                                         :max-date="maxDate" color="red"
                                         :popover="{ visibility: 'click', placement: 'bottom-start', appendTo: 'self' }"
                                         :masks="{ input: 'YYYY / MM / DD' }">
                                         <template #default="{ inputValue, togglePopover }">
                                             <input type="text" :value="inputValue" readonly @click="togglePopover"
-                                                @focus="errorInfo.exp = false"
+                                                @focus="errorInfo[index].exp = false"
                                                 class="bg-white border border-gray-300 px-2 py-1 w-[100%] cursor-pointer"
                                                 placeholder="請選擇日期" />
                                         </template>
                                     </v-date-picker>
                                 </div>
                             </div>
-                            <small v-if="errorInfo.exp" class="text-sm text-end text-hot-red">{{
-                                errorInfo.exp }}</small>
+                            <small v-if="errorInfo[index].exp" class="text-sm text-end text-hot-red">{{
+                                errorInfo[index].exp }}</small>
                         </div>
                     </div>
                     <button @click.prevent="addPeople()"
                         class="bg-gray-100 hover:bg-gray-50 active:bg-gray-200 border border-gray-300 px-10 py-3 w-full text-gray-400"><i
                             class="fa-solid fa-square-plus fa-lg"></i> 新增旅客</button>
                     <div class="flex flex-row gap-4">
-                        <button
+                        <button @click.prevent="submitBtn()"
                             class=" px-10 py-3 w-full bg-hot-red hover:bg-red-500 active:bg-red-700  text-white">確認送出</button>
                         <router-link to="/checkout"
-                            class="bg-gray-400 hover:bg-gray-300 active:bg-gray-500 px-10 py-3 w-full text-center text-white">返回</router-link >
+                            class="bg-gray-400 hover:bg-gray-300 active:bg-gray-500 px-10 py-3 w-full text-center text-white">返回</router-link>
                     </div>
                 </div>
             </div>
@@ -144,26 +147,16 @@ export default {
                     exp: '2028/02/28',
                 }
             ],
-            errorInfo: {
-                firstName: '',
-                secondName: '',
-                id: '',
-                passportCode: '',
-                exp: '',
-            },
-        }
-    },
-    methods: {
-        addPeople() {
-            if (this.passportInfo.length > 20) return;
-            const newItem = {
-                firstName: '',
-                secondName: '',
-                id: '',
-                passportCode: '',
-                exp: '',
-            };
-            this.passportInfo.push(newItem);
+            isError: false,
+            errorInfo: [
+                {
+                    firstName: '',
+                    secondName: '',
+                    id: '',
+                    passportCode: '',
+                    exp: '',
+                }
+            ],
         }
     },
     computed: {
@@ -177,6 +170,62 @@ export default {
             maxMonth.setMonth(maxMonth.getMonth() + 60);
             return maxMonth;
         }
+    },
+    methods: {
+        addPeople() {
+            if (this.passportInfo.length > 20) return;
+            const newItem = {
+                firstName: '',
+                secondName: '',
+                id: '',
+                passportCode: '',
+                exp: '',
+            };
+            const newItemErr = {
+                firstName: '',
+                secondName: '',
+                id: '',
+                passportCode: '',
+                exp: '',
+            };
+            this.passportInfo.push(newItem);
+            this.errorInfo.push(newItemErr);
+        },
+        submitBtn() {
+            this.passportInfo.forEach((p, index) => {
+                const err = this.errorInfo[index];
+
+                if (!p.firstName || p.firstName.trim() === '') {
+                    this.isError = true;
+                    err.firstName = '姓氏不可空白';
+                }
+
+                if (!p.secondName || p.secondName.trim() === '') {
+                    this.isError = true;
+                    err.secondName = '名字不可空白';
+                }
+
+                if (!p.id || p.id.trim() === '') {
+                    err.id = '*請輸入身份證字號'
+                    this.isError = true;
+                }
+                const idRule = /^[A-Z]\d{9}$/;
+                if (!idRule.test(p.id)) {
+                    err.id = '*不符合台灣身分證格式'
+                    this.isError = true;
+                }
+
+                if (!p.passportCode || p.passportCode.trim() === '') {
+                    err.passportCode = '*請輸入護照號碼';
+                    this.isError = true;
+                }
+                const passportNumberRule = /^\d{9}$/;
+                if (!passportNumberRule.test(p.passportCode)) {
+                    err.passportCode = '*護照必須是9碼數字';
+                    this.isError = true;
+                }
+            })
+        },
     }
 }
 </script>

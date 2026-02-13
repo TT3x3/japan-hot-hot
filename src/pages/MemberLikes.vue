@@ -35,7 +35,6 @@
                         <option v-for="num in selectNum" :key="num" :value="num">{{
                             num }}</option>
                     </select>
-
                 </div>
             </div>
 
@@ -60,18 +59,13 @@
                             <div class="flex gap-2 mb-3">
                                 <p
                                     class="md:text-sm text-xs md:px-2 px-0 inline-block border border-gray-300 text-gray-400">
-                                    {{
-                                        item.type
-                                    }}</p>
+                                    {{ item.type }}</p>
                                 <p
                                     class="md:text-sm text-xs md:px-2 px-0 inline-block border border-gray-300 text-gray-400">
-                                    {{
-                                        item.timeLong
-                                    }}</p>
+                                    {{ item.timeLong }}</p>
                                 <p
                                     class="md:text-sm text-xs md:px-2 px-0 inline-block border border-gray-300 text-gray-400">
-                                    {{
-                                        item.location }}</p>
+                                    {{ item.location }}</p>
                             </div>
                             <p class="font-bold line-clamp-1 text-base-heavy">{{ item.title }}</p>
                             <p class="font-bold text-lg text-hot-red mt-auto text-end">{{ item.price.toLocaleString() |

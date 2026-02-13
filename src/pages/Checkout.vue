@@ -78,59 +78,59 @@
                     <div class="flex flex-col gap-4 border border-gray-100 px-6 md:py-6 py-4">
                         <div class="flex flex-col gap-1 px-4">
                             <div class="flex flex-row w-full items-center">
-                                <label for="nameInput" class="inline-block w-24 font-bold text-base-light">購買人</label>
-                                <input id="nameInput" type="text" v-model.trim="userInfo.password"
-                                    @focus="errorInfo.password = ''" class="w-full border border-gray-300 px-2 py-1 "
-                                    :class="{ 'border-hot-red': errorInfo.password }" placeholder="請輸入購買人">
+                                <label for="nameInput" class="inline-block w-24 font-bold text-base-light">姓名</label>
+                                <input id="nameInput" type="text" v-model.trim="userInfo.name"
+                                    @focus="errorInfo.name = ''" class="w-full border border-gray-300 px-2 py-1 "
+                                    :class="{ 'border-hot-red': errorInfo.name }" placeholder="請輸入姓名">
                             </div>
-                            <small v-if="errorInfo.password" class="text-sm text-end text-hot-red">{{
-                                errorInfo.password }}</small>
+                            <small v-if="errorInfo.name" class="text-sm text-end text-hot-red">{{
+                                errorInfo.name }}</small>
                         </div>
                         <div class="w-full h-px bg-gray-100"></div>
                         <div class="flex flex-col gap-1 px-4">
                             <div class="flex flex-row w-full items-center">
                                 <label for="emailInput"
                                     class="inline-block w-24 font-bold text-base-light">Email</label>
-                                <input id="emailInput" type="text" v-model.trim="userInfo.password"
-                                    @focus="errorInfo.password = ''" class="w-full border border-gray-300 px-2 py-1 "
-                                    :class="{ 'border-hot-red': errorInfo.password }" placeholder="請輸入Email">
+                                <input id="emailInput" type="text" v-model.trim="userInfo.email"
+                                    @focus="errorInfo.email = ''" class="w-full border border-gray-300 px-2 py-1 "
+                                    :class="{ 'border-hot-red': errorInfo.email }" placeholder="請輸入Email">
                             </div>
-                            <small v-if="errorInfo.password" class="text-sm text-end text-hot-red">{{
-                                errorInfo.password }}</small>
+                            <small v-if="errorInfo.email" class="text-sm text-end text-hot-red">{{
+                                errorInfo.email }}</small>
                         </div>
                         <div class="w-full h-px bg-gray-100"></div>
                         <div class="flex flex-col gap-1 px-4">
                             <div class="flex flex-row w-full items-center">
                                 <label for="phoneInput" class="inline-block w-24 font-bold text-base-light">聯絡電話</label>
-                                <input id="phoneInput" type="text" v-model.trim="userInfo.password"
-                                    @focus="errorInfo.password = ''" class="w-full border border-gray-300 px-2 py-1 "
-                                    :class="{ 'border-hot-red': errorInfo.password }" placeholder="請輸入聯絡電話">
+                                <input id="phoneInput" type="text" v-model.trim="userInfo.phone"
+                                    @focus="errorInfo.phone = ''" class="w-full border border-gray-300 px-2 py-1 "
+                                    :class="{ 'border-hot-red': errorInfo.phone }" placeholder="請輸入聯絡電話">
                             </div>
-                            <small v-if="errorInfo.password" class="text-sm text-end text-hot-red">{{
-                                errorInfo.password }}</small>
+                            <small v-if="errorInfo.phone" class="text-sm text-end text-hot-red">{{
+                                errorInfo.phone }}</small>
                         </div>
                         <div class="w-full h-px bg-gray-100"></div>
                         <div class="flex flex-col gap-1 px-4">
                             <div class="flex flex-row w-full items-center">
                                 <label for="addressInput" class="inline-block w-24 font-bold text-base-light">地址</label>
-                                <input id="addressInput" type="text" v-model.trim="userInfo.password"
-                                    @focus="errorInfo.password = ''" class="w-full border border-gray-300 px-2 py-1 "
-                                    :class="{ 'border-hot-red': errorInfo.password }" placeholder="請輸入地址">
+                                <input id="addressInput" type="text" v-model.trim="userInfo.address"
+                                    @focus="errorInfo.address = ''" class="w-full border border-gray-300 px-2 py-1 "
+                                    :class="{ 'border-hot-red': errorInfo.address }" placeholder="請輸入地址">
                             </div>
-                            <small v-if="errorInfo.password" class="text-sm text-end text-hot-red">{{
-                                errorInfo.password }}</small>
+                            <small v-if="errorInfo.address" class="text-sm text-end text-hot-red">{{
+                                errorInfo.address }}</small>
                         </div>
                         <div class="w-full h-px bg-gray-100"></div>
                         <div class="flex flex-col gap-1 px-4">
                             <div class="flex flex-row w-full items-start">
                                 <label for="noteInput" class="inline-block w-24 font-bold text-base-light">備註</label>
-                                <textarea id="noteInput" type="text" v-model.trim="userInfo.password" rows="2" cols="20"
-                                    maxlength="80" @focus="errorInfo.password = ''"
+                                <textarea id="noteInput" type="text" v-model.trim="userInfo.note" rows="2" cols="20"
+                                    maxlength="80" @focus="errorInfo.note = ''"
                                     class="w-full border border-gray-300 px-2 py-1 "
-                                    :class="{ 'border-hot-red': errorInfo.password }"></textarea>
+                                    :class="{ 'border-hot-red': errorInfo.note }"></textarea>
                             </div>
-                            <small v-if="errorInfo.password" class="text-sm text-end text-hot-red">{{
-                                errorInfo.password }}</small>
+                            <small v-if="errorInfo.note" class="text-sm text-end text-hot-red">{{
+                                errorInfo.note }}</small>
                         </div>
                     </div>
                 </div>
@@ -141,25 +141,25 @@
                     <div class="flex flex-col gap-4 border border-gray-100 p-6">
                         <div class="flex flex-row w-full items-center">
                             <label for="paymentInput" class="inline-block w-24 font-bold text-base-light">支付方式</label>
-                            <select id="paymentInput" type="text" v-model.trim="userInfo.password"
-                                @focus="errorInfo.password = ''"
+                            <select id="paymentInput" type="text" v-model.trim="userInfo.payment"
+                                @focus="errorInfo.payment = ''"
                                 class="w-full border border-gray-300 px-2 py-1 text-base-heavy"
-                                :class="{ 'border-hot-red': errorInfo.password }" placeholder="請輸入支付方式">
-                                <option value="">選擇支付方式</option>
+                                :class="{ 'border-hot-red': errorInfo.payment }" placeholder="請輸入支付方式">
+                                <option value="" disabled>選擇支付方式</option>
                                 <option value="cash">現金</option>
-                                <option value="card">信用卡</option>
+                                <option value="card" disabled>信用卡(尚未開放)</option>
                             </select>
                         </div>
-                        <small v-if="errorInfo.password" class="text-sm text-end text-hot-red">{{
-                            errorInfo.password }}</small>
+                        <small v-if="errorInfo.payment" class="text-sm text-end text-hot-red">{{
+                            errorInfo.payment }}</small>
                         <div class="flex flex-row items-center justify-between bg-gray-100 p-6">
                             <p>總金額</p>
                             <p class="font-bold text-xl text-hot-red">NT$ 280,000</p>
                         </div>
                     </div>
                     <div class="flex flex-row gap-4">
-                        <router-link to="/checkout/passport"
-                            class="bg-hot-red hover:bg-red-500 active:bg-red-700 px-10 py-3 w-full font-bold text-center text-white">確認</router-link>
+                        <button @click.prevent="submitBtn()"
+                            class="bg-hot-red hover:bg-red-500 active:bg-red-700 px-10 py-3 w-full font-bold text-center text-white">確認</button>
                         <button
                             class="bg-gray-400 hover:bg-gray-300 active:bg-gray-500 px-10 py-3 w-full text-center text-white">返回</button>
                     </div>
@@ -177,42 +177,65 @@ export default {
         return {
             date: null,
             userInfo: {
+                name: '',
                 email: '',
-                password: '',
+                phone: '',
+                address: '',
+                note: '',
+                payment: '',
 
             },
+            isError: false,
             errorInfo: {
+                name: '',
                 email: '',
-                password: '',
-                date: '',
-
+                phone: '',
+                address: '',
+                note: '',
+                payment: '',
             },
         }
     },
     methods: {
-        addPeople() {
-            if (this.passportInfo.length > 20) return;
-            const newItem = {
-                firstName: '',
-                secondName: '',
-                id: '',
-                passportCode: '',
-                exp: '',
-            };
-            this.passportInfo.push(newItem);
+        submitBtn() {
+            const nameRule = /^[A-Za-z\u4E00-\u9FFF\s-]{1,10}$/;
+            if (this.userInfo.name.trim() === '') {
+                this.isError = true;
+                this.errorInfo.name = '姓名不可空白';
+            }
+            if (!nameRule.test(this.userInfo.name)) {
+                this.isError = true;
+                this.errorInfo.name = '姓名不可使用英文/中文以外的文字';
+            }
+
+            const emailRule = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
+            if (this.userInfo.email.trim() === '') {
+                this.isError = true;
+                this.errorInfo.email = 'Email不可空白';
+            }
+            if (!emailRule.test(this.userInfo.email)) {
+                this.isError = true;
+                this.errorInfo.email = '請輸入正確的Email格式';
+            }
+
+            const phoneRule = /^09\d{8}$/;
+            if (this.userInfo.phone.trim() === '') {
+                this.isError = true;
+                this.errorInfo.phone = '電話不可空白';
+            }
+            if (!phoneRule.test(this.userInfo.phone)) {
+                this.isError = true;
+                this.errorInfo.phone = '請輸入正確的電話格式';
+            }
+
+            const noteRule = /^[A-Za-z0-9\s.,!?'"()\-_:]+$/;
+            if (this.userInfo.note && !noteRule.test(this.userInfo.note)) {
+                this.isError = true;
+                this.errorInfo.note = '不允使用 < > ／＼ = & 等特殊符號。';
+            }
         }
     },
     computed: {
-        minDate() {
-            const today = new Date();
-            today.setMonth(today.getMonth() + 6);
-            return today;
-        },
-        maxDate() {
-            const maxMonth = new Date();
-            maxMonth.setMonth(maxMonth.getMonth() + 60);
-            return maxMonth;
-        }
     }
 }
 </script>
