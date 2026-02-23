@@ -77,8 +77,8 @@
                     <p class="font-bold text-xl ">收件資訊</p>
                     <div class="flex flex-col gap-4 border border-gray-100 px-6 md:py-6 py-4">
                         <div class="flex flex-col gap-1 px-4">
-                            <div class="flex flex-row w-full items-center">
-                                <label for="nameInput" class="inline-block w-24 font-bold text-base-light">姓名</label>
+                            <div class="flex md:flex-row flex-col w-full md:items-center items-start">
+                                <label for="nameInput" class="inline-block w-24 font-bold text-base-light md:text-base text-sm">姓名<span class="text-hot-red">*</span></label>
                                 <input id="nameInput" type="text" v-model.trim="userInfo.name"
                                     @focus="errorInfo.name = ''" class="w-full border border-gray-300 px-2 py-1 "
                                     :class="{ 'border-hot-red': errorInfo.name }" placeholder="請輸入姓名">
@@ -88,9 +88,9 @@
                         </div>
                         <div class="w-full h-px bg-gray-100"></div>
                         <div class="flex flex-col gap-1 px-4">
-                            <div class="flex flex-row w-full items-center">
+                            <div class="flex md:flex-row flex-col w-full md:items-center items-start">
                                 <label for="emailInput"
-                                    class="inline-block w-24 font-bold text-base-light">Email</label>
+                                    class="inline-block w-24 font-bold text-base-light md:text-base text-sm">Email<span class="text-hot-red">*</span></label>
                                 <input id="emailInput" type="text" v-model.trim="userInfo.email"
                                     @focus="errorInfo.email = ''" class="w-full border border-gray-300 px-2 py-1 "
                                     :class="{ 'border-hot-red': errorInfo.email }" placeholder="請輸入Email">
@@ -100,8 +100,8 @@
                         </div>
                         <div class="w-full h-px bg-gray-100"></div>
                         <div class="flex flex-col gap-1 px-4">
-                            <div class="flex flex-row w-full items-center">
-                                <label for="phoneInput" class="inline-block w-24 font-bold text-base-light">聯絡電話</label>
+                            <div class="flex md:flex-row flex-col w-full md:items-center items-start">
+                                <label for="phoneInput" class="inline-block w-24 font-bold text-base-light md:text-base text-sm">聯絡電話<span class="text-hot-red">*</span></label>
                                 <input id="phoneInput" type="text" v-model.trim="userInfo.phone"
                                     @focus="errorInfo.phone = ''" class="w-full border border-gray-300 px-2 py-1 "
                                     :class="{ 'border-hot-red': errorInfo.phone }" placeholder="請輸入聯絡電話">
@@ -111,8 +111,8 @@
                         </div>
                         <div class="w-full h-px bg-gray-100"></div>
                         <div class="flex flex-col gap-1 px-4">
-                            <div class="flex flex-row w-full items-center">
-                                <label for="addressInput" class="inline-block w-24 font-bold text-base-light">地址</label>
+                            <div class="flex md:flex-row flex-col w-full md:items-center items-start">
+                                <label for="addressInput" class="inline-block w-24 font-bold text-base-light md:text-base text-sm">地址<span class="text-hot-red">*</span></label>
                                 <input id="addressInput" type="text" v-model.trim="userInfo.address"
                                     @focus="errorInfo.address = ''" class="w-full border border-gray-300 px-2 py-1 "
                                     :class="{ 'border-hot-red': errorInfo.address }" placeholder="請輸入地址">
@@ -122,16 +122,17 @@
                         </div>
                         <div class="w-full h-px bg-gray-100"></div>
                         <div class="flex flex-col gap-1 px-4">
-                            <div class="flex flex-row w-full items-start">
-                                <label for="noteInput" class="inline-block w-24 font-bold text-base-light">備註</label>
-                                <textarea id="noteInput" type="text" v-model.trim="userInfo.note" rows="2" cols="20"
+                            <div class="flex md:flex-row flex-col w-full items-start">
+                                <label for="noteInput" class="inline-block w-24 font-bold text-base-light md:text-base text-sm">備註</label>
+                                <textarea id="noteInput" type="text" v-model.trim="userInfo.note" rows="5"
                                     maxlength="80" @focus="errorInfo.note = ''"
-                                    class="w-full border border-gray-300 px-2 py-1 "
+                                    class="w-full border border-gray-300 px-2 py-1 resize-none"
                                     :class="{ 'border-hot-red': errorInfo.note }"></textarea>
                             </div>
                             <small v-if="errorInfo.note" class="text-sm text-end text-hot-red">{{
                                 errorInfo.note }}</small>
                         </div>
+                        <p class="text-sm px-4 text-gray-400">* 為必填欄位</p>
                     </div>
                 </div>
 
@@ -139,8 +140,8 @@
                 <div class="flex flex-col gap-2 w-full">
                     <p class="font-bold text-xl ">價格資訊</p>
                     <div class="flex flex-col gap-4 border border-gray-100 p-6">
-                        <div class="flex flex-row w-full items-center">
-                            <label for="paymentInput" class="inline-block w-24 font-bold text-base-light">支付方式</label>
+                        <div class="flex md:flex-row flex-col w-full md:items-center items-start">
+                            <label for="paymentInput" class="inline-block w-24 font-bold text-base-light md:text-base text-sm">支付方式</label>
                             <select id="paymentInput" type="text" v-model.trim="userInfo.payment"
                                 @focus="errorInfo.payment = ''"
                                 class="w-full border border-gray-300 px-2 py-1 text-base-heavy"
@@ -152,7 +153,7 @@
                         </div>
                         <small v-if="errorInfo.payment" class="text-sm text-end text-hot-red">{{
                             errorInfo.payment }}</small>
-                        <div class="flex flex-row items-center justify-between bg-gray-100 p-6">
+                        <div class="flex md:flex-row flex-col md:items-center items-start justify-between bg-gray-100 p-6">
                             <p>總金額</p>
                             <p class="font-bold text-xl text-hot-red">NT$ 280,000</p>
                         </div>
