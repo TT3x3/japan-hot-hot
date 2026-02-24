@@ -2,7 +2,7 @@
     <div class="flex flex-col gap-32 w-full">
         <div class="max-w-[80%] w-full mx-auto flex flex-col gap-12">
             <!-- 進度條 -->
-            <div class=" flex flex-row gap-4">
+            <div class=" flex flex-row md:gap-4 gap-1">
                 <div class="flex flex-col gap-2 w-full">
                     <div class="w-full h-1 bg-hot-red"></div>
                     <div class="p-1">
@@ -14,7 +14,7 @@
                     <div class="w-full h-1 bg-hot-red"></div>
                     <div class="p-1">
                         <p class="font-bold text-hot-red">Step 2</p>
-                        <p class="text-sm text--base-light">填寫護照</p>
+                        <p class="text-sm text-base-light">填寫護照</p>
                     </div>
                 </div>
                 <div class="flex flex-col gap-2 w-full">

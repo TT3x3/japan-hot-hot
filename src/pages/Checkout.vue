@@ -2,7 +2,7 @@
     <div class="flex flex-col gap-32 w-full">
         <div class="max-w-[80%] w-full mx-auto flex flex-col gap-12">
             <!-- 進度條 -->
-            <div class=" flex flex-row gap-4">
+            <div class=" flex flex-row md:gap-4 gap-1">
                 <div class="flex flex-col gap-2 w-full">
                     <div class="w-full h-1 bg-hot-red"></div>
                     <div class="p-1">
@@ -78,7 +78,9 @@
                     <div class="flex flex-col gap-4 border border-gray-100 px-6 md:py-6 py-4">
                         <div class="flex flex-col gap-1 px-4">
                             <div class="flex md:flex-row flex-col w-full md:items-center items-start">
-                                <label for="nameInput" class="inline-block w-24 font-bold text-base-light md:text-base text-sm">姓名<span class="text-hot-red">*</span></label>
+                                <label for="nameInput"
+                                    class="inline-block w-24 font-bold text-base-light md:text-base text-sm">姓名<span
+                                        class="text-hot-red">*</span></label>
                                 <input id="nameInput" type="text" v-model.trim="userInfo.name"
                                     @focus="errorInfo.name = ''" class="w-full border border-gray-300 px-2 py-1 "
                                     :class="{ 'border-hot-red': errorInfo.name }" placeholder="請輸入姓名">
@@ -90,7 +92,8 @@
                         <div class="flex flex-col gap-1 px-4">
                             <div class="flex md:flex-row flex-col w-full md:items-center items-start">
                                 <label for="emailInput"
-                                    class="inline-block w-24 font-bold text-base-light md:text-base text-sm">Email<span class="text-hot-red">*</span></label>
+                                    class="inline-block w-24 font-bold text-base-light md:text-base text-sm">Email<span
+                                        class="text-hot-red">*</span></label>
                                 <input id="emailInput" type="text" v-model.trim="userInfo.email"
                                     @focus="errorInfo.email = ''" class="w-full border border-gray-300 px-2 py-1 "
                                     :class="{ 'border-hot-red': errorInfo.email }" placeholder="請輸入Email">
@@ -101,7 +104,9 @@
                         <div class="w-full h-px bg-gray-100"></div>
                         <div class="flex flex-col gap-1 px-4">
                             <div class="flex md:flex-row flex-col w-full md:items-center items-start">
-                                <label for="phoneInput" class="inline-block w-24 font-bold text-base-light md:text-base text-sm">聯絡電話<span class="text-hot-red">*</span></label>
+                                <label for="phoneInput"
+                                    class="inline-block w-24 font-bold text-base-light md:text-base text-sm">聯絡電話<span
+                                        class="text-hot-red">*</span></label>
                                 <input id="phoneInput" type="text" v-model.trim="userInfo.phone"
                                     @focus="errorInfo.phone = ''" class="w-full border border-gray-300 px-2 py-1 "
                                     :class="{ 'border-hot-red': errorInfo.phone }" placeholder="請輸入聯絡電話">
@@ -110,12 +115,31 @@
                                 errorInfo.phone }}</small>
                         </div>
                         <div class="w-full h-px bg-gray-100"></div>
-                        <div class="flex flex-col gap-1 px-4">
-                            <div class="flex md:flex-row flex-col w-full md:items-center items-start">
-                                <label for="addressInput" class="inline-block w-24 font-bold text-base-light md:text-base text-sm">地址<span class="text-hot-red">*</span></label>
+                        <div class="flex flex-col gap-2 px-4"
+                            :class="{ 'border border-hot-red py-2': errorInfo.address }">
+                            <div class="flex md:flex-row flex-col gap-4">
+                                <div class="flex flex-col w-full">
+                                    <label for="citySelect"
+                                        class="inline-block w-24 font-bold text-base-light md:text-base text-sm">縣市<span
+                                            class="text-hot-red">*</span></label>
+                                    <v-select id="citySelect" v-model="selectCity" @open="openCitySelect"
+                                        label="CityName" placeholder="請選擇" :options="cities"></v-select>
+                                </div>
+                                <div class="flex flex-col w-full">
+                                    <label for="citySelect"
+                                        class="inline-block w-24 font-bold text-base-light md:text-base text-sm">鄉鎮市<span
+                                            class="text-hot-red">*</span></label>
+                                    <v-select label="AreaName" v-model="selectArea" :disabled="!selectCity"
+                                        placeholder="請選擇" :options="areaOptions"></v-select>
+                                </div>
+                            </div>
+                            <div class="flex flex-col w-full">
+                                <label for="citySelect"
+                                    class="inline-block w-24 font-bold text-base-light md:text-base text-sm">詳細地址<span
+                                        class="text-hot-red">*</span></label>
                                 <input id="addressInput" type="text" v-model.trim="userInfo.address"
-                                    @focus="errorInfo.address = ''" class="w-full border border-gray-300 px-2 py-1 "
-                                    :class="{ 'border-hot-red': errorInfo.address }" placeholder="請輸入地址">
+                                    @focus="errorInfo.address = ''" class="w-full border border-gray-300 px-2 py-1"
+                                    placeholder="請輸入詳細地址">
                             </div>
                             <small v-if="errorInfo.address" class="text-sm text-end text-hot-red">{{
                                 errorInfo.address }}</small>
@@ -123,7 +147,8 @@
                         <div class="w-full h-px bg-gray-100"></div>
                         <div class="flex flex-col gap-1 px-4">
                             <div class="flex md:flex-row flex-col w-full items-start">
-                                <label for="noteInput" class="inline-block w-24 font-bold text-base-light md:text-base text-sm">備註</label>
+                                <label for="noteInput"
+                                    class="inline-block w-24 font-bold text-base-light md:text-base text-sm">備註</label>
                                 <textarea id="noteInput" type="text" v-model.trim="userInfo.note" rows="5"
                                     maxlength="80" @focus="errorInfo.note = ''"
                                     class="w-full border border-gray-300 px-2 py-1 resize-none"
@@ -141,7 +166,8 @@
                     <p class="font-bold text-xl ">價格資訊</p>
                     <div class="flex flex-col gap-4 border border-gray-100 p-6">
                         <div class="flex md:flex-row flex-col w-full md:items-center items-start">
-                            <label for="paymentInput" class="inline-block w-24 font-bold text-base-light md:text-base text-sm">支付方式</label>
+                            <label for="paymentInput"
+                                class="inline-block w-24 font-bold text-base-light md:text-base text-sm">支付方式</label>
                             <select id="paymentInput" type="text" v-model.trim="userInfo.payment"
                                 @focus="errorInfo.payment = ''"
                                 class="w-full border border-gray-300 px-2 py-1 text-base-heavy"
@@ -153,7 +179,8 @@
                         </div>
                         <small v-if="errorInfo.payment" class="text-sm text-end text-hot-red">{{
                             errorInfo.payment }}</small>
-                        <div class="flex md:flex-row flex-col md:items-center items-start justify-between bg-gray-100 p-6">
+                        <div
+                            class="flex md:flex-row flex-col md:items-center items-start justify-between bg-gray-100 p-6">
                             <p>總金額</p>
                             <p class="font-bold text-xl text-hot-red">NT$ 280,000</p>
                         </div>
@@ -171,11 +198,15 @@
 </template>
 
 <script>
+import cities from '@/json/city.json';
 
 export default {
     name: 'CheckoutPage',
     data() {
         return {
+            cities,
+            selectCity: null,
+            selectArea: null,
             date: null,
             userInfo: {
                 name: '',
@@ -198,6 +229,10 @@ export default {
         }
     },
     methods: {
+        openCitySelect() {
+            this.errorInfo.address = '';
+            this.selectCity = '';
+        },
         submitBtn() {
             const nameRule = /^[A-Za-z\u4E00-\u9FFF\s-]{1,10}$/;
             if (this.userInfo.name.trim() === '') {
@@ -234,9 +269,28 @@ export default {
                 this.isError = true;
                 this.errorInfo.note = '不允使用 < > ／＼ = & 等特殊符號。';
             }
+
+            if (this.userInfo.address.trim() === "" || this.selectCity === null || this.selectArea === null) {
+                this.isError = true;
+                this.errorInfo.address = '必須完整填寫並選擇地址'
+            }
+
+            const addressRule = /^[\u4e00-\u9fa5a-zA-Z0-9\s（）()\-_.#/,，．／]+$/;
+            if (!addressRule.test(this.userInfo.address)) {
+                this.isError = true;
+                this.errorInfo.address = '請填寫常規台灣地址'
+            }
         }
     },
     computed: {
+        areaOptions() {
+            return this.selectCity ? this.selectCity.AreaList : []
+        }
+    },
+    watch: {
+        selectCity() {
+            this.selectArea = null
+        }
     }
 }
 </script>
