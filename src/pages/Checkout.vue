@@ -74,7 +74,10 @@
             <!-- 資訊欄 -->
             <div class="flex md:flex-row flex-col justify-between gap-4 text-base-heavy">
                 <div class="flex flex-col gap-2 md:w-[150%] w-full">
-                    <p class="font-bold text-xl ">收件資訊</p>
+                    <div class="flex items-center">
+                        <p class="font-bold text-xl ">收件資訊</p>
+                        <p class="text-sm px-4 text-gray-400">* 為必填欄位</p>
+                    </div>
                     <div class="flex flex-col gap-4 border border-gray-100 px-6 md:py-6 py-4">
                         <div class="flex flex-col gap-1 px-4">
                             <div class="flex md:flex-row flex-col w-full md:items-center items-start">
@@ -157,7 +160,6 @@
                             <small v-if="errorInfo.note" class="text-sm text-end text-hot-red">{{
                                 errorInfo.note }}</small>
                         </div>
-                        <p class="text-sm px-4 text-gray-400">* 為必填欄位</p>
                     </div>
                 </div>
 
