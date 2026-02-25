@@ -136,27 +136,31 @@
             <!-- 護照資訊 -->
             <div class="flex flex-col gap-4">
                 <p class="font-bold text-xl text-base-heavy">護照資料</p>
-                <div v-for="passport in passportInfo" :key="passport.idCard" class="flex flex-row gap-2">
-                    <div class="flex flex-col gap-1 bg-gray-100 px-8 py-4 w-full">
-                        <div class="flex items-center gap-1">
-                            <p class="w-24 font-bold text-base-light md:text-base text-sm">姓氏</p>
-                            <p class="font-bold text-base-heavy">{{ passport.firstName }}</p>
-                        </div>
-                        <div class="flex items-center gap-1">
-                            <p class="w-24 font-bold text-base-light md:text-base text-sm">名稱</p>
-                            <p class="font-bold text-base-heavy">{{ passport.secondName }}</p>
-                        </div>
-                        <div class="flex items-center gap-1">
-                            <p class="w-24 font-bold text-base-light md:text-base text-sm">身分證字號</p>
-                            <p class="font-bold text-base-heavy">{{ passport.idCard }}</p>
-                        </div>
-                        <div class="flex items-center gap-1">
-                            <p class="w-24 font-bold text-base-light md:text-base text-sm">護照號碼</p>
-                            <p class="font-bold text-base-heavy">{{ passport.passportCode }}</p>
-                        </div>
-                        <div class="flex items-center gap-1">
-                            <p class="w-24 font-bold text-base-light md:text-base text-sm">護照到期日</p>
-                            <p class="font-bold text-base-heavy">{{ passport.exp }}</p>
+                <div v-for="(passport, index) in passportInfo" :key="passport.idCard" class="flex flex-row gap-2">
+                    <div class="flex flex-row gap-4 bg-gray-100 md:px-8 px-4 py-4 w-full">
+                        <p class="[writing-mode:vertical-rl] font-bold text-sm text-gray-400">旅客 {{ index + 1 }}</p>
+                        <div class="h-full w-2 bg-gray-300"></div>
+                        <div class="flex flex-col gap-1">
+                            <div class="flex items-center gap-1">
+                                <p class="w-24 font-bold text-base-light md:text-base text-sm">姓氏</p>
+                                <p class="font-bold text-base-heavy">{{ passport.firstName }}</p>
+                            </div>
+                            <div class="flex items-center gap-1">
+                                <p class="w-24 font-bold text-base-light md:text-base text-sm">名稱</p>
+                                <p class="font-bold text-base-heavy">{{ passport.secondName }}</p>
+                            </div>
+                            <div class="flex items-center gap-1">
+                                <p class="w-24 font-bold text-base-light md:text-base text-sm">身分證字號</p>
+                                <p class="font-bold text-base-heavy">{{ passport.idCard }}</p>
+                            </div>
+                            <div class="flex items-center gap-1">
+                                <p class="w-24 font-bold text-base-light md:text-base text-sm">護照號碼</p>
+                                <p class="font-bold text-base-heavy">{{ passport.passportCode }}</p>
+                            </div>
+                            <div class="flex items-center gap-1">
+                                <p class="w-24 font-bold text-base-light md:text-base text-sm">護照到期日</p>
+                                <p class="font-bold text-base-heavy">{{ passport.exp }}</p>
+                            </div>
                         </div>
                     </div>
                 </div>
