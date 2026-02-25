@@ -1,16 +1,16 @@
 <template>
     <footer class="w-full">
-        <div class="mx-auto max-w-[80%] flex justify-between items-center py-16">
-            <div class="h-[218px] flex flex-col justify-between">
-                <img src="../assets/images/logo-2-s.png" alt="logo-small" class="w-[210px] pb-5">
-                <ul class="flex flex-col gap-1 text-sm  text-base-heavy">
-                    <li>0912-345-678</li>
-                    <li>japan-hothot@hot.com</li>
-                    <li>航空市登機區 88 巷 168 號 (空橋下方第三個行李箱左轉)</li>
+        <div class="mx-auto max-w-[80%] flex md:flex-row flex-col md:justify-between items-center gap-8 pt-16 md:pb-28 pb-16">
+            <div class="h-[218px] flex flex-col md:justify-between md:items-start items-center gap-8">
+                <img src="../assets/images/logo-2-s.png" alt="logo-small" class="w-[200px] pb-5">
+                <ul class="flex flex-col md:gap-1 gap-2 text-sm  text-base-heavy">
+                    <li class="flex md:gap-2 gap-1 items-center"><i class="fa-solid fa-phone"></i><p>0912-345-678</p></li>
+                    <li class="flex md:gap-2 gap-1 items-center"><i class="fa-solid fa-envelope"></i><p>japan-hothot@hot.com</p></li>
+                    <li class="flex md:gap-2 gap-1 items-center"><i class="fa-solid fa-house"></i><p>航空市登機區 88 巷 168 號 (空橋下方第三個行李箱左轉)</p></li>
                 </ul>
             </div>
-            <div class="h-[218px] flex flex-col justify-between items-end">
-                <ul class="flex gap-4 text-base-heavy">
+            <div class="h-[218px] flex flex-col md:justify-between md:items-end items-center gap-8">
+                <ul class="flex md:gap-4 gap-1 text-base-heavy">
                     <li class="cursor-pointer"><i class="fa-brands fa-threads fa-lg"></i></li>
                     <li class="cursor-pointer"><i class="fa-brands fa-facebook-f fa-lg"></i></li>
                     <li class="cursor-pointer"><i class="fa-brands fa-instagram fa-lg"></i></li>

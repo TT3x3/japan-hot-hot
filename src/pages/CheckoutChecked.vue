@@ -87,7 +87,7 @@
                         <div class="flex flex-col gap-1 px-4">
                             <div class="flex md:flex-row flex-col w-full md:items-center items-start">
                                 <p class="w-24 font-bold text-base-light md:text-base text-sm">Email</p>
-                                <p>{{ userInfo.email }}</p>
+                                <p class="break-all">{{ userInfo.email }}</p>
                             </div>
 
                         </div>
@@ -137,29 +137,33 @@
             <div class="flex flex-col gap-4">
                 <p class="font-bold text-xl text-base-heavy">護照資料</p>
                 <div v-for="(passport, index) in passportInfo" :key="passport.idCard" class="flex flex-row gap-2">
-                    <div class="flex flex-row gap-4 bg-gray-100 md:px-8 px-4 py-4 w-full">
-                        <p class="[writing-mode:vertical-rl] font-bold text-sm text-gray-400">旅客 {{ index + 1 }}</p>
-                        <div class="h-full w-2 bg-gray-300"></div>
+                    <div class="flex flex-row md:gap-8 gap-2 bg-gray-100 md:px-8 px-4 py-4 w-full">
+                        <div class="text-gray-400 flex flex-col gap-1">
+                            <i class="fa-solid fa-user"></i>
+                            <p class="[writing-mode:vertical-rl] font-bold text-sm">旅客 {{ index + 1 }}</p>
+                        </div>
+                        <div class="hidden md:flex h-full w-2 bg-gray-300"></div>
                         <div class="flex flex-col gap-1">
                             <div class="flex items-center gap-1">
-                                <p class="w-24 font-bold text-base-light md:text-base text-sm">姓氏</p>
-                                <p class="font-bold text-base-heavy">{{ passport.firstName }}</p>
+                                <p class="md:w-24 w-20 font-bold text-base-light md:text-base text-sm">姓氏</p>
+                                <p class="md:text-base text-sm font-bold text-base-heavy">{{ passport.firstName }}</p>
                             </div>
                             <div class="flex items-center gap-1">
-                                <p class="w-24 font-bold text-base-light md:text-base text-sm">名稱</p>
-                                <p class="font-bold text-base-heavy">{{ passport.secondName }}</p>
+                                <p class="md:w-24 w-20 font-bold text-base-light md:text-base text-sm">名稱</p>
+                                <p class="md:text-base text-sm font-bold text-base-heavy">{{ passport.secondName }}</p>
                             </div>
                             <div class="flex items-center gap-1">
-                                <p class="w-24 font-bold text-base-light md:text-base text-sm">身分證字號</p>
-                                <p class="font-bold text-base-heavy">{{ passport.idCard }}</p>
+                                <p class="md:w-24 w-20 font-bold text-base-light md:text-base text-sm">身分證字號</p>
+                                <p class="md:text-base text-sm font-bold text-base-heavy">{{ passport.idCard }}</p>
                             </div>
                             <div class="flex items-center gap-1">
-                                <p class="w-24 font-bold text-base-light md:text-base text-sm">護照號碼</p>
-                                <p class="font-bold text-base-heavy">{{ passport.passportCode }}</p>
+                                <p class="md:w-24 w-20 font-bold text-base-light md:text-base text-sm">護照號碼</p>
+                                <p class="md:text-base text-sm font-bold text-base-heavy">{{ passport.passportCode }}
+                                </p>
                             </div>
                             <div class="flex items-center gap-1">
-                                <p class="w-24 font-bold text-base-light md:text-base text-sm">護照到期日</p>
-                                <p class="font-bold text-base-heavy">{{ passport.exp }}</p>
+                                <p class="md:w-24 w-20 font-bold text-base-light md:text-base text-sm">護照到期日</p>
+                                <p class="md:text-base text-sm font-bold text-base-heavy">{{ passport.exp }}</p>
                             </div>
                         </div>
                     </div>

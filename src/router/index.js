@@ -17,6 +17,7 @@ import MemberLikes from "@/pages/MemberLikes.vue";
 import CheckoutPage from "@/pages/Checkout.vue";
 import CheckoutPassport from "@/pages/CheckoutPassport.vue";
 import CheckoutChecked from "@/pages/CheckoutChecked.vue";
+import CheckoutFinished from "@/pages/CheckoutFinished.vue";
 
 Vue.use(Router);
 
@@ -93,10 +94,15 @@ export default new Router({
       name: "checkoutPassport",
       component: CheckoutPassport,
     },
-        {
+    {
       path: "/checkout/checked",
       name: "checkoutChecked",
       component: CheckoutChecked,
+    },
+    {
+      path: "/checkout/finished",
+      name: "checkoutFinished",
+      component: CheckoutFinished,
     },
   ],
 });
