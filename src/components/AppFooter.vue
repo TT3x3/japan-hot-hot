@@ -9,7 +9,7 @@
                     <li class="flex md:gap-2 gap-1 items-center"><i class="fa-solid fa-house"></i><p>航空市登機區 88 巷 168 號 (空橋下方第三個行李箱左轉)</p></li>
                 </ul>
             </div>
-            <div class="h-[218px] flex flex-col md:justify-between md:items-end items-center gap-8">
+            <div class="md:h-[218px] flex flex-col md:justify-between md:items-end items-center gap-8">
                 <ul class="flex md:gap-4 gap-1 text-base-heavy">
                     <li class="cursor-pointer"><i class="fa-brands fa-threads fa-lg"></i></li>
                     <li class="cursor-pointer"><i class="fa-brands fa-facebook-f fa-lg"></i></li>
