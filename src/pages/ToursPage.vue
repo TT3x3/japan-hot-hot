@@ -51,28 +51,29 @@
         <div class="max-w-[80%] w-full mx-auto flex flex-col gap-12">
             <ul class="flex flex-wrap gap-x-6 gap-y-12">
                 <!-- 卡片 -->
-                <router-link to="/tour-detail" v-for="(item, key) in journey.slice(0, 9)" :key="key"
+                <router-link to="/tour-detail" v-for="(item) in journey" :key="item.productId"
                     class="flex-[0_0_calc(33.333%-1rem)] cursor-pointer group">
                     <div class="flex flex-col h-[450px] border border-gray-200">
                         <div class="relative h-72 overflow-hidden">
-                            <img :src="item.imgSrc" alt="" class="object-cover w-full h-full">
+                            <!-- <img :src="item.thumbnail" alt="" class="object-cover w-full h-full"> -->
                             <div
                                 class="absolute inset-0 bg-white/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ">
                             </div>
                             <!-- 收藏 -->
-                            <button @click="item.isCollected = !item.isCollected"
+                            <!-- <button @click="item.isCollected = !item.isCollected"
                                 class="absolute top-3 right-3 p-2  text-white/65 hover:text-red-500 transition-colors duration-200 ">
                                 <i v-if="item.isCollected" class="fa-solid fa-heart fa-xl text-red-500"></i>
                                 <i v-else class="fa-regular fa-heart fa-xl"></i>
-                            </button>
+                            </button> -->
                         </div>
                         <div class="flex flex-col flex-1 p-5">
                             <div class="flex gap-2 mb-3">
-                                <p class="text-sm px-2 inline-block border border-gray-300 text-gray-400">{{ item.type }}</p>
-                                <p class="text-sm px-2 inline-block border border-gray-300 text-gray-400">{{ item.location }}</p>
+                                <p class="text-sm px-2 inline-block border border-gray-300 text-gray-400">{{item.tags[0]}}</p>
+                                <p class="text-sm px-2 inline-block border border-gray-300 text-gray-400">{{item.tags[1]}}</p>
                             </div>
                             <p class="font-bold line-clamp-2 text-base-heavy">{{ item.title }}</p>
-                            <p class="font-bold text-lg text-hot-red mt-auto text-end">{{ item.price.toLocaleString()|  dollarSign | currency }}</p>
+                            <p class="font-bold text-lg text-hot-red mt-auto text-end">{{ item.price.toLocaleString() |
+                                dollarSign | currency }}</p>
                         </div>
                     </div>
                 </router-link>
@@ -85,87 +86,24 @@
 </template>
 
 <script>
+import http from '@/api/http'
+
 export default {
     name: 'ToursPage',
     data() {
         return {
-            journey: [
-                {
-                    type: '一日遊',
-                    location: '大阪',
-                    title: '水色之際：伊根與天橋立的一日拾光',
-                    price: 12000,
-                    imgSrc: require('../assets/images/carousel-2.jpg'),
-                    isCollected: false,
-                },
-                {
-                    type: '一日遊',
-                    location: '東京',
-                    title: '東京迪士尼樂園一日遊',
-                    price: 15000,
-                    imgSrc: require('../assets/images/carousel-1.jpg'),
-                    isCollected: false,
-                },
-                {
-                    type: '二日遊',
-                    location: '京都',
-                    title: '京都文化深度之旅京都文化深度之旅京都文化深度之旅京都文化深度之旅京都文化深度之旅',
-                    price: 25000,
-                    imgSrc: require('../assets/images/carousel-3.jpg'),
-                    isCollected: false,
-                },
-                {
-                    type: '一日遊',
-                    location: '東京',
-                    title: '東京迪士尼樂園一日遊東京迪士尼樂園一日遊東京迪士尼樂園一日遊東京迪士尼樂園一日遊東京迪士尼樂園一日遊',
-                    price: 15000,
-                    imgSrc: require('../assets/images/carousel-1.jpg'),
-                    isCollected: false,
-                },
-                {
-                    type: '二日遊',
-                    location: '京都',
-                    title: '京都文化深度之旅',
-                    price: 25000,
-                    imgSrc: require('../assets/images/carousel-3.jpg'),
-                    isCollected: false,
-                },
-                {
-                    type: '一日遊',
-                    location: '東京',
-                    title: '東京迪士尼樂園一日遊',
-                    price: 15000,
-                    imgSrc: require('../assets/images/carousel-1.jpg'),
-                    isCollected: false,
-                },
-                {
-                    type: '二日遊',
-                    location: '京都',
-                    title: '京都文化深度之旅',
-                    price: 25000,
-                    imgSrc: require('../assets/images/carousel-3.jpg'),
-                    isCollected: false,
-                },
-                {
-                    type: '一日遊',
-                    location: '東京',
-                    title: '東京迪士尼樂園一日遊',
-                    price: 15000,
-                    imgSrc: require('../assets/images/carousel-1.jpg'),
-                    isCollected: false,
-                },
-                {
-                    type: '二日遊',
-                    location: '京都',
-                    title: '京都文化深度之旅',
-                    price: 25000,
-                    imgSrc: require('../assets/images/carousel-3.jpg'),
-                    isCollected: false,
-                },
-            ],
+            journey: "",
         };
     },
     methods: {
-    }
+        async getTours() {
+            const api = process.env.VUE_APP_API_PATH;
+            const res = await http.get(`${api}product/tour`);
+            this.journey = res.data.items;
+        }
+    },
+    created() {
+        this.getTours();
+    },
 }
 </script>

@@ -2,7 +2,7 @@
   <header class="w-full">
     <div
       class="mx-auto max-w-[80%] pt-16 md:pb-28 pb-16 flex justify-between items-center tracking-widest min-h-[200px]">
-      <router-link to="/">
+      <router-link to="/" class="z-51">
         <img src="../assets/images/logo-s.png" alt="logo-small" class="w-[160px] max-[400px]:w-[60%]">
       </router-link>
 
@@ -13,6 +13,7 @@
         <div class="h-1 w-full bg-hot-red"></div>
         <div class="h-1 w-full bg-hot-red"></div>
       </div>
+      <div v-if="isOpen" class="fixed top-52 left-0 z-20 w-full h-full bg-black/60 transition-opacity duration-300"></div>
 
       <div class="md:hidden fixed top-48 right-0 z-50 w-full h-full transform transition-transform duration-300"
         :class="isOpen ? 'translate-y-0' : '-translate-y-full'">
@@ -48,13 +49,27 @@ export default {
   data() {
     return {
       loggedIn: true,
-      isOpen: true,
+      isOpen: false,
     }
   },
   methods: {
     toggleMenu() {
       this.isOpen = !this.isOpen;
-    }
+    },
+    // closeMenu() {
+    //   this.isOpen = false;
+    // }
+  },
+  watch: {
+    $route() {
+      this.isOpen = false
+    },
+    isOpen(val) {
+      document.body.style.overflow = val ? 'hidden' : ''
+    },
+  },
+  beforeDestroy() {
+    document.body.style.overflow = ''
   }
 }
 </script>

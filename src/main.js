@@ -1,11 +1,11 @@
 import Vue from 'vue'
 import App from './App.vue'
+import router from './router';
 import VCalendar from 'v-calendar';
 import vSelect from 'vue-select';
 import 'vue-select/dist/vue-select.css';
 import './assets/main.css'
 import '@fortawesome/fontawesome-free/css/all.min.css';
-import router from './router';
 import './utils/filter';
 import CustomPagination from './components/CustomPagination.vue'
 
