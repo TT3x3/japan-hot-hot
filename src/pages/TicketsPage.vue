@@ -52,32 +52,31 @@
         <div class="max-w-[80%] w-full mx-auto flex flex-col gap-12">
             <ul class="flex flex-wrap gap-x-6 gap-y-12">
                 <!-- 卡片 -->
-                <router-link to="/ticket-detail" v-for="(item, key) in journey.slice(0, 9)" :key="key"
+                <router-link to="/ticket-detail" v-for="item in flights" :key="item.productId"
                     class="flex-[0_0_calc(33.333%-1rem)] cursor-pointer group">
                     <div class="flex flex-col h-[450px] border border-gray-200">
                         <div class="relative h-72 overflow-hidden">
-                            <img :src="item.imgSrc" alt="" class="object-cover w-full h-full">
+                            <img :src="`${apiBase}${item.thumbnail}`" alt="" class="object-cover w-full h-full">
                             <div
                                 class="absolute inset-0 bg-white/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ">
                             </div>
                             <!-- 收藏 -->
-                            <button @click="item.isCollected = !item.isCollected"
+                            <!-- <button @click="item.isCollected = !item.isCollected"
                                 class="absolute top-3 right-3 p-2  text-white/65 hover:text-red-500 transition-colors duration-200 ">
                                 <i v-if="item.isCollected" class="fa-solid fa-heart fa-xl text-red-500"></i>
                                 <i v-else class="fa-regular fa-heart fa-xl"></i>
-                            </button>
+                            </button> -->
                         </div>
                         <div class="flex flex-col flex-1 p-5">
                             <div class="flex gap-2 mb-3">
-                                <p class="text-sm px-2 inline-block bg-gray-400 text-white">{{
-                                    item.airPlane }}</p>
-                                <p class="text-sm px-2 inline-block border border-gray-300 text-gray-400">{{ item.type
+                                <p class="text-sm px-2 inline-block border border-gray-300 text-gray-400">{{ item.tags[0]
                                 }}</p>
                                 <p class="text-sm px-2 inline-block border border-gray-300 text-gray-400">{{
-                                    item.location }}</p>
+                                    item.tags[1] }}</p>
                             </div>
                             <p class="font-bold line-clamp-1 text-base-heavy">{{ item.title }}</p>
-                            <p class="font-bold text-lg text-hot-red mt-auto text-end">{{ item.price.toLocaleString() | dollarSign | currency }}</p>
+                            <p class="font-bold text-lg text-hot-red mt-auto text-end">{{ item.price.toLocaleString() |
+                                dollarSign | currency }}</p>
                         </div>
                     </div>
                 </router-link>
@@ -90,96 +89,25 @@
 </template>
 
 <script>
+import http from '@/api/http'
+
 export default {
     name: 'TicketsPage',
     data() {
         return {
-            journey: [
-                {
-                    type: '早去午回',
-                    location: '桃園出發',
-                    airPlane: '快桃航空',
-                    title: '雲端軌跡：關西空港限時優惠機票',
-                    price: 12000,
-                    imgSrc: require('../assets/images/carousel-2.jpg'),
-                    isCollected: false,
-                },
-                {
-                    type: '晚去晚回',
-                    location: '桃園出發',
-                    airPlane: '護航航空',
-                    title: '微光啟程：東京成田午夜浪漫航線',
-                    price: 15000,
-                    imgSrc: require('../assets/images/carousel-1.jpg'),
-                    isCollected: false,
-                },
-                {
-                    type: '早去早回',
-                    location: '高雄出發',
-                    airPlane: '快桃航空',
-                    title: '晨曦之翼：直飛關西，拾取京都第一道日光',
-                    price: 25000,
-                    imgSrc: require('../assets/images/carousel-3.jpg'),
-                    isCollected: false,
-                },
-                {
-                    type: '早去午回',
-                    location: '桃園出發',
-                    airPlane: '護航航空',
-                    title: '東京來回機票與春季限定特選東京來回機票與春季限定特選東京來回機票與春季限定特選東京來回機票與春季限定特選',
-                    price: 15000,
-                    imgSrc: require('../assets/images/carousel-1.jpg'),
-                    isCollected: false,
-                },
-                {
-                    type: '早去早回',
-                    location: '高雄出發',
-                    airPlane: '護航航空',
-                    title: '天際連結：南國出發，連結古都的優雅航路',
-                    price: 25000,
-                    imgSrc: require('../assets/images/carousel-3.jpg'),
-                    isCollected: false,
-                },
-                {
-                    type: '早去午回',
-                    location: '高雄出發',
-                    airPlane: '快桃航空',
-                    title: '高雄往返關西，極簡商務選航',
-                    price: 15000,
-                    imgSrc: require('../assets/images/carousel-1.jpg'),
-                    isCollected: false,
-                },
-                {
-                    type: '早去早回',
-                    location: '桃園出發',
-                    airPlane: '短榮航空',
-                    title: '雲端軌跡：關西空港優惠機票',
-                    price: 25000,
-                    imgSrc: require('../assets/images/carousel-3.jpg'),
-                    isCollected: false,
-                },
-                {
-                    type: '晚去晚回',
-                    location: '桃園出發',
-                    airPlane: '短榮航空',
-                    title: '晨曦之翼：直飛關西',
-                    price: 15000,
-                    imgSrc: require('../assets/images/carousel-1.jpg'),
-                    isCollected: false,
-                },
-                {
-                    type: '晚去晚回',
-                    location: '高雄出發',
-                    airPlane: '快桃航空',
-                    title: '晨曦之翼：直飛關西，拾取京都第一道日光',
-                    price: 25000,
-                    imgSrc: require('../assets/images/carousel-3.jpg'),
-                    isCollected: false,
-                },
-            ],
+            apiBase: process.env.VUE_APP_API_PATH,
+            flights: "",
         };
     },
     methods: {
+        async getFlights() {
+            const res = await http.get(`${this.apiBase}/product/flight`);
+            this.flights = res.data.items;
+        }
+    },
+    created() {
+        this.getFlights();
     }
+
 }
 </script>

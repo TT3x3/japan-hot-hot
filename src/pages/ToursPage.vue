@@ -55,7 +55,7 @@
                     class="flex-[0_0_calc(33.333%-1rem)] cursor-pointer group">
                     <div class="flex flex-col h-[450px] border border-gray-200">
                         <div class="relative h-72 overflow-hidden">
-                            <!-- <img :src="item.thumbnail" alt="" class="object-cover w-full h-full"> -->
+                            <img :src="`${apiBase}${item.thumbnail}`" alt="" class="object-cover w-full h-full">
                             <div
                                 class="absolute inset-0 bg-white/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ">
                             </div>
@@ -92,13 +92,13 @@ export default {
     name: 'ToursPage',
     data() {
         return {
+            apiBase: process.env.VUE_APP_API_PATH,
             journey: "",
         };
     },
     methods: {
         async getTours() {
-            const api = process.env.VUE_APP_API_PATH;
-            const res = await http.get(`${api}product/tour`);
+            const res = await http.get(`${this.apiBase}/product/tour`);
             this.journey = res.data.items;
         }
     },

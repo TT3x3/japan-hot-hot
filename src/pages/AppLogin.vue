@@ -19,7 +19,7 @@
                                     <div class="flex flex-row w-full items-center">
                                         <label for="emailInput"
                                             class="inline-block w-24 font-bold text-base-light">Email</label>
-                                        <input id="emailInput" type="email" v-model.trim="userInfo.email"
+                                        <input id="emailInput" type="email" v-model.trim="loginInfo.email"
                                             @focus="errorInfo.email = ''"
                                             class="w-full border border-gray-300 px-2 py-1 text-base-heavy"
                                             :class="{ 'border-hot-red': errorInfo.email }" placeholder="請輸入Email">
@@ -32,7 +32,7 @@
                                     <div class="flex flex-row w-full items-center">
                                         <label for="passwordInput"
                                             class="inline-block w-24 font-bold text-base-light">密碼</label>
-                                        <input id="passwordInput" type="password" v-model.trim="userInfo.password"
+                                        <input id="passwordInput" type="password" v-model.trim="loginInfo.password"
                                             @focus="errorInfo.password = ''"
                                             class="w-full border border-gray-300 px-2 py-1 text-base-heavy"
                                             :class="{ 'border-hot-red': errorInfo.password }" placeholder="請輸入密碼">
@@ -42,7 +42,7 @@
                                 </div>
                             </div>
                             <div class="flex gap-4 justify-center items-center">
-                                <button type="submit" @click.prevent="validateForm()"
+                                <button type="submit" @click.prevent="postLogin()"
                                     class="w-36 cursor-pointer bg-hot-red text-center text-white py-3  hover:bg-red-500 active:bg-red-700 transition-colors">登入</button>
                                 <router-link to="/signup"
                                     class="w-36 cursor-pointer bg-gray-400 text-center text-white py-3  hover:bg-gray-300 active:bg-gray-500 transition-colors">加入日頭</router-link>
@@ -63,11 +63,14 @@
 </template>
 
 <script>
+import http from '@/api/http'
+import { login } from '@/utils/auth'
+
 export default {
     name: 'AppLogin',
     data() {
         return {
-            userInfo: {
+            loginInfo: {
                 email: '',
                 password: '',
 
@@ -77,22 +80,47 @@ export default {
                 password: '',
 
             },
+            isError: false,
+            apiBase: process.env.VUE_APP_API_PATH,
+            loginErrorMessage: '',
         };
     }, methods: {
         validateForm() {
             const emailRule = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (this.userInfo.email.trim() === '') {
+            if (this.loginInfo.email.trim() === '') {
                 this.errorInfo.email = '*請輸入電子郵件';
+                this.isError = true;
             }
-            if (!emailRule.test(this.userInfo.email)) {
+            if (!emailRule.test(this.loginInfo.email)) {
                 this.errorInfo.email = '*請輸入正確的電子郵件格式';
+                this.isError = true;
             }
 
-            if (this.userInfo.password.trim() === '') {
+            if (this.loginInfo.password.trim() === '') {
                 this.errorInfo.password = '*請輸入密碼';
+                this.isError = true;
             }
-            if (this.userInfo.password.length < 6 || this.userInfo.password.length > 20) {
+            if (this.loginInfo.password.length < 6 || this.loginInfo.password.length > 20) {
                 this.errorInfo.password = '*密碼長度需介於6到20個字元';
+                this.isError = true;
+            }
+        },
+        async postLogin() {
+            this.validateForm();
+            if (this.isError) return;
+            try {
+                const res = await http.post(`${this.apiBase}/members/login`, this.loginInfo);
+                const token = res.data?.access_token;
+                const name = res.data?.member?.name;
+                if (token) {
+                    login(token, name);
+                    this.$router.push('/');
+                }
+            } catch (error) {
+                this.loginErrorMessage = error.response?.data?.message || '登入失敗';
+                alert(this.loginErrorMessage);
+                this.loginInfo.email = '';
+                this.loginInfo.password = '';
             }
         },
     }

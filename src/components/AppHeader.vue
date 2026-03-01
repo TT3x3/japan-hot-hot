@@ -13,7 +13,9 @@
         <div class="h-1 w-full bg-hot-red"></div>
         <div class="h-1 w-full bg-hot-red"></div>
       </div>
-      <div v-if="isOpen" class="fixed top-52 left-0 z-20 w-full h-full bg-black/60 transition-opacity duration-300"></div>
+      <div v-if="isOpen"
+        class="md:hidden fixed top-52 left-0 z-20 w-full h-full bg-black/60 transition-opacity duration-300">
+      </div>
 
       <div class="md:hidden fixed top-48 right-0 z-50 w-full h-full transform transition-transform duration-300"
         :class="isOpen ? 'translate-y-0' : '-translate-y-full'">
@@ -21,20 +23,21 @@
           <img src="../assets/images/logo-pic.png" alt="" class="w-10">
           <router-link to="/tickets" class="hover:text-gray-400 py-2 w-full text-center">機票</router-link>
           <router-link to="/tours" class="hover:text-gray-400 py-2 w-full text-center">行程</router-link>
-          <router-link v-if="loggedIn === true" to="/member"
+          <router-link v-if="!$auth.isLoggedIn" to="/member"
             class="hover:text-gray-400 py-2 w-full text-center">會員中心</router-link>
           <li class="py-2 w-full text-center">關於我</li>
-          <router-link v-if="loggedIn === false" to="/login" class="hover:text-gray-400 py-2 w-full text-center">登入 /
+          <router-link v-if="!$auth.isLoggedIn" to="/login" class="hover:text-gray-400 py-2 w-full text-center">登入 /
             註冊</router-link>
-          <li v-if="loggedIn === true" class=" py-2 w-full text-center">登出</li>
+          <button type="button" v-if="$auth.isLoggedIn" @click="handleLogout()"
+            class="hover:text-gray-400 py-2 w-full text-center cursor-pointer">登出</button>
         </ul>
       </div>
 
       <!-- md 以上菜單 -->
       <ul class="hidden md:flex flex-col md:gap-3 gap-1 [writing-mode:vertical-rl] text-base-heavy">
-        <router-link v-if="loggedIn === false" to="/login" class="hover:text-gray-400">登入 / 註冊</router-link>
-        <li v-if="loggedIn === true">登出</li>
-        <router-link v-if="loggedIn === true" to="/member" class="hover:text-gray-400">會員中心</router-link>
+        <router-link v-if="!$auth.isLoggedIn" to="/login" class="hover:text-gray-400">登入 / 註冊</router-link>
+        <li v-if="$auth.isLoggedIn" @click="handleLogout()" class="hover:text-gray-400 cursor-pointer">登出</li>
+        <router-link v-if="$auth.isLoggedIn" to="/member" class="hover:text-gray-400">會員中心</router-link>
         <li>關於我</li>
         <router-link to="/tours" class="hover:text-gray-400">行程</router-link>
         <router-link to="/tickets" class="hover:text-gray-400">機票</router-link>
@@ -44,11 +47,13 @@
 </template>
 
 <script>
+import { logout } from '@/utils/auth';
+
 export default {
   name: 'AppHeader',
   data() {
     return {
-      loggedIn: true,
+      apiBase: process.env.VUE_APP_API_PATH,
       isOpen: false,
     }
   },
@@ -56,9 +61,13 @@ export default {
     toggleMenu() {
       this.isOpen = !this.isOpen;
     },
-    // closeMenu() {
-    //   this.isOpen = false;
-    // }
+    handleLogout() {
+      logout();
+      this.isOpen = false;
+      if (this.$route.path === '/members/login') {
+        this.$router.push('/members/login');
+      }
+    }
   },
   watch: {
     $route() {
@@ -70,6 +79,9 @@ export default {
   },
   beforeDestroy() {
     document.body.style.overflow = ''
+  },
+  created() {
+    
   }
 }
 </script>
