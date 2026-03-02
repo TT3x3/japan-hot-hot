@@ -1,6 +1,6 @@
 <template>
     <footer class="w-full">
-        <div class="mx-auto max-w-[80%] flex md:flex-row flex-col md:justify-between items-center gap-8 pt-16 md:pb-28 pb-16">
+        <div class="mx-auto max-w-[80%] flex md:flex-row flex-col md:justify-between items-center gap-8 md:pt-16 md:pb-28 py-10">
             <div class="h-[218px] flex flex-col md:justify-between md:items-start items-center gap-8">
                 <img src="../assets/images/logo-2-s.png" alt="logo-small" class="w-[200px] pb-5">
                 <ul class="flex flex-col md:gap-1 gap-2 text-sm  text-base-heavy">

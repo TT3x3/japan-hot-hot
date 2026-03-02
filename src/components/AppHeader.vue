@@ -1,24 +1,25 @@
 <template>
   <header class="w-full">
     <div
-      class="mx-auto max-w-[80%] pt-16 md:pb-28 pb-16 flex justify-between items-center tracking-widest min-h-[200px]">
+      class="mx-auto max-w-[80%] md:pt-16 md:pb-28 py-6 flex justify-between items-center gap-4 tracking-widest md:min-h-[200px]">
       <router-link to="/" class="z-51">
-        <img src="../assets/images/logo-s.png" alt="logo-small" class="w-[160px] max-[400px]:w-[60%]">
+        <img src="../assets/images/logo-s.png" alt="logo-small" class="hidden md:block md:w-[160px]">
+        <img src="../assets/images/logo-2-s.png" class="block md:hidden w-48">
       </router-link>
 
       <!-- md 以下菜單 -->
       <!-- button -->
-      <div @click="toggleMenu()" class=" flex flex-col md:hidden justify-between min-w-8 h-[28px] cursor-pointer z-51">
+      <div @click="toggleMenu()" class=" flex flex-col md:hidden justify-between min-w-8 h-[24px] cursor-pointer z-51">
         <div class="h-1 w-full bg-hot-red"></div>
         <div class="h-1 w-full bg-hot-red"></div>
         <div class="h-1 w-full bg-hot-red"></div>
       </div>
       <div v-if="isOpen"
-        class="md:hidden fixed top-52 left-0 z-20 w-full h-full bg-black/60 transition-opacity duration-300">
+        class="md:hidden fixed top-22 left-0 z-20 w-full h-full bg-black/60 transition-opacity duration-300">
       </div>
 
-      <div class="md:hidden fixed top-48 right-0 z-50 w-full h-full transform transition-transform duration-300"
-        :class="isOpen ? 'translate-y-0' : '-translate-y-full'">
+      <div class="md:hidden fixed top-22 right-0 z-50 w-full h-full transform transition-transform duration-200"
+        :class="isOpen ? 'translate-y-0' : '-translate-y-full pointer-events-none'">
         <ul class="absolute flex flex-col items-center gap-4 w-full py-16 bg-gray-400 text-white">
           <img src="../assets/images/logo-pic.png" alt="" class="w-10">
           <router-link to="/tickets" class="hover:text-gray-400 py-2 w-full text-center">機票</router-link>
