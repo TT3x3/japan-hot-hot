@@ -1,22 +1,22 @@
 <template>
-    <div class="flex flex-col gap-32 w-full bg-gray-100">
+    <div class="flex flex-col md:gap-32 gap-12 w-full bg-gray-100">
         <!-- top -->
-        <div class="relative h-80 overflow-hidden">
+        <div class="relative md:h-80 h-40 overflow-hidden">
             <img src="../assets/images/carousel-5.jpg" alt="" class=" w-full h-full object-cover">
         </div>
         <div>
             <div class="flex justify-center items-center">
-                <h1 class="text-3xl text-center tracking-[2rem] pl-[2rem] text-base-heavy">歡迎回來</h1>
+                <h1 class="text-3xl text-center md:tracking-[2rem] tracking-[1rem] pl-[2rem] text-base-heavy">歡迎回來</h1>
             </div>
             <div class="mx-auto max-w-[80%] flex justify-between items-center">
-                <div class="flex flex-col gap-32 w-full justify-center">
+                <div class="flex flex-col md:gap-32 gap-12 w-full justify-center">
                     <div></div>
                     <!-- 登入區塊 -->
                     <div class="flex flex-col justify-center items-center gap-12">
-                        <form class="bg-white px-10 py-18 w-full max-w-3xl flex flex-col gap-6 justify-center">
+                        <form class="bg-white md:px-10 px-4 md:py-18 py-6 w-full max-w-3xl flex flex-col gap-6 justify-center">
                             <div class="flex flex-col gap-4">
                                 <div class="flex flex-col gap-1 px-4">
-                                    <div class="flex flex-row w-full items-center">
+                                    <div class="flex md:flex-row flex-col md:items-center items-start md:gap-0 gap-1 w-full">
                                         <label for="emailInput"
                                             class="inline-block w-24 font-bold text-base-light">Email</label>
                                         <input id="emailInput" type="email" v-model.trim="loginInfo.email"
@@ -27,9 +27,9 @@
                                     <small v-if="errorInfo.email" class="text-sm text-end text-hot-red">{{
                                         errorInfo.email }}</small>
                                 </div>
-                                <div class="w-full h-px bg-gray-100"></div>
+                                <div class="md:block hidden w-full h-px bg-gray-100"></div>
                                 <div class="flex flex-col gap-1 px-4">
-                                    <div class="flex flex-row w-full items-center">
+                                    <div class="flex md:flex-row flex-col md:items-center items-start md:gap-0 gap-1 w-full">
                                         <label for="passwordInput"
                                             class="inline-block w-24 font-bold text-base-light">密碼</label>
                                         <input id="passwordInput" type="password" v-model.trim="loginInfo.password"
@@ -41,11 +41,11 @@
                                         errorInfo.password }}</small>
                                 </div>
                             </div>
-                            <div class="flex gap-4 justify-center items-center">
+                            <div class="flex md:flex-row flex-col gap-4 justify-center items-center">
                                 <button type="submit" @click.prevent="postLogin()"
-                                    class="w-36 cursor-pointer bg-hot-red text-center text-white py-3  hover:bg-red-500 active:bg-red-700 transition-colors">登入</button>
+                                    class="md:w-36 w-full cursor-pointer bg-hot-red text-center text-white py-3  hover:bg-red-500 active:bg-red-700 transition-colors">登入</button>
                                 <router-link to="/signup"
-                                    class="w-36 cursor-pointer bg-gray-400 text-center text-white py-3  hover:bg-gray-300 active:bg-gray-500 transition-colors">加入日頭</router-link>
+                                    class="md:w-36 w-full cursor-pointer bg-gray-400 text-center text-white py-3  hover:bg-gray-300 active:bg-gray-500 transition-colors">加入日頭</router-link>
                             </div>
                             <!-- <p class="text-center text-sm px-4 cursor-pointer text-base-light">忘記密碼了嗎？</p> -->
                             <div class="w-full h-px bg-gray-100"></div>

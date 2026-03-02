@@ -14,13 +14,15 @@
         <div class="h-1 w-full bg-hot-red"></div>
         <div class="h-1 w-full bg-hot-red"></div>
       </div>
-      <div v-if="isOpen"
-        class="md:hidden fixed top-22 left-0 z-20 w-full h-full bg-black/60 transition-opacity duration-300">
+
+      <!-- 遮罩 -->
+      <div v-if="isOpen" @click="isOpen=false"
+        class="md:hidden fixed top-22 left-0 z-20 w-full h-full bg-black/60">
       </div>
 
-      <div class="md:hidden fixed top-22 right-0 z-50 w-full h-full transform transition-transform duration-200"
-        :class="isOpen ? 'translate-y-0' : '-translate-y-full pointer-events-none'">
-        <ul class="absolute flex flex-col items-center gap-4 w-full py-16 bg-gray-400 text-white">
+      <div @click.stop class="md:hidden fixed top-22 right-0 z-50 w-full h-full transform transition-transform duration-200 pointer-events-none"
+        :class="isOpen ? 'translate-y-0' : '-translate-y-full'">
+        <ul class="pointer-events-auto absolute flex flex-col items-center gap-4 w-full py-16 bg-gray-400 text-white">
           <img src="../assets/images/logo-pic.png" alt="" class="w-10">
           <router-link to="/tickets" class="hover:text-gray-400 py-2 w-full text-center">機票</router-link>
           <router-link to="/tours" class="hover:text-gray-400 py-2 w-full text-center">行程</router-link>
