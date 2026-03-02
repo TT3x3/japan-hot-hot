@@ -1,40 +1,40 @@
 <template>
-    <div class="flex flex-col gap-32 w-full">
-        <div class="max-w-[80%] w-full mx-auto flex flex-col gap-12">
+    <div v-if="ticket" class="flex flex-col gap-32 w-full">
+        <div class="max-w-[80%] w-full mx-auto flex flex-col md:gap-12 gap-6">
             <div class=" flex flex-col gap-4">
-                <h1 class="font-black text-2xl text-base-heavy">{{ detail.title }}</h1>
+                <h1 class="font-black text-2xl text-base-heavy">{{ ticket.title }}</h1>
                 <div class="flex gap-2">
-                    <p class="text-sm px-2 inline-block bg-gray-400 text-white">{{ detail.airplane }}</p>
-                    <p class="text-sm px-2 inline-block border border-gray-300 text-gray-400">{{ detail.timeType }}</p>
-                    <p class="text-sm px-2 inline-block border border-gray-300 text-gray-400">{{ detail.location }}</p>
+                    <p class="text-sm px-2 inline-block bg-gray-400 text-white">{{ ticket.airline }}</p>
+                    <p v-for="tag in ticket.tags" :key="tag"
+                        class="text-sm px-2 inline-block border border-gray-300 text-gray-400">{{ tag }}</p>
                 </div>
             </div>
-            <div class="h-[720px] overflow-hidden">
-                <img :src="detail.thumbnail" class="w-full h-full object-cover object-center"
+            <div class="md:h-[640px] h-80 overflow-hidden">
+                <img :src="`${apiBase}${ticket.thumbnail}`" class="w-full h-full object-cover object-center"
                     alt="ticket-detail-banner">
             </div>
             <div class="flex flex-col gap-6">
-                <div class="flex flex-row justify-between pl-3 pt-3">
-                    <div class="flex md:gap-12 gap-4">
+                <div
+                    class="flex md:flex-row flex-col md:gap-0 gap-4 md:justify-between justify-center items-center px-3 pt-3">
+                    <div class="flex gap-4">
                         <div class="flex flex-col justify-center items-center gap-6 text-gray-400">
                             <i class="fa-solid fa-plane fa-2xl"></i>
-                            <p class="text-sm">{{ detail.timeLong }}</p>
+                            <p class="text-sm">{{ ticket.flightDuration }}</p>
                         </div>
                         <div class="flex flex-col justify-center items-center gap-6 text-gray-400">
                             <i class="fa-solid fa-suitcase fa-2xl"></i>
-                            <p class="text-sm">{{ detail.hasLuggage ? '含行李重量' : '不含行李重量' }}</p>
+                            <p class="text-sm">{{ ticket.baggage ? '含行李重量' : '不含行李重量' }}</p>
                         </div>
                     </div>
-                    <div class="flex flex-row justify-center items-center gap-4">
-                        <p class="font-bold text-3xl text-hot-red">{{ detail.price | dollarSign | currency }}～</p>
-                        <button @click.prevent="scrollToBooking()"
-                            class="bg-hot-red text-white px-10 py-3 hover:bg-red-400 active:bg-red-700">立即購票</button>
+                    <div class="flex md:flex-row flex-col justify-center items-center md:w-auto w-full md:gap-2 gap-4">
+                        <p class="font-bold text-3xl text-hot-red">{{ ticket.price | dollarSign | currency }}～</p>
+                        <button v-if="ticket.status === 'active'" @click.prevent="scrollToBooking()"
+                            class="bg-hot-red text-white px-10 py-3 hover:bg-red-400 active:bg-red-700 w-full md:w-auto">立即購票</button>
+                        <button v-else class="bg-gray-400 text-gray-300 px-10 py-3 w-full" disabled>無法購買</button>
                     </div>
                 </div>
                 <div class="text-sm leading-6.5 text-base-heavy">
-                    <p>・精選高雄直飛關西航線，以極簡、高效的步調開啟您的商務或探尋之旅。</p>
-                    <p>・採用早去午回的優質時段，完美平衡工作行程與抵達京都後的舒緩時光。</p>
-                    <p>・專為講究效率的旅人設計，減少不必要的候機繁冗，直達大和文化的中心。</p>
+                    <p v-for="(text, index) in ticket.notices" :key="index">・{{ text }}</p>
                 </div>
             </div>
             <div class="w-full h-px bg-gray-100"></div>
@@ -43,72 +43,82 @@
                 <table>
                     <tbody class="border border-gray-200 divide-y divide-gray-200 text-sm">
                         <tr>
-                            <td class="px-6 py-4 table-fixed w-36 text-base-light bg-gray-100">出發機場</td>
-                            <td class="pl-4 py-4 text-base-heavy">{{ detail.departureAirport }}</td>
+                            <td class="px-6 py-4 table-fixed md:w-36 w-28 text-center text-base-light bg-gray-100">出發機場
+                            </td>
+                            <td class="md:px-4 px-2 py-4 text-base-heavy">{{ ticket.departure.airportName }}</td>
                         </tr>
                         <tr>
-                            <td class="px-6 py-4 table-fixed w-36 text-base-light bg-gray-100">出發時間</td>
-                            <td class="pl-4 py-4 text-base-heavy">{{ detail.departureTime }}<br />
+                            <td class="px-6 py-4 table-fixed md:w-36 w-28 text-center text-base-light bg-gray-100">出發時間
+                            </td>
+                            <td class="md:px-4 px-2 py-4 text-base-heavy">{{ ticket.departure.time }}<br />
                                 <span class="text-xs text-gray-400">*航空公司保有航班異動時間，正確航班時間請依航空公司官網公告為準</span>
                             </td>
                         </tr>
                         <tr>
-                            <td class="px-6 py-4 table-fixed w-36 text-base-light bg-gray-100">到達機場</td>
-                            <td class="pl-4 py-4 text-base-heavy">{{ detail.arrivedAirport }}</td>
+                            <td class="px-6 py-4 table-fixed md:w-36 w-28 text-center text-base-light bg-gray-100">到達機場
+                            </td>
+                            <td class="md:px-4 px-2 py-4 text-base-heavy">{{ ticket.arrival.airportName }}</td>
                         </tr>
                         <tr>
-                            <td class="px-6 py-4 table-fixed w-36 text-base-light bg-gray-100">到達時間</td>
-                            <td class="pl-4 py-4 text-base-heavy">{{ detail.arrivedTime }}<br />
+                            <td class="px-6 py-4 table-fixed md:w-36 w-28 text-center text-base-light bg-gray-100">到達時間
+                            </td>
+                            <td class="md:px-4 px-2 py-4 text-base-heavy">{{ ticket.arrival.time }}<br />
                                 <span class="text-xs text-gray-400">*航空公司保有航班異動時間，正確航班時間請依航空公司官網公告為準</span>
                             </td>
                         </tr>
                         <tr>
-                            <td class="px-6 py-4 table-fixed w-36 text-base-light bg-gray-100">航行時長</td>
-                            <td class="pl-4 py-4 text-base-heavy">{{ detail.timeLong }}<br />
+                            <td class="px-6 py-4 table-fixed md:w-36 w-28 text-center text-base-light bg-gray-100">航行時長
+                            </td>
+                            <td class="md:px-4 px-2 py-4 text-base-heavy">{{ ticket.flightDuration }}<br />
                                 <span class="text-xs text-gray-400">*以實際航行時間為準</span>
                             </td>
                         </tr>
-                        <tr v-if="!detail.hasLuggage">
-                            <td class="px-6 py-4 table-fixed w-36 text-base-light bg-gray-100">行李相關</td>
-                            <td class="pl-4 py-4 text-base-heavy">不含行李重量，如有需求請額外加購<br />
+                        <tr v-if="!ticket.baggage">
+                            <td class="px-6 md:py-4 table-fixed md:w-36 w-28 text-center text-base-light bg-gray-100">
+                                行李相關</td>
+                            <td class="md:px-4 px-2 py-4 text-base-heavy">不含行李重量，如有需求請額外加購<br />
                                 <span class="text-xs text-gray-400">* 請留意各家航空公司對行李重量、尺寸及內容物的規定</span>
                             </td>
                         </tr>
                         <tr v-else>
-                            <td class="px-6 py-4 table-fixed w-36 text-base-light bg-gray-100">行李相關</td>
-                            <td class="pl-4 py-4 text-base-heavy">隨身行李 {{ detail.luggageInfo?.carryon }}，
-                                托運行李 {{ detail.luggageInfo?.checked }}<br />
+                            <td class="px-6 md:py-4 table-fixed md:w-36 w-28 text-center text-base-light bg-gray-100">
+                                行李相關</td>
+                            <td class="md:px-4 px-2 py-4 text-base-heavy">隨身行李 {{ ticket.baggage?.carryon }}，
+                                托運行李 {{ ticket.baggage?.checked }}<br />
                                 <span class="text-xs text-gray-400">* 請留意各家航空公司對行李重量、尺寸及內容物的規定</span>
                             </td>
                         </tr>
                         <tr>
-                            <td class="px-6 py-4 table-fixed w-36 text-base-light bg-gray-100">提供住宿</td>
-                            <td class="pl-4 py-4 text-base-heavy">{{ detail.stayInfo }}</td>
+                            <td class="px-6 md:py-4 table-fixed md:w-36 w-28 text-center text-base-light bg-gray-100">
+                                提供住宿</td>
+                            <td class="md:px-4 px-2 py-4 text-base-heavy">{{ ticket.accommodation }}</td>
                         </tr>
                         <tr>
-                            <td class="px-6 py-4 table-fixed w-36 text-base-light bg-gray-100">機場接駁</td>
-                            <td class="pl-4 py-4 text-base-heavy">{{ detail.connect }}</td>
+                            <td class="px-6 md:py-4 table-fixed md:w-36 w-28 text-center text-base-light bg-gray-100">
+                                機場接駁</td>
+                            <td class="md:px-4 px-2 py-4 text-base-heavy">{{ ticket.airportTransfer }}</td>
                         </tr>
                         <tr>
-                            <td class="px-6 py-4 table-fixed w-36 text-base-light bg-gray-100">重要須知</td>
-                            <td class="pl-4 py-4 text-base-heavy">請務必填寫與護照相同之資料並攜帶有效護照，確保護照在行程結束後至少還有6個月的有效期限。
+                            <td class="px-6 md:py-4 table-fixed md:w-36 w-28 text-center text-base-light bg-gray-100">
+                                重要須知</td>
+                            <td class="md:px-4 px-2 py-4 text-base-heavy">請務必填寫與護照相同之資料並攜帶有效護照，確保護照在行程結束後至少還有6個月的有效期限。
                             </td>
                         </tr>
                     </tbody>
                 </table>
                 <div class="max-w-[960px] flex flex-col gap-2 justify-center mx-auto leading-6.5 text-base-heavy">
-                    <p class="font-black">【 航向關西 】高雄直飛：連結南國暖陽與京都之藍</p>
-                    <img :src="detail.images" alt="">
-                    <p>{{ detail.description }}</p>
-
+                    <img v-for="img in ticket.images" :key="img" :src="`${apiBase}${img}`" alt="">
+                    <p>{{ ticket.description }}</p>
                 </div>
             </div>
-            <div ref="bookingSection"
-                class="bg-gray-100 flex flex-col gap-8 p-14 border transition-colors duration-500 text-base-heavy"
+
+            <!-- 購買區 -->
+            <div v-if="ticket.status === 'active'" ref="bookingSection"
+                class="bg-gray-100 flex flex-col gap-8 md:p-14 p-6 border transition-colors duration-500 text-base-heavy"
                 :class="highlighted ? 'border-red-500' : 'border-red-500/0'">
                 <div class="flex flex-col gap-2">
                     <p class="text-sm text-gray-500">購買機票</p>
-                    <p class="font-bold">{{ detail.title }}</p>
+                    <p class="font-bold">{{ ticket.title }}</p>
                 </div>
                 <div class="flex flex-col gap-2">
                     <p class="text-sm text-gray-500">去回程時間</p>
@@ -130,22 +140,21 @@
                 </div>
                 <div class="flex flex-col gap-2">
                     <p class="text-sm text-gray-500">選擇數量</p>
-                    <div class="flex flex-row justify-between items-center gap-12 bg-white px-8 py-6 text-base-heavy"
+                    <div class="flex md:flex-row flex-col justify-between items-center md:gap-12 gap-4 bg-white md:px-8 py-6 text-base-heavy"
                         :class="isError.ticketCount ? 'border border-red-500' : 'border-none'">
-                        <p class="text-base-heavy">每張<span class="text-sm text-gray-400">（{{ detail.price |
+                        <p class="text-base-heavy">每張<span class="text-sm text-gray-400">（{{ ticket.price |
                             dollarSign | currency }} / 張）</span>
                         </p>
                         <div class="flex flex-row gap-12 items-center">
                             <i class="fa-solid fa-minus fa-lg hover:text-gray-400 active:text-gray-900"
                                 @click="subCount()"></i>
-                            <p class="text-xl">{{ detail.ticketCount }}</p>
+                            <p class="text-xl">{{ ticketCount }}</p>
                             <i class="fa-solid fa-plus fa-lg hover:text-gray-400 active:text-gray-900"
                                 @click="addCount()"></i>
                         </div>
                     </div>
                     <p v-if="isError.ticketCount" class="text-xs text-red-700">{{ isError.countErrMsg }}</p>
                 </div>
-
                 <div class="flex flex-col gap-2">
                     <p class="text-sm text-gray-500">注意事項</p>
                     <p class="text-xs text-gray-500">* 請留意去程及回程日期，逾期不可退費或變更方案。</p>
@@ -153,28 +162,38 @@
                 </div>
                 <div class="flex flex-col gap-2">
                     <p class="text-sm text-gray-500">總金額</p>
-                    <p class="font-bold text-xl">{{ detail.price * detail.ticketCount | dollarSign | currency }}</p>
+                    <p class="font-bold text-xl">{{ ticket.price * ticketCount | dollarSign | currency }}</p>
                 </div>
-                <router-link to="/checkout" @click.prevent="confirmBooking()"
-                    class="bg-hot-red self-end text-white px-10 py-3 hover:bg-red-400 active:bg-red-700">確認購買</router-link>
+                <button @click.prevent="confirmBooking()"
+                    class="bg-hot-red self-end text-white px-10 py-3 hover:bg-red-400 active:bg-red-700 w-full">確認購買</button>
             </div>
+            <div v-else class=" bg-gray-100 flex flex-col gap-4 justify-center items-center p-14 text-base-heavy">
+                <i class="fa-solid fa-face-sad-tear fa-5x"></i>
+                <p>搜哩～！暫時無法購買！</p>
+            </div>
+
             <div class="flex flex-col gap-4">
                 <p class="font-bold text-xl">注意事項</p>
                 <table>
                     <tbody class="border border-gray-200 divide-y divide-gray-200 text-sm">
                         <tr>
-                            <td class="px-6 py-4 table-fixed w-36 text-base-light bg-gray-100">不可抗因素</td>
-                            <td class="pl-4 py-4 text-base-heavy">若因天災、政府政策、器械故障等不可抗力因素造成航班可能取消或變更。我們將會主動通知您並處理相關事宜。
+                            <td class="px-6 py-4 table-fixed md:w-36 w-30 text-center text-base-light bg-gray-100">不可抗因素
+                            </td>
+                            <td class="md:px-4 px-2 py-4 text-base-heavy">
+                                若因天災、政府政策、器械故障等不可抗力因素造成航班可能取消或變更。我們將會主動通知您並處理相關事宜。
                             </td>
                         </tr>
                         <tr>
-                            <td class="px-6 py-4 table-fixed w-36 text-base-light bg-gray-100">取消或變更</td>
-                            <td class="pl-4 py-4 text-base-heavy">不可取消或變更，請務必確認您的行程安排後再進行預訂。如有特殊情況需要協助，請聯繫客服，我們將盡力提供協助。
+                            <td class="px-6 py-4 table-fixed md:w-36 w-30 text-center text-base-light bg-gray-100">取消或變更
+                            </td>
+                            <td class="md:px-4 px-2 py-4 text-base-heavy">
+                                不可取消或變更，請務必確認您的行程安排後再進行預訂。如有特殊情況需要協助，請聯繫客服，我們將盡力提供協助。
                             </td>
                         </tr>
                         <tr>
-                            <td class="px-6 py-4 table-fixed w-36 text-base-light bg-gray-100">其他</td>
-                            <td class="pl-4 py-4 text-base-heavy">若因個人原因或未依照規定時間集合而錯過航班，恕不退費。</td>
+                            <td class="px-6 py-4 table-fixed md:w-36 w-30 text-center text-base-light bg-gray-100">其他
+                            </td>
+                            <td class="md:px-4 px-2 py-4 text-base-heavy">若因個人原因或未依照規定時間集合而錯過航班，恕不退費。</td>
                         </tr>
                     </tbody>
                 </table>
@@ -184,11 +203,14 @@
 </template>
 
 <script>
+import http from '@/api/http'
 
 export default {
     name: 'TicketDetail',
     data() {
         return {
+            apiBase: process.env.VUE_APP_API_PATH,
+            ticket: "",
             highlighted: false,
             range: {
                 rangeDate: null,
@@ -204,35 +226,16 @@ export default {
                 ticketCount: false,
                 countErrMsg: '',
             },
-            detail: {
-                title: '高雄往返關西，極簡商務選航',
-                airplane: '快桃航空',
-                timeType: '早去午回',
-                location: '高雄出發',
-                departureTime: '07:30 AM',
-                departureAirport: '高雄機場',
-                arrivedTime: '10:30 AM',
-                timeLong: '2小時45分～3小時10分',
-                arrivedAirport: '關西機場',
-                hasLuggage: true,
-                luggageInfo: {
-                    "checked": "23KG",
-                    "carryon": "10KG"
-                },
-                price: 16888,
-                stayInfo: '提供住宿，關西大飯店',
-                connect: '有機場專車接駁至飯店，如欲自行前往請搭乘JR至「你給我站」',
-                description: '【 航向關西 】高雄直飛：連結南國暖陽與京都之藍在高雄的日光裡啟程，飛往另一片被海環抱的淨土。這是一條專為追求純粹與效率的旅人所設計的航路，讓起飛成為一種優雅的儀式。',
-                thumbnail: require('@/assets/images/tour-detail-03.jpg'),
-                images: require('@/assets/images/tour-detail-02.jpg'),
-                ticketCount: 1,
-                maxQuantity: 10,
-            },
+
         }
     },
     components: {
     },
     methods: {
+        async findProduct(id) {
+            const res = await http.get(`${this.apiBase}/product/flight/${id}`);
+            this.ticket = res.data;
+        },
         scrollToBooking() {
             const bookingSection = this.$refs.bookingSection;
             if (bookingSection) {
@@ -258,20 +261,20 @@ export default {
             }
         },
         addCount() {
-            if (this.detail.ticketCount >= this.detail.maxQuantity) {
+            if (this.ticketCount >= this.ticket.stock) {
                 this.isError.ticketCount = true;
-                this.isError.countErrMsg = `* 最多只能選擇 ${this.detail.maxQuantity} 張`;
+                this.isError.countErrMsg = `* 最多只能選擇 ${this.ticket.stock} 張`;
             } else {
-                this.detail.ticketCount++;
+                this.ticketCount++;
                 this.isError.ticketCount = false;
             }
         },
         subCount() {
-            if (this.detail.ticketCount <= 1) {
+            if (this.ticketCount <= 1) {
                 this.isError.ticketCount = true;
                 this.isError.countErrMsg = `* 最少需選擇 1 張`;
             } else {
-                this.detail.ticketCount--;
+                this.ticketCount--;
                 this.isError.ticketCount = false;
             }
         },
@@ -281,9 +284,9 @@ export default {
                 this.isError.dateErrMsg = '* 請選擇日期';
                 return;
             }
-            if (this.detail.ticketCount <= 0 || this.detail.ticketCount > this.detail.maxQuantity) {
+            if (this.ticket.ticketCount <= 0 || this.ticket.ticketCount > this.ticket.stock) {
                 this.isError.ticketCount = true;
-                this.isError.countErrMsg = `* 張數錯誤，請選擇 1~ ${this.detail.maxQuantity} 張`;
+                this.isError.countErrMsg = `* 張數錯誤，請選擇 1~ ${this.ticket.stock} 張`;
                 return;
             }
             if (this.isError.ticketCount || this.isError.date) {
@@ -311,6 +314,9 @@ export default {
 
             return `${format(new Date(r.start))} - ${format(new Date(r.end))}`
         },
+    },
+    created() {
+        this.findProduct(this.$route.params.id);
     }
 }
 </script>

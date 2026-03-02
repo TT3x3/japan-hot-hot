@@ -70,7 +70,7 @@ export default new Router({
       component: ToursPage,
     },
     {
-      path: "/tour-detail",
+      path: "/tour-detail/:id",
       name: "tour-detail",
       component: TourDetail,
     },
@@ -80,7 +80,7 @@ export default new Router({
       component: TicketsPage,
     },
     {
-      path: "/ticket-detail",
+      path: "/ticket-detail/:id",
       name: "ticket-detail",
       component: TicketDetail,
     },
