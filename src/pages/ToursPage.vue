@@ -65,11 +65,12 @@
                                 class="absolute inset-0 bg-white/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ">
                             </div>
                             <!-- 收藏 -->
-                            <!-- <button @click="item.isCollected = !item.isCollected"
+                            <button @click.prevent.stop="toggleLike(item.productId)"
                                 class="absolute top-3 right-3 p-2  text-white/65 hover:text-red-500 transition-colors duration-200 ">
-                                <i v-if="item.isCollected" class="fa-solid fa-heart fa-xl text-red-500"></i>
-                                <i v-else class="fa-regular fa-heart fa-xl"></i>
-                            </button> -->
+                                <i v-if="findLike(item.productId)"
+                                    class="fa-solid fa-heart fa-xl text-red-500 cursor-pointer"></i>
+                                <i v-else class="fa-regular fa-heart fa-xl cursor-pointer"></i>
+                            </button>
                         </div>
                         <div class="flex flex-col flex-1 p-5">
                             <div class="flex gap-2 mb-3">
@@ -99,16 +100,66 @@ export default {
         return {
             apiBase: process.env.VUE_APP_API_PATH,
             journey: "",
+            likesList: [],
         };
     },
     methods: {
         async getTours() {
             const res = await http.get(`${this.apiBase}/product/tour`);
             this.journey = res.data.items;
+        },
+        async getLikes() {
+            const token = localStorage.getItem('token');
+            const res = await http.get(`${this.apiBase}/cart`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            this.likesList = res.data.items;
+            if (this.likesList.length === 0) {
+                return;
+            }
+        },
+        findLike(id) {
+            return this.likesList.find(item => item.productId === id);
+        },
+        async addToLikes(id) {
+            const token = localStorage.getItem('token');
+            await http.post(`${this.apiBase}/cart/items`, {
+                productId: id,
+                quantity: 1
+            }, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            this.getLikes();
+        },
+        async delLike(id) {
+            if (this.findLike(id)) {
+                const token = localStorage.getItem('token');
+                await http.delete(`${this.apiBase}/cart/items`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    },
+                    data: {
+                        productId: id
+                    }
+                });
+                this.getLikes();
+            }
+        },
+        toggleLike(id) {
+            if (this.findLike(id)) {
+                this.delLike(id);
+            } else {
+                this.addToLikes(id);
+            }
         }
     },
     created() {
         this.getTours();
+        this.getLikes();
     },
 }
 </script>
