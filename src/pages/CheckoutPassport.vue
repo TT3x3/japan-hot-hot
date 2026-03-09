@@ -47,7 +47,9 @@
                                 <i class="fa-solid fa-user fa-sm"></i>
                                 <p class="font-bold text-sm">旅客 {{ index + 1 }}</p>
                             </div>
-                            <button @click="deleteInfo(index)" class="flex items-center gap-1 text-red-800">
+                            <button @click="deleteInfo(index)" :disabled="passportInfo.length === 1"
+                                class="flex items-center gap-1"
+                                :class="passportInfo.length === 1 ? 'hidden' : 'cursor-pointer text-red-700 hover:text-red-600 active:text-red-800'">
                                 <p class="font-bold text-sm">刪除資料</p>
                                 <i class="fa-solid fa-trash fa-sm"></i>
                             </button>
@@ -127,11 +129,11 @@
                         </div>
                     </div>
                     <div>
-                        <button @click.prevent="addPeople()" :disabled="passportInfo.length > 3"
-                            class="bg-gray-100 hover:bg-gray-50 active:bg-gray-200 border border-gray-300 px-10 py-3 w-full text-gray-400"
-                            :class="{ 'cursor-not-allowed text-gray-300': passportInfo.length > 3 }">
+                        <button @click.prevent="addPeople()" :disabled="passportInfo.length >= peopleNum"
+                            class="border-gray-300 px-10 py-3 w-full"
+                            :class="passportInfo.length >= peopleNum ? 'cursor-not-allowed bg-gray-100 text-gray-300' : 'cursor-pointer text-gray-400 hover:text-gray-600 active:text-gray-800 hover:bg-gray-50 active:bg-gray-200 border'">
                             <i class="fa-solid fa-square-plus fa-lg"></i> 新增旅客</button>
-                        <small class="text-sm text-gray-400">* 最多只能填寫 20 位旅客資料</small>
+                        <small v-if="passportInfo.length >= peopleNum " class="text-sm text-red-600">* 最多只能填寫 {{ peopleNum }} 位旅客資料</small>
                     </div>
                     <div class="flex flex-row gap-4">
                         <button @click.prevent="submitBtn()"
@@ -152,6 +154,7 @@ export default {
     data() {
         return {
             date: null,
+            peopleNum: 1,
             passportInfo: [
                 {
                     id: Date.now(),
@@ -187,7 +190,7 @@ export default {
     },
     methods: {
         addPeople() {
-            if (this.passportInfo.length > 2) {
+            if (this.passportInfo.length >= this.peopleNum) {
                 this.isOver = true;
                 return;
             }
@@ -261,6 +264,7 @@ export default {
                 if (this.isError) return;
             })
         },
-    }
+    },
+
 }
 </script>
