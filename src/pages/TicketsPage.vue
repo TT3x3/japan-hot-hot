@@ -55,7 +55,8 @@
                     class="relative md:flex-[0_0_calc(33.333%-1rem)] cursor-pointer group">
                     <div class="flex flex-col md:h-[450px] h-72 border border-gray-200">
                         <!-- 無庫存遮罩 -->
-                        <p v-if="item.status !== 'active'"  class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white z-3">
+                        <p v-if="item.status !== 'active'"
+                            class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white z-3">
                             暫無庫存</p>
                         <div v-if="item.status !== 'active'" class="absolute inset-0 bg-black/30 z-2"></div>
 
@@ -73,13 +74,10 @@
                         </div>
                         <div class="flex flex-col flex-1 p-5">
                             <div class="flex gap-2 mb-3">
-                                <p class="text-sm px-2 inline-block border border-gray-300 text-gray-400">{{
-                                    item.tags[0]
-                                }}</p>
-                                <p class="text-sm px-2 inline-block border border-gray-300 text-gray-400">{{
-                                    item.tags[1] }}</p>
+                                <p v-for="(tag, index) in item.tags" :key="index"
+                                    class="text-sm px-1 inline-block border border-gray-300 text-gray-400">{{ tag }}</p>
                             </div>
-                            <p class="font-bold line-clamp-1 text-base-heavy">{{ item.title }}</p>
+                            <p class="font-bold line-clamp-2 text-base-heavy">{{ item.title }}</p>
                             <p class="font-bold text-lg text-hot-red mt-auto text-end">{{ item.price.toLocaleString() |
                                 dollarSign | currency }}</p>
                         </div>
