@@ -28,7 +28,7 @@
           <img src="../assets/images/logo-pic.png" alt="" class="w-10">
           <router-link to="/tickets" class="hover:text-gray-300 py-2 w-full text-center">機票</router-link>
           <router-link to="/tours" class="hover:text-gray-300 py-2 w-full text-center">行程</router-link>
-          <router-link v-if="!$auth.isLoggedIn" to="/member"
+          <router-link v-if="$auth.isLoggedIn" to="/member"
             class="hover:text-gray-300 py-2 w-full text-center">會員中心</router-link>
           <li class="py-2 w-full text-center">關於我</li>
           <router-link v-if="!$auth.isLoggedIn" to="/login" class="hover:text-gray-300 py-2 w-full text-center">登入 /

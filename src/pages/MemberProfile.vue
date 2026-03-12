@@ -8,7 +8,7 @@
             <h1 class="text-3xl text-center tracking-[2rem] pl-[2rem] text-base-heavy">會員資料</h1>
         </div>
         <div class="max-w-[80%] w-full mx-auto flex flex-col gap-8">
-            <p class="font-bold text-2xl text-base-heavy">哩賀！甲奔未！{{ userInfo.name }}！！！</p>
+            <p class="font-bold text-2xl text-base-heavy">哩賀！甲奔未！{{ oldInfo.name }}！！！</p>
             <div class="text-base-heavy">
                 <div class="flex flex-row gap-4 ps-2 pb-4 items-center">
                     <i class="fa-solid fa-user"></i>
@@ -146,7 +146,7 @@
                             </div>
                         </div>
                         <div class="flex gap-4 justify-center items-center">
-                            <button type="submit" @click.prevent="validateForm()"
+                            <button type="submit" @click.prevent="patchUser()"
                                 class="w-36 cursor-pointer bg-hot-red text-white py-3  hover:bg-red-500 active:bg-red-700 transition-colors">確認變更</button>
                             <router-link to="/member"
                                 class="w-36 cursor-pointer bg-gray-400 text-white text-center py-3  hover:bg-gray-300 active:bg-gray-500 transition-colors">返回</router-link>
@@ -185,6 +185,7 @@ export default {
                 address: '',
             },
             oldInfo: {},
+            changeList: {},
             isFormValid: false,
         }
     },
@@ -193,14 +194,41 @@ export default {
     },
     methods: {
         async getUser() {
-            const token = localStorage.getItem('token')
-            const res = await http.get(`${this.apiBase}/members/me`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            })
-            this.userInfo = res.data;
-            this.oldInfo = { ...res.data }
+            try {
+                const token = localStorage.getItem('token')
+                const res = await http.get(`${this.apiBase}/members/me`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+                this.userInfo = res.data;
+                this.oldInfo = { ...res.data }
+            } catch (error) {
+                alert(error);
+            }
+        },
+        async patchUser() {
+            this.validateForm();
+            if (!this.isFormValid) return;
+            try {
+                Object.keys(this.userInfo).forEach(key => {
+                    if (this.userInfo[key] !== this.oldInfo[key]) {
+                        this.changeList[key] = this.userInfo[key];
+                    }
+                });
+                const token = localStorage.getItem('token');
+                http.patch(`${this.apiBase}/members/me`, this.changeList, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+                this.getUser();
+                this.changeList = {};
+                alert('會員資料更新成功！');
+            } catch (error) {
+                alert(error);
+            }
+
         },
         validateForm() {
             this.isFormValid = true;

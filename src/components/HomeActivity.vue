@@ -1,17 +1,21 @@
 <template>
-    <div class="flex flex-col justify-center items-center bg-gradient-to-t from-white from-50% to-gray-200 to-50%">
+    <div
+        class="flex flex-col justify-center md:items-center items-stretch  bg-gradient-to-t from-white from-50% to-gray-200 to-50%">
         <div class="flex flex-col gap-10 pt-32">
             <h2 class="font-bold text-center text-2xl text-base-heavy">最新活動</h2>
             <!-- 卡片區 -->
-            <div class="flex md:flex-row flex-col justify-center items-center gap-8 w-full md:px-0 px-8">
-                <!-- 卡片 -->
-                <div v-for="(activity, index) in activities" :key="index" class="md:w-[20%] border-solid border-1 border-gray-300">
-                    <img class="w-full" :src="activity.img" alt="activities-banner">
-                    <div class="flex flex-col gap-4 h-[180px] justify-between bg-white p-7">
-                        <h4 class="font-bold text-base-heavy line-clamp-2 ">{{ activity.title }}</h4>
-                        <p class="text-sm text-base-light line-clamp-3">
-                            {{ activity.description }}
-                        </p>
+            <div class="flex md:flex-row flex-nowrap overflow-x-auto md:overflow-visible gap-8 w-full md:px-0 px-8">
+                <div class="flex flex-nowrap no-scrollbar overflow-x-auto md:overflow-visible gap-8 md:justify-center">
+                    <!-- 卡片 -->
+                    <div v-for="(activity, index) in activities" :key="index"
+                        class="flex-shrink-0 md:w-[20%] w-[260px] border-solid border-1 border-gray-300">
+                        <img class="w-full" :src="activity.img" alt="activities-banner">
+                        <div class="flex flex-col gap-4 h-[180px] justify-between bg-white p-7">
+                            <h4 class="font-bold text-base-heavy line-clamp-2 ">{{ activity.title }}</h4>
+                            <p class="text-sm text-base-light line-clamp-3">
+                                {{ activity.description }}
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -45,3 +49,13 @@ export default {
     },
 }
 </script>
+<style scoped>
+.no-scrollbar::-webkit-scrollbar {
+    display: none;
+}
+
+.no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+</style>

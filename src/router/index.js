@@ -11,6 +11,7 @@ import TicketsPage from "@/pages/TicketsPage.vue";
 import TicketDetail from "@/pages/TicketDetail.vue";
 import MemberCenter from "@/pages/MemberCenter.vue";
 import MemberProfile from "@/pages/MemberProfile.vue";
+import MemberPassword from "@/pages/MemberPassword.vue";
 import MemberOrders from "@/pages/MemberOrders.vue";
 import MemberOrderDetail from "@/pages/MemberOrderDetail.vue";
 import MemberLikes from "@/pages/MemberLikes.vue";
@@ -48,6 +49,11 @@ export default new Router({
       path: "/member/profile",
       name: "profile",
       component: MemberProfile,
+    },
+        {
+      path: "/member/password",
+      name: "password]",
+      component: MemberPassword,
     },
     {
       path: "/member/orders",
