@@ -48,7 +48,7 @@
                                 <td class="px-6 py-4 table-fixed md:w-36 w-28 text-center text-base-light bg-gray-100">
                                     旅程天數
                                 </td>
-                                <td class="md:px-4 px-2 py-4 text-base-heavy">7 日</td>
+                                <td class="md:px-4 px-2 py-4 text-base-heavy">{{ ticket.fixedDays }} 日</td>
                             </tr>
                             <tr>
                                 <td class="px-6 py-4 table-fixed md:w-36 w-28 text-center text-base-light bg-gray-100">
@@ -143,7 +143,7 @@
                         <p class="text-sm text-gray-500">旅途天數</p>
                         <div
                             class="flex md:flex-row flex-col justify-between items-center md:gap-12 gap-4 bg-white md:px-8 py-6 text-base-heavy">
-                            <p class="font-bold text-base-heavy">7 日</p>
+                            <p class="font-bold text-base-heavy">{{ ticket.fixedDays }} 日</p>
                         </div>
                     </div>
                     <div class="flex flex-col gap-2">
