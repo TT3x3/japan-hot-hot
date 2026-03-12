@@ -41,7 +41,7 @@
                     </div>
                 </div>
 
-                <ul class="flex flex-wrap md:justify-between justify-center gap-y-12">
+                <ul class="flex flex-wrap md:justify-start justify-center gap-x-2 gap-y-12">
                     <!-- 卡片 -->
                     <router-link :to="`/${typeTranslate[item.type]}-detail/${item.productId}`" target="_blank"
                         rel="noopener noreferrer" v-for="(item, key) in paginationPages" :key="key"
@@ -59,7 +59,7 @@
                                 </button>
                             </div>
                             <div class="flex flex-col flex-1 gap-4 p-5 bg-white">
-                                <p class="font-bold line-clamp-2 text-base-heavy">{{ item.title }}</p>
+                                <p class="font-bold line-clamp-1 text-base-heavy">{{ item.title }}</p>
                                 <p class="font-bold text-lg text-hot-red mt-auto text-end">{{
                                     item.price.toLocaleString() |
                                     dollarSign | currency }}</p>

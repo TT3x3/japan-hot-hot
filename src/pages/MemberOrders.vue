@@ -9,18 +9,18 @@
         </div>
         <div class="max-w-[80%] mx-auto flex flex-col gap-8">
             <div class="text-base-heavy">
-                <div class="flex justify-between items-center pb-4">
-                    <div class="flex flex-row gap-4 items-center">
-                        <i class="fa-solid fa-clipboard-list"></i>
-                        <p class="font-bold text-lg text-base-heavy">訂單總覽</p>
-                    </div>
-                    <div class="flex gap-2 items-center">
-                        <label for="numberSelect" class="text-base-light md:text-base text-sm">每頁顯示</label>
-                        <select id="numberSelect" v-model.number="perPage"
-                            class="border border-gray-300 bg-white px-3 py-1">
-                            <option v-for="num in selectNum" :key="num" :value="num">{{
-                                num }}</option>
-                        </select>
+                <div class="flex flex-col pb-4">
+                    <div class="flex items-center justify-between">
+                        <router-link to="/member"
+                            class="cursor-pointer bg-gray-400 text-white text-center px-10 py-3  hover:bg-gray-300 active:bg-gray-500 transition-colors">返回會員中心</router-link>
+                        <div class="flex gap-2 items-center">
+                            <label for="numberSelect" class="text-base-light md:text-base text-sm">每頁顯示</label>
+                            <select id="numberSelect" v-model.number="perPage"
+                                class="border border-gray-300 bg-white px-3 py-1">
+                                <option v-for="num in selectNum" :key="num" :value="num">{{
+                                    num }}</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
 
