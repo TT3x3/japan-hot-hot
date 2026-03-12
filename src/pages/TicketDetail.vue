@@ -46,6 +46,12 @@
                         <tbody class="border border-gray-200 divide-y divide-gray-200 text-sm">
                             <tr>
                                 <td class="px-6 py-4 table-fixed md:w-36 w-28 text-center text-base-light bg-gray-100">
+                                    旅程天數
+                                </td>
+                                <td class="md:px-4 px-2 py-4 text-base-heavy">7 日</td>
+                            </tr>
+                            <tr>
+                                <td class="px-6 py-4 table-fixed md:w-36 w-28 text-center text-base-light bg-gray-100">
                                     出發機場
                                 </td>
                                 <td class="md:px-4 px-2 py-4 text-base-heavy">{{ ticket.departure.airportName }}</td>
@@ -134,22 +140,40 @@
                         <p class="font-bold">{{ ticket.title }}</p>
                     </div>
                     <div class="flex flex-col gap-2">
-                        <p class="text-sm text-gray-500">去回程時間</p>
+                        <p class="text-sm text-gray-500">旅途天數</p>
+                        <div
+                            class="flex md:flex-row flex-col justify-between items-center md:gap-12 gap-4 bg-white md:px-8 py-6 text-base-heavy">
+                            <p class="font-bold text-base-heavy">7 日</p>
+                        </div>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <p class="text-sm text-gray-500">去程日期</p>
                         <div class="relative border" :class="isError.date ? 'border-red-500' : 'border-none'">
-                            <v-date-picker v-model="range.rangeDate" @focus.prevent="range.outOfRange = false"
-                                :columns="2" :min-date="minDate" :max-date="maxDate" is-range color="red"
+                            <v-date-picker v-model="date" :columns="1" :min-date="minDate" :max-date="maxDate"
+                                color="red"
                                 :popover="{ visibility: 'click', placement: 'bottom-start', appendTo: 'self' }"
                                 :masks="{ input: 'YYYY / MM / DD' }">
-                                <template #default="{ togglePopover }">
-                                    <input type="text" :value="rangeText" readonly @click="togglePopover"
+                                <template #default="{ inputValue, togglePopover }">
+                                    <input type="text" :value="inputValue" readonly @click="togglePopover"
                                         @focus="isError.date = false"
-                                        class="border border-gray-300 bg-white px-8 py-6 w-[100%] cursor-pointer"
+                                        class="md:text-start text-center border border-gray-300 bg-white px-8 py-6 w-[100%] cursor-pointer"
                                         placeholder="請選擇日期" />
                                 </template>
                             </v-date-picker>
                         </div>
                         <p v-if="isError.date" class="text-xs text-red-700">{{ isError.dateErrMsg }}</p>
                         <p class="text-xs text-gray-500">* 僅可訂購1個月後至6個月以內的機票。</p>
+                    </div>
+                    <div class="flex flex-col gap-2">
+                        <p class="text-sm text-gray-500">回程日期</p>
+                        <div
+                            class="flex md:flex-row flex-col justify-between items-center md:gap-12 gap-4 bg-white md:px-8 px-2 py-6 text-base-heavy">
+                            <div v-if="!date" class="flex flex-col">
+                                <p class="md:text-start text-center font-bold text-hot-red">尚未選擇去程日期</p>
+                                <span class="md:text-sm text-xs text-gray-400">*選擇去程日期後系統將自動計算回程日期。</span>
+                            </div>
+                            <p v-if="returnDate" class="font-bold text-base-heavy">{{ returnDate }}</p>
+                        </div>
                     </div>
                     <div class="flex flex-col gap-2">
                         <p class="text-sm text-gray-500">選擇數量</p>
@@ -241,7 +265,8 @@ export default {
                 outOfRange: false,
                 errorMessage: '',
             },
-            date: null,
+            date: '',
+            returnDate: '',
             ticketCount: 1,
             isError: {
                 date: false,
@@ -277,20 +302,6 @@ export default {
                 setTimeout(() => {
                     this.highlighted = false;
                 }, 3000);
-            }
-        },
-        handleRange() {
-            const r = this.range.rangeDate;
-            if (!r?.start || !r?.end) return;
-            const start = new Date(r.start)
-            const end = new Date(r.end)
-            const diffDays =
-                Math.ceil((end - start) / (1000 * 60 * 60 * 24)) + 1
-
-            if (diffDays > this.range.maxRange) {
-                this.range.errorMessage = `只能選擇最多 ${this.range.maxRange} 天`
-                this.range.outOfRange = true
-                this.range.rangeDate = null
             }
         },
         addCount() {
@@ -338,18 +349,24 @@ export default {
             maxMonth.setMonth(maxMonth.getMonth() + 6);
             return maxMonth;
         },
-        rangeText() {
-            const r = this.range.rangeDate;
-            if (!r?.start || !r?.end) return '';
-
-            const format = (d) =>
-                `${d.getFullYear()} / ${String(d.getMonth() + 1).padStart(2, '0')} / ${String(d.getDate()).padStart(2, '0')}`
-
-            return `${format(new Date(r.start))} - ${format(new Date(r.end))}`
-        },
     },
     created() {
         this.findProduct(this.$route.params.id);
+    },
+    watch: {
+        date(newDate) {
+            if (!newDate) {
+                this.returnDate = '';
+                return;
+            }
+            const returnDate = new Date(newDate);
+            returnDate.setDate(returnDate.getDate() + 7);
+
+            const year = returnDate.getFullYear();
+            const month = String(returnDate.getMonth() + 1).padStart(2, '0');
+            const day = String(returnDate.getDate()).padStart(2, '0');
+            this.returnDate = `${year} / ${month} / ${day}`;
+        }
     }
 }
 </script>
