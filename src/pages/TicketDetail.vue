@@ -201,7 +201,7 @@
                         <p class="text-sm text-gray-500">總金額</p>
                         <p class="font-bold text-xl">{{ ticket.price * ticketCount | dollarSign | currency }}</p>
                     </div>
-                    <button @click.prevent="confirmBooking()"
+                    <button @click.prevent="createOrder()"
                         class="bg-hot-red self-end text-white px-10 py-3 hover:bg-red-400 active:bg-red-700 w-full">確認購買</button>
                 </div>
                 <div v-else class=" bg-gray-100 flex flex-col gap-4 justify-center items-center p-14 text-base-heavy">
@@ -274,6 +274,7 @@ export default {
                 ticketCount: false,
                 countErrMsg: '',
             },
+            isFormValid: false,
             isNotFound: false,
             seconds: 5,
         }
@@ -292,6 +293,28 @@ export default {
                         this.$router.push('/tickets');
                     }
                 }, 1000);
+            }
+        },
+        async createOrder() {
+            this.confirmBooking();
+            if (!this.isFormValid) return;
+            try {
+                const orderDetail = {
+                    productId: this.$route.params.id,
+                    startDate: new Date(this.date).toISOString().split('T')[0],
+                    endDate: new Date(this.returnDate).toISOString().split('T')[0],
+                    peopleCount: this.ticketCount,
+                };
+                const token = localStorage.getItem('token');
+                const res = await http.post(`${this.apiBase}/orders/flight/init`, orderDetail, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    }
+                });
+                sessionStorage.setItem('orderInit', JSON.stringify(res.data));
+                this.$router.push(`/checkout/${res.data.orderId}`);
+            } catch (error) {
+                alert(error);
             }
         },
         scrollToBooking() {
@@ -314,7 +337,7 @@ export default {
             }
         },
         subCount() {
-            if (this.ticketCount <= 1) {
+            if (this.ticketCount < 1) {
                 this.isError.ticketCount = true;
                 this.isError.countErrMsg = `* 最少需選擇 1 張`;
             } else {
@@ -323,19 +346,18 @@ export default {
             }
         },
         confirmBooking() {
+            this.isFormValid = true;
             if (!this.date) {
                 this.isError.date = true;
                 this.isError.dateErrMsg = '* 請選擇日期';
-                return;
+                this.isFormValid = false;
             }
             if (this.ticket.ticketCount <= 0 || this.ticket.ticketCount > this.ticket.stock) {
                 this.isError.ticketCount = true;
                 this.isError.countErrMsg = `* 張數錯誤，請選擇 1~ ${this.ticket.stock} 張`;
-                return;
+                this.isFormValid = false;
             }
-            if (this.isError.ticketCount || this.isError.date) {
-                return;
-            }
+            if (!this.isFormValid) return;
         },
     },
     computed: {
@@ -355,6 +377,7 @@ export default {
     },
     watch: {
         date(newDate) {
+            // console.log(new Date(newDate).toISOString().split('T')[0]);
             if (!newDate) {
                 this.returnDate = '';
                 return;
@@ -366,7 +389,7 @@ export default {
             const month = String(returnDate.getMonth() + 1).padStart(2, '0');
             const day = String(returnDate.getDate()).padStart(2, '0');
             this.returnDate = `${year} / ${month} / ${day}`;
-        }
+        },
     }
 }
 </script>

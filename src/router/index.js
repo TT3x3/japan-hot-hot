@@ -91,22 +91,22 @@ export default new Router({
       component: TicketDetail,
     },
     {
-      path: "/checkout",
+      path: "/checkout/:id",
       name: "checkout",
       component: CheckoutPage,
     },
     {
-      path: "/checkout/passport",
-      name: "checkoutPassport",
+      path: "/checkout/passport/:id",
+      name: "checkoutPassport/:id",
       component: CheckoutPassport,
     },
     {
-      path: "/checkout/checked",
+      path: "/checkout/checked/:id",
       name: "checkoutChecked",
       component: CheckoutChecked,
     },
     {
-      path: "/checkout/finished",
+      path: "/checkout/finished/:id",
       name: "checkoutFinished",
       component: CheckoutFinished,
     },
