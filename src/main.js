@@ -3,6 +3,7 @@ import App from "./App.vue";
 import router from "./router";
 import VCalendar from "v-calendar";
 import vSelect from "vue-select";
+import { createPinia, PiniaVuePlugin } from "pinia";
 import "vue-select/dist/vue-select.css";
 import "./assets/main.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
@@ -12,9 +13,12 @@ import { auth } from "@/utils/auth";
 
 Vue.config.productionTip = false;
 Vue.use(VCalendar);
+Vue.use(PiniaVuePlugin);
 Vue.component("CustomPagination", CustomPagination);
 Vue.component("v-select", vSelect);
 Vue.prototype.$auth = auth;
+
+const pinia = createPinia();
 
 router.beforeEach((to, from, next) => {
   document.body.scrollTop = 0;
@@ -24,6 +28,7 @@ router.beforeEach((to, from, next) => {
 });
 
 new Vue({
+  pinia,
   router,
   render: (h) => h(App),
 }).$mount("#app");

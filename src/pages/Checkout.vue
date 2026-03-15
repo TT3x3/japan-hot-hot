@@ -43,7 +43,7 @@
                 <div class="flex flex-row gap-2">
                     <div class="bg-gray-100 md:px-8 px-2 py-4 w-full">
                         <p class="text-sm text-base-light">出發日期</p>
-                        <p class="font-bold md:text-xl text-md text-base-heavy">2026/12/25</p>
+                        <p class="font-bold md:text-xl text-md text-base-heavy">{{ orderInfo.startDate }}</p>
                     </div>
                     <div class="bg-gray-100 md:px-8 px-2 py-4 w-full">
                         <p class="text-sm text-base-light">出發時間</p>
@@ -51,21 +51,8 @@
                     </div>
                     <div class="bg-gray-100 md:px-8 px-2 py-4 w-full">
                         <p class="text-sm text-base-light">購買數量</p>
-                        <p class="font-bold md:text-xl text-md text-base-heavy">3 <span class="text-sm">人</span></p>
-                    </div>
-                </div>
-                <div class="flex flex-row gap-2">
-                    <div class="bg-gray-100 md:px-8 px-2 py-4 w-full">
-                        <p class="text-sm text-hot-red">回程日期</p>
-                        <p class="font-bold md:text-xl text-md text-hot-red">2026/12/30</p>
-                    </div>
-                    <div class="bg-gray-100 md:px-8 px-2 py-4 w-full">
-                        <p class="text-sm text-hot-red">回程時間</p>
-                        <p class="font-bold md:text-xl text-md text-hot-red">06:30 PM</p>
-                    </div>
-                    <div class="bg-gray-100 md:px-8 px-2 py-4 w-full">
-                        <p class="text-sm text-hot-red">購買天數</p>
-                        <p class="font-bold md:text-xl text-md text-hot-red">5 <span class="text-sm">天</span></p>
+                        <p class="font-bold md:text-xl text-md text-base-heavy">{{ orderInfo.peopleCount }}<span
+                                class="text-sm">人</span></p>
                     </div>
                 </div>
             </div>
@@ -184,13 +171,13 @@
                         <div
                             class="flex md:flex-row flex-col md:items-center items-start justify-between bg-gray-100 p-6">
                             <p>總金額</p>
-                            <p class="font-bold text-xl text-hot-red">NT$ 280,000</p>
+                            <p class="font-bold text-xl text-hot-red">{{ orderInfo.totalAmount | dollarSign | currency }}</p>
                         </div>
                     </div>
                     <div class="flex flex-row gap-4">
                         <button @click.prevent="submitBtn()"
                             class="bg-hot-red hover:bg-red-500 active:bg-red-700 px-10 py-3 w-full font-bold text-center text-white">確認</button>
-                        <button
+                        <button @click.prevent="$router.back(-1)"
                             class="bg-gray-400 hover:bg-gray-300 active:bg-gray-500 px-10 py-3 w-full text-center text-white">返回</button>
                     </div>
                 </div>
@@ -201,11 +188,13 @@
 
 <script>
 import cities from '@/json/city.json';
+import { useOrderStore } from '@/stores/order';
 
 export default {
     name: 'CheckoutPage',
     data() {
         return {
+            store: useOrderStore(),
             cities,
             selectCity: null,
             selectArea: null,
@@ -285,6 +274,9 @@ export default {
         }
     },
     computed: {
+        orderInfo() {
+            return this.store.orderInit;
+        },
         areaOptions() {
             return this.selectCity ? this.selectCity.AreaList : []
         }
@@ -293,6 +285,6 @@ export default {
         selectCity() {
             this.selectArea = null
         }
-    }
+    },
 }
 </script>

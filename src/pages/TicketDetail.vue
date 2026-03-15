@@ -98,8 +98,9 @@
                                 <td
                                     class="px-6 md:py-4 table-fixed md:w-36 w-28 text-center text-base-light bg-gray-100">
                                     行李相關</td>
-                                <td class="md:px-4 px-2 py-4 text-base-heavy">隨身行李 {{ ticket.baggage?.carryon }}，
-                                    托運行李 {{ ticket.baggage?.checked }}<br />
+                                <td class="md:px-4 px-2 py-4 text-base-heavy">隨身行李 {{ ticket.baggage &&
+                                    ticket.baggage.carryon }}，
+                                    托運行李 {{ ticket.baggage && ticket.baggage.checked }}<br />
                                     <span class="text-xs text-gray-400">* 請留意各家航空公司對行李重量、尺寸及內容物的規定</span>
                                 </td>
                             </tr>
@@ -251,11 +252,13 @@
 
 <script>
 import http from '@/api/http'
+import { useOrderStore } from '@/stores/order';
 
 export default {
     name: 'TicketDetail',
     data() {
         return {
+            store: useOrderStore(),
             apiBase: process.env.VUE_APP_API_PATH,
             ticket: "",
             highlighted: false,
@@ -298,24 +301,14 @@ export default {
         async createOrder() {
             this.confirmBooking();
             if (!this.isFormValid) return;
-            try {
-                const orderDetail = {
-                    productId: this.$route.params.id,
-                    startDate: new Date(this.date).toISOString().split('T')[0],
-                    endDate: new Date(this.returnDate).toISOString().split('T')[0],
-                    peopleCount: this.ticketCount,
-                };
-                const token = localStorage.getItem('token');
-                const res = await http.post(`${this.apiBase}/orders/flight/init`, orderDetail, {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    }
-                });
-                sessionStorage.setItem('orderInit', JSON.stringify(res.data));
-                this.$router.push(`/checkout/${res.data.orderId}`);
-            } catch (error) {
-                alert(error);
-            }
+            await this.store.createOrder({
+                productId: this.$route.params.id,
+                startDate: new Date(this.date).toISOString().split("T")[0],
+                endDate: new Date(this.returnDate).toISOString().split("T")[0],
+                peopleCount: this.ticketCount,
+                apiBase: this.apiBase,
+                router: this.$router,
+            })
         },
         scrollToBooking() {
             const bookingSection = this.$refs.bookingSection;
