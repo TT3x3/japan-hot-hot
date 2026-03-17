@@ -1,5 +1,7 @@
 <template>
     <div class="flex flex-col md:gap-32 gap-12 w-full bg-gray-100">
+        <CustomModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
+            @close="isModalOpen = false" />
         <!-- top -->
         <div class="relative md:h-80 h-40 overflow-hidden">
             <img src="../assets/images/carousel-5.jpg" alt="" class=" w-full h-full object-cover">
@@ -13,10 +15,12 @@
                     <div></div>
                     <!-- 登入區塊 -->
                     <div class="flex flex-col justify-center items-center gap-12">
-                        <form class="bg-white md:px-10 px-4 md:py-18 py-6 w-full max-w-3xl flex flex-col gap-6 justify-center">
+                        <form
+                            class="bg-white md:px-10 px-4 md:py-18 py-6 w-full max-w-3xl flex flex-col gap-6 justify-center">
                             <div class="flex flex-col gap-4">
                                 <div class="flex flex-col gap-1 px-4">
-                                    <div class="flex md:flex-row flex-col md:items-center items-start md:gap-0 gap-1 w-full">
+                                    <div
+                                        class="flex md:flex-row flex-col md:items-center items-start md:gap-0 gap-1 w-full">
                                         <label for="emailInput"
                                             class="inline-block w-24 font-bold text-base-light">Email</label>
                                         <input id="emailInput" type="email" v-model.trim="loginInfo.email"
@@ -29,7 +33,8 @@
                                 </div>
                                 <div class="md:block hidden w-full h-px bg-gray-100"></div>
                                 <div class="flex flex-col gap-1 px-4">
-                                    <div class="flex md:flex-row flex-col md:items-center items-start md:gap-0 gap-1 w-full">
+                                    <div
+                                        class="flex md:flex-row flex-col md:items-center items-start md:gap-0 gap-1 w-full">
                                         <label for="passwordInput"
                                             class="inline-block w-24 font-bold text-base-light">密碼</label>
                                         <input id="passwordInput" type="password" v-model.trim="loginInfo.password"
@@ -65,11 +70,15 @@
 <script>
 import http from '@/api/http'
 import { login } from '@/utils/auth'
+import CustomModal from '@/components/CustomModal.vue';
 
 export default {
     name: 'AppLogin',
     data() {
         return {
+            isModalOpen: false,
+            hasError: false,
+            modalContent: '',
             loginInfo: {
                 email: '',
                 password: '',
@@ -84,7 +93,11 @@ export default {
             apiBase: process.env.VUE_APP_API_PATH,
             loginErrorMessage: '',
         };
-    }, methods: {
+    },
+    components: {
+        CustomModal,
+    },
+    methods: {
         validateForm() {
             const emailRule = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (this.loginInfo.email.trim() === '') {
@@ -117,8 +130,9 @@ export default {
                     this.$router.push('/');
                 }
             } catch (error) {
-                this.loginErrorMessage = error.response?.data?.message || '登入失敗';
-                alert(this.loginErrorMessage);
+                this.isModalOpen = true;
+                this.hasError = true;
+                this.modalContent = error.response?.data?.message;
                 this.loginInfo.email = '';
                 this.loginInfo.password = '';
             }
