@@ -370,7 +370,6 @@ export default {
     },
     watch: {
         date(newDate) {
-            // console.log(new Date(newDate).toISOString().split('T')[0]);
             if (!newDate) {
                 this.returnDate = '';
                 return;

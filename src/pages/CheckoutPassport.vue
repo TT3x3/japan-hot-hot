@@ -1,5 +1,7 @@
 <template>
     <div class="flex flex-col gap-32 w-full">
+        <CustomModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
+            @close="isModalOpen = false" />
         <div class="max-w-[80%] w-full mx-auto flex flex-col gap-12">
             <!-- 進度條 -->
             <div class=" flex flex-row md:gap-4 gap-1">
@@ -39,6 +41,7 @@
                     <div>
                         <p class="font-bold text-xl pt-4">護照資訊</p>
                         <p class="text-sm text-hot-red">※務必與護照上的資訊相同，否則無法使用票券。</p>
+                        <p class="text-sm text-hot-red">※該訂單最多只能填寫 {{ orderInfo.peopleCount }} 位旅客資料</p>
                     </div>
                     <div v-for="(people, index) in passportInfo" :key="people.id"
                         class="flex flex-col gap-5 bg-gray-50 border border-gray-200 md:px-6 px-2 md:py-6 py-4">
@@ -47,12 +50,6 @@
                                 <i class="fa-solid fa-user fa-sm"></i>
                                 <p class="font-bold text-sm">旅客 {{ index + 1 }}</p>
                             </div>
-                            <button @click="deleteInfo(index)" :disabled="passportInfo.length === 1"
-                                class="flex items-center gap-1"
-                                :class="passportInfo.length === 1 ? 'hidden' : 'cursor-pointer text-red-700 hover:text-red-600 active:text-red-800'">
-                                <p class="font-bold text-sm">刪除資料</p>
-                                <i class="fa-solid fa-trash fa-sm"></i>
-                            </button>
                         </div>
                         <div class="flex md:flex-row flex-col md:justify-between md:gap-2 gap-5">
                             <div class="flex flex-col md:w-[70%] w-full gap-1">
@@ -69,77 +66,71 @@
                             </div>
                             <div class="flex flex-col gap-1 w-full">
                                 <div class="flex flex-row  items-center">
-                                    <label for="secondNameInput"
+                                    <label for="lastNameInput"
                                         class="inline-block  w-20 font-bold md:text-base text-sm text-base-light">名字</label>
-                                    <input id="secondNameInput" type="text" v-model.trim="people.secondName"
-                                        @focus="people.errors.secondName = ''"
+                                    <input id="lastNameInput" type="text" v-model.trim="people.lastName"
+                                        @focus="people.errors.lastName = ''"
                                         class="w-full bg-white border border-gray-300 px-2 py-1 "
-                                        :class="{ 'border-hot-red': people.errors.secondName }" placeholder="請輸入護照名稱">
+                                        :class="{ 'border-hot-red': people.errors.lastName }" placeholder="請輸入護照名稱">
                                 </div>
-                                <small v-if="people.errors.secondName" class="text-sm text-end text-hot-red">{{
-                                    people.errors.secondName }}</small>
+                                <small v-if="people.errors.lastName" class="text-sm text-end text-hot-red">{{
+                                    people.errors.lastName }}</small>
                             </div>
                         </div>
                         <div class="flex flex-col gap-1">
                             <div class="flex flex-row w-full items-center">
                                 <label for="idInput"
                                     class="inline-block w-20 font-bold md:text-base text-sm text-base-light">身分證</label>
-                                <input id="idInput" type="text" v-model.trim="people.idCard"
-                                    @focus="people.errors.idCard = ''"
-                                    @input="people.idCard = $event.target.value.toUpperCase()"
+                                <input id="idInput" type="text" v-model.trim="people.idNumber"
+                                    @focus="people.errors.idNumber = ''"
+                                    @input="people.idNumber = $event.target.value.toUpperCase()"
                                     class="w-full bg-white border border-gray-300 px-2 py-1 "
-                                    :class="{ 'border-hot-red': people.errors.idCard }" placeholder="請輸入身分證">
+                                    :class="{ 'border-hot-red': people.errors.idNumber }" placeholder="請輸入身分證">
                             </div>
-                            <small v-if="people.errors.idCard" class="text-sm text-end text-hot-red">{{
-                                people.errors.idCard }}</small>
+                            <small v-if="people.errors.idNumber" class="text-sm text-end text-hot-red">{{
+                                people.errors.idNumber }}</small>
                         </div>
                         <div class="flex flex-col gap-1">
                             <div class="flex flex-row w-full items-center">
-                                <label for="passportCodeInput"
+                                <label for="passportNumberInput"
                                     class="inline-block w-20 font-bold md:text-base text-sm text-base-light">護照號碼</label>
-                                <input id="passportCodeInput" type="text" v-model.trim="people.passportCode"
-                                    @focus="people.errors.passportCode = ''"
+                                <input id="passportNumberInput" type="text" v-model.trim="people.passportNumber"
+                                    @focus="people.errors.passportNumber = ''"
                                     class="w-full bg-white border border-gray-300 px-2 py-1 "
-                                    :class="{ 'border-hot-red': people.errors.passportCode }" placeholder="請輸入護照號碼">
+                                    :class="{ 'border-hot-red': people.errors.passportNumber }" placeholder="請輸入護照號碼">
                             </div>
-                            <small v-if="people.errors.passportCode" class="text-sm text-end text-hot-red">{{
-                                people.errors.passportCode }}</small>
+                            <small v-if="people.errors.passportNumber" class="text-sm text-end text-hot-red">{{
+                                people.errors.passportNumber }}</small>
                         </div>
                         <div class="flex flex-col gap-1">
                             <div class="flex flex-row w-full items-center">
                                 <label for="dateInput"
                                     class="inline-block w-20 font-bold md:text-base text-sm text-base-light">證件效期</label>
                                 <div class="relative w-full"
-                                    :class="people.errors.exp ? 'border border-red-500' : 'border-none'" id="dateInput">
-                                    <v-date-picker v-model="people.exp" :columns="2" :min-date="minDate"
+                                    :class="people.errors.passportExpiry ? 'border border-red-500' : 'border-none'"
+                                    id="dateInput">
+                                    <v-date-picker v-model="people.passportExpiry" :columns="1" :min-date="minDate"
                                         :max-date="maxDate" color="red"
                                         :popover="{ visibility: 'click', placement: 'bottom-start', appendTo: 'self' }"
                                         :masks="{ input: 'YYYY / MM / DD' }">
                                         <template #default="{ inputValue, togglePopover }">
                                             <input type="text" :value="inputValue" readonly @click="togglePopover"
-                                                @focus="people.errors.exp = false"
+                                                @focus="people.errors.passportExpiry = false"
                                                 class="bg-white border border-gray-300 px-2 py-1 w-[100%] cursor-pointer"
                                                 placeholder="請選擇日期" />
                                         </template>
                                     </v-date-picker>
                                 </div>
                             </div>
-                            <small v-if="people.errors.exp" class="text-sm text-end text-hot-red">{{
-                                people.errors.exp }}</small>
+                            <small v-if="people.errors.passportExpiry" class="text-sm text-end text-hot-red">{{
+                                people.errors.passportExpiry }}</small>
                         </div>
                     </div>
-                    <div>
-                        <button @click.prevent="addPeople()" :disabled="passportInfo.length >= peopleNum"
-                            class="border-gray-300 px-10 py-3 w-full"
-                            :class="passportInfo.length >= peopleNum ? 'cursor-not-allowed bg-gray-100 text-gray-300' : 'cursor-pointer text-gray-400 hover:text-gray-600 active:text-gray-800 hover:bg-gray-50 active:bg-gray-200 border'">
-                            <i class="fa-solid fa-square-plus fa-lg"></i> 新增旅客</button>
-                        <small v-if="passportInfo.length >= peopleNum " class="text-sm text-red-600">* 最多只能填寫 {{ peopleNum }} 位旅客資料</small>
-                    </div>
                     <div class="flex flex-row gap-4">
-                        <button @click.prevent="submitBtn()"
+                        <button @click.prevent="savePassportInfo()" type="button"
                             class=" px-10 py-3 w-full bg-hot-red hover:bg-red-500 active:bg-red-700  text-white">確認送出</button>
-                        <router-link to="/checkout"
-                            class="bg-gray-400 hover:bg-gray-300 active:bg-gray-500 px-10 py-3 w-full text-center text-white">返回</router-link>
+                        <button @click.prevent="$router.back(-1)" type="button"
+                            class="bg-gray-400 hover:bg-gray-300 active:bg-gray-500 px-10 py-3 w-full text-center text-white">返回</button>
                     </div>
                 </div>
             </div>
@@ -148,76 +139,54 @@
 </template>
 
 <script>
+import { useOrderStore } from '@/stores/order';
+import CustomModal from '@/components/CustomModal.vue';
 
 export default {
     name: 'CheckoutPage',
+    components: {
+        CustomModal,
+    },
     data() {
         return {
+            apiBase: process.env.VUE_APP_API_PATH,
+            store: '',
+            isModalOpen: false,
+            hasError: false,
+            modalContent: '',
             date: null,
-            peopleNum: 1,
-            passportInfo: [
-                {
-                    id: Date.now(),
-                    firstName: '',
-                    secondName: '',
-                    idCard: '',
-                    passportCode: '',
-                    exp: '',
-                    errors: {
-                        firstName: '',
-                        secondName: '',
-                        idCard: '',
-                        passportCode: '',
-                        exp: '',
-                    }
-                }
-            ],
+            passportInfo: [],
             isError: false,
             isOver: false,
         }
     },
-    computed: {
-        minDate() {
-            const today = new Date();
-            today.setMonth(today.getMonth() + 6);
-            return today;
-        },
-        maxDate() {
-            const maxMonth = new Date();
-            maxMonth.setMonth(maxMonth.getMonth() + 60);
-            return maxMonth;
-        }
+    created() {
+        this.store = useOrderStore();
+        this.initPassport();
     },
     methods: {
-        addPeople() {
-            if (this.passportInfo.length >= this.peopleNum) {
-                this.isOver = true;
-                return;
-            }
-
-            const newItem = {
-                id: Date.now(),
-                firstName: '',
-                secondName: '',
-                idCard: '',
-                passportCode: '',
-                exp: '',
-                errors: {
+        initPassport() {
+            this.passportInfo = Array.from({ length: this.orderInfo.peopleCount }, () => (
+                {
+                    id: Math.random(),
                     firstName: '',
-                    secondName: '',
-                    idCard: '',
-                    passportCode: '',
-                    exp: '',
+                    lastName: '',
+                    idNumber: '',
+                    passportNumber: '',
+                    passportExpiry: '',
+                    errors: {
+                        firstName: '',
+                        lastName: '',
+                        idNumber: '',
+                        passportNumber: '',
+                        passportExpiry: '',
+                    }
                 }
-            };
-            this.passportInfo.push(newItem);
+            ))
         },
-        deleteInfo(i) {
-            this.passportInfo.splice(i, 1);
-        },
-        submitBtn() {
+        validateForm() {
             this.passportInfo.forEach(p => {
-                const nameRule = /^[A-Z,\-\s]+$/;
+                const nameRule = /^[A-Za-z,\-\s]+$/;
                 if (!p.firstName || p.firstName.trim() === '') {
                     this.isError = true;
                     p.errors.firstName = '姓氏不可空白';
@@ -227,44 +196,95 @@ export default {
                     p.errors.firstName = '名稱格式錯誤';
                 }
 
-                if (!p.secondName || p.secondName.trim() === '') {
+                if (!p.lastName || p.lastName.trim() === '') {
                     this.isError = true;
-                    p.errors.secondName = '名字不可空白';
+                    p.errors.lastName = '名字不可空白';
                 }
-                if (p.secondName && !nameRule.test(p.secondName)) {
+                if (p.lastName && !nameRule.test(p.lastName)) {
                     this.isError = true;
-                    p.errors.secondName = '名稱格式錯誤';
+                    p.errors.lastName = '名稱格式錯誤';
                 }
 
-                if (!p.idCard || p.idCard.trim() === '') {
-                    p.errors.idCard = '*請輸入身份證字號'
+                if (!p.idNumber || p.idNumber.trim() === '') {
+                    p.errors.idNumber = '*請輸入身份證字號'
                     this.isError = true;
                 }
                 const idRule = /^[A-Z]\d{9}$/;
-                if (!idRule.test(p.idCard)) {
-                    p.errors.idCard = '*不符合台灣身分證格式'
+                if (!idRule.test(p.idNumber)) {
+                    p.errors.idNumber = '*不符合台灣身分證格式'
                     this.isError = true;
                 }
 
-                if (!p.passportCode || p.passportCode.trim() === '') {
-                    p.errors.passportCode = '*請輸入護照號碼';
+                if (!p.passportNumber || p.passportNumber.trim() === '') {
+                    p.errors.passportNumber = '*請輸入護照號碼';
                     this.isError = true;
                 }
                 const passportNumberRule = /^\d{9}$/;
-                if (!passportNumberRule.test(p.passportCode)) {
-                    p.errors.passportCode = '*護照必須是9碼數字';
+                if (!passportNumberRule.test(p.passportNumber)) {
+                    p.errors.passportNumber = '*護照必須是9碼數字';
                     this.isError = true;
                 }
 
-                if (!p.exp) {
-                    p.errors.exp = '*請輸入護照號碼';
+                if (!p.passportExpiry) {
+                    p.errors.passportExpiry = '*請輸入護照號碼';
                     this.isError = true;
                 }
 
                 if (this.isError) return;
             })
         },
-    },
+        // async savePassportInfo() {
+        //     this.validateForm();
+        //     if (this.isError) return;
+        //     try {
+        //         let travelerInfo = this.passportInfo.map(people => ({
+        //             firstName: people.firstName,
+        //             lastName: people.lastName,
+        //             idNumber: people.idNumber,
+        //             passportNumber: people.passportNumber,
+        //             passportExpiry: new Date(people.passportExpiry).toISOString().split('T')[0],
+        //         }));
+        //         const token = localStorage.getItem('token');
+        //         const res = await http.patch(`${this.apiBase}/orders/${this.orderInfo.orderId}/travelers`, {
+        //             travelers: travelerInfo
+        //         }, {
+        //             headers: {
+        //                 Authorization: `Bearer ${token}`
+        //             },
+        //         })
+        //         console.log(res);
 
+        //     } catch (error) {
+        //         this.isModalOpen = true;
+        //         this.hasError = true;
+        //         this.modalContent = error.response?.data?.message || '發生錯誤，請重新操作';
+        //     }
+        // }
+        async savePassportInfo(){
+            this.validateForm();
+            if(this.isError) return;
+            await this.store.savePassportInfo({
+                passportInfo:this.passportInfo,
+                apiBase: this.apiBase,
+                orderId: this.orderInfo.orderId,
+                router: this.$router,
+            })
+        }
+    },
+    computed: {
+        orderInfo() {
+            return this.store.orderInit;
+        },
+        minDate() {
+            const today = new Date();
+            today.setMonth(today.getMonth() + 6);
+            return today;
+        },
+        maxDate() {
+            const maxMonth = new Date();
+            maxMonth.setMonth(maxMonth.getMonth() + 60);
+            return maxMonth;
+        },
+    },
 }
 </script>

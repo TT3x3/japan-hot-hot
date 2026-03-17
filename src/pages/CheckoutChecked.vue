@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col gap-32 w-full">
-        <div class="max-w-[80%] w-full mx-auto flex flex-col gap-12">
+        <div v-if="orderDetail" class="max-w-[80%] w-full mx-auto flex flex-col gap-12">
             <!-- 進度條 -->
             <div class=" flex flex-row md:gap-4 gap-1">
                 <div class="flex flex-col gap-2 w-full">
@@ -44,7 +44,7 @@
                     <div class="flex flex-row">
                         <div class=" md:px-8 px-2 py-4 w-full">
                             <p class="text-sm text-base-light">出發日期</p>
-                            <p class="font-bold md:text-xl text-md text-base-heavy">2026/12/25</p>
+                            <p class="font-bold md:text-xl text-md text-base-heavy">{{ orderDetail.startDate }}</p>
                         </div>
                         <div class=" md:px-8 px-2 py-4 w-full">
                             <p class="text-sm text-base-light">出發時間</p>
@@ -52,21 +52,8 @@
                         </div>
                         <div class=" md:px-8 px-2 py-4 w-full">
                             <p class="text-sm text-base-light">購買數量</p>
-                            <p class="font-bold md:text-xl text-md text-base-heavy">3 <span class="text-sm">人</span></p>
-                        </div>
-                    </div>
-                    <div class="flex flex-row">
-                        <div class=" md:px-8 px-2 py-4 w-full">
-                            <p class="text-sm text-base-light">回程日期</p>
-                            <p class="font-bold md:text-xl text-md text-base-heavy">2026/12/30</p>
-                        </div>
-                        <div class=" md:px-8 px-2 py-4 w-full">
-                            <p class="text-sm text-base-light">回程時間</p>
-                            <p class="font-bold md:text-xl text-md text-base-heavy">06:30 PM</p>
-                        </div>
-                        <div class=" md:px-8 px-2 py-4 w-full">
-                            <p class="text-sm text-base-light">購買天數</p>
-                            <p class="font-bold md:text-xl text-md text-base-heavy">5 <span class="text-sm">天</span></p>
+                            <p class="font-bold md:text-xl text-md text-base-heavy">{{ orderDetail.peopleCount }} <span
+                                    class="text-sm">人</span></p>
                         </div>
                     </div>
                 </div>
@@ -80,14 +67,14 @@
                         <div class="flex flex-col gap-1 px-4">
                             <div class="flex md:flex-row flex-col w-full md:items-center items-start">
                                 <p class="w-24 font-bold text-base-light md:text-base text-sm">姓名</p>
-                                <p>{{ userInfo.name }}</p>
+                                <p>{{ orderDetail.contact.name }}</p>
                             </div>
                         </div>
                         <div class="w-full h-px bg-gray-100"></div>
                         <div class="flex flex-col gap-1 px-4">
                             <div class="flex md:flex-row flex-col w-full md:items-center items-start">
                                 <p class="w-24 font-bold text-base-light md:text-base text-sm">Email</p>
-                                <p class="break-all">{{ userInfo.email }}</p>
+                                <p class="break-all">{{ orderDetail.contact.email }}</p>
                             </div>
 
                         </div>
@@ -95,7 +82,7 @@
                         <div class="flex flex-col gap-1 px-4">
                             <div class="flex md:flex-row flex-col w-full md:items-center items-start">
                                 <p class="w-24 font-bold text-base-light md:text-base text-sm">聯絡電話</p>
-                                <p>{{ userInfo.phone }}</p>
+                                <p>{{ orderDetail.contact.phone }}</p>
                             </div>
 
                         </div>
@@ -103,7 +90,7 @@
                         <div class="flex flex-col gap-2 px-4">
                             <div class="flex md:flex-row flex-col w-full items-start">
                                 <p class="w-24 font-bold text-base-light md:text-base text-sm">地址</p>
-                                <p>{{ userInfo.address }}</p>
+                                <p>{{ orderDetail.contact.address }}</p>
                             </div>
 
                         </div>
@@ -111,7 +98,7 @@
                         <div class="flex flex-col gap-1 px-4">
                             <div class="flex md:flex-row flex-col w-full items-start">
                                 <p class="w-24 font-bold text-base-light md:text-base text-sm">備註</p>
-                                <p>{{ userInfo.note }}</p>
+                                <p>{{ orderDetail.contact.remark }}</p>
                             </div>
                         </div>
                     </div>
@@ -124,11 +111,12 @@
                 <div class="flex flex-col gap-4 bg-gray-100 p-6">
                     <div class="flex md:flex-row flex-col w-full md:items-center items-start">
                         <p class="w-24 font-bold text-base-light md:text-base text-sm">支付方式</p>
-                        <p>{{ typeTranslate[userInfo.payment] }}</p>
+                        <p>{{ typeTranslate[orderDetail.contact.paymentMethod] }}</p>
                     </div>
                     <div class="flex md:flex-row flex-col w-full md:items-center items-start">
                         <p class="w-24 font-bold text-base-light md:text-base text-sm">總金額</p>
-                        <p class="font-bold text-xl text-hot-red">{{ userInfo.totalPrice | dollarSign | currency }}</p>
+                        <p class="font-bold text-xl text-hot-red">{{ orderDetail.totalAmount | dollarSign | currency }}
+                        </p>
                     </div>
                 </div>
             </div>
@@ -136,7 +124,8 @@
             <!-- 護照資訊 -->
             <div class="flex flex-col gap-4">
                 <p class="font-bold text-xl text-base-heavy">護照資料</p>
-                <div v-for="(passport, index) in passportInfo" :key="passport.idCard" class="flex flex-row gap-2">
+                <div v-for="(passport, index) in orderDetail.travelers" :key="passport.passportNumber"
+                    class="flex flex-row gap-2">
                     <div class="flex flex-row md:gap-8 gap-2 bg-gray-100 md:px-8 px-4 py-4 w-full">
                         <div class="text-gray-400 flex flex-col gap-1">
                             <i class="fa-solid fa-user"></i>
@@ -150,20 +139,21 @@
                             </div>
                             <div class="flex items-center gap-1">
                                 <p class="md:w-24 w-20 font-bold text-base-light md:text-base text-sm">名稱</p>
-                                <p class="md:text-base text-sm font-bold text-base-heavy">{{ passport.secondName }}</p>
+                                <p class="md:text-base text-sm font-bold text-base-heavy">{{ passport.lastName }}</p>
                             </div>
                             <div class="flex items-center gap-1">
                                 <p class="md:w-24 w-20 font-bold text-base-light md:text-base text-sm">身分證字號</p>
-                                <p class="md:text-base text-sm font-bold text-base-heavy">{{ passport.idCard }}</p>
+                                <p class="md:text-base text-sm font-bold text-base-heavy">{{ passport.idNumber }}</p>
                             </div>
                             <div class="flex items-center gap-1">
                                 <p class="md:w-24 w-20 font-bold text-base-light md:text-base text-sm">護照號碼</p>
-                                <p class="md:text-base text-sm font-bold text-base-heavy">{{ passport.passportCode }}
+                                <p class="md:text-base text-sm font-bold text-base-heavy">{{ passport.passportNumber }}
                                 </p>
                             </div>
                             <div class="flex items-center gap-1">
                                 <p class="md:w-24 w-20 font-bold text-base-light md:text-base text-sm">護照到期日</p>
-                                <p class="md:text-base text-sm font-bold text-base-heavy">{{ passport.exp }}</p>
+                                <p class="md:text-base text-sm font-bold text-base-heavy">{{ passport.passportExpiry }}
+                                </p>
                             </div>
                         </div>
                     </div>
@@ -171,7 +161,7 @@
             </div>
 
             <div class="flex flex-row gap-4">
-                <button @click.prevent="submitBtn()"
+                <button @click.prevent="submitOrder()"
                     class="bg-hot-red hover:bg-red-500 active:bg-red-700 px-10 py-3 w-full font-bold text-center text-white">確認</button>
                 <button
                     class="bg-gray-400 hover:bg-gray-300 active:bg-gray-500 px-10 py-3 w-full text-center text-white">返回</button>
@@ -181,49 +171,46 @@
 </template>
 
 <script>
+import http from '@/api/http'
+import { useOrderStore } from '@/stores/order';
+
 export default {
     name: 'CheckoutChecked',
     data() {
         return {
+            apiBase: process.env.VUE_APP_API_PATH,
+            store: '',
             selectCity: null,
             selectArea: null,
             date: null,
-            userInfo: {
-                name: '黃飛貓',
-                email: 'fly_dragon2000@gmail.com',
-                phone: '0912345678',
-                address: '飛天市昇龍區雲海里飛龍大道999號',
-                note: '趕快出貨',
-                payment: 'cash',
-                totalPrice: '280000'
-
-            },
-            passportInfo: [
-                {
-                    firstName: 'HUANG',
-                    secondName: 'FEI-MAO',
-                    idCard: 'A123456789',
-                    passportCode: '888800123',
-                    exp: '2028-2-30',
-                },
-                {
-                    firstName: 'LEE',
-                    secondName: 'CHEN',
-                    idCard: 'Y123450071',
-                    passportCode: '888800666',
-                    exp: '2028-2-30',
-                },
-                {
-                    firstName: 'WANG',
-                    secondName: 'WU-WU',
-                    idCard: 'Q123456710',
-                    passportCode: '887790909',
-                    exp: '2028-2-30',
-                }
-            ]
         }
     },
+    created() {
+        this.store = useOrderStore();
+    },
+    methods: {
+        async submitOrder() {
+            try {
+                const token = localStorage.getItem('token');
+                await http.post(`${this.apiBase}/orders/${this.orderId}/submit`, {}, {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                    }
+                })
+
+                this.$router.push(`/checkout/finished/${this.orderId}`)
+            } catch (error) {
+                console.log(error)
+            }
+        },
+    },
     computed: {
+        orderDetail() {
+            return this.store.checkedInfo;
+        },
+        orderId() {
+            return this.store.orderInit.orderId;
+        },
         typeTranslate() {
             return {
                 cash: '現金',

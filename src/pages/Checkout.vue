@@ -171,11 +171,12 @@
                         <div
                             class="flex md:flex-row flex-col md:items-center items-start justify-between bg-gray-100 p-6">
                             <p>總金額</p>
-                            <p class="font-bold text-xl text-hot-red">{{ orderInfo.totalAmount | dollarSign | currency }}</p>
+                            <p class="font-bold text-xl text-hot-red">{{ orderInfo.totalAmount | dollarSign | currency
+                            }}</p>
                         </div>
                     </div>
                     <div class="flex flex-row gap-4">
-                        <button @click.prevent="submitBtn()"
+                        <button @click.prevent="saveCheckoutInfo()"
                             class="bg-hot-red hover:bg-red-500 active:bg-red-700 px-10 py-3 w-full font-bold text-center text-white">確認</button>
                         <button @click.prevent="$router.back(-1)"
                             class="bg-gray-400 hover:bg-gray-300 active:bg-gray-500 px-10 py-3 w-full text-center text-white">返回</button>
@@ -187,6 +188,7 @@
 </template>
 
 <script>
+import http from '@/api/http'
 import cities from '@/json/city.json';
 import { useOrderStore } from '@/stores/order';
 
@@ -194,7 +196,8 @@ export default {
     name: 'CheckoutPage',
     data() {
         return {
-            store: useOrderStore(),
+            apiBase: process.env.VUE_APP_API_PATH,
+            store: '',
             cities,
             selectCity: null,
             selectArea: null,
@@ -219,12 +222,15 @@ export default {
             },
         }
     },
+    created() {
+        this.store = useOrderStore();
+    },
     methods: {
         openCitySelect() {
             this.errorInfo.address = '';
             this.selectCity = '';
         },
-        submitBtn() {
+        validateForm() {
             const nameRule = /^[A-Za-z\u4E00-\u9FFF\s-]{1,10}$/;
             if (this.userInfo.name.trim() === '') {
                 this.isError = true;
@@ -255,7 +261,7 @@ export default {
                 this.errorInfo.phone = '請輸入正確的電話格式';
             }
 
-            const noteRule = /^[A-Za-z0-9\s.,!?'"()\-_:]+$/;
+            const noteRule = /^[A-Za-z0-9\u4e00-\u9fa5\s.,!?'"()\-_:]+$/;
             if (this.userInfo.note && !noteRule.test(this.userInfo.note)) {
                 this.isError = true;
                 this.errorInfo.note = '不允使用 < > ／＼ = & 等特殊符號。';
@@ -270,6 +276,34 @@ export default {
             if (!addressRule.test(this.userInfo.address)) {
                 this.isError = true;
                 this.errorInfo.address = '請填寫常規台灣地址'
+            }
+
+            if (this.userInfo.payment.trim() === '') {
+                this.isError = true;
+                this.errorInfo.payment = '付款方式不可空白';
+            }
+        },
+        async saveCheckoutInfo() {
+            this.validateForm();
+            if (this.isError === true) return;
+            const info = {
+                name: this.userInfo.name,
+                email: this.userInfo.email,
+                phone: this.userInfo.phone,
+                address: this.userInfo.address,
+                remark: this.userInfo.note || '',
+                paymentMethod: this.userInfo.payment,
+            }
+            try {
+                const token = localStorage.getItem('token');
+                await http.patch(`${this.apiBase}/orders/${this.orderInfo.orderId}/contact`, info, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                })
+                this.$router.push(`passport/${this.orderInfo.orderId}`)
+            } catch (error) {
+                console.log(error)
             }
         }
     },

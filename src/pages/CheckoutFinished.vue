@@ -41,14 +41,14 @@
             </div>
             <div v-if="isSuccessful === true" class="flex flex-col justify-center items-center w-full">
                 <div class="flex flex-col items-center py-8">
-                    <img src="../assets/images/logo-pic.png" alt="" class="md:w-[50%] w-[60px] h-full">
+                    <i class="fa-solid fa-circle-check fa-8x text-hot-red"></i>
                     <p class="py-8 font-bold md:text-3xl text-xl text-hot-red">訂購完成！</p>
                 </div>
                 <div class="flex md:flex-row flex-col gap-4 md:w-[70%] w-full">
-                    <button
-                        class="bg-hot-red hover:bg-red-500 active:bg-red-700 md:px-10 px-4 py-3 w-full font-bold text-center text-white">查看訂單</button>
-                    <button
-                        class=" border border-hot-red hover:bg-red-100 active:bg-red-300 md:px-10 px-4 py-3 w-full font-bold text-center text-hot-red">繼續尋寶</button>
+                    <router-link to="/member/orders"
+                        class="bg-hot-red hover:bg-red-500 active:bg-red-700 md:px-10 px-4 py-3 w-full font-bold text-center text-white">查看訂單</router-link>
+                    <router-link to="/"
+                        class=" border border-hot-red hover:bg-red-100 active:bg-red-300 md:px-10 px-4 py-3 w-full font-bold text-center text-hot-red">繼續尋寶</router-link>
                 </div>
             </div>
             <div v-else class="flex flex-col justify-center items-center w-full">
@@ -60,10 +60,10 @@
                     </div>
                 </div>
                 <div class="flex md:flex-row flex-col gap-4 md:w-[70%] w-full">
-                    <button
-                        class="bg-hot-red hover:bg-red-500 active:bg-red-700 md:px-10 px-4 py-3 w-full font-bold text-center text-white">查看訂單</button>
-                    <button
-                        class=" border border-hot-red hover:bg-red-100 active:bg-red-300 md:px-10 px-4 py-3 w-full font-bold text-center text-hot-red">繼續尋寶</button>
+                    <router-link to="/member/orders"
+                        class="bg-hot-red hover:bg-red-500 active:bg-red-700 md:px-10 px-4 py-3 w-full font-bold text-center text-white">查看訂單</router-link>
+                    <router-link to="/"
+                        class=" border border-hot-red hover:bg-red-100 active:bg-red-300 md:px-10 px-4 py-3 w-full font-bold text-center text-hot-red">繼續尋寶</router-link>
                 </div>
             </div>
 
