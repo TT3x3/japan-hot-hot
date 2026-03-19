@@ -61,7 +61,7 @@ export default new Router({
       component: MemberOrders,
     },
     {
-      path: "/member/orders/detail",
+      path: "/member/orders/:orderId",
       name: "orders-detail",
       component: MemberOrderDetail,
     },

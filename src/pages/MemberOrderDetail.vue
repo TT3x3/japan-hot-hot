@@ -19,60 +19,54 @@
                             class="cursor-pointer bg-gray-400 text-white text-center px-10 py-3  hover:bg-gray-300 active:bg-gray-500 transition-colors">返回訂單總覽</router-link>
                     </div>
                 </div>
-                <div class="flex md:flex-row flex-col w-full gap-5 items-start">
+                <div v-if="orderDetail" class="flex md:flex-row flex-col w-full gap-5 items-start">
                     <!-- orders -->
                     <div class="flex flex-col justify-center text-base-heavy md:w-[85%] w-full">
                         <div
                             class="bg-gray-300 flex md:flex-row flex-col md:items-center gap-2 md:px-10 px-6 md:py-6 py-4 text-sm text-base-light">
-                            <p class="text-base-light">訂單編號 {{ orders.id }} </p>
+                            <p class="text-base-light">訂單編號 {{ orderDetail.orderId }} </p>
                         </div>
                         <div class="bg-white flex justify-between md:items-center md:px-10 px-6 md:py-6 py-4">
                             <div class="flex flex-col md:gap-4 gap-2 w-full">
                                 <img src="../assets/images/carousel-1.jpg" class="h-40 object-cover">
                                 <p class="hidden md:block font-bold">
                                     {{ orders.title }}</p>
-                                <p class="text-sm text-end text-base-light">{{ orders.singlePrice | dollarSign |
-                                    currency }}
-                                    x {{ orders.num
+                                <p class="text-sm text-end text-base-light">沒有單價回傳
+                                    x {{ orderDetail.peopleCount
                                     }}</p>
                                 <div class="w-full h-px bg-gray-100"></div>
                                 <div class="flex justify-between items-center">
                                     <p class="text-gray-400">建立時間</p>
-                                    <p>{{ orders.date }}</p>
+                                    <p>{{ dateToISO(orderDetail.createdAt) }}</p>
                                 </div>
                                 <div class="flex justify-between items-center">
                                     <p class="text-gray-400">訂單類型</p>
-                                    <p>{{ typeTranslate[orders.type] }}</p>
+                                    <p>{{ typeTranslate[orderDetail.productType] }}</p>
                                 </div>
                                 <div class="flex justify-between items-center">
                                     <p class="text-gray-400">總金額</p>
-                                    <p>{{ orders.singlePrice * orders.num | dollarSign | currency }}</p>
+                                    <p>{{ orderDetail.totalAmount | dollarSign | currency }}</p>
                                 </div>
                                 <div class="flex justify-between items-center">
-                                    <p class="text-gray-400">付款狀態</p>
-                                    <p class=" text-green-700" :class="{ 'text-hot-red': orders.isPaid === false }">{{
-                                        orders.isPaid ?
-                                            '已付款' : '未付款' }}</p>
-                                </div>
-                                <div class="flex justify-between items-center">
-                                    <p class="text-gray-400">出貨狀態</p>
-                                    <p class=" text-green-700" :class="{ 'text-hot-red': orders.isShipped === false }">{{
-                                        orders.isShipped ?
-                                            '已出貨' : '未出貨' }}</p>
+                                    <p class="text-gray-400">訂單狀態</p>
+                                    <p
+                                        :class="[orderDetail.status === 'confirmed' ? 'text-green-700' : 'text-hot-red']">
+                                        {{ orderDetail.status === 'confirmed' ? '已完成' : '未完成' }}
+                                    </p>
                                 </div>
                             </div>
                         </div>
                         <div class="w-full flex gap-4 pt-4">
-                            <button type="button" class="cursor-pointer bg-hot-red text-white text-center px-10 py-3 w-full  hover:bg-gray-300 active:bg-gray-500 transition-colors">點我付款</button>
-                            <button type="button" class="cursor-pointer bg-gray-400 text-white text-center px-10 py-3 w-full  hover:bg-gray-300 active:bg-gray-500 transition-colors">取消訂單</button>
+                            <button type="button"
+                                class="cursor-pointer bg-hot-red text-white text-center px-10 py-3 w-full  hover:bg-red-500 active:bg-red-700 transition-colors">重新下單</button>
                         </div>
                     </div>
 
-                    <!-- user info -->
                     <div class="flex flex-col justify-center text-base-heavy w-full">
+                        <!-- user info -->
                         <div
                             class="bg-gray-300 flex md:flex-row flex-col md:items-center gap-2 md:px-10 px-6 md:py-6 py-4 text-sm text-base-light">
-                            <p class="text-base-light">購買資訊 & 收件資訊</p>
+                            <p class="text-base-light">購買資訊</p>
                         </div>
                         <div
                             class="bg-white flex flex-col justify-between md:items-center md:px-10 px-6 md:py-6 py-4 md:text-base text-sm">
@@ -80,10 +74,6 @@
                                 <div class="flex justify-between items-center">
                                     <p class="text-gray-400">付款方式</p>
                                     <p>{{ purchaseInfo.payment }}</p>
-                                </div>
-                                <div class="flex justify-between items-center">
-                                    <p class="text-gray-400">收件方式</p>
-                                    <p>{{ purchaseInfo.receive }}</p>
                                 </div>
                                 <div class="w-full h-px bg-gray-100"></div>
                                 <div class="flex justify-between items-center">
@@ -105,6 +95,37 @@
                                 <div class="flex flex-col">
                                     <p class="text-gray-400">給賣家的話</p>
                                     <p>{{ purchaseInfo.note }}</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- passport info -->
+                        <div
+                            class="mt-4 bg-gray-300 flex md:flex-row flex-col md:items-center gap-2 md:px-10 px-6 md:py-6 py-4 text-sm text-base-light">
+                            <p class="text-base-light">護照資訊</p>
+                        </div>
+                        <div
+                            class=" flex flex-col gap-2 justify-between md:items-center md:text-base text-sm">
+                            <div v-for="traveler in orderDetail.travelers" :key="traveler.idNumber" class="bg-white flex flex-col md:gap-4 gap-2 w-full md:px-10 px-6 md:py-6 py-4">
+                                <div class="flex gap-4 items-center">
+                                    <p class="w-20 text-gray-400">護照姓氏</p>
+                                    <p>{{ traveler.lastName }}</p>
+                                </div>
+                                <div class="flex gap-4 items-center">
+                                    <p class="w-20 text-gray-400">護照名字</p>
+                                    <p>{{ traveler.firstName }}</p>
+                                </div>
+                                <div class="flex gap-4 items-center">
+                                    <p class="w-20 text-gray-400">身分證字號</p>
+                                    <p>{{ traveler.idNumber }}</p>
+                                </div>
+                                <div class="flex gap-4 items-center">
+                                    <p class="w-20 text-gray-400">護照號碼</p>
+                                    <p>{{ traveler.passportNumber }}</p>
+                                </div>
+                                <div class="flex gap-4 items-center">
+                                    <p class="w-20 text-gray-400">護照效期</p>
+                                    <p>{{ traveler.passportExpiry }}</p>
                                 </div>
                             </div>
                         </div>
@@ -159,10 +180,14 @@
 </template>
 
 <script>
+import http from '@/api/http'
+
 export default {
     name: 'MemberOrderDetail',
     data() {
         return {
+            apiBase: process.env.VUE_APP_API_PATH,
+            orderDetail: '',
             orders:
             {
                 id: 'AK123456788',
@@ -186,12 +211,29 @@ export default {
         }
     },
     methods: {
+        async getOrderDetail(id) {
+            const token = localStorage.getItem('token');
+            const res = await http.get(`${this.apiBase}/members/orders/${id}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            this.orderDetail = res.data;
+            console.log(this.orderDetail)
+        },
+        dateToISO(date) {
+            const isoDate = new Date(date).toISOString().split('T')[0];
+            return isoDate;
+        },
+    },
+    created() {
+        this.getOrderDetail(this.$route.params.orderId);
     },
     computed: {
         typeTranslate() {
             return {
-                tour: '行程',
-                ticket: '機票',
+                Tour: '行程',
+                Flight: '機票',
             }
         },
     },
