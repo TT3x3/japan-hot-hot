@@ -301,7 +301,7 @@ export default {
         async createOrder() {
             this.confirmBooking();
             if (!this.isFormValid) return;
-            await this.store.createOrder({
+            await this.store.createTicketOrder({
                 productId: this.$route.params.id,
                 startDate: new Date(this.date).toISOString().split("T")[0],
                 endDate: new Date(this.returnDate).toISOString().split("T")[0],

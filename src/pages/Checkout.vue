@@ -43,11 +43,11 @@
                 <div class="flex flex-row gap-2">
                     <div class="bg-gray-100 md:px-8 px-2 py-4 w-full">
                         <p class="text-sm text-base-light">出發日期</p>
-                        <p class="font-bold md:text-xl text-md text-base-heavy">{{ orderInfo.startDate }}</p>
+                        <p class="font-bold md:text-xl text-md text-base-heavy">{{ orderInfo.startDate || orderInfo.date }}</p>
                     </div>
                     <div class="bg-gray-100 md:px-8 px-2 py-4 w-full">
                         <p class="text-sm text-base-light">出發時間</p>
-                        <p class="font-bold md:text-xl text-md text-base-heavy">07:30 AM</p>
+                        <p class="font-bold md:text-xl text-md text-base-heavy">{{ orderInfo.scheduleTime}}</p>
                     </div>
                     <div class="bg-gray-100 md:px-8 px-2 py-4 w-full">
                         <p class="text-sm text-base-light">購買數量</p>
@@ -209,7 +209,6 @@ export default {
                 address: '',
                 note: '',
                 payment: '',
-
             },
             isError: false,
             errorInfo: {

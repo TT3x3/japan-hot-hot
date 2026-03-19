@@ -7,7 +7,7 @@ export const useOrderStore = defineStore("order", {
     checkedInfo: {},
   }),
   actions: {
-    async createOrder({
+    async createTicketOrder({
       productId,
       startDate,
       endDate,
@@ -25,6 +25,30 @@ export const useOrderStore = defineStore("order", {
         const token = localStorage.getItem("token");
         const res = await http.post(
           `${apiBase}/orders/flight/init`,
+          orderDetail,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        console.log(res);
+        this.orderInit = res.data;
+        router.push(`/checkout/${res.data.orderId}`);
+      } catch (error) {
+        alert(error);
+      }
+    },
+    async createTourOrder({ productId, startDate, peopleCount,apiBase,router }) {
+      try {
+        const orderDetail = {
+          productId,
+          date: new Date(startDate).toISOString().split("T")[0],
+          peopleCount,
+        };
+        const token = localStorage.getItem("token");
+        const res = await http.post(
+          `${apiBase}/orders/tour/init`,
           orderDetail,
           {
             headers: {
@@ -68,7 +92,7 @@ export const useOrderStore = defineStore("order", {
         this.isModalOpen = true;
         this.hasError = true;
         this.modalContent =
-        error.response?.data?.message || "發生錯誤，請重新操作";
+          error.response?.data?.message || "發生錯誤，請重新操作";
       }
     },
   },

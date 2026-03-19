@@ -165,7 +165,7 @@
                         <p class="text-sm text-gray-500">總金額</p>
                         <p class="font-bold text-xl">{{ peopleCount * tour.price | dollarSign | currency }} </p>
                     </div>
-                    <button @click.prevent="confirmBooking()"
+                    <button @click.prevent="createOrder()"
                         class="md:w-auto w-full bg-hot-red self-end text-white px-10 py-3 hover:bg-red-400 active:bg-red-700">確認預約</button>
                 </div>
                 <div v-else class=" bg-gray-100 flex flex-col gap-4 justify-center items-center p-14 text-base-heavy">
@@ -223,11 +223,13 @@
 
 <script>
 import http from '@/api/http'
+import { useOrderStore } from '@/stores/order.js';
 
 export default {
     name: 'TourDetail',
     data() {
         return {
+            store: '',
             apiBase: process.env.VUE_APP_API_PATH,
             highlighted: false,
             date: null,
@@ -239,11 +241,14 @@ export default {
                 peopleCount: false,
                 countErrMsg: '',
             },
+            isFormValid: false,
             isNotFound: false,
             seconds: 5,
         }
     },
-    components: {
+    created() {
+        this.findProduct(this.$route.params.id);
+        this.store = useOrderStore();
     },
     methods: {
         async findProduct(id) {
@@ -260,6 +265,17 @@ export default {
                     }
                 }, 1000);
             }
+        },
+        async createOrder() {
+            this.confirmBooking();
+            if (!this.isFormValid) return;
+            await this.store.createTourOrder({
+                productId: this.$route.params.id,
+                startDate: this.date,
+                peopleCount: this.peopleCount,
+                apiBase: this.apiBase,
+                router: this.$router,
+            })
         },
         scrollToBooking() {
             const bookingSection = this.$refs.bookingSection;
@@ -290,17 +306,18 @@ export default {
             }
         },
         confirmBooking() {
+            this.isFormValid = true;
             if (!this.date) {
                 this.isError.date = true;
                 this.isError.dateErrMsg = '* 請選擇日期';
-                return;
+                this.isFormValid = false;
             }
             if (this.peopleCount <= 0 || this.peopleCount > this.tour.maxParticipants) {
                 this.isError.peopleCount = true;
                 this.isError.countErrMsg = `* 人數錯誤，請選擇 1~${this.tour.maxParticipants} 人`;
-                return;
+                this.isFormValid = false;
             }
-            if (this.isError.peopleCount || this.isError.date) {
+            if (!this.isFormValid || this.isError.peopleCount || this.isError.date) {
                 return;
             }
         },
@@ -317,8 +334,5 @@ export default {
             return maxMonth;
         }
     },
-    created() {
-        this.findProduct(this.$route.params.id);
-    }
 }
 </script>

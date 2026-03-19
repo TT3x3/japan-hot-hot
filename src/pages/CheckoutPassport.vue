@@ -54,27 +54,27 @@
                         <div class="flex md:flex-row flex-col md:justify-between md:gap-2 gap-5">
                             <div class="flex flex-col md:w-[70%] w-full gap-1">
                                 <div class="flex flex-row items-center">
-                                    <label for="firstNameInput"
-                                        class="inline-block w-20 font-bold md:text-base text-sm text-base-light">姓氏</label>
-                                    <input id="firstNameInput" type="text" v-model.trim="people.firstName"
-                                        @focus="people.errors.firstName = ''"
-                                        class="w-full bg-white border border-gray-300 px-2 py-1 "
-                                        :class="{ 'border-hot-red': people.errors.firstName }" placeholder="請輸入護照姓氏">
-                                </div>
-                                <small v-if="people.errors.firstName" class="text-sm text-end text-hot-red">{{
-                                    people.errors.firstName }}</small>
-                            </div>
-                            <div class="flex flex-col gap-1 w-full">
-                                <div class="flex flex-row  items-center">
                                     <label for="lastNameInput"
-                                        class="inline-block  w-20 font-bold md:text-base text-sm text-base-light">名字</label>
+                                        class="inline-block w-20 font-bold md:text-base text-sm text-base-light">姓氏</label>
                                     <input id="lastNameInput" type="text" v-model.trim="people.lastName"
-                                        @focus="people.errors.lastName = ''"
+                                        @focus="people.errors.lastName = ''; isError = false"
                                         class="w-full bg-white border border-gray-300 px-2 py-1 "
-                                        :class="{ 'border-hot-red': people.errors.lastName }" placeholder="請輸入護照名稱">
+                                        :class="{ 'border-hot-red': people.errors.lastName }" placeholder="請輸入護照姓氏">
                                 </div>
                                 <small v-if="people.errors.lastName" class="text-sm text-end text-hot-red">{{
                                     people.errors.lastName }}</small>
+                            </div>
+                            <div class="flex flex-col gap-1 w-full">
+                                <div class="flex flex-row  items-center">
+                                    <label for="firstNameInput"
+                                        class="inline-block  w-20 font-bold md:text-base text-sm text-base-light">名字</label>
+                                    <input id="firstNameInput" type="text" v-model.trim="people.firstName"
+                                        @focus="people.errors.firstName = ''; isError = false"
+                                        class="w-full bg-white border border-gray-300 px-2 py-1 "
+                                        :class="{ 'border-hot-red': people.errors.firstName }" placeholder="請輸入護照名稱">
+                                </div>
+                                <small v-if="people.errors.firstName" class="text-sm text-end text-hot-red">{{
+                                    people.errors.firstName }}</small>
                             </div>
                         </div>
                         <div class="flex flex-col gap-1">
@@ -82,7 +82,7 @@
                                 <label for="idInput"
                                     class="inline-block w-20 font-bold md:text-base text-sm text-base-light">身分證</label>
                                 <input id="idInput" type="text" v-model.trim="people.idNumber"
-                                    @focus="people.errors.idNumber = ''"
+                                    @focus="people.errors.idNumber = ''; isError = false"
                                     @input="people.idNumber = $event.target.value.toUpperCase()"
                                     class="w-full bg-white border border-gray-300 px-2 py-1 "
                                     :class="{ 'border-hot-red': people.errors.idNumber }" placeholder="請輸入身分證">
@@ -95,7 +95,7 @@
                                 <label for="passportNumberInput"
                                     class="inline-block w-20 font-bold md:text-base text-sm text-base-light">護照號碼</label>
                                 <input id="passportNumberInput" type="text" v-model.trim="people.passportNumber"
-                                    @focus="people.errors.passportNumber = ''"
+                                    @focus="people.errors.passportNumber = ''; isError = false"
                                     class="w-full bg-white border border-gray-300 px-2 py-1 "
                                     :class="{ 'border-hot-red': people.errors.passportNumber }" placeholder="請輸入護照號碼">
                             </div>
@@ -115,7 +115,7 @@
                                         :masks="{ input: 'YYYY / MM / DD' }">
                                         <template #default="{ inputValue, togglePopover }">
                                             <input type="text" :value="inputValue" readonly @click="togglePopover"
-                                                @focus="people.errors.passportExpiry = false"
+                                                @focus="people.errors.passportExpiry = false; isError = false"
                                                 class="bg-white border border-gray-300 px-2 py-1 w-[100%] cursor-pointer"
                                                 placeholder="請選擇日期" />
                                         </template>
@@ -185,90 +185,81 @@ export default {
             ))
         },
         validateForm() {
+            let isValid = true;
+            this.isError = false;
             this.passportInfo.forEach(p => {
                 const nameRule = /^[A-Za-z,\-\s]+$/;
                 if (!p.firstName || p.firstName.trim() === '') {
-                    this.isError = true;
+                    isValid = false;
                     p.errors.firstName = '姓氏不可空白';
                 }
                 if (p.firstName && !nameRule.test(p.firstName)) {
-                    this.isError = true;
+                    isValid = false;
                     p.errors.firstName = '名稱格式錯誤';
                 }
 
                 if (!p.lastName || p.lastName.trim() === '') {
-                    this.isError = true;
+                    isValid = false;
                     p.errors.lastName = '名字不可空白';
                 }
                 if (p.lastName && !nameRule.test(p.lastName)) {
-                    this.isError = true;
+                    isValid = false;
                     p.errors.lastName = '名稱格式錯誤';
                 }
 
                 if (!p.idNumber || p.idNumber.trim() === '') {
                     p.errors.idNumber = '*請輸入身份證字號'
-                    this.isError = true;
+                    isValid = false;
                 }
                 const idRule = /^[A-Z]\d{9}$/;
                 if (!idRule.test(p.idNumber)) {
                     p.errors.idNumber = '*不符合台灣身分證格式'
-                    this.isError = true;
+                    isValid = false;
                 }
 
                 if (!p.passportNumber || p.passportNumber.trim() === '') {
                     p.errors.passportNumber = '*請輸入護照號碼';
-                    this.isError = true;
+                    isValid = false;
                 }
                 const passportNumberRule = /^\d{9}$/;
                 if (!passportNumberRule.test(p.passportNumber)) {
                     p.errors.passportNumber = '*護照必須是9碼數字';
-                    this.isError = true;
+                    isValid = false;
                 }
 
                 if (!p.passportExpiry) {
                     p.errors.passportExpiry = '*請輸入護照號碼';
-                    this.isError = true;
+                    isValid = false;
                 }
-
-                if (this.isError) return;
             })
+            this.isError = !isValid;
+            return isValid;
         },
-        // async savePassportInfo() {
-        //     this.validateForm();
-        //     if (this.isError) return;
-        //     try {
-        //         let travelerInfo = this.passportInfo.map(people => ({
-        //             firstName: people.firstName,
-        //             lastName: people.lastName,
-        //             idNumber: people.idNumber,
-        //             passportNumber: people.passportNumber,
-        //             passportExpiry: new Date(people.passportExpiry).toISOString().split('T')[0],
-        //         }));
-        //         const token = localStorage.getItem('token');
-        //         const res = await http.patch(`${this.apiBase}/orders/${this.orderInfo.orderId}/travelers`, {
-        //             travelers: travelerInfo
-        //         }, {
-        //             headers: {
-        //                 Authorization: `Bearer ${token}`
-        //             },
-        //         })
-        //         console.log(res);
-
-        //     } catch (error) {
-        //         this.isModalOpen = true;
-        //         this.hasError = true;
-        //         this.modalContent = error.response?.data?.message || '發生錯誤，請重新操作';
-        //     }
-        // }
-        async savePassportInfo(){
-            this.validateForm();
-            if(this.isError) return;
+        async savePassportInfo() {
+            if(!this.validateForm()) return;
+            if(this.findPassport()) return;
+            if (this.isError) return;
             await this.store.savePassportInfo({
-                passportInfo:this.passportInfo,
+                passportInfo: this.passportInfo,
                 apiBase: this.apiBase,
                 orderId: this.orderInfo.orderId,
                 router: this.$router,
             })
+        },
+        findPassport() {
+            const setIdNumber = new Set();
+            const setPassportNumber = new Set();
+            for (let p of this.passportInfo) {
+                if (setIdNumber.has(p.idNumber) ||
+                    setPassportNumber.has(p.passportNumber)) {
+                    this.isError = true;
+                    alert('部分護照資訊不可重複')
+                    return true;
+                }
+                setIdNumber.add(p.idNumber);
+                setPassportNumber.add(p.passportNumber);
+            }
+            return false;
         }
     },
     computed: {
