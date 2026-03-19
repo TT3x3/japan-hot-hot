@@ -161,9 +161,9 @@
             </div>
 
             <div class="flex flex-row gap-4">
-                <button @click.prevent="submitOrder()"
+                <button type="button" @click.prevent="submitOrder()"
                     class="bg-hot-red hover:bg-red-500 active:bg-red-700 px-10 py-3 w-full font-bold text-center text-white">確認</button>
-                <button
+                <button type="button" @click.prevent="$router.back(-1)"
                     class="bg-gray-400 hover:bg-gray-300 active:bg-gray-500 px-10 py-3 w-full text-center text-white">返回</button>
             </div>
         </div>

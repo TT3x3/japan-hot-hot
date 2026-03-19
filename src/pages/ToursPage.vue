@@ -17,7 +17,7 @@
                 <div class="flex justify-center items-center w-full">
                     <input type="text" placeholder="赤穗市"
                         class="outline-solid outline-1 outline-gray-300 py-2 px-4 md:w-[348px] w-full" />
-                    <button class="cursor-pointer px-3">
+                    <button type="button" class="cursor-pointer px-3">
                         <i class="fa-solid fa-magnifying-glass fa-lg text-gray-600"></i>
                     </button>
                 </div>
@@ -65,7 +65,7 @@
                                 class="absolute inset-0 bg-white/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ">
                             </div>
                             <!-- 收藏 -->
-                            <button @click.prevent.stop="toggleLike(item.productId)"
+                            <button type="button" @click.prevent.stop="toggleLike(item.productId)"
                                 class="absolute top-3 right-3 p-2  text-white/65 hover:text-red-500 transition-colors duration-200 ">
                                 <i v-if="findLike(item.productId)"
                                     class="fa-solid fa-heart fa-xl text-red-500 cursor-pointer"></i>

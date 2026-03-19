@@ -53,7 +53,7 @@
                                     class="absolute inset-0 bg-white/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ">
                                 </div>
                                 <!-- 移除收藏 -->
-                                <button @click.prevent.stop="delLike(item.productId)"
+                                <button type="button" @click.prevent.stop="delLike(item.productId)"
                                     class="absolute top-3 right-3 p-2  text-white/65 hover:text-red-500 active:text-red-700 transition-colors duration-200 cursor-pointer">
                                     <i class="fa-solid fa-trash fa-xl"></i>
                                 </button>

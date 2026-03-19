@@ -63,8 +63,8 @@
                             </div>
                         </div>
                         <div class="w-full flex gap-4 pt-4">
-                            <button class="cursor-pointer bg-hot-red text-white text-center px-10 py-3 w-full  hover:bg-gray-300 active:bg-gray-500 transition-colors">點我付款</button>
-                            <button class="cursor-pointer bg-gray-400 text-white text-center px-10 py-3 w-full  hover:bg-gray-300 active:bg-gray-500 transition-colors">取消訂單</button>
+                            <button type="button" class="cursor-pointer bg-hot-red text-white text-center px-10 py-3 w-full  hover:bg-gray-300 active:bg-gray-500 transition-colors">點我付款</button>
+                            <button type="button" class="cursor-pointer bg-gray-400 text-white text-center px-10 py-3 w-full  hover:bg-gray-300 active:bg-gray-500 transition-colors">取消訂單</button>
                         </div>
                     </div>
 

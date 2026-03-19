@@ -30,9 +30,9 @@
                         <div
                             class="flex md:flex-row flex-col justify-center items-center md:w-auto w-full md:gap-2 gap-4">
                             <p class="font-bold text-3xl text-hot-red">{{ ticket.price | dollarSign | currency }}～</p>
-                            <button v-if="ticket.status === 'active'" @click.prevent="scrollToBooking()"
-                                class="bg-hot-red text-white px-10 py-3 hover:bg-red-400 active:bg-red-700 w-full md:w-auto">立即購票</button>
-                            <button v-else class="bg-gray-400 text-gray-300 px-10 py-3 w-full" disabled>無法購買</button>
+                            <button type="button" v-if="ticket.status === 'active'" @click.prevent="scrollToBooking()"
+                                class="bg-hot-red text-white px-10 py-3 hover:bg-red-400 active:bg-red-700 w-full md:w-auto cursor-pointer">立即購票</button>
+                            <button type="button" v-else class="bg-gray-400 text-gray-300 px-10 py-3 w-full" disabled>無法購買</button>
                         </div>
                     </div>
                     <div class="text-sm leading-6.5 text-base-heavy">
@@ -44,12 +44,6 @@
                     <p class="font-bold text-xl">機票介紹</p>
                     <table>
                         <tbody class="border border-gray-200 divide-y divide-gray-200 text-sm">
-                            <tr>
-                                <td class="px-6 py-4 table-fixed md:w-36 w-28 text-center text-base-light bg-gray-100">
-                                    旅程天數
-                                </td>
-                                <td class="md:px-4 px-2 py-4 text-base-heavy">{{ ticket.fixedDays }} 日</td>
-                            </tr>
                             <tr>
                                 <td class="px-6 py-4 table-fixed md:w-36 w-28 text-center text-base-light bg-gray-100">
                                     出發機場
@@ -148,7 +142,7 @@
                         </div>
                     </div>
                     <div class="flex flex-col gap-2">
-                        <p class="text-sm text-gray-500">去程日期</p>
+                        <p class="text-sm text-gray-500">行程日期</p>
                         <div class="relative border" :class="isError.date ? 'border-red-500' : 'border-none'">
                             <v-date-picker v-model="date" :columns="1" :min-date="minDate" :max-date="maxDate"
                                 color="red"
@@ -165,7 +159,7 @@
                         <p v-if="isError.date" class="text-xs text-red-700">{{ isError.dateErrMsg }}</p>
                         <p class="text-xs text-gray-500">* 僅可訂購1個月後至6個月以內的機票。</p>
                     </div>
-                    <div class="flex flex-col gap-2">
+                    <!-- <div class="flex flex-col gap-2">
                         <p class="text-sm text-gray-500">回程日期</p>
                         <div
                             class="flex md:flex-row flex-col justify-between items-center md:gap-12 gap-4 bg-white md:px-8 px-2 py-6 text-base-heavy">
@@ -175,7 +169,7 @@
                             </div>
                             <p v-if="returnDate" class="font-bold text-base-heavy">{{ returnDate }}</p>
                         </div>
-                    </div>
+                    </div> -->
                     <div class="flex flex-col gap-2">
                         <p class="text-sm text-gray-500">選擇數量</p>
                         <div class="flex md:flex-row flex-col justify-between items-center md:gap-12 gap-4 bg-white md:px-8 py-6 text-base-heavy"
@@ -184,10 +178,10 @@
                                 dollarSign | currency }} / 張）</span>
                             </p>
                             <div class="flex flex-row gap-12 items-center">
-                                <i class="fa-solid fa-minus fa-lg hover:text-gray-400 active:text-gray-900"
+                                <i class="fa-solid fa-minus fa-lg hover:text-gray-400 active:text-gray-900 cursor-pointer"
                                     @click="subCount()"></i>
                                 <p class="text-xl">{{ ticketCount }}</p>
-                                <i class="fa-solid fa-plus fa-lg hover:text-gray-400 active:text-gray-900"
+                                <i class="fa-solid fa-plus fa-lg hover:text-gray-400 active:text-gray-900 cursor-pointer"
                                     @click="addCount()"></i>
                             </div>
                         </div>
@@ -202,8 +196,8 @@
                         <p class="text-sm text-gray-500">總金額</p>
                         <p class="font-bold text-xl">{{ ticket.price * ticketCount | dollarSign | currency }}</p>
                     </div>
-                    <button @click.prevent="createOrder()"
-                        class="bg-hot-red self-end text-white px-10 py-3 hover:bg-red-400 active:bg-red-700 w-full">確認購買</button>
+                    <button @click.prevent="createOrder()" type="button"
+                        class="bg-hot-red self-end text-white px-10 py-3 hover:bg-red-400 active:bg-red-700 w-full cursor-pointer">確認購買</button>
                 </div>
                 <div v-else class=" bg-gray-100 flex flex-col gap-4 justify-center items-center p-14 text-base-heavy">
                     <i class="fa-solid fa-face-sad-tear fa-5x"></i>

@@ -8,9 +8,9 @@
             <img :src="carouselImages[currentIndex].img" class="max-h-[500px] w-auto" :alt="carouselImages[currentIndex].caption">
         </div>
         <div class="flex flex-col gap-16 px-6">
-            <button class="cursor-pointer" @click="carouselPrev"><i
+            <button type="button" class="cursor-pointer" @click="carouselPrev"><i
                     class="fa-solid fa-arrow-up fa-lg  text-gray-400 hover:text-gray-300 active:text-gray-500"></i></button>
-            <button class="cursor-pointer" @click="carouselNext"><i
+            <button type="button" class="cursor-pointer" @click="carouselNext"><i
                     class="fa-solid fa-arrow-down fa-lg text-gray-400 hover:text-gray-300 active:text-gray-500"></i></button>
         </div>
     </div>

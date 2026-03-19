@@ -34,9 +34,9 @@
                         <div
                             class="flex md:flex-row flex-col justify-center items-center md:w-auto w-full md:gap-2 gap-4">
                             <p class="font-bold text-3xl text-hot-red">{{ tour.price | dollarSign | currency }} ～</p>
-                            <button v-if="tour.status === 'active'" @click.prevent="scrollToBooking()"
-                                class=" bg-hot-red text-white px-10 py-3 hover:bg-red-400 active:bg-red-700 w-full md:w-auto">立即預訂</button>
-                            <button v-else class="bg-gray-400 text-gray-300 px-10 py-3 w-full" disabled>無法購買</button>
+                            <button type="button" v-if="tour.status === 'active'" @click.prevent="scrollToBooking()"
+                                class=" bg-hot-red text-white px-10 py-3 hover:bg-red-400 active:bg-red-700 w-full md:w-auto cursor-pointer">立即購買</button>
+                            <button type="button" v-else class="bg-gray-400 text-gray-300 px-10 py-3 w-full" disabled>無法購買</button>
 
                         </div>
                     </div>
@@ -147,10 +147,10 @@
                             </p>
                             <div class="flex flex-row gap-12 items-center">
                                 <i @click="subCount()" @focus="isError.peopleCount = false"
-                                    class="fa-solid fa-minus fa-lg hover:text-gray-400 active:text-gray-900"></i>
+                                    class="fa-solid fa-minus fa-lg hover:text-gray-400 active:text-gray-900 cursor-pointer"></i>
                                 <p class="text-xl">{{ peopleCount }}</p>
                                 <i @click="addCount()" @focus="isError.peopleCount = false"
-                                    class="fa-solid fa-plus fa-lg hover:text-gray-400 active:text-gray-900"></i>
+                                    class="fa-solid fa-plus fa-lg hover:text-gray-400 active:text-gray-900 cursor-pointer"></i>
                             </div>
                         </div>
                         <p v-if="isError.peopleCount" class="text-xs text-red-700">{{ isError.countErrMsg }}</p>
@@ -165,8 +165,8 @@
                         <p class="text-sm text-gray-500">總金額</p>
                         <p class="font-bold text-xl">{{ peopleCount * tour.price | dollarSign | currency }} </p>
                     </div>
-                    <button @click.prevent="createOrder()"
-                        class="md:w-auto w-full bg-hot-red self-end text-white px-10 py-3 hover:bg-red-400 active:bg-red-700">確認預約</button>
+                    <button @click.prevent="createOrder()" type="button"
+                        class="bg-hot-red self-end text-white px-10 py-3 hover:bg-red-400 active:bg-red-700 w-full cursor-pointer">確認購買</button>
                 </div>
                 <div v-else class=" bg-gray-100 flex flex-col gap-4 justify-center items-center p-14 text-base-heavy">
                     <i class="fa-solid fa-face-sad-tear fa-5x"></i>

@@ -8,7 +8,7 @@
           <div class="flex justify-center items-center w-full">
             <input type="text" placeholder="赤穗市"
               class="outline-solid outline-1 outline-gray-300 py-2 px-4 md:w-[348px] w-full" />
-            <button class="cursor-pointer px-3">
+            <button type="button" class="cursor-pointer px-3">
               <i class="fa-solid fa-magnifying-glass fa-lg text-gray-600"></i>
             </button>
           </div>
