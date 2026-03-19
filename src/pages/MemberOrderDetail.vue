@@ -30,8 +30,8 @@
                             <div class="flex flex-col md:gap-4 gap-2 w-full">
                                 <img src="../assets/images/carousel-1.jpg" class="h-40 object-cover">
                                 <p class="hidden md:block font-bold">
-                                    {{ orders.title }}</p>
-                                <p class="text-sm text-end text-base-light">沒有單價回傳
+                                    {{ orderDetail.product.title }}</p>
+                                <p class="text-sm text-end text-base-light">{{ orderDetail.product.price | dollarSign | currency }}
                                     x {{ orderDetail.peopleCount
                                     }}</p>
                                 <div class="w-full h-px bg-gray-100"></div>
@@ -71,30 +71,30 @@
                         <div
                             class="bg-white flex flex-col justify-between md:items-center md:px-10 px-6 md:py-6 py-4 md:text-base text-sm">
                             <div class="flex flex-col md:gap-4 gap-2 w-full">
-                                <div class="flex justify-between items-center">
-                                    <p class="text-gray-400">付款方式</p>
-                                    <p>{{ purchaseInfo.payment }}</p>
+                                <div class="flex items-center">
+                                    <p class="min-w-24 text-gray-400">付款方式</p>
+                                    <p>{{ typeTranslate[orderDetail.contact.paymentMethod] }}</p>
                                 </div>
                                 <div class="w-full h-px bg-gray-100"></div>
-                                <div class="flex justify-between items-center">
-                                    <p class="text-gray-400">收件人</p>
-                                    <p>{{ purchaseInfo.name }}</p>
+                                <div class="flex items-center">
+                                    <p class="min-w-24 text-gray-400">收件人</p>
+                                    <p>{{ orderDetail.contact.name }}</p>
                                 </div>
-                                <div class="flex justify-between items-center">
-                                    <p class="text-gray-400">聯絡電話</p>
-                                    <p>{{ purchaseInfo.phone }}</p>
+                                <div class="flex items-center">
+                                    <p class="min-w-24 text-gray-400">聯絡電話</p>
+                                    <p>{{ orderDetail.contact.phone }}</p>
                                 </div>
-                                <div class="flex flex-col">
-                                    <p class="text-gray-400">E-mail</p>
-                                    <p>{{ purchaseInfo.email }}</p>
+                                <div class="flex items-center">
+                                    <p class="min-w-24 text-gray-400">E-mail</p>
+                                    <p>{{ orderDetail.contact.email }}</p>
                                 </div>
-                                <div class="flex flex-col">
-                                    <p class="text-gray-400">收件地址</p>
-                                    <p>{{ purchaseInfo.address }}</p>
+                                <div class="flex items-center">
+                                    <p class="min-w-24 text-gray-400">收件地址</p>
+                                    <p>{{ orderDetail.contact.address }}</p>
                                 </div>
-                                <div class="flex flex-col">
-                                    <p class="text-gray-400">給賣家的話</p>
-                                    <p>{{ purchaseInfo.note }}</p>
+                                <div class="flex items-center">
+                                    <p class="min-w-24 text-gray-400">給賣家的話</p>
+                                    <p>{{ orderDetail.contact.remark || '無' }}</p>
                                 </div>
                             </div>
                         </div>
@@ -106,25 +106,25 @@
                         </div>
                         <div
                             class=" flex flex-col gap-2 justify-between md:items-center md:text-base text-sm">
-                            <div v-for="traveler in orderDetail.travelers" :key="traveler.idNumber" class="bg-white flex flex-col md:gap-4 gap-2 w-full md:px-10 px-6 md:py-6 py-4">
-                                <div class="flex gap-4 items-center">
-                                    <p class="w-20 text-gray-400">護照姓氏</p>
+                            <div v-for="traveler in orderDetail.purchaseInfo.travelers" :key="traveler.idNumber" class="bg-white flex flex-col md:gap-4 gap-2 w-full md:px-10 px-6 md:py-6 py-4">
+                                <div class="flex items-center">
+                                    <p class="min-w-24 text-gray-400">護照姓氏</p>
                                     <p>{{ traveler.lastName }}</p>
                                 </div>
-                                <div class="flex gap-4 items-center">
-                                    <p class="w-20 text-gray-400">護照名字</p>
+                                <div class="flex items-center">
+                                    <p class="min-w-24 text-gray-400">護照名字</p>
                                     <p>{{ traveler.firstName }}</p>
                                 </div>
-                                <div class="flex gap-4 items-center">
-                                    <p class="w-20 text-gray-400">身分證字號</p>
+                                <div class="flex items-center">
+                                    <p class="min-w-24 text-gray-400">身分證字號</p>
                                     <p>{{ traveler.idNumber }}</p>
                                 </div>
-                                <div class="flex gap-4 items-center">
-                                    <p class="w-20 text-gray-400">護照號碼</p>
+                                <div class="flex items-center">
+                                    <p class="min-w-24 text-gray-400">護照號碼</p>
                                     <p>{{ traveler.passportNumber }}</p>
                                 </div>
-                                <div class="flex gap-4 items-center">
-                                    <p class="w-20 text-gray-400">護照效期</p>
+                                <div class="flex items-center">
+                                    <p class="min-w-24 text-gray-400">護照效期</p>
                                     <p>{{ traveler.passportExpiry }}</p>
                                 </div>
                             </div>
@@ -188,17 +188,6 @@ export default {
         return {
             apiBase: process.env.VUE_APP_API_PATH,
             orderDetail: '',
-            orders:
-            {
-                id: 'AK123456788',
-                date: ' 2026/12/25',
-                type: 'tour',
-                title: '水色之際：伊根與天橋立的一日拾光伊根水色之際：伊根與天橋立的一日拾光伊根水色之際：伊根與天橋立的一日拾光伊根',
-                num: 12,
-                singlePrice: 2433,
-                isPaid: false,
-                isShipped: false,
-            },
             purchaseInfo: {
                 name: '黃飛貓',
                 phone: '0912345678',
@@ -219,7 +208,6 @@ export default {
                 }
             });
             this.orderDetail = res.data;
-            console.log(this.orderDetail)
         },
         dateToISO(date) {
             const isoDate = new Date(date).toISOString().split('T')[0];
@@ -234,6 +222,7 @@ export default {
             return {
                 Tour: '行程',
                 Flight: '機票',
+                cash: '現金支付',
             }
         },
     },

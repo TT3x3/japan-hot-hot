@@ -25,6 +25,7 @@
                 </div>
 
                 <!-- orders list -->
+                <!-- md 以下 -->
                 <div class="flex flex-col gap-6 justify-center text-base-heavy">
                     <div v-for="(order) in paginationPages" :key="order.id"
                         class="hover:shadow-md transition-shadow duration-200">
@@ -35,18 +36,20 @@
                                     typeTranslate[order.productType] }}</p>
                                 <p class="w-24 ">{{ dateToISO(order.createdAt) }}</p>
                                 <p>{{ order.orderId }}</p>
-                                <p class="block md:hidden truncate font-bold">還沒回傳標題</p>
+                                <p class="block md:hidden truncate font-bold">{{ order.productName }}</p>
                             </div>
                             <router-link :to="`/member/orders/${order.orderId}`"
                                 class="hidden md:block bg-gray-200 px-4 py-1 text-sm text-gray-500 hover:bg-gray-100 active:bg-gray-400">查看訂單</router-link>
                         </div>
+
+                        <!-- md 以上 -->
                         <div class="bg-white flex justify-between md:items-center md:px-10 px-6 md-py-6 py-4">
                             <div class="flex md:flex-row flex-col md:gap-4 gap-1">
                                 <p class="block md:hidden self-start bg-gray-400 text-white px-2 py-1">{{
                                     typeTranslate[order.productType] }}</p>
                                 <p
                                     class="hidden md:block w-64 font-bold whitespace-nowrap overflow-hidden text-ellipsis line-clamp-1">
-                                    還沒回傳標題</p>
+                                    {{ order.productName }}</p>
                                 <p class="w-30">{{ order.price | dollarSign | currency }}</p>
                                 <p :class="['w-14', order.status === 'confirmed' ? 'text-green-700' : 'text-hot-red']">
                                     {{ order.status === 'confirmed' ? '已完成' : '未完成' }}
@@ -89,6 +92,7 @@ export default {
                 }
             });
             this.orderList = res.data.data;
+            console.log(this.orderList)
         },
         dateToISO(date) {
             const isoDate = new Date(date).toISOString().split('T')[0];

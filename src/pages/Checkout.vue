@@ -47,7 +47,7 @@
                     </div>
                     <div class="bg-gray-100 md:px-8 px-2 py-4 w-full">
                         <p class="text-sm text-base-light">出發時間</p>
-                        <p class="font-bold md:text-xl text-md text-base-heavy">{{ orderInfo.scheduleTime}}</p>
+                        <p class="font-bold md:text-xl text-md text-base-heavy">{{  orderInfo.departureTime ||orderInfo.scheduleTime}}</p>
                     </div>
                     <div class="bg-gray-100 md:px-8 px-2 py-4 w-full">
                         <p class="text-sm text-base-light">購買數量</p>
