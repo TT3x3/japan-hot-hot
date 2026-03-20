@@ -11,19 +11,19 @@
 
             <div v-if="items.length > 0" class="max-w-[80%] w-full mx-auto flex flex-col gap-10">
                 <!-- 分類 -->
-                <div class="flex gap-8">
+                <div class="flex md:gap-8 gap-4">
                     <div @click.prevent="changeCategory('全部')"
-                        class="relative flex-1 h-40 overflow-hidden cursor-pointer">
+                        class="relative flex-1 h-24 overflow-hidden cursor-pointer">
                         <img src="../assets/images/carousel-5.jpg" alt="" class="object-cover w-full h-full">
                         <h2 class="absolute left-5 bottom-5 font-black text-white">不分類</h2>
                     </div>
                     <div @click.prevent="changeCategory('Tour')"
-                        class="relative flex-1 h-40 overflow-hidden cursor-pointer">
+                        class="relative flex-1 h-24 overflow-hidden cursor-pointer">
                         <img src="../assets/images/carousel-5.jpg" alt="" class="object-cover w-full h-full">
                         <h2 class="absolute left-5 bottom-5 font-black text-white">行程</h2>
                     </div>
                     <div @click.prevent="changeCategory('Flight')"
-                        class="relative flex-1 h-40 overflow-hidden cursor-pointer">
+                        class="relative flex-1 h-24 overflow-hidden cursor-pointer">
                         <img src="../assets/images/carousel-5.jpg" alt="" class="object-cover w-full h-full">
                         <h2 class="absolute left-5 bottom-5 font-black text-white">機票</h2>
                     </div>
