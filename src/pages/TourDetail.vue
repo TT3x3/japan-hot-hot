@@ -1,5 +1,7 @@
 <template>
     <div>
+        <CustomModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
+            @close="isModalOpen = false" />
         <div v-if="tour" class="flex flex-col gap-32w-full">
             <div class="max-w-[80%] w-full mx-auto flex flex-col md:gap-12 gap-6">
                 <div class=" flex flex-col gap-4">
@@ -36,7 +38,8 @@
                             <p class="font-bold text-3xl text-hot-red">{{ tour.price | dollarSign | currency }} ～</p>
                             <button type="button" v-if="tour.status === 'active'" @click.prevent="scrollToBooking()"
                                 class=" bg-hot-red text-white px-10 py-3 hover:bg-red-400 active:bg-red-700 w-full md:w-auto cursor-pointer">立即購買</button>
-                            <button type="button" v-else class="bg-gray-400 text-gray-300 px-10 py-3 w-full" disabled>無法購買</button>
+                            <button type="button" v-else class="bg-gray-400 text-gray-300 px-10 py-3 w-full"
+                                disabled>無法購買</button>
 
                         </div>
                     </div>
@@ -210,6 +213,8 @@
                         </tbody>
                     </table>
                 </div>
+                <button type="button" @click.prevent="$router.back(-1)"
+                    class="inline-block self-center bg-gray-400 px-10 py-3 hover:bg-gray-300 active:bg-gray-500 text-white cursor-pointer">返回上頁</button>
             </div>
         </div>
         <div v-if="isNotFound === true" class="flex flex-col justify-center items-center w-full">
@@ -224,6 +229,7 @@
 <script>
 import http from '@/api/http'
 import { useOrderStore } from '@/stores/order.js';
+import CustomModal from '@/components/CustomModal.vue';
 
 export default {
     name: 'TourDetail',
@@ -244,7 +250,13 @@ export default {
             isFormValid: false,
             isNotFound: false,
             seconds: 5,
+            isModalOpen: false,
+            hasError: false,
+            modalContent: '',
         }
+    },
+    components: {
+        CustomModal,
     },
     created() {
         this.findProduct(this.$route.params.id);
@@ -269,13 +281,24 @@ export default {
         async createOrder() {
             this.confirmBooking();
             if (!this.isFormValid) return;
-            await this.store.createTourOrder({
-                productId: this.$route.params.id,
-                startDate: this.date,
-                peopleCount: this.peopleCount,
-                apiBase: this.apiBase,
-                router: this.$router,
-            })
+            const token = localStorage.getItem('token');
+            if (!token) {
+                this.isModalOpen = true;
+                this.hasError = true;
+                this.modalContent = '此功能僅限會員使用，請先登入';
+                return;
+            }
+            try {
+                await this.store.createTourOrder({
+                    productId: this.$route.params.id,
+                    startDate: this.date,
+                    peopleCount: this.peopleCount,
+                    apiBase: this.apiBase,
+                    router: this.$router,
+                })
+            } catch (error) {
+                console.log(error)
+            }
         },
         scrollToBooking() {
             const bookingSection = this.$refs.bookingSection;

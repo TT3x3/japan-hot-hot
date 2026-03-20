@@ -236,6 +236,8 @@
                         </tbody>
                     </table>
                 </div>
+                <button type="button" @click.prevent="$router.back(-1)"
+                    class="inline-block self-center bg-gray-400 px-10 py-3 hover:bg-gray-300 active:bg-gray-500 text-white">返回上頁</button>
             </div>
         </div>
         <div v-if="isNotFound === true" class="flex flex-col justify-center items-center w-full">
@@ -312,14 +314,18 @@ export default {
                 this.modalContent = '此功能僅限會員使用，請先登入';
                 return;
             }
-            await this.store.createTicketOrder({
-                productId: this.$route.params.id,
-                startDate: new Date(this.date).toISOString().split("T")[0],
-                endDate: new Date(this.returnDate).toISOString().split("T")[0],
-                peopleCount: this.ticketCount,
-                apiBase: this.apiBase,
-                router: this.$router,
-            })
+            try {
+                await this.store.createTicketOrder({
+                    productId: this.$route.params.id,
+                    startDate: new Date(this.date).toISOString().split("T")[0],
+                    endDate: new Date(this.returnDate).toISOString().split("T")[0],
+                    peopleCount: this.ticketCount,
+                    apiBase: this.apiBase,
+                    router: this.$router,
+                })
+            } catch (error) {
+                console.log(error)
+            }
         },
         scrollToBooking() {
             const bookingSection = this.$refs.bookingSection;
