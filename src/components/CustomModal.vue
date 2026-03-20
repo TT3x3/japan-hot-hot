@@ -12,8 +12,8 @@
                         <p class="font-bold text-xl text-base-heavy">{{ modalTitle }}</p>
                         <p class="text-sm text-base-light">{{ modalContent }}</p>
                     </div>
-                    <button @click.prevent="closeModal()"
-                        class="bg-gray-400 hover:bg-gray-300 active:bg-gray-500 text-white py-2 w-full">確認</button>
+                    <button type="button" @click.prevent="closeModal()"
+                        class="bg-gray-400 hover:bg-gray-300 active:bg-gray-500 text-white py-2 w-full cursor-pointer">確認</button>
                 </div>
             </div>
         </div>
@@ -50,6 +50,11 @@ export default {
         closeModal() {
             this.$emit('close');
         }
+    },
+    watch: {
+        isModalOpen(val) {
+            document.body.style.overflow = val ? 'hidden' : ''
+        },
     },
 }
 </script>
