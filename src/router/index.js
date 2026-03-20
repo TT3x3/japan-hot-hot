@@ -1,5 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
+import { useOrderStore } from "@/stores/order";
+
 
 // import 頁面
 import AppHome from "@/pages/AppHome.vue";
@@ -125,7 +127,11 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
   const isLogin = !!localStorage.getItem("token");
+  const orderStore = useOrderStore();
+
   if (to.meta.requiresAuth && !isLogin) {
+    next("/");
+  } else if (to.path.includes("/checkout") && !orderStore.isCheckoutStarted) {
     next("/");
   } else {
     next();

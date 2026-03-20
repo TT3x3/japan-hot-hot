@@ -145,7 +145,7 @@
                             :class="isError.peopleCount ? 'border border-red-500' : 'border-none'">
                             <p class="text-base-heavy">每人<span class="text-sm text-gray-400">（{{ tour.price | dollarSign
                                 |
-                                    currency }}
+                                currency }}
                                     / 人）</span>
                             </p>
                             <div class="flex flex-row gap-12 items-center">

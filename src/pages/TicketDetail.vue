@@ -258,7 +258,7 @@ export default {
     name: 'TicketDetail',
     data() {
         return {
-            store: useOrderStore(),
+            store: '',
             apiBase: process.env.VUE_APP_API_PATH,
             ticket: "",
             highlighted: false,
@@ -384,6 +384,7 @@ export default {
     },
     created() {
         this.findProduct(this.$route.params.id);
+        this.store = useOrderStore();
     },
     watch: {
         date(newDate) {

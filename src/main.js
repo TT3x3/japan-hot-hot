@@ -13,12 +13,12 @@ import { auth } from "@/utils/auth";
 
 Vue.config.productionTip = false;
 Vue.use(VCalendar);
-Vue.use(PiniaVuePlugin);
+Vue.use(PiniaVuePlugin); 
 Vue.component("CustomPagination", CustomPagination);
 Vue.component("v-select", vSelect);
 Vue.prototype.$auth = auth;
-
 const pinia = createPinia();
+Vue.use(pinia);
 
 router.beforeEach((to, from, next) => {
   document.body.scrollTop = 0;
@@ -28,7 +28,6 @@ router.beforeEach((to, from, next) => {
 });
 
 new Vue({
-  pinia,
   router,
   render: (h) => h(App),
 }).$mount("#app");

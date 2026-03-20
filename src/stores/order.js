@@ -6,6 +6,7 @@ export const useOrderStore = defineStore("order", {
     isLogin: false,
     orderInit: {},
     checkedInfo: {},
+    isCheckoutStarted: false,
   }),
   actions: {
     async createTicketOrder({
@@ -33,14 +34,20 @@ export const useOrderStore = defineStore("order", {
             },
           }
         );
-        console.log(res);
         this.orderInit = res.data;
+        this.isCheckoutStarted = true;
         router.push(`/checkout/${res.data.orderId}`);
       } catch (error) {
         alert(error);
       }
     },
-    async createTourOrder({ productId, startDate, peopleCount,apiBase,router }) {
+    async createTourOrder({
+      productId,
+      startDate,
+      peopleCount,
+      apiBase,
+      router,
+    }) {
       try {
         const orderDetail = {
           productId,
@@ -58,6 +65,7 @@ export const useOrderStore = defineStore("order", {
           }
         );
         this.orderInit = res.data;
+        this.isCheckoutStarted = true;
         router.push(`/checkout/${res.data.orderId}`);
       } catch (error) {
         alert(error);
@@ -97,4 +105,5 @@ export const useOrderStore = defineStore("order", {
       }
     },
   },
+  persist: true,
 });

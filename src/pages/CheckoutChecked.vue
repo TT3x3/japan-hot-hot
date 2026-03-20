@@ -199,6 +199,7 @@ export default {
                 })
 
                 this.$router.push(`/checkout/finished/${this.orderId}`)
+                this.store.isCheckoutStarted = false;
             } catch (error) {
                 console.log(error)
             }
