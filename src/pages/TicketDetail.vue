@@ -1,5 +1,7 @@
 <template>
     <div>
+        <CustomModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
+            @close="isModalOpen = false" />
         <div v-if="ticket" class="flex flex-col gap-32 w-full">
             <div class="max-w-[80%] w-full mx-auto flex flex-col md:gap-12 gap-6">
                 <div class=" flex flex-col gap-4">
@@ -32,7 +34,8 @@
                             <p class="font-bold text-3xl text-hot-red">{{ ticket.price | dollarSign | currency }}～</p>
                             <button type="button" v-if="ticket.status === 'active'" @click.prevent="scrollToBooking()"
                                 class="bg-hot-red text-white px-10 py-3 hover:bg-red-400 active:bg-red-700 w-full md:w-auto cursor-pointer">立即購票</button>
-                            <button type="button" v-else class="bg-gray-400 text-gray-300 px-10 py-3 w-full" disabled>無法購買</button>
+                            <button type="button" v-else class="bg-gray-400 text-gray-300 px-10 py-3 w-full"
+                                disabled>無法購買</button>
                         </div>
                     </div>
                     <div class="text-sm leading-6.5 text-base-heavy">
@@ -247,6 +250,7 @@
 <script>
 import http from '@/api/http'
 import { useOrderStore } from '@/stores/order';
+import CustomModal from '@/components/CustomModal.vue';
 
 export default {
     name: 'TicketDetail',
@@ -274,7 +278,13 @@ export default {
             isFormValid: false,
             isNotFound: false,
             seconds: 5,
+            isModalOpen: false,
+            hasError: false,
+            modalContent: '',
         }
+    },
+    components: {
+        CustomModal,
     },
     methods: {
         async findProduct(id) {
@@ -295,6 +305,13 @@ export default {
         async createOrder() {
             this.confirmBooking();
             if (!this.isFormValid) return;
+            const token = localStorage.getItem('token');
+            if (!token) {
+                this.isModalOpen = true;
+                this.hasError = true;
+                this.modalContent = '此功能僅限會員使用，請先登入';
+                return;
+            }
             await this.store.createTicketOrder({
                 productId: this.$route.params.id,
                 startDate: new Date(this.date).toISOString().split("T")[0],

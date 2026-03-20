@@ -1,15 +1,15 @@
 <template>
     <div v-if="flights" class="flex flex-col md:gap-32 gap-12 w-full">
+        <CustomModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
+            @close="isModalOpen = false" />
         <div class="flex justify-center items-center pt-8">
             <h1 class="text-3xl text-center tracking-[2rem] pl-[2rem] text-base-heavy">機票</h1>
         </div>
-
 
         <!-- top -->
         <div class="relative md:h-80 h-40 overflow-hidden">
             <img src="../assets/images/carousel-2.jpg" alt="tour-banner" class=" w-full h-full object-cover">
         </div>
-
 
         <!-- 搜尋框 -->
         <div class="flex justify-center items-center max-w-[80%] w-full mx-auto">
@@ -94,15 +94,22 @@
 
 <script>
 import http from '@/api/http'
+import CustomModal from '@/components/CustomModal.vue';
 
 export default {
     name: 'TicketsPage',
     data() {
         return {
             apiBase: process.env.VUE_APP_API_PATH,
+            isModalOpen: false,
+            hasError: false,
+            modalContent: '',
             flights: "",
             likesList: [],
         };
+    },
+    components: {
+        CustomModal,
     },
     methods: {
         async getFlights() {
@@ -111,42 +118,65 @@ export default {
         },
         async getLikes() {
             const token = localStorage.getItem('token');
-            const res = await http.get(`${this.apiBase}/cart`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
+            if (!token) return;
+            try {
+                const res = await http.get(`${this.apiBase}/cart`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                this.likesList = res.data.items;
+                if (this.likesList.length === 0) {
+                    return;
                 }
-            });
-            this.likesList = res.data.items;
-            if (this.likesList.length === 0) {
-                return;
+            } catch (error) {
+                console.log(error)
             }
         },
         findLike(id) {
-            return this.likesList.find(item => item.productId === id);
+            const token = localStorage.getItem('token');
+            if (token) {
+                return this.likesList.find(item => item.productId === id)
+            }
         },
         async addToLikes(id) {
             const token = localStorage.getItem('token');
-            await http.post(`${this.apiBase}/cart/items`, {
-                productId: id,
-                quantity: 1
-            }, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-            this.getLikes();
-        },
-        async delLike(id) {
-            if (this.findLike(id)) {
-                const token = localStorage.getItem('token');
-                await http.delete(`${this.apiBase}/cart/items`, {
+            if (!token) {
+                this.isModalOpen = true;
+                this.hasError = true;
+                this.modalContent = '哇！登入才能使用收藏功能唷！';
+                return;
+            }
+            try {
+                await http.post(`${this.apiBase}/cart/items`, {
+                    productId: id,
+                    quantity: 1
+                }, {
                     headers: {
                         Authorization: `Bearer ${token}`
-                    },
-                    data: {
-                        productId: id
                     }
                 });
+                this.getLikes();
+            } catch (error) {
+                console.log(error)
+            }
+        },
+        async delLike(id) {
+            const token = localStorage.getItem('token');
+            if (!token) return;
+            if (this.findLike(id)) {
+                try {
+                    await http.delete(`${this.apiBase}/cart/items`, {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        },
+                        data: {
+                            productId: id
+                        }
+                    });
+                } catch (error) {
+                    console.log(error)
+                }
                 this.getLikes();
             }
         },
