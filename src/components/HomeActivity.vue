@@ -1,7 +1,7 @@
 <template>
     <div
         class="flex flex-col justify-center md:items-center items-stretch  bg-gradient-to-t from-white from-50% to-gray-200 to-50%">
-        <div class="flex flex-col gap-10 pt-32">
+        <div class="flex flex-col gap-10 md:pt-32 pt-10">
             <h2 class="font-bold text-center text-2xl text-base-heavy">最新活動</h2>
             <!-- 卡片區 -->
             <div class="flex md:flex-row flex-nowrap overflow-x-auto md:overflow-visible gap-8 w-full md:px-0 px-8">

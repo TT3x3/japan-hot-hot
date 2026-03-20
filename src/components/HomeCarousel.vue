@@ -1,17 +1,26 @@
 <template>
     <!-- 輪播圖 -->
-    <div class="flex justify-center items-center">
-        <div class="relative">
-            <div class="absolute left-4 bottom-4 bg-black/20 text-white px-3 py-1 text-sm">
+    <div class="flex md:flex-row flex-col gap-4 justify-center items-center">
+        <div class="relative md:h-[500px] h-[240px] md:w-[80%] w-full">
+            <div class="absolute left-4 bottom-4 z-21 bg-black/20 text-white px-3 py-1 text-sm">
                 {{ carouselImages[currentIndex].caption }}
             </div>
-            <img :src="carouselImages[currentIndex].img" class="max-h-[500px] w-auto" :alt="carouselImages[currentIndex].caption">
+            <img v-for="(img, index) in carouselImages" :key="index" :src="img.img"
+                class="w-full h-full object-cover transition-opacity duration-500 absolute top-0 left-0"
+                :class="{ 'opacity-100': index === currentIndex, 'opacity-0': index !== currentIndex }"
+                :alt="img.caption">
         </div>
-        <div class="flex flex-col gap-16 px-6">
+        <div class="hidden md:flex flex-col gap-16">
             <button type="button" class="cursor-pointer" @click="carouselPrev"><i
                     class="fa-solid fa-arrow-up fa-lg  text-gray-400 hover:text-gray-300 active:text-gray-500"></i></button>
             <button type="button" class="cursor-pointer" @click="carouselNext"><i
                     class="fa-solid fa-arrow-down fa-lg text-gray-400 hover:text-gray-300 active:text-gray-500"></i></button>
+        </div>
+        <div class="absolute z-21 flex md:hidden flex-row gap-16 px-2 justify-between w-full">
+            <button type="button" class="cursor-pointer" @click="carouselPrev"><i
+                    class="fa-solid fa-angle-left fa-2x  text-white/60 shadow-2xl"></i></button>
+            <button type="button" class="cursor-pointer" @click="carouselNext"><i
+                    class="fa-solid fa-angle-right fa-2x text-white/60 shadow-2xl"></i></button>
         </div>
     </div>
 </template>
@@ -20,6 +29,7 @@ export default {
     name: 'AppHome',
     data() {
         return {
+            intervalId: null,
             currentIndex: 0,
             carouselImages: [
                 {
@@ -52,6 +62,14 @@ export default {
         carouselNext() {
             this.currentIndex = (this.currentIndex + 1) % this.carouselImages.length;
         }
-    }
+    },
+    mounted() {
+        this.intervalId = setInterval(() => {
+            this.currentIndex = (this.currentIndex + 1) % this.carouselImages.length;
+        }, 4000)
+    },
+    beforeDestroy() {
+        clearInterval(this.intervalId);
+    },
 }
 </script>
