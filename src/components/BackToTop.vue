@@ -1,8 +1,9 @@
 <template>
     <!-- top -->
     <div v-show="showTopBtn" @click="backToTop()"
-        class="fixed bottom-[10%] right-14 md:bg-white/30 bg-white/70 w-12 h-12 flex flex-col justify-center items-center hover:bg-white/60 cursor-pointer">
-        <i class="fa-solid fa-angle-up fa-xl text-gray-600"></i>
+        class="fixed bottom-[10%] right-14 md:bg-white/30 bg-white/70 p-3 flex flex-col gap-1 justify-center items-center hover:bg-white/80 cursor-pointer">
+        <i class="pt-2 pb-1 fa-solid fa-angle-up fa-xl text-gray-600"></i>
+        <p class="text-xs text-gray-400">TOP</p>
     </div>
 </template>
 <script>
