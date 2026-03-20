@@ -37,7 +37,7 @@
                                 <div class="md:flex gap-2 items-center justify-between">
                                     <p
                                         :class="['px-2 py-1 text-sm text-white', order.status === 'confirmed' ? 'bg-green-700' : 'bg-hot-red']">
-                                        {{ order.status === 'confirmed' ? '已完成' : '未完成' }} - {{  }}
+                                        {{ order.status === 'confirmed' ? '已完成' : '未完成' }}
                                     </p>
                                     <p class="bg-gray-400 text-sm text-white px-2 py-1">{{
                                         typeTranslate[order.productType] }}</p>
