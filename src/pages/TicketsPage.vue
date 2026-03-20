@@ -65,18 +65,28 @@
                             <div
                                 class="absolute inset-0 bg-white/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ">
                             </div>
-                            <!-- 收藏 -->
+                            <!-- md 以上收藏 -->
                             <button type="button" @click.prevent.stop="toggleLike(item.productId)"
-                                class="absolute top-3 right-3 p-2  text-white/65 hover:text-red-500 transition-colors duration-200 ">
+                                class="hidden md:block absolute top-3 right-3 p-2  text-white/65 hover:text-red-500 transition-colors duration-200 ">
                                 <i v-if="findLike(item.productId)"
                                     class="fa-solid fa-heart fa-xl text-red-500 cursor-pointer"></i>
                                 <i v-else class="fa-regular fa-heart fa-xl cursor-pointer"></i>
                             </button>
                         </div>
-                        <div class="flex flex-col flex-1 p-5">
-                            <div class="flex gap-2 mb-3">
-                                <p v-for="(tag, index) in item.tags" :key="index"
-                                    class="text-sm px-1 inline-block border border-gray-300 text-gray-400">{{ tag }}</p>
+                        <div class="flex flex-col gap-3 flex-1 p-5">
+                            <div class="flex gap-2 justify-between">
+                                <div class="flex gap-2 items-center">
+                                    <p v-for="(tag, index) in item.tags" :key="index"
+                                        class="text-sm px-1 inline-block border border-gray-300 text-gray-400">{{ tag }}
+                                    </p>
+                                </div>
+                                <!-- md 以下收藏 -->
+                                <button type="button" @click.prevent.stop="toggleLike(item.productId)"
+                                    class=" block md:hidden text-red-500 hover:text-red-400 transition-colors duration-200 ">
+                                    <i v-if="findLike(item.productId)"
+                                        class="fa-solid fa-heart fa-lg  cursor-pointer"></i>
+                                    <i v-else class="fa-regular fa-heart fa-lg cursor-pointer"></i>
+                                </button>
                             </div>
                             <p class="font-bold line-clamp-2 text-base-heavy">{{ item.title }}</p>
                             <p class="font-bold text-lg text-hot-red mt-auto text-end">{{ item.price.toLocaleString() |

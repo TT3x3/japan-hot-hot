@@ -52,14 +52,21 @@
                                 <div
                                     class="absolute inset-0 bg-white/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ">
                                 </div>
-                                <!-- 移除收藏 -->
+                                <!-- md 以上移除收藏 -->
                                 <button type="button" @click.prevent.stop="delLike(item.productId)"
-                                    class="absolute top-3 right-3 p-2  text-white/65 hover:text-red-500 active:text-red-700 transition-colors duration-200 cursor-pointer">
+                                    class="hidden md:block absolute top-3 right-3 p-2  text-white/65 hover:text-red-500 active:text-red-700 transition-colors duration-200 cursor-pointer">
                                     <i class="fa-solid fa-trash fa-xl"></i>
                                 </button>
                             </div>
                             <div class="flex flex-col flex-1 gap-4 p-5 bg-white">
-                                <p class="font-bold line-clamp-1 text-base-heavy">{{ item.title }}</p>
+                                <div class="flex justify-between">
+                                    <p class="font-bold line-clamp-1 text-base-heavy">{{ item.title }}</p>
+                                    <!-- md 以下移除收藏 -->
+                                    <button type="button" @click.prevent.stop="delLike(item.productId)"
+                                        class="text-gray-400 transition-colors duration-200 cursor-pointer">
+                                        <i class="fa-solid fa-trash fa-md"></i>
+                                    </button>
+                                </div>
                                 <p class="font-bold text-lg text-hot-red mt-auto text-end">{{
                                     item.price.toLocaleString() |
                                     dollarSign | currency }}</p>
@@ -103,26 +110,36 @@ export default {
     methods: {
         async getLikes() {
             const token = localStorage.getItem('token');
-            const res = await http.get(`${this.apiBase}/cart`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-            this.items = res.data.items;
+            if (!token) return;
+            try {
+                const res = await http.get(`${this.apiBase}/cart`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                this.items = res.data.items;
+            } catch (error) {
+                console.log(error)
+            }
         },
         async delLike(id) {
             this.deleteId = id;
             const token = localStorage.getItem('token');
-            await http.delete(`${this.apiBase}/cart/items`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                },
-                data: {
-                    productId: this.deleteId
-                }
-            });
-            this.getLikes();
-            this.deleteId = '';
+            if (!token || !id) return;
+            try {
+                await http.delete(`${this.apiBase}/cart/items`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    },
+                    data: {
+                        productId: this.deleteId
+                    }
+                });
+                this.getLikes();
+                this.deleteId = '';
+            } catch (error) {
+                console.log(error)
+            }
         },
         changeCategory(category) {
             this.selectCategory = category;
