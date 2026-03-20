@@ -22,7 +22,7 @@ import CheckoutFinished from "@/pages/CheckoutFinished.vue";
 
 Vue.use(Router);
 
-export default new Router({
+const router = new Router({
   mode: "history",
   routes: [
     {
@@ -44,31 +44,37 @@ export default new Router({
       path: "/member",
       name: "member",
       component: MemberCenter,
+      meta: { requiresAuth: true },
     },
     {
       path: "/member/profile",
       name: "profile",
       component: MemberProfile,
+      meta: { requiresAuth: true },
     },
-        {
+    {
       path: "/member/password",
       name: "password]",
       component: MemberPassword,
+      meta: { requiresAuth: true },
     },
     {
       path: "/member/orders",
       name: "orders",
       component: MemberOrders,
+      meta: { requiresAuth: true },
     },
     {
       path: "/member/orders/:orderId",
       name: "orders-detail",
       component: MemberOrderDetail,
+      meta: { requiresAuth: true },
     },
     {
       path: "/member/likes",
       name: "likes",
       component: MemberLikes,
+      meta: { requiresAuth: true },
     },
     {
       path: "/tours",
@@ -94,21 +100,36 @@ export default new Router({
       path: "/checkout/:id",
       name: "checkout",
       component: CheckoutPage,
+      meta: { requiresAuth: true },
     },
     {
       path: "/checkout/passport/:id",
       name: "checkoutPassport/:id",
       component: CheckoutPassport,
+      meta: { requiresAuth: true },
     },
     {
       path: "/checkout/checked/:id",
       name: "checkoutChecked",
       component: CheckoutChecked,
+      meta: { requiresAuth: true },
     },
     {
       path: "/checkout/finished/:id",
       name: "checkoutFinished",
       component: CheckoutFinished,
+      meta: { requiresAuth: true },
     },
   ],
 });
+
+router.beforeEach((to, from, next) => {
+  const isLogin = !!localStorage.getItem("token");
+  if (to.meta.requiresAuth && !isLogin) {
+    next("/");
+  } else {
+    next();
+  }
+});
+
+export default router;

@@ -1,7 +1,7 @@
 <template>
-    <div class="flex flex-col gap-32 w-full bg-gray-100">
+    <div class="flex flex-col md:gap-32 gap-12 w-full bg-gray-100">
         <!-- top -->
-        <div class="relative h-80 overflow-hidden">
+        <div class="relative  md:h-80 h-40 overflow-hidden">
             <img src="../assets/images/carousel-4.jpg" alt="tour-banner" class=" w-full h-full object-cover">
         </div>
         <div class="flex justify-center items-center ">
@@ -31,7 +31,8 @@
                                 <img src="../assets/images/carousel-1.jpg" class="h-40 object-cover">
                                 <p class="hidden md:block font-bold">
                                     {{ orderDetail.product.title }}</p>
-                                <p class="text-sm text-end text-base-light">{{ orderDetail.product.price | dollarSign | currency }}
+                                <p class="text-sm text-end text-base-light">{{ orderDetail.product.price | dollarSign |
+                                    currency }}
                                     x {{ orderDetail.peopleCount
                                     }}</p>
                                 <div class="w-full h-px bg-gray-100"></div>
@@ -49,10 +50,12 @@
                                 </div>
                                 <div class="flex justify-between items-center">
                                     <p class="text-gray-400">訂單狀態</p>
-                                    <p
+                                    <!-- <p
                                         :class="[orderDetail.status === 'confirmed' ? 'text-green-700' : 'text-hot-red']">
                                         {{ orderDetail.status === 'confirmed' ? '已完成' : '未完成' }}
-                                    </p>
+                                    </p> -->
+                                    <p v-if="orderDetail.status === 'confirmed'" class="text-green-700">{{ statusTranslate[orderDetail.status] }}</p>
+                                    <p v-else class="text-hot-red">{{ statusTranslate[orderDetail.status] }}</p>
                                 </div>
                             </div>
                         </div>
@@ -72,28 +75,28 @@
                             class="bg-white flex flex-col justify-between md:items-center md:px-10 px-6 md:py-6 py-4 md:text-base text-sm">
                             <div class="flex flex-col md:gap-4 gap-2 w-full">
                                 <div class="flex items-center">
-                                    <p class="min-w-24 text-gray-400">付款方式</p>
+                                    <p class="md:min-w-24 min-w-20 text-gray-400">付款方式</p>
                                     <p>{{ typeTranslate[orderDetail.contact.paymentMethod] }}</p>
                                 </div>
                                 <div class="w-full h-px bg-gray-100"></div>
                                 <div class="flex items-center">
-                                    <p class="min-w-24 text-gray-400">收件人</p>
+                                    <p class="md:min-w-24 min-w-20 text-gray-400">收件人</p>
                                     <p>{{ orderDetail.contact.name }}</p>
                                 </div>
                                 <div class="flex items-center">
-                                    <p class="min-w-24 text-gray-400">聯絡電話</p>
+                                    <p class="md:min-w-24 min-w-20 text-gray-400">聯絡電話</p>
                                     <p>{{ orderDetail.contact.phone }}</p>
                                 </div>
                                 <div class="flex items-center">
-                                    <p class="min-w-24 text-gray-400">E-mail</p>
+                                    <p class="md:min-w-24 min-w-20 text-gray-400">E-mail</p>
                                     <p>{{ orderDetail.contact.email }}</p>
                                 </div>
                                 <div class="flex items-center">
-                                    <p class="min-w-24 text-gray-400">收件地址</p>
+                                    <p class="md:min-w-24 min-w-20 text-gray-400">收件地址</p>
                                     <p>{{ orderDetail.contact.address }}</p>
                                 </div>
                                 <div class="flex items-center">
-                                    <p class="min-w-24 text-gray-400">給賣家的話</p>
+                                    <p class="md:min-w-24 min-w-20 text-gray-400">給賣家的話</p>
                                     <p>{{ orderDetail.contact.remark || '無' }}</p>
                                 </div>
                             </div>
@@ -104,27 +107,27 @@
                             class="mt-4 bg-gray-300 flex md:flex-row flex-col md:items-center gap-2 md:px-10 px-6 md:py-6 py-4 text-sm text-base-light">
                             <p class="text-base-light">護照資訊</p>
                         </div>
-                        <div
-                            class=" flex flex-col gap-2 justify-between md:items-center md:text-base text-sm">
-                            <div v-for="traveler in orderDetail.purchaseInfo.travelers" :key="traveler.idNumber" class="bg-white flex flex-col md:gap-4 gap-2 w-full md:px-10 px-6 md:py-6 py-4">
+                        <div class=" flex flex-col gap-2 justify-between md:items-center md:text-base text-sm">
+                            <div v-for="traveler in orderDetail.purchaseInfo.travelers" :key="traveler.idNumber"
+                                class="bg-white flex flex-col md:gap-4 gap-2 w-full md:px-10 px-6 md:py-6 py-4">
                                 <div class="flex items-center">
-                                    <p class="min-w-24 text-gray-400">護照姓氏</p>
+                                    <p class="md:min-w-24 min-w-20 text-gray-400">護照姓氏</p>
                                     <p>{{ traveler.lastName }}</p>
                                 </div>
                                 <div class="flex items-center">
-                                    <p class="min-w-24 text-gray-400">護照名字</p>
+                                    <p class="md:min-w-24 min-w-20 text-gray-400">護照名字</p>
                                     <p>{{ traveler.firstName }}</p>
                                 </div>
                                 <div class="flex items-center">
-                                    <p class="min-w-24 text-gray-400">身分證字號</p>
+                                    <p class="md:min-w-24 min-w-20 text-gray-400">身分證字號</p>
                                     <p>{{ traveler.idNumber }}</p>
                                 </div>
                                 <div class="flex items-center">
-                                    <p class="min-w-24 text-gray-400">護照號碼</p>
+                                    <p class="md:min-w-24 min-w-20 text-gray-400">護照號碼</p>
                                     <p>{{ traveler.passportNumber }}</p>
                                 </div>
                                 <div class="flex items-center">
-                                    <p class="min-w-24 text-gray-400">護照效期</p>
+                                    <p class="md:min-w-24 min-w-20 text-gray-400">護照效期</p>
                                     <p>{{ traveler.passportExpiry }}</p>
                                 </div>
                             </div>
@@ -223,6 +226,14 @@ export default {
                 Tour: '行程',
                 Flight: '機票',
                 cash: '現金支付',
+            }
+        },
+        statusTranslate() {
+            return {
+                confirmed: '完成訂單',
+                draft: '未完成，僅建立訂單',
+                contact_filled: '未完成，未填寫收件資訊',
+                travelers_filled: '未完成，未填寫護照資訊',
             }
         },
     },

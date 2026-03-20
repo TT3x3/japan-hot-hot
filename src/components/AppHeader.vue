@@ -69,9 +69,7 @@ export default {
     handleLogout() {
       logout();
       this.isOpen = false;
-      if (this.$route.path === '/members/login') {
-        this.$router.push('/members/login');
-      }
+      this.$router.push('/login');
     }
   },
   watch: {

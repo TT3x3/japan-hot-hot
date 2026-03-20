@@ -3,6 +3,7 @@ import http from "@/api/http";
 
 export const useOrderStore = defineStore("order", {
   state: () => ({
+    isLogin: false,
     orderInit: {},
     checkedInfo: {},
   }),

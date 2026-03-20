@@ -1,8 +1,8 @@
 <template>
     <div>
-        <div v-if="items" class="flex flex-col gap-32 w-full bg-gray-100">
+        <div v-if="items" class="flex flex-col md:gap-32 gap-12 w-full bg-gray-100">
             <!-- top -->
-            <div class="relative h-80 overflow-hidden">
+            <div class="relative  md:h-80 h-40 overflow-hidden">
                 <img src="../assets/images/carousel-4.jpg" alt="tour-banner" class=" w-full h-full object-cover">
             </div>
             <div class="flex justify-center items-center ">
