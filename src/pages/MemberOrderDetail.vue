@@ -54,14 +54,17 @@
                                         :class="[orderDetail.status === 'confirmed' ? 'text-green-700' : 'text-hot-red']">
                                         {{ orderDetail.status === 'confirmed' ? '已完成' : '未完成' }}
                                     </p> -->
-                                    <p v-if="orderDetail.status === 'confirmed'" class="text-green-700">{{ statusTranslate[orderDetail.status] }}</p>
+                                    <p v-if="orderDetail.status === 'confirmed'" class="text-green-700">{{
+                                        statusTranslate[orderDetail.status] }}</p>
                                     <p v-else class="text-hot-red">{{ statusTranslate[orderDetail.status] }}</p>
                                 </div>
                             </div>
                         </div>
                         <div class="w-full flex gap-4 pt-4">
-                            <button type="button"
-                                class="cursor-pointer bg-hot-red text-white text-center px-10 py-3 w-full  hover:bg-red-500 active:bg-red-700 transition-colors">重新下單</button>
+                            <router-link v-if="orderDetail.productType==='Flight'" :to="`/ticket-detail/${orderDetail.productId}`"
+                                class="cursor-pointer bg-hot-red text-white text-center px-10 py-3 w-full  hover:bg-red-500 active:bg-red-700 transition-colors">重新下單</router-link>
+                            <router-link v-else :to="`/tour-detail/${orderDetail.productId}`"
+                                class="cursor-pointer bg-hot-red text-white text-center px-10 py-3 w-full  hover:bg-red-500 active:bg-red-700 transition-colors">重新下單</router-link>
                         </div>
                     </div>
 
