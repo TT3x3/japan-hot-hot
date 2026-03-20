@@ -237,7 +237,7 @@
                     </table>
                 </div>
                 <button type="button" @click.prevent="$router.back(-1)"
-                    class="inline-block self-center bg-gray-400 px-10 py-3 hover:bg-gray-300 active:bg-gray-500 text-white">返回上頁</button>
+                    class="inline-block self-center bg-gray-400 px-10 py-3 hover:bg-gray-300 active:bg-gray-500 text-white cursor-pointer">返回上頁</button>
             </div>
         </div>
         <div v-if="isNotFound === true" class="flex flex-col justify-center items-center w-full">
