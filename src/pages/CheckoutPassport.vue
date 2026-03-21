@@ -149,7 +149,6 @@ export default {
     },
     data() {
         return {
-            apiBase: process.env.VUE_APP_API_PATH,
             store: '',
             date: null,
             passportInfo: [],
@@ -242,7 +241,6 @@ export default {
             if (this.isError) return;
             await this.store.savePassportInfo({
                 passportInfo: this.passportInfo,
-                apiBase: this.apiBase,
                 orderId: this.orderInfo.orderId,
                 router: this.$router,
             })

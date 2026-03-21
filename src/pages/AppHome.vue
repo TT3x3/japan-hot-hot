@@ -2,18 +2,7 @@
   <div class="flex flex-col md:gap-32 gap-12">
     <div class="flex md:flex-col flex-col-reverse md:gap-32 gap-12">
       <!-- 搜尋框 -->
-      <div class="flex justify-center items-center max-w-[80%] w-full mx-auto">
-        <div class="flex flex-col gap-2 justify-center items-center w-full">
-          <h3 class="font-bold md:text-3xl text-xl text-base-heavy">麥囉唆，直接講想去哪嘿皮？</h3>
-          <div class="flex justify-center items-center w-full">
-            <input type="text" placeholder="赤穗市"
-              class="outline-solid outline-1 outline-gray-300 py-2 px-4 md:w-[348px] w-full" />
-            <button type="button" class="cursor-pointer px-3">
-              <i class="fa-solid fa-magnifying-glass fa-lg text-gray-600"></i>
-            </button>
-          </div>
-        </div>
-      </div>
+      <SearchBar />
       <img src="../assets/images/home-banner.jpg" class="w-full h-72 relative object-cover" alt="home-banner">
     </div>
 
@@ -35,7 +24,8 @@
             </p>
           </div>
         </div>
-        <img src="../assets/images/about-img-1.jpg" alt="about-img-1" class="hidden md:block max-w-[30%] h-full object-cover">
+        <img src="../assets/images/about-img-1.jpg" alt="about-img-1"
+          class="hidden md:block max-w-[30%] h-full object-cover">
       </div>
     </div>
 
@@ -45,12 +35,15 @@
 <script>
 import HomeActivity from '@/components/HomeActivity.vue';
 import HomeCarousel from '@/components/HomeCarousel.vue';
+import SearchBar from '@/components/SearchBar.vue';
+
 
 export default {
   name: 'AppHome',
   components: {
     HomeActivity,
-    HomeCarousel
+    HomeCarousel,
+    SearchBar,
   },
   data() {
     return {

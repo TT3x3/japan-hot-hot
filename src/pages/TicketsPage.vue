@@ -12,18 +12,7 @@
         </div>
 
         <!-- 搜尋框 -->
-        <div class="flex justify-center items-center max-w-[80%] w-full mx-auto">
-            <div class="flex flex-col gap-2 justify-center items-center w-full">
-                <h3 class="md:text-3xl text-xl text-bold text-base-heavy">麥囉唆，直接講想去哪嘿皮？</h3>
-                <div class="flex justify-center items-center w-full">
-                    <input type="text" placeholder="赤穗市"
-                        class="outline-solid outline-1 outline-gray-300 py-2 px-4 md:w-[348px] w-full" />
-                    <button type="button" class="cursor-pointer px-3">
-                        <i class="fa-solid fa-magnifying-glass fa-lg text-gray-600"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
+        <SearchBar />
 
         <!-- 分類 -->
         <div class="max-w-[80%] w-full mx-auto">
@@ -106,6 +95,7 @@
 <script>
 import http from '@/api/http'
 import CustomModal from '@/components/CustomModal.vue';
+import SearchBar from '@/components/SearchBar.vue';
 
 export default {
     name: 'TicketsPage',
@@ -122,17 +112,18 @@ export default {
     },
     components: {
         CustomModal,
+        SearchBar,
     },
     methods: {
         async getFlights() {
-            const res = await http.get(`${this.apiBase}/product/flight`);
+            const res = await http.get(`/product/flight`);
             this.flights = res.data.items;
         },
         async getLikes() {
             const token = localStorage.getItem('token');
             if (!token) return;
             try {
-                const res = await http.get(`${this.apiBase}/cart`, {
+                const res = await http.get(`/cart`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
@@ -163,7 +154,7 @@ export default {
                 return;
             }
             try {
-                await http.post(`${this.apiBase}/cart/items`, {
+                await http.post(`/cart/items`, {
                     productId: id,
                     quantity: 1
                 }, {
@@ -184,7 +175,7 @@ export default {
             if (!token) return;
             if (this.findLike(id)) {
                 try {
-                    await http.delete(`${this.apiBase}/cart/items`, {
+                    await http.delete(`/cart/items`, {
                         headers: {
                             Authorization: `Bearer ${token}`
                         },

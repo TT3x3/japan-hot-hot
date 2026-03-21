@@ -1,11 +1,9 @@
 import Vue from "vue";
 
-
 export const auth = Vue.observable({
     isLoggedIn: !!localStorage.getItem("token"),
     user: JSON.parse(localStorage.getItem("user")) || null,
 });
-
 
 export function login(token, user) {
     localStorage.setItem("token", token);
@@ -13,7 +11,6 @@ export function login(token, user) {
     auth.isLoggedIn = true;
     auth.user = user;
 }
-
 
 export function logout() {
     localStorage.removeItem("token");

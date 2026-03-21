@@ -279,7 +279,8 @@ export default {
         return {
             store: '',
             apiBase: process.env.VUE_APP_API_PATH,
-            ticket: "",
+            token:'',
+            ticket: '',
             highlighted: false,
             range: {
                 rangeDate: null,
@@ -312,7 +313,7 @@ export default {
     methods: {
         async findProduct(id) {
             try {
-                const res = await http.get(`${this.apiBase}/product/flight/${id}`);
+                const res = await http.get(`/product/flight/${id}`);
                 this.ticket = res.data;
             } catch (error) {
                 this.isNotFound = true;
@@ -328,8 +329,7 @@ export default {
         async createOrder() {
             this.confirmBooking();
             if (!this.isFormValid) return;
-            const token = localStorage.getItem('token');
-            if (!token) {
+            if (!this.token) {
                 this.isModalOpen = true;
                 this.hasError = true;
                 this.modalContent = '此功能僅限會員使用，請先登入';
@@ -341,7 +341,6 @@ export default {
                     startDate: new Date(this.date).toISOString().split("T")[0],
                     endDate: new Date(this.returnDate).toISOString().split("T")[0],
                     peopleCount: this.ticketCount,
-                    apiBase: this.apiBase,
                     router: this.$router,
                 })
             } catch (error) {
@@ -352,12 +351,11 @@ export default {
             }
         },
         async getLikes() {
-            const token = localStorage.getItem('token');
-            if (!token) return;
+            if (!this.token) return;
             try {
-                const res = await http.get(`${this.apiBase}/cart`, {
+                const res = await http.get(`/cart`, {
                     headers: {
-                        Authorization: `Bearer ${token}`
+                        Authorization: `Bearer ${this.token}`
                     }
                 });
                 this.likesList = res.data.items;
@@ -372,26 +370,24 @@ export default {
             }
         },
         findLike(id) {
-            const token = localStorage.getItem('token');
-            if (token) {
+            if (this.token) {
                 return this.likesList.find(item => item.productId === id)
             }
         },
         async addToLikes(id) {
-            const token = localStorage.getItem('token');
-            if (!token) {
+            if (!this.token) {
                 this.isModalOpen = true;
                 this.hasError = true;
                 this.modalContent = '哇！登入才能使用收藏功能唷！';
                 return;
             }
             try {
-                await http.post(`${this.apiBase}/cart/items`, {
+                await http.post(`/cart/items`, {
                     productId: id,
                     quantity: 1
                 }, {
                     headers: {
-                        Authorization: `Bearer ${token}`
+                        Authorization: `Bearer ${this.token}`
                     }
                 });
                 this.getLikes();
@@ -403,13 +399,12 @@ export default {
             }
         },
         async delLike(id) {
-            const token = localStorage.getItem('token');
-            if (!token) return;
+            if (!this.token) return;
             if (this.findLike(id)) {
                 try {
-                    await http.delete(`${this.apiBase}/cart/items`, {
+                    await http.delete(`/cart/items`, {
                         headers: {
-                            Authorization: `Bearer ${token}`
+                            Authorization: `Bearer ${this.token}`
                         },
                         data: {
                             productId: id
@@ -494,6 +489,7 @@ export default {
         this.findProduct(this.$route.params.id);
         this.getLikes();
         this.store = useOrderStore();
+        this.token = localStorage.getItem('token');
     },
     watch: {
         date(newDate) {

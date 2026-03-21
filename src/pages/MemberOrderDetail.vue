@@ -196,7 +196,6 @@ export default {
     name: 'MemberOrderDetail',
     data() {
         return {
-            apiBase: process.env.VUE_APP_API_PATH,
             orderDetail: '',
             purchaseInfo: {
                 name: '黃飛貓',
@@ -220,7 +219,7 @@ export default {
         async getOrderDetail(id) {
             try {
                 const token = localStorage.getItem('token');
-                const res = await http.get(`${this.apiBase}/members/orders/${id}`, {
+                const res = await http.get(`/members/orders/${id}`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }

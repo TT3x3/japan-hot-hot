@@ -123,7 +123,7 @@ export default {
             const token = localStorage.getItem('token');
             if (!token) return;
             try {
-                const res = await http.get(`${this.apiBase}/cart`, {
+                const res = await http.get(`/cart`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
@@ -141,7 +141,7 @@ export default {
             const token = localStorage.getItem('token');
             if (!token || !id) return;
             try {
-                await http.delete(`${this.apiBase}/cart/items`, {
+                await http.delete(`/cart/items`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     },

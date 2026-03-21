@@ -102,7 +102,6 @@ export default {
     name: 'MemberOrders',
     data() {
         return {
-            apiBase: process.env.VUE_APP_API_PATH,
             orderList: '',
             selectNum: [5, 10, 20, 40],
             currentPage: 1,
@@ -113,7 +112,7 @@ export default {
     methods: {
         async getOrders() {
             const token = localStorage.getItem('token');
-            const res = await http.get(`${this.apiBase}/members/orders`, {
+            const res = await http.get(`/members/orders`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }

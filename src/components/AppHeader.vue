@@ -58,7 +58,6 @@ export default {
   name: 'AppHeader',
   data() {
     return {
-      apiBase: process.env.VUE_APP_API_PATH,
       isOpen: false,
     }
   },

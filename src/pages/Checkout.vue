@@ -201,7 +201,6 @@ export default {
     name: 'CheckoutPage',
     data() {
         return {
-            apiBase: process.env.VUE_APP_API_PATH,
             store: '',
             cities,
             selectCity: null,
@@ -307,7 +306,7 @@ export default {
             }
             try {
                 const token = localStorage.getItem('token');
-                await http.patch(`${this.apiBase}/orders/${this.orderInfo.orderId}/contact`, info, {
+                await http.patch(`/orders/${this.orderInfo.orderId}/contact`, info, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }

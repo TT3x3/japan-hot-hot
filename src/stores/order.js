@@ -14,7 +14,7 @@ export const useOrderStore = defineStore("order", {
       startDate,
       endDate,
       peopleCount,
-      apiBase,
+     
       router,
     }) {
       try {
@@ -26,7 +26,7 @@ export const useOrderStore = defineStore("order", {
         };
         const token = localStorage.getItem("token");
         const res = await http.post(
-          `${apiBase}/orders/flight/init`,
+          `/orders/flight/init`,
           orderDetail,
           {
             headers: {
@@ -48,7 +48,7 @@ export const useOrderStore = defineStore("order", {
       productId,
       startDate,
       peopleCount,
-      apiBase,
+     
       router,
     }) {
       try {
@@ -59,7 +59,7 @@ export const useOrderStore = defineStore("order", {
         };
         const token = localStorage.getItem("token");
         const res = await http.post(
-          `${apiBase}/orders/tour/init`,
+          `/orders/tour/init`,
           orderDetail,
           {
             headers: {
@@ -77,7 +77,7 @@ export const useOrderStore = defineStore("order", {
         this.isCatchError = true;
       }
     },
-    async savePassportInfo({ passportInfo, apiBase, orderId, router }) {
+    async savePassportInfo({ passportInfo, orderId, router }) {
       try {
         let travelerInfo = passportInfo.map((people) => ({
           firstName: people.firstName,
@@ -90,7 +90,7 @@ export const useOrderStore = defineStore("order", {
         }));
         const token = localStorage.getItem("token");
         const res = await http.patch(
-          `${apiBase}/orders/${orderId}/travelers`,
+          `/orders/${orderId}/travelers`,
           {
             travelers: travelerInfo,
           },

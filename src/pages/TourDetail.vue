@@ -252,11 +252,12 @@ export default {
     name: 'TourDetail',
     data() {
         return {
-            store: '',
             apiBase: process.env.VUE_APP_API_PATH,
+            store: '',
+            token: '',
             highlighted: false,
             date: null,
-            tour: "",
+            tour: '',
             peopleCount: 1,
             isError: {
                 date: false,
@@ -278,6 +279,7 @@ export default {
         CustomModal,
     },
     created() {
+        this.token = localStorage.getItem('token');
         this.findProduct(this.$route.params.id);
         this.getLikes();
         this.store = useOrderStore();
@@ -285,7 +287,7 @@ export default {
     methods: {
         async findProduct(id) {
             try {
-                const res = await http.get(`${this.apiBase}/product/tour/${id}`);
+                const res = await http.get(`/product/tour/${id}`);
                 this.tour = res.data;
             } catch (error) {
                 this.isNotFound = true;
@@ -301,8 +303,7 @@ export default {
         async createOrder() {
             this.confirmBooking();
             if (!this.isFormValid) return;
-            const token = localStorage.getItem('token');
-            if (!token) {
+            if (!this.token) {
                 this.isModalOpen = true;
                 this.hasError = true;
                 this.modalContent = '此功能僅限會員使用，請先登入';
@@ -313,7 +314,6 @@ export default {
                     productId: this.$route.params.id,
                     startDate: this.date,
                     peopleCount: this.peopleCount,
-                    apiBase: this.apiBase,
                     router: this.$router,
                 })
             } catch (error) {
@@ -324,12 +324,11 @@ export default {
             }
         },
         async getLikes() {
-            const token = localStorage.getItem('token');
-            if (!token) return;
+            if (!this.token) return;
             try {
-                const res = await http.get(`${this.apiBase}/cart`, {
+                const res = await http.get(`/cart`, {
                     headers: {
-                        Authorization: `Bearer ${token}`
+                        Authorization: `Bearer ${this.token}`
                     }
                 });
                 this.likesList = res.data.items;
@@ -344,26 +343,24 @@ export default {
             }
         },
         findLike(id) {
-            const token = localStorage.getItem('token');
-            if (token) {
+            if (this.token) {
                 return this.likesList.find(item => item.productId === id)
             }
         },
         async addToLikes(id) {
-            const token = localStorage.getItem('token');
-            if (!token) {
+            if (!this.token) {
                 this.isModalOpen = true;
                 this.hasError = true;
                 this.modalContent = '哇！登入才能使用收藏功能唷！';
                 return;
             }
             try {
-                await http.post(`${this.apiBase}/cart/items`, {
+                await http.post(`/cart/items`, {
                     productId: id,
                     quantity: 1
                 }, {
                     headers: {
-                        Authorization: `Bearer ${token}`
+                        Authorization: `Bearer ${this.token}`
                     }
                 });
                 this.getLikes();
@@ -375,13 +372,12 @@ export default {
             }
         },
         async delLike(id) {
-            const token = localStorage.getItem('token');
-            if (!token) return;
+            if (!this.token) return;
             if (this.findLike(id)) {
                 try {
-                    await http.delete(`${this.apiBase}/cart/items`, {
+                    await http.delete(`/cart/items`, {
                         headers: {
-                            Authorization: `Bearer ${token}`
+                            Authorization: `Bearer ${this.token}`
                         },
                         data: {
                             productId: id

@@ -90,7 +90,6 @@ export default {
 
             },
             isError: false,
-            apiBase: process.env.VUE_APP_API_PATH,
             loginErrorMessage: '',
         };
     },
@@ -122,7 +121,7 @@ export default {
             this.validateForm();
             if (this.isError) return;
             try {
-                const res = await http.post(`${this.apiBase}/members/login`, this.loginInfo);
+                const res = await http.post(`/members/login`, this.loginInfo);
                 const token = res.data?.access_token;
                 const name = res.data?.member?.name;
                 if (token) {

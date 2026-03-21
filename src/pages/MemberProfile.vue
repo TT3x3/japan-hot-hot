@@ -177,7 +177,6 @@ export default {
     name: 'MemberProfile',
     data() {
         return {
-            apiBase: process.env.VUE_APP_API_PATH,
             userInfo: {},
             isError: {
                 name: '',
@@ -208,7 +207,7 @@ export default {
         async getUser() {
             try {
                 const token = localStorage.getItem('token')
-                const res = await http.get(`${this.apiBase}/members/me`, {
+                const res = await http.get(`/members/me`, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
@@ -232,7 +231,7 @@ export default {
                     }
                 });
                 const token = localStorage.getItem('token');
-                http.patch(`${this.apiBase}/members/me`, this.changeList, {
+                http.patch(`/members/me`, this.changeList, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }

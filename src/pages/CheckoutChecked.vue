@@ -184,7 +184,6 @@ export default {
     name: 'CheckoutChecked',
     data() {
         return {
-            apiBase: process.env.VUE_APP_API_PATH,
             store: '',
             selectCity: null,
             selectArea: null,
@@ -205,7 +204,7 @@ export default {
         async submitOrder() {
             try {
                 const token = localStorage.getItem('token');
-                await http.post(`${this.apiBase}/orders/${this.orderId}/submit`, {}, {
+                await http.post(`/orders/${this.orderId}/submit`, {}, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     }

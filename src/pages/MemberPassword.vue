@@ -84,7 +84,6 @@ export default {
     name: 'MemberPassword',
     data() {
         return {
-            apiBase: process.env.VUE_APP_API_PATH,
             passwordInfo: {
                 oldPassword: '',
                 newPassword: '',
@@ -110,7 +109,7 @@ export default {
                     newPassword: this.passwordInfo.newPassword,
                 }
                 const token = localStorage.getItem('token');
-                await http.patch(`${this.apiBase}/members/me/password`, this.changeList, {
+                await http.patch(`/members/me/password`, this.changeList, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
