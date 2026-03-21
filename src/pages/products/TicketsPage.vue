@@ -1,15 +1,14 @@
 <template>
-    <div v-if="journey" class="flex flex-col md:gap-32 gap-12 w-full">
+    <div v-if="flights" class="flex flex-col md:gap-32 gap-12 w-full">
         <CustomModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
-            @close="isModalOpen = false;" @confirm="handleModalClick()" />
+            @close="isModalOpen = false"  @confirm="handleModalClick()"/>
         <div class="flex justify-center items-center pt-8">
-            <h1 class="text-3xl text-center tracking-[2rem] pl-[2rem] text-base-heavy">行程</h1>
+            <h1 class="text-3xl text-center tracking-[2rem] pl-[2rem] text-base-heavy">機票</h1>
         </div>
-
 
         <!-- top -->
         <div class="relative md:h-80 h-40 overflow-hidden">
-            <img src="../assets/images/tour-banner.jpg" alt="tour-banner" class=" w-full h-full object-cover">
+            <img src="../../assets/images/carousel-2.jpg" alt="tour-banner" class=" w-full h-full object-cover">
         </div>
 
         <!-- 搜尋框 -->
@@ -19,29 +18,29 @@
         <div class="max-w-[80%] w-full mx-auto">
             <div class="flex md:flex-row flex-col md:gap-8 gap-2">
                 <div class="relative bg-gray-500 flex-1 overflow-hidden">
-                    <img src="../assets/images/carousel-1.jpg" alt="" class="object-cover w-full md:h-full h-16">
+                    <img src="../../assets/images/carousel-1.jpg" alt="" class="object-cover w-full md:h-full h-16">
                     <h2 class="absolute left-5 bottom-5 font-bold text-white">日本本州</h2>
                 </div>
                 <div class="relative bg-gray-500 flex-1 overflow-hidden">
-                    <img src="../assets/images/carousel-2.jpg" alt="" class="object-cover w-full md:h-full h-16">
+                    <img src="../../assets/images/carousel-2.jpg" alt="" class="object-cover w-full md:h-full h-16">
                     <h2 class="absolute left-5 bottom-5 font-bold text-white">四國/九州</h2>
                 </div>
                 <div class="relative bg-gray-500 flex-1 overflow-hidden">
-                    <img src="../assets/images/carousel-3.jpg" alt="" class="object-cover w-full md:h-full h-16">
+                    <img src="../../assets/images/carousel-3.jpg" alt="" class="object-cover w-full md:h-full h-16">
                     <h2 class="absolute left-5 bottom-5 font-bold text-white">北海道</h2>
                 </div>
                 <div class="relative bg-gray-500 flex-1 overflow-hidden">
-                    <img src="../assets/images/carousel-4.jpg" alt="" class="object-cover w-full md:h-full h-16">
+                    <img src="../../assets/images/carousel-4.jpg" alt="" class="object-cover w-full md:h-full h-16">
                     <h2 class="absolute left-5 bottom-5 font-bold text-white">沖繩</h2>
                 </div>
             </div>
         </div>
 
-        <!-- 活動banner -->
+        <!-- banner -->
         <div class="max-w-[80%] w-full mx-auto flex flex-col gap-12">
-            <ul class="flex flex-wrap gap-x-6 md:gap-y-12 gap-4 md:justify-start justify-center">
+            <ul class="flex flex-wrap md:gap-x-6 md:gap-y-12 gap-4 md:justify-start justify-center">
                 <!-- 卡片 -->
-                <router-link :to="`/tour-detail/${item.productId}`" v-for="item in journey" :key="item.productId"
+                <router-link :to="`/ticket-detail/${item.productId}`" v-for="item in flights" :key="item.productId"
                     class="relative md:flex-[0_0_calc(33.333%-1rem)] cursor-pointer group">
                     <div class="flex flex-col md:h-[450px] h-72 border border-gray-200">
                         <!-- 無庫存遮罩 -->
@@ -99,15 +98,15 @@ import CustomModal from '@/components/CustomModal.vue';
 import SearchBar from '@/components/SearchBar.vue';
 
 export default {
-    name: 'ToursPage',
+    name: 'TicketsPage',
     data() {
         return {
             apiBase: process.env.VUE_APP_API_PATH,
+            flights: "",
+            likesList: [],
             isModalOpen: false,
             hasError: false,
             modalContent: '',
-            journey: "",
-            likesList: [],
             isCatchError: false,
         };
     },
@@ -116,13 +115,13 @@ export default {
         SearchBar,
     },
     methods: {
-        async getTours() {
-            const res = await http.get(`/product/tour`);
-            this.journey = res.data.items;
+        async getFlights() {
+            const res = await http.get(`/product/flight`);
+            this.flights = res.data.items;
         },
         async getLikes() {
             const token = localStorage.getItem('token');
-            if(!token) return;
+            if (!token) return;
             try {
                 const res = await http.get(`/cart`, {
                     headers: {
@@ -206,8 +205,9 @@ export default {
         }
     },
     created() {
-        this.getTours();
+        this.getFlights();
         this.getLikes();
-    },
+    }
+
 }
 </script>

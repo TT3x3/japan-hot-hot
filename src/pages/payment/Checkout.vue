@@ -36,7 +36,7 @@
             </div>
 
             <div class="flex flex-col gap-2">
-                <img src="../assets/images/carousel-3.jpg" class="w-full h-64 object-cover" alt="">
+                <img src="../../assets/images/carousel-3.jpg" class="w-full h-64 object-cover" alt="">
                 <p class="font-extrabold text-xl text-base-heavy">高雄往返關西，極簡商務選航</p>
             </div>
 

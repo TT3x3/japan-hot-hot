@@ -5,7 +5,7 @@
         <div v-if="items" class="flex flex-col md:gap-32 gap-12 w-full bg-gray-100">
             <!-- top -->
             <div class="relative  md:h-80 h-40 overflow-hidden">
-                <img src="../assets/images/carousel-4.jpg" alt="tour-banner" class=" w-full h-full object-cover">
+                <img src="../../assets/images/carousel-4.jpg" alt="tour-banner" class=" w-full h-full object-cover">
             </div>
             <div class="flex justify-center items-center ">
                 <h1 class="text-3xl text-center tracking-[2rem] pl-[2rem] text-base-heavy">收藏清單</h1>
@@ -16,17 +16,17 @@
                 <div class="flex md:gap-8 gap-4">
                     <div @click.prevent="changeCategory('全部')"
                         class="relative flex-1 h-24 overflow-hidden cursor-pointer">
-                        <img src="../assets/images/carousel-5.jpg" alt="" class="object-cover w-full h-full">
+                        <img src="../../assets/images/carousel-5.jpg" alt="" class="object-cover w-full h-full">
                         <h2 class="absolute left-5 bottom-5 md:font-black font-bold text-white">不分類</h2>
                     </div>
                     <div @click.prevent="changeCategory('Tour')"
                         class="relative flex-1 h-24 overflow-hidden cursor-pointer">
-                        <img src="../assets/images/carousel-5.jpg" alt="" class="object-cover w-full h-full">
+                        <img src="../../assets/images/carousel-5.jpg" alt="" class="object-cover w-full h-full">
                         <h2 class="absolute left-5 bottom-5 md:font-black font-bold text-white">行程</h2>
                     </div>
                     <div @click.prevent="changeCategory('Flight')"
                         class="relative flex-1 h-24 overflow-hidden cursor-pointer">
-                        <img src="../assets/images/carousel-5.jpg" alt="" class="object-cover w-full h-full">
+                        <img src="../../assets/images/carousel-5.jpg" alt="" class="object-cover w-full h-full">
                         <h2 class="absolute left-5 bottom-5 md:font-black font-bold text-white">機票</h2>
                     </div>
                 </div>

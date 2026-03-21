@@ -4,7 +4,7 @@
             @close="isModalOpen = false;" @confirm="handleModalClick()" />
         <!-- top -->
         <div class="relative  md:h-80 h-40 overflow-hidden">
-            <img src="../assets/images/carousel-4.jpg" alt="tour-banner" class=" w-full h-full object-cover">
+            <img src="../../assets/images/carousel-4.jpg" alt="tour-banner" class=" w-full h-full object-cover">
         </div>
         <div class="flex justify-center items-center ">
             <h1 class="text-3xl text-center tracking-[2rem] pl-[2rem] text-base-heavy">訂單</h1>
@@ -30,7 +30,7 @@
                         </div>
                         <div class="bg-white flex justify-between md:items-center md:px-10 px-6 md:py-6 py-4">
                             <div class="flex flex-col md:gap-4 gap-2 w-full">
-                                <img src="../assets/images/carousel-1.jpg" class="h-40 object-cover">
+                                <img src="../../assets/images/carousel-1.jpg" class="h-40 object-cover">
                                 <p class="hidden md:block font-bold">
                                     {{ orderDetail.product.title }}</p>
                                 <p class="text-sm text-end text-base-light">{{ orderDetail.product.price | dollarSign |

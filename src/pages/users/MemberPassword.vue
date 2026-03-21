@@ -2,7 +2,7 @@
     <div class="flex flex-col gap-32 w-full bg-gray-100">
         <!-- top -->
         <div class="relative  md:h-80 h-40 overflow-hidden">
-            <img src="../assets/images/carousel-4.jpg" alt="tour-banner" class=" w-full h-full object-cover">
+            <img src="../../assets/images/carousel-4.jpg" alt="tour-banner" class=" w-full h-full object-cover">
         </div>
         <div class="flex justify-center items-center ">
             <h1 class="text-3xl text-center tracking-[2rem] pl-[2rem] text-base-heavy">會員密碼</h1>
