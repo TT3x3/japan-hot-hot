@@ -49,6 +49,7 @@ export default {
     methods: {
         closeModal() {
             this.$emit('close');
+            this.$emit('confirm');
         }
     },
     watch: {

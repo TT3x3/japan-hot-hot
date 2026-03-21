@@ -1,14 +1,23 @@
 <template>
     <div>
         <CustomModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
-            @close="isModalOpen = false" />
+            @close="isModalOpen = false" @confirm="handleModalClick()" />
         <div v-if="tour" class="flex flex-col gap-32w-full">
             <div class="max-w-[80%] w-full mx-auto flex flex-col md:gap-12 gap-6">
                 <div class=" flex flex-col gap-4">
-                    <h1 class="font-black text-2xl text-base-heavy">{{ tour.title }}</h1>
+                    <div class="flex justify-between">
+                        <h1 class="font-black text-2xl text-base-heavy">{{ tour.title }}</h1>
+                        <button type="button" @click.prevent.stop="toggleLike(tour.productId)"
+                            class="hidden md:block text-red-300  hover:text-red-500 transition-colors duration-200 ">
+                            <i v-if="findLike(tour.productId)"
+                                class="fa-solid fa-heart fa-xl text-red-500 cursor-pointer"></i>
+                            <i v-else class="fa-regular fa-heart fa-xl cursor-pointer"></i>
+                        </button>
+                    </div>
                     <div class="flex gap-2">
                         <p v-for="tag in tour.tags" :key="tag"
-                            class="text-sm px-2 inline-block border border-gray-300 text-gray-400">{{ tag }}</p>
+                            class="font-thin text-sm px-2 inline-block border border-gray-300 text-gray-400">{{ tag }}
+                        </p>
                     </div>
                 </div>
                 <div class="md:h-[640px] h-80 overflow-hidden">
@@ -21,29 +30,37 @@
                         <div class="flex gap-4">
                             <div class="flex flex-col justify-center items-center gap-6 text-gray-400">
                                 <i class="fa-solid fa-user fa-2xl"></i>
-                                <p class="md:text-xs text-sm">{{ tour.ageLimit ? `年滿 ${tour.ageLimit} 歲` : '無年齡限制' }}
+                                <p class="text-sm">{{ tour.ageLimit ? `年滿 ${tour.ageLimit} 歲` : '無年齡限制' }}
                                 </p>
                             </div>
                             <div class="flex flex-col justify-center items-center gap-6 text-gray-400">
                                 <i class="fa-regular fa-clock fa-2xl"></i>
-                                <p class="md:text-xs text-sm">{{ tour.duration }}</p>
+                                <p class="text-sm">{{ tour.duration }}</p>
                             </div>
                             <div class="flex flex-col justify-center items-center gap-6 text-gray-400">
                                 <i class="fa-solid fa-people-pulling fa-2xl"></i>
-                                <p class="md:text-xs text-sm">最多 {{ tour.maxParticipants }} 人</p>
+                                <p class="text-sm">最多 {{ tour.maxParticipants }} 人</p>
                             </div>
                         </div>
                         <div
                             class="flex md:flex-row flex-col justify-center items-center md:w-auto w-full md:gap-2 gap-4">
-                            <p class="font-bold text-3xl text-hot-red">{{ tour.price | dollarSign | currency }} ～</p>
-                            <button type="button" v-if="tour.status === 'active'" @click.prevent="scrollToBooking()"
-                                class=" bg-hot-red text-white px-10 py-3 hover:bg-red-400 active:bg-red-700 w-full md:w-auto cursor-pointer">立即購買</button>
-                            <button type="button" v-else class="bg-gray-400 text-gray-300 px-10 py-3 w-full"
-                                disabled>無法購買</button>
-
+                            <p class="font-bold text-3xl text-hot-red w-full whitespace-nowrap">{{ tour.price |
+                                dollarSign | currency }}～</p>
+                            <div class="flex items-center md:gap-0 gap-3 w-full">
+                                <button type="button" v-if="tour.status === 'active'" @click.prevent="scrollToBooking()"
+                                    class="bg-hot-red text-white px-10 py-3 hover:bg-red-400 active:bg-red-700 cursor-pointer w-full">立即購票</button>
+                                <button type="button" v-else class="bg-gray-400 text-gray-300 px-10 py-3 w-full"
+                                    disabled>無法購買</button>
+                                <button type="button" @click.prevent.stop="toggleLike(tour.productId)"
+                                    class="md:hidden block text-red-300  hover:text-red-500 transition-colors duration-200 ">
+                                    <i v-if="findLike(tour.productId)"
+                                        class="fa-solid fa-heart fa-2x text-red-500 cursor-pointer"></i>
+                                    <i v-else class="fa-regular fa-heart fa-2xl cursor-pointer"></i>
+                                </button>
+                            </div>
                         </div>
                     </div>
-                    <div class="text-sm leading-6.5 text-base-heavy">
+                    <div class="leading-6.5 text-base-heavy">
                         <p v-for="(text, key) in tour.notices" :key="key">・{{ text }}</p>
                     </div>
                 </div>
@@ -143,7 +160,7 @@
                         <p class="text-sm text-gray-500">選擇數量</p>
                         <div class="flex md:flex-row flex-col justify-between items-center md:gap-12 gap-4 bg-white md:px-8 py-6 text-base-heavy"
                             :class="isError.peopleCount ? 'border border-red-500' : 'border-none'">
-                            <p class="text-base-heavy">每人<span class="text-sm text-gray-400">（{{ tour.price | dollarSign
+                            <p class="text-base-heavy">每人<span class=" text-gray-400">（{{ tour.price | dollarSign
                                 |
                                 currency }}
                                     / 人）</span>
@@ -250,9 +267,11 @@ export default {
             isFormValid: false,
             isNotFound: false,
             seconds: 5,
+            likesList: [],
             isModalOpen: false,
             hasError: false,
             modalContent: '',
+            isCatchError: false,
         }
     },
     components: {
@@ -260,6 +279,7 @@ export default {
     },
     created() {
         this.findProduct(this.$route.params.id);
+        this.getLikes();
         this.store = useOrderStore();
     },
     methods: {
@@ -297,7 +317,90 @@ export default {
                     router: this.$router,
                 })
             } catch (error) {
-                console.log(error)
+                this.isModalOpen = true;
+                this.hasError = true;
+                this.modalContent = '伺服器錯誤，將轉跳回首頁';
+                this.isCatchError = true;
+            }
+        },
+        async getLikes() {
+            const token = localStorage.getItem('token');
+            if (!token) return;
+            try {
+                const res = await http.get(`${this.apiBase}/cart`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                this.likesList = res.data.items;
+                if (this.likesList.length === 0) {
+                    return;
+                }
+            } catch (error) {
+                this.isModalOpen = true;
+                this.hasError = true;
+                this.modalContent = '伺服器錯誤，將轉跳回首頁';
+                this.isCatchError = true;
+            }
+        },
+        findLike(id) {
+            const token = localStorage.getItem('token');
+            if (token) {
+                return this.likesList.find(item => item.productId === id)
+            }
+        },
+        async addToLikes(id) {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                this.isModalOpen = true;
+                this.hasError = true;
+                this.modalContent = '哇！登入才能使用收藏功能唷！';
+                return;
+            }
+            try {
+                await http.post(`${this.apiBase}/cart/items`, {
+                    productId: id,
+                    quantity: 1
+                }, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                this.getLikes();
+            } catch (error) {
+                this.isModalOpen = true;
+                this.hasError = true;
+                this.modalContent = '伺服器錯誤，將轉跳回首頁';
+                this.isCatchError = true;
+            }
+        },
+        async delLike(id) {
+            const token = localStorage.getItem('token');
+            if (!token) return;
+            if (this.findLike(id)) {
+                try {
+                    await http.delete(`${this.apiBase}/cart/items`, {
+                        headers: {
+                            Authorization: `Bearer ${token}`
+                        },
+                        data: {
+                            productId: id
+                        }
+                    });
+                } catch (error) {
+                    this.isModalOpen = true;
+                    this.hasError = true;
+                    this.modalContent = '伺服器錯誤，將轉跳回首頁';
+                    this.isCatchError = true;
+                }
+                this.getLikes();
+            }
+        },
+        toggleLike(id) {
+            if (this.findLike(id)) {
+                this.delLike(id);
+            } else {
+                this.addToLikes(id);
             }
         },
         scrollToBooking() {
@@ -343,6 +446,10 @@ export default {
             if (!this.isFormValid || this.isError.peopleCount || this.isError.date) {
                 return;
             }
+        },
+        handleModalClick() {
+            if (!this.isCatchError) return;
+            this.$router.push('/');
         },
     },
     computed: {

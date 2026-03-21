@@ -7,7 +7,7 @@
                     <div class="w-full h-1 bg-hot-red"></div>
                     <div class="p-1">
                         <p class="font-bold text-hot-red">Step 1</p>
-                        <p class="text-sm text-base-light">結帳</p>
+                        <p class="text-sm text-gray-400">結帳</p>
                     </div>
                 </div>
                 <div class="flex flex-col gap-2 w-full">
@@ -42,7 +42,7 @@
             <div v-if="isSuccessful === true" class="flex flex-col justify-center items-center w-full">
                 <div class="flex flex-col items-center py-8">
                     <i class="fa-solid fa-circle-check fa-8x text-hot-red"></i>
-                    <p class="py-8 font-bold md:text-3xl text-xl text-hot-red">訂購完成！</p>
+                    <p class="py-8 font-extrabold md:text-3xl text-xl text-hot-red">訂購完成！</p>
                 </div>
                 <div class="flex md:flex-row flex-col gap-4 md:w-[70%] w-full">
                     <router-link to="/member/orders"
@@ -55,7 +55,7 @@
                 <div class="flex flex-col items-center py-8">
                     <i class="fa-solid fa-heart-crack fa-8x text-gray-500"></i>
                     <div class="flex justify-center flex-col items-center">
-                        <p class="pt-8 pb-2 font-bold md:text-3xl text-xl text-gray-500">挖咧，訂購失敗</p>
+                        <p class="pt-8 pb-2 font-extrabold md:text-3xl text-xl text-gray-500">挖咧，訂購失敗</p>
                         <p class="text-gray-400 pb-8">請洽管理員或稍後嘗試重新訂購。</p>
                     </div>
                 </div>

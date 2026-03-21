@@ -1,5 +1,7 @@
 <template>
     <div class="flex flex-col gap-32 w-full">
+        <CustomModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
+            @close="isModalOpen = false;" @confirm="handleModalClick()" />
         <div v-if="orderDetail" class="max-w-[80%] w-full mx-auto flex flex-col gap-12">
             <!-- 進度條 -->
             <div class=" flex flex-row md:gap-4 gap-1">
@@ -7,7 +9,7 @@
                     <div class="w-full h-1 bg-hot-red"></div>
                     <div class="p-1">
                         <p class="font-bold text-hot-red">Step 1</p>
-                        <p class="text-sm text-base-light">結帳</p>
+                        <p class="text-sm text-gray-400">結帳</p>
                     </div>
                 </div>
                 <div class="flex flex-col gap-2 w-full">
@@ -38,22 +40,25 @@
                 <p class="font-bold text-xl text-base-heavy">確認訂單內容</p>
                 <div class="bg-gray-100">
                     <div class=" md:px-8 px-2 py-4 w-full">
-                        <p class="text-sm text-base-light">方案名稱</p>
-                        <p class="font-bold md:text-xl text-md text-base-heavy">{{ orderDetail.productName }}</p>
+                        <p class="text-sm text-gray-400">方案名稱</p>
+                        <p class="md:font-extrabold font-bold md:text-xl text-md text-base-heavy">{{
+                            orderDetail.productName }}</p>
                     </div>
                     <div class="flex flex-row">
                         <div class=" md:px-8 px-2 py-4 w-full">
-                            <p class="text-sm text-base-light">出發日期</p>
-                            <p class="font-bold md:text-xl text-md text-base-heavy">{{ orderDetail.startDate || orderDetail.date }}</p>
+                            <p class="text-sm text-gray-400">出發日期</p>
+                            <p class="md:font-extrabold font-bold md:text-xl text-md text-base-heavy">{{
+                                orderDetail.startDate || orderDetail.date }}</p>
                         </div>
                         <div class=" md:px-8 px-2 py-4 w-full">
-                            <p class="text-sm text-base-light">出發時間</p>
-                            <p class="font-bold md:text-xl text-md text-base-heavy">{{ orderDetail.departureTime }}</p>
+                            <p class="text-sm text-gray-400">出發時間</p>
+                            <p class="md:font-extrabold font-bold md:text-xl text-md text-base-heavy">{{
+                                orderDetail.departureTime }}</p>
                         </div>
                         <div class=" md:px-8 px-2 py-4 w-full">
-                            <p class="text-sm text-base-light">購買數量</p>
-                            <p class="font-bold md:text-xl text-md text-base-heavy">{{ orderDetail.peopleCount }} <span
-                                    class="text-sm">人</span></p>
+                            <p class="text-sm text-gray-400">購買數量</p>
+                            <p class="md:font-extrabold font-bold md:text-xl text-md text-base-heavy">{{
+                                orderDetail.peopleCount }} <span class="text-sm">人</span></p>
                         </div>
                     </div>
                 </div>
@@ -63,7 +68,7 @@
             <div class="flex md:flex-row flex-col justify-between gap-4 text-base-heavy">
                 <div class="flex flex-col gap-2 md:w-[150%] w-full">
                     <p class="font-bold text-xl ">收件資訊</p>
-                    <div class="flex flex-col gap-4 border border-gray-100 px-6 md:py-6 py-4">
+                    <div class="flex flex-col gap-4 border border-gray-100 md:px-6 px-2 md:py-6 py-4">
                         <div class="flex flex-col gap-1 px-4">
                             <div class="flex md:flex-row flex-col w-full md:items-center items-start">
                                 <p class="w-24 font-bold text-base-light md:text-base text-sm">姓名</p>
@@ -134,25 +139,25 @@
                         <div class="hidden md:flex h-full w-2 bg-gray-300"></div>
                         <div class="flex flex-col gap-1">
                             <div class="flex items-center gap-1">
-                                <p class="md:w-24 w-20 font-bold text-base-light md:text-base text-sm">姓氏</p>
-                                <p class="md:text-base text-sm font-bold text-base-heavy">{{ passport.firstName }}</p>
+                                <p class="w-24 font-bold text-base-light ">姓氏</p>
+                                <p class="font-bold text-base-heavy">{{ passport.firstName }}</p>
                             </div>
                             <div class="flex items-center gap-1">
-                                <p class="md:w-24 w-20 font-bold text-base-light md:text-base text-sm">名稱</p>
-                                <p class="md:text-base text-sm font-bold text-base-heavy">{{ passport.lastName }}</p>
+                                <p class="w-24 font-bold text-base-light ">名稱</p>
+                                <p class=" font-bold text-base-heavy">{{ passport.lastName }}</p>
                             </div>
                             <div class="flex items-center gap-1">
-                                <p class="md:w-24 w-20 font-bold text-base-light md:text-base text-sm">身分證字號</p>
-                                <p class="md:text-base text-sm font-bold text-base-heavy">{{ passport.idNumber }}</p>
+                                <p class="w-24 font-bold text-base-light ">身分證字號</p>
+                                <p class=" font-bold text-base-heavy">{{ passport.idNumber }}</p>
                             </div>
                             <div class="flex items-center gap-1">
-                                <p class="md:w-24 w-20 font-bold text-base-light md:text-base text-sm">護照號碼</p>
-                                <p class="md:text-base text-sm font-bold text-base-heavy">{{ passport.passportNumber }}
+                                <p class="w-24 font-bold text-base-light ">護照號碼</p>
+                                <p class=" font-bold text-base-heavy">{{ passport.passportNumber }}
                                 </p>
                             </div>
                             <div class="flex items-center gap-1">
-                                <p class="md:w-24 w-20 font-bold text-base-light md:text-base text-sm">護照到期日</p>
-                                <p class="md:text-base text-sm font-bold text-base-heavy">{{ passport.passportExpiry }}
+                                <p class="w-24 font-bold text-base-light ">護照到期日</p>
+                                <p class=" font-bold text-base-heavy">{{ passport.passportExpiry }}
                                 </p>
                             </div>
                         </div>
@@ -173,6 +178,7 @@
 <script>
 import http from '@/api/http'
 import { useOrderStore } from '@/stores/order';
+import CustomModal from '@/components/CustomModal.vue';
 
 export default {
     name: 'CheckoutChecked',
@@ -183,7 +189,14 @@ export default {
             selectCity: null,
             selectArea: null,
             date: null,
+                    isCatchError: false,
+                    isModalOpen: false,
+            hasError: false,
+            modalContent: '',
         }
+    },
+    components: {
+        CustomModal,
     },
     created() {
         this.store = useOrderStore();
@@ -201,8 +214,15 @@ export default {
                 this.$router.push(`/checkout/finished/${this.orderId}`)
                 this.store.isCheckoutStarted = false;
             } catch (error) {
-                console.log(error)
+                this.isModalOpen = true;
+                this.hasError = true;
+                this.modalContent = '伺服器錯誤，將轉跳回首頁';
+                this.isCatchError = true;
             }
+        },
+        handleModalClick() {
+            if (!this.isCatchError) return;
+            this.$router.push('/');
         },
     },
     computed: {

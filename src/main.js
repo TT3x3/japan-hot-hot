@@ -10,10 +10,11 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./utils/filter";
 import CustomPagination from "./components/CustomPagination.vue";
 import { auth } from "@/utils/auth";
+import "@/assets/font.css";
 
 Vue.config.productionTip = false;
 Vue.use(VCalendar);
-Vue.use(PiniaVuePlugin); 
+Vue.use(PiniaVuePlugin);
 Vue.component("CustomPagination", CustomPagination);
 Vue.component("v-select", vSelect);
 Vue.prototype.$auth = auth;

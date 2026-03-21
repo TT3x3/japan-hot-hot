@@ -23,4 +23,7 @@ export default {
 </script>
 
 <style>
+#app {
+  font-family: 'GenRyuMin2TW', sans-serif;
+}
 </style>

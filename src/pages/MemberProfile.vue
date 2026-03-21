@@ -1,5 +1,7 @@
 <template>
     <div class="flex flex-col md:gap-32 gap-12 w-full bg-gray-100">
+        <CustomModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
+            @close="isModalOpen = false;" @confirm="handleModalClick()" />
         <!-- top -->
         <div class="relative  md:h-80 h-40 overflow-hidden">
             <img src="../assets/images/carousel-4.jpg" alt="tour-banner" class=" w-full h-full object-cover">
@@ -15,7 +17,8 @@
                     <p class="font-bold text-lg text-base-heavy">會員資料</p>
                 </div>
                 <div class="bg-white flex justify-center">
-                    <form class="bg-white md:px-10 px-8 md:py-18 py-12 w-full max-w-3xl flex flex-col gap-6 justify-center">
+                    <form
+                        class="bg-white md:px-10 px-8 md:py-18 py-12 w-full max-w-3xl flex flex-col gap-6 justify-center">
                         <div class="flex flex-col gap-4">
                             <div class="flex flex-col gap-1">
                                 <div class="flex md:flex-row flex-col md:items-center item-start w-full">
@@ -153,8 +156,8 @@
                         </div>
                         <div class="w-full h-px bg-gray-100"></div>
                         <div>
-                            <p class="text-xs px-4 text-red-500">* 為必填欄位。</p>
-                            <p class="text-xs px-4 text-red-500">* 務必確認證件及護照相關資料，否則將可能損失購票權益。</p>
+                            <p class="text-sm font-thin px-4 text-red-500">* 為必填欄位。</p>
+                            <p class="text-sm font-thin px-4 text-red-500">* 務必確認證件及護照相關資料，否則將可能損失購票權益。</p>
                         </div>
                     </form>
                 </div>
@@ -167,6 +170,8 @@
 
 <script>
 import http from '@/api/http'
+import CustomModal from '@/components/CustomModal.vue';
+
 
 export default {
     name: 'MemberProfile',
@@ -187,9 +192,16 @@ export default {
             oldInfo: {},
             changeList: {},
             isFormValid: false,
+            isCatchError: false,
+            isModalOpen: false,
+            hasError: false,
+            modalContent: '',
         }
     },
-    mounted() {
+    components: {
+        CustomModal,
+    },
+    created() {
         this.getUser();
     },
     methods: {
@@ -204,7 +216,10 @@ export default {
                 this.userInfo = res.data;
                 this.oldInfo = { ...res.data }
             } catch (error) {
-                alert(error);
+                this.isModalOpen = true;
+                this.hasError = true;
+                this.modalContent = '伺服器錯誤，將轉跳回首頁';
+                this.isCatchError = true;
             }
         },
         async patchUser() {
@@ -226,7 +241,10 @@ export default {
                 this.changeList = {};
                 alert('會員資料更新成功！');
             } catch (error) {
-                alert(error);
+                this.isModalOpen = true;
+                this.hasError = true;
+                this.modalContent = '伺服器錯誤，將轉跳回首頁';
+                this.isCatchError = true;
             }
 
         },
@@ -315,6 +333,10 @@ export default {
                 return;
             }
         },
+        handleModalClick() {
+            if (!this.isCatchError) return;
+            this.$router.push('/');
+        }
     },
     computed: {
         minDate() {

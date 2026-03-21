@@ -66,7 +66,7 @@
                                     class="md:w-36 w-full cursor-pointer bg-gray-400 text-white text-center py-3  hover:bg-gray-300 active:bg-gray-500 transition-colors">返回</router-link>
                             </div>
                             <div class="w-full h-px bg-gray-100"></div>
-                            <p class="text-xs px-4 text-red-500">* 為必填欄位。</p>
+                            <p class="text-sm font-thin px-4 text-red-500">* 為必填欄位。</p>
                         </div>
                     </form>
                 </div>

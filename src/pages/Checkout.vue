@@ -1,5 +1,7 @@
 <template>
     <div class="flex flex-col gap-32 w-full">
+        <CustomModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
+            @close="isModalOpen = false;" @confirm="handleModalClick()" />
         <div class="max-w-[80%] w-full mx-auto flex flex-col gap-12">
             <!-- 進度條 -->
             <div class=" flex flex-row md:gap-4 gap-1">
@@ -7,7 +9,7 @@
                     <div class="w-full h-1 bg-hot-red"></div>
                     <div class="p-1">
                         <p class="font-bold text-hot-red">Step 1</p>
-                        <p class="text-sm text-base-light">結帳</p>
+                        <p class="text-sm text-gray-400">結帳</p>
                     </div>
                 </div>
                 <div class="flex flex-col gap-2 w-full">
@@ -35,7 +37,7 @@
 
             <div class="flex flex-col gap-2">
                 <img src="../assets/images/carousel-3.jpg" class="w-full h-64 object-cover" alt="">
-                <p class="font-bold text-xl text-base-heavy">高雄往返關西，極簡商務選航</p>
+                <p class="font-extrabold text-xl text-base-heavy">高雄往返關西，極簡商務選航</p>
             </div>
 
             <div class="flex flex-col gap-4">
@@ -43,11 +45,13 @@
                 <div class="flex flex-row gap-2">
                     <div class="bg-gray-100 md:px-8 px-2 py-4 w-full">
                         <p class="text-sm text-base-light">出發日期</p>
-                        <p class="font-bold md:text-xl text-md text-base-heavy">{{ orderInfo.startDate || orderInfo.date }}</p>
+                        <p class="font-bold md:text-xl text-md text-base-heavy">{{ orderInfo.startDate || orderInfo.date
+                            }}</p>
                     </div>
                     <div class="bg-gray-100 md:px-8 px-2 py-4 w-full">
                         <p class="text-sm text-base-light">出發時間</p>
-                        <p class="font-bold md:text-xl text-md text-base-heavy">{{  orderInfo.departureTime ||orderInfo.scheduleTime}}</p>
+                        <p class="font-bold md:text-xl text-md text-base-heavy">{{ orderInfo.departureTime
+                            || orderInfo.scheduleTime }}</p>
                     </div>
                     <div class="bg-gray-100 md:px-8 px-2 py-4 w-full">
                         <p class="text-sm text-base-light">購買數量</p>
@@ -65,7 +69,7 @@
                         <p class="font-bold text-xl ">收件資訊</p>
                         <p class="text-sm px-4 text-gray-400">* 為必填欄位</p>
                     </div>
-                    <div class="flex flex-col gap-4 border border-gray-100 px-6 md:py-6 py-4">
+                    <div class="flex flex-col gap-4 border border-gray-100 md:px-6 px-2 md:py-6 py-4">
                         <div class="flex flex-col gap-1 px-4">
                             <div class="flex md:flex-row flex-col w-full md:items-center items-start">
                                 <label for="nameInput"
@@ -172,7 +176,7 @@
                             class="flex md:flex-row flex-col md:items-center items-start justify-between bg-gray-100 p-6">
                             <p>總金額</p>
                             <p class="font-bold text-xl text-hot-red">{{ orderInfo.totalAmount | dollarSign | currency
-                            }}</p>
+                                }}</p>
                         </div>
                     </div>
                     <div class="flex flex-row gap-4">
@@ -191,6 +195,7 @@
 import http from '@/api/http'
 import cities from '@/json/city.json';
 import { useOrderStore } from '@/stores/order';
+import CustomModal from '@/components/CustomModal.vue';
 
 export default {
     name: 'CheckoutPage',
@@ -219,7 +224,14 @@ export default {
                 note: '',
                 payment: '',
             },
+            isModalOpen: false,
+            hasError: false,
+            modalContent: '',
+            isCatchError: false,
         }
+    },
+    components: {
+        CustomModal,
     },
     created() {
         this.store = useOrderStore();
@@ -302,8 +314,15 @@ export default {
                 })
                 this.$router.push(`passport/${this.orderInfo.orderId}`)
             } catch (error) {
-                console.log(error)
+                this.isModalOpen = true;
+                this.hasError = true;
+                this.modalContent = '伺服器錯誤，將轉跳回首頁';
+                this.isCatchError = true;
             }
+        },
+        handleModalClick() {
+            if (!this.isCatchError) return;
+            this.$router.push('/');
         }
     },
     computed: {

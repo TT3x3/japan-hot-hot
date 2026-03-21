@@ -38,7 +38,10 @@ export const useOrderStore = defineStore("order", {
         this.isCheckoutStarted = true;
         router.push(`/checkout/${res.data.orderId}`);
       } catch (error) {
-        alert(error);
+        this.isModalOpen = true;
+        this.hasError = true;
+        this.modalContent = "伺服器錯誤，將轉跳回首頁";
+        this.isCatchError = true;
       }
     },
     async createTourOrder({
@@ -68,7 +71,10 @@ export const useOrderStore = defineStore("order", {
         this.isCheckoutStarted = true;
         router.push(`/checkout/${res.data.orderId}`);
       } catch (error) {
-        alert(error);
+        this.isModalOpen = true;
+        this.hasError = true;
+        this.modalContent = "伺服器錯誤，將轉跳回首頁";
+        this.isCatchError = true;
       }
     },
     async savePassportInfo({ passportInfo, apiBase, orderId, router }) {
@@ -95,13 +101,12 @@ export const useOrderStore = defineStore("order", {
           }
         );
         this.checkedInfo = res.data;
-        console.log(this.checkedInfo);
         router.push(`/checkout/checked/${res.data.orderId}`);
       } catch (error) {
         this.isModalOpen = true;
         this.hasError = true;
-        this.modalContent =
-          error.response?.data?.message || "發生錯誤，請重新操作";
+        this.modalContent = "伺服器錯誤，將轉跳回首頁";
+        this.isCatchError = true;
       }
     },
   },

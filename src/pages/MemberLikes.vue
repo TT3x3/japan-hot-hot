@@ -1,5 +1,7 @@
 <template>
     <div>
+        <CustomModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
+            @close="isModalOpen = false;" @confirm="handleModalClick()" />
         <div v-if="items" class="flex flex-col md:gap-32 gap-12 w-full bg-gray-100">
             <!-- top -->
             <div class="relative  md:h-80 h-40 overflow-hidden">
@@ -15,17 +17,17 @@
                     <div @click.prevent="changeCategory('全部')"
                         class="relative flex-1 h-24 overflow-hidden cursor-pointer">
                         <img src="../assets/images/carousel-5.jpg" alt="" class="object-cover w-full h-full">
-                        <h2 class="absolute left-5 bottom-5 font-black text-white">不分類</h2>
+                        <h2 class="absolute left-5 bottom-5 md:font-black font-bold text-white">不分類</h2>
                     </div>
                     <div @click.prevent="changeCategory('Tour')"
                         class="relative flex-1 h-24 overflow-hidden cursor-pointer">
                         <img src="../assets/images/carousel-5.jpg" alt="" class="object-cover w-full h-full">
-                        <h2 class="absolute left-5 bottom-5 font-black text-white">行程</h2>
+                        <h2 class="absolute left-5 bottom-5 md:font-black font-bold text-white">行程</h2>
                     </div>
                     <div @click.prevent="changeCategory('Flight')"
                         class="relative flex-1 h-24 overflow-hidden cursor-pointer">
                         <img src="../assets/images/carousel-5.jpg" alt="" class="object-cover w-full h-full">
-                        <h2 class="absolute left-5 bottom-5 font-black text-white">機票</h2>
+                        <h2 class="absolute left-5 bottom-5 md:font-black font-bold text-white">機票</h2>
                     </div>
                 </div>
                 <div class="flex items-center justify-between">
@@ -60,7 +62,8 @@
                             </div>
                             <div class="flex flex-col flex-1 gap-4 p-5 bg-white">
                                 <div class="flex justify-between">
-                                    <p class="font-bold line-clamp-1 text-base-heavy">{{ item.title }}</p>
+                                    <p class="font-bold md:text-md text-lg line-clamp-1 text-base-heavy">{{ item.title
+                                        }}</p>
                                     <!-- md 以下移除收藏 -->
                                     <button type="button" @click.prevent.stop="delLike(item.productId)"
                                         class="text-gray-400 transition-colors duration-200 cursor-pointer">
@@ -93,6 +96,7 @@
 
 <script>
 import http from '@/api/http'
+import CustomModal from '@/components/CustomModal.vue';
 
 export default {
     name: 'MemberLikes',
@@ -105,7 +109,14 @@ export default {
             selectCategory: '全部',
             items: '',
             deleteId: '',
+            isCatchError: false,
+            isModalOpen: false,
+            hasError: false,
+            modalContent: '',
         };
+    },
+    components: {
+        CustomModal,
     },
     methods: {
         async getLikes() {
@@ -119,7 +130,10 @@ export default {
                 });
                 this.items = res.data.items;
             } catch (error) {
-                console.log(error)
+                this.isModalOpen = true;
+                this.hasError = true;
+                this.modalContent = '伺服器錯誤，將轉跳回首頁';
+                this.isCatchError = true;
             }
         },
         async delLike(id) {
@@ -138,13 +152,20 @@ export default {
                 this.getLikes();
                 this.deleteId = '';
             } catch (error) {
-                console.log(error)
+                this.isModalOpen = true;
+                this.hasError = true;
+                this.modalContent = '伺服器錯誤，將轉跳回首頁';
+                this.isCatchError = true;
             }
         },
         changeCategory(category) {
             this.selectCategory = category;
             this.currentPage = 1;
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        },
+        handleModalClick() {
+            if (!this.isCatchError) return;
+            this.$router.push('/');
         }
     },
     computed: {

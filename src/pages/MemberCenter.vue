@@ -1,7 +1,5 @@
 <template>
     <div class="flex flex-col md:gap-32 gap-12 w-full bg-gray-100">
-        <CustomModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
-            @close="isModalOpen = false" />
         <!-- top -->
         <div class="relative  md:h-80 h-40 overflow-hidden">
             <img src="../assets/images/carousel-3.jpg" alt="tour-banner" class=" w-full h-full object-cover">
@@ -47,8 +45,6 @@
 </template>
 
 <script>
-import CustomModal from '@/components/CustomModal.vue';
-
 export default {
     name: 'MemberCenter',
     data() {
@@ -58,10 +54,5 @@ export default {
             modalContent: '',
         }
     },
-    components: {
-        CustomModal,
-    },
-    methods: {
-    }
 }
 </script>

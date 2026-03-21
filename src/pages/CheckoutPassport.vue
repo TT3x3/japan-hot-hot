@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col gap-32 w-full">
         <CustomModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
-            @close="isModalOpen = false" />
+            @close="isModalOpen = false;" @confirm="handleModalClick()" />
         <div class="max-w-[80%] w-full mx-auto flex flex-col gap-12">
             <!-- 進度條 -->
             <div class=" flex flex-row md:gap-4 gap-1">
@@ -9,14 +9,14 @@
                     <div class="w-full h-1 bg-hot-red"></div>
                     <div class="p-1">
                         <p class="font-bold text-hot-red">Step 1</p>
-                        <p class="text-sm text-base-light">結帳</p>
+                        <p class="text-sm text-gray-400">結帳</p>
                     </div>
                 </div>
                 <div class="flex flex-col gap-2 w-full">
                     <div class="w-full h-1 bg-hot-red"></div>
                     <div class="p-1">
                         <p class="font-bold text-hot-red">Step 2</p>
-                        <p class="text-sm text-base-light">填寫護照</p>
+                        <p class="text-sm text-gray-400">填寫護照</p>
                     </div>
                 </div>
                 <div class="flex flex-col gap-2 w-full">
@@ -151,13 +151,14 @@ export default {
         return {
             apiBase: process.env.VUE_APP_API_PATH,
             store: '',
-            isModalOpen: false,
-            hasError: false,
-            modalContent: '',
             date: null,
             passportInfo: [],
             isError: false,
             isOver: false,
+            isCatchError: false,
+            isModalOpen: false,
+            hasError: false,
+            modalContent: '',
         }
     },
     created() {
@@ -236,8 +237,8 @@ export default {
             return isValid;
         },
         async savePassportInfo() {
-            if(!this.validateForm()) return;
-            if(this.findPassport()) return;
+            if (!this.validateForm()) return;
+            if (this.findPassport()) return;
             if (this.isError) return;
             await this.store.savePassportInfo({
                 passportInfo: this.passportInfo,
@@ -260,6 +261,10 @@ export default {
                 setPassportNumber.add(p.passportNumber);
             }
             return false;
+        },
+        handleModalClick() {
+            if (!this.isCatchError) return;
+            this.$router.push('/');
         }
     },
     computed: {

@@ -1,5 +1,7 @@
 <template>
     <div class="flex flex-col md:gap-32 gap-12 w-full bg-gray-100">
+        <CustomModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
+            @close="isModalOpen = false;" @confirm="handleModalClick()" />
         <!-- top -->
         <div class="relative  md:h-80 h-40 overflow-hidden">
             <img src="../assets/images/carousel-4.jpg" alt="tour-banner" class=" w-full h-full object-cover">
@@ -61,7 +63,8 @@
                             </div>
                         </div>
                         <div class="w-full flex gap-4 pt-4">
-                            <router-link v-if="orderDetail.productType==='Flight'" :to="`/ticket-detail/${orderDetail.productId}`"
+                            <router-link v-if="orderDetail.productType === 'Flight'"
+                                :to="`/ticket-detail/${orderDetail.productId}`"
                                 class="cursor-pointer bg-hot-red text-white text-center px-10 py-3 w-full  hover:bg-red-500 active:bg-red-700 transition-colors">重新下單</router-link>
                             <router-link v-else :to="`/tour-detail/${orderDetail.productId}`"
                                 class="cursor-pointer bg-hot-red text-white text-center px-10 py-3 w-full  hover:bg-red-500 active:bg-red-700 transition-colors">重新下單</router-link>
@@ -187,6 +190,7 @@
 
 <script>
 import http from '@/api/http'
+import CustomModal from '@/components/CustomModal.vue';
 
 export default {
     name: 'MemberOrderDetail',
@@ -202,22 +206,40 @@ export default {
                 note: '請小心保護好票券，我不喜歡被折到的票券，如果折到我會退貨，最好是保護好。',
                 receive: '貨到付款',
                 payment: '貨到付款',
-            }
+            },
+            isCatchError: false,
+            isModalOpen: false,
+            hasError: false,
+            modalContent: '',
         }
+    },
+    components: {
+        CustomModal,
     },
     methods: {
         async getOrderDetail(id) {
-            const token = localStorage.getItem('token');
-            const res = await http.get(`${this.apiBase}/members/orders/${id}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-            this.orderDetail = res.data;
+            try {
+                const token = localStorage.getItem('token');
+                const res = await http.get(`${this.apiBase}/members/orders/${id}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                this.orderDetail = res.data;
+            } catch (error) {
+                this.isModalOpen = true;
+                this.hasError = true;
+                this.modalContent = '伺服器錯誤，將轉跳回首頁';
+                this.isCatchError = true;
+            }
         },
         dateToISO(date) {
             const isoDate = new Date(date).toISOString().split('T')[0];
             return isoDate;
+        },
+        handleModalClick() {
+            if (!this.isCatchError) return;
+            this.$router.push('/');
         },
     },
     created() {

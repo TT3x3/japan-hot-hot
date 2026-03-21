@@ -10,9 +10,9 @@
                     <div v-for="(activity, index) in activities" :key="index"
                         class="flex-shrink-0 md:w-[20%] w-[260px] border-solid border-1 border-gray-300">
                         <img class="w-full" :src="activity.img" alt="activities-banner">
-                        <div class="flex flex-col gap-4 h-[180px] justify-between bg-white p-7">
-                            <h4 class="font-bold text-base-heavy line-clamp-2 ">{{ activity.title }}</h4>
-                            <p class="text-sm text-base-light line-clamp-3">
+                        <div class="flex flex-col gap-4 h-[200px] justify-between bg-white p-7">
+                            <h4 class="md:text-md text-lg font-bold text-base-heavy line-clamp-2 ">{{ activity.title }}</h4>
+                            <p class="md:text-sm font-thin text-base-light line-clamp-3">
                                 {{ activity.description }}
                             </p>
                         </div>

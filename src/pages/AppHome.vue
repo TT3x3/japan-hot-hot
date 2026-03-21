@@ -1,10 +1,10 @@
 <template>
   <div class="flex flex-col md:gap-32 gap-12">
-    <div class="flex md:flex-col flex-col-reverse gap-12">
+    <div class="flex md:flex-col flex-col-reverse md:gap-32 gap-12">
       <!-- 搜尋框 -->
       <div class="flex justify-center items-center max-w-[80%] w-full mx-auto">
         <div class="flex flex-col gap-2 justify-center items-center w-full">
-          <h3 class="md:text-3xl text-xl text-base-heavy">麥囉唆，直接講想去哪嘿皮？</h3>
+          <h3 class="font-bold md:text-3xl text-xl text-base-heavy">麥囉唆，直接講想去哪嘿皮？</h3>
           <div class="flex justify-center items-center w-full">
             <input type="text" placeholder="赤穗市"
               class="outline-solid outline-1 outline-gray-300 py-2 px-4 md:w-[348px] w-full" />
