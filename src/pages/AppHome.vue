@@ -1,11 +1,10 @@
 <template>
-  <div class="flex flex-col md:gap-32 gap-12">
+  <div class="flex flex-col md:gap-56 gap-12">
     <div class="flex md:flex-col flex-col-reverse md:gap-32 gap-12">
       <!-- 搜尋框 -->
       <SearchBar />
       <img src="../assets/images/home-banner.jpg" class="w-full h-72 relative object-cover" alt="home-banner">
     </div>
-
 
     <!-- 輪播圖 -->
     <HomeCarousel />
@@ -13,7 +12,7 @@
     <HomeActivity />
 
     <!-- 關於我 -->
-    <div class="bg-gray-200 overflow-x-hidden md:py-0 py-12">
+    <div class="bg-gray-200 overflow-x-hidden md:py-0 md:pb-24 md:pt-8 py-12">
       <div class="flex w-full justify-center items-center gap-8">
         <div class="flex flex-col md:items-end items-center">
           <img src="../assets/images/about-img-2.jpg" alt="about-img-2" class="md:h-72 h-96 object-cover md:pr-16">
@@ -28,7 +27,6 @@
           class="hidden md:block max-w-[30%] h-full object-cover">
       </div>
     </div>
-
   </div>
 </template>
 
