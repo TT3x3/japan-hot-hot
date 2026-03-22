@@ -8,8 +8,8 @@
 
         <!-- top -->
         <div class="relative md:h-80 h-40 overflow-hidden">
-            <img v-if="type==='tickets'" src="../../assets/images/carousel-2.jpg" alt="tour-banner" class=" w-full h-full object-cover">
-            <img v-else src="../../assets/images/carousel-3.jpg" alt="tour-banner" class=" w-full h-full object-cover">
+            <img :src="type === 'tickets' ? require('../../assets/images/carousel-2.jpg') : require('../../assets/images/carousel-3.jpg')"
+                class="w-full h-full object-cover">
         </div>
 
         <!-- 搜尋框 -->
@@ -41,19 +41,19 @@
         <div class="max-w-[80%] w-full mx-auto flex flex-col gap-12">
             <ul class="flex flex-wrap md:gap-x-6 md:gap-y-12 gap-4 md:justify-start justify-center">
                 <!-- 卡片 -->
-                <router-link :to="`/${pageType}-detail/${item.productId}`" v-for="item in pageList" :key="item.productId"
-                    class="relative md:flex-[0_0_calc(33.333%-1rem)] cursor-pointer group">
-                    <div class="flex flex-col md:h-[450px] h-72 border border-gray-200">
+                <router-link :to="`/${pageType}-detail/${item.productId}`" v-for="item in pageList"
+                    :key="item.productId" class="relative md:flex-[0_0_calc(33.333%-1rem)] w-full cursor-pointer group">
+                    <div class="flex flex-col md:h-[450px] border border-gray-200">
                         <!-- 無庫存遮罩 -->
                         <p v-if="item.status !== 'active'"
                             class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-white z-3">
                             暫無庫存</p>
                         <div v-if="item.status !== 'active'" class="absolute inset-0 bg-black/30 z-2"></div>
 
-                        <div class="relative h-72 overflow-hidden">
-                            <img :src="`${apiBase}${item.thumbnail}`" alt="" class="object-cover w-full h-full">
+                        <div class="relative h-72 w-full">
+                            <img :src="`${apiBase}${item.thumbnail}`" alt="" class="object-cover object-top w-full h-full">
                             <div
-                                class="absolute inset-0 bg-white/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ">
+                                class="absolute inset-0 bg-white/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                             </div>
                             <!-- md 以上收藏 -->
                             <button type="button" @click.prevent.stop="toggleLike(item.productId)"
@@ -75,19 +75,19 @@
                                 <button type="button" @click.prevent.stop="toggleLike(item.productId)"
                                     class=" block md:hidden text-red-500 hover:text-red-400 transition-colors duration-200 ">
                                     <i v-if="findLike(item.productId)"
-                                        class="fa-solid fa-heart fa-lg  cursor-pointer"></i>
+                                        class="fa-solid fa-heart fa-lg cursor-pointer"></i>
                                     <i v-else class="fa-regular fa-heart fa-lg cursor-pointer"></i>
                                 </button>
                             </div>
-                            <p class="font-bold line-clamp-2 text-lg text-base-heavy">{{ item.title }}</p>
+                            <p class="font-bold text-lg line-clamp-2 text-base-heavy md:h-14">{{ item.title }}</p>
                             <p class="font-bold text-lg text-hot-red mt-auto text-end">{{ item.price.toLocaleString() |
                                 dollarSign | currency }}</p>
                         </div>
                     </div>
                 </router-link>
             </ul>
-            <button type="button"
-                class="self-center px-10 py-3 bg-gray-400 text-white  hover:bg-gray-300 active:bg-gray-500 transition-colors md:w-auto w-full">查看更多</button>
+            <!-- <button type="button"
+                class="self-center px-10 py-3 bg-gray-400 text-white  hover:bg-gray-300 active:bg-gray-500 transition-colors md:w-auto w-full">查看更多</button> -->
         </div>
         <div></div>
     </div>
@@ -230,10 +230,10 @@ export default {
             if (!this.isCatchError) return;
             this.$router.push('/');
         },
-        fetchType(){
-            if(this.type === 'tickets'){
+        fetchType() {
+            if (this.type === 'tickets') {
                 this.getFlights();
-            } else if( this.type === 'tours'){
+            } else if (this.type === 'tours') {
                 this.getTours();
             }
         }
@@ -243,9 +243,9 @@ export default {
         this.getLikes();
     },
     computed: {
-        pageType(){
+        pageType() {
             return this.type === 'tickets' ? 'ticket' : 'tour';
-        },  
+        },
         pageList() {
             return this.type === 'tickets' ? this.flights : this.tours;
         },
@@ -253,8 +253,8 @@ export default {
             return this.type === 'tickets' ? '機票' : '行程';
         },
     },
-    watch:{
-        type(){
+    watch: {
+        type() {
             this.fetchType();
         }
     }
