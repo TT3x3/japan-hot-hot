@@ -1,14 +1,15 @@
 <template>
     <div v-if="flights" class="flex flex-col md:gap-32 gap-12 w-full">
         <CustomModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
-            @close="isModalOpen = false"  @confirm="handleModalClick()"/>
+            @close="isModalOpen = false" @confirm="handleModalClick()" />
         <div class="flex justify-center items-center pt-8">
-            <h1 class="text-3xl text-center tracking-[2rem] pl-[2rem] text-base-heavy">機票</h1>
+            <h1 class="text-3xl text-center tracking-[2rem] pl-[2rem] text-base-heavy">{{ pageTitle }}</h1>
         </div>
 
         <!-- top -->
         <div class="relative md:h-80 h-40 overflow-hidden">
-            <img src="../../assets/images/carousel-2.jpg" alt="tour-banner" class=" w-full h-full object-cover">
+            <img v-if="type==='tickets'" src="../../assets/images/carousel-2.jpg" alt="tour-banner" class=" w-full h-full object-cover">
+            <img v-else src="../../assets/images/carousel-3.jpg" alt="tour-banner" class=" w-full h-full object-cover">
         </div>
 
         <!-- 搜尋框 -->
@@ -40,7 +41,7 @@
         <div class="max-w-[80%] w-full mx-auto flex flex-col gap-12">
             <ul class="flex flex-wrap md:gap-x-6 md:gap-y-12 gap-4 md:justify-start justify-center">
                 <!-- 卡片 -->
-                <router-link :to="`/ticket-detail/${item.productId}`" v-for="item in flights" :key="item.productId"
+                <router-link :to="`/${pageType}-detail/${item.productId}`" v-for="item in pageList" :key="item.productId"
                     class="relative md:flex-[0_0_calc(33.333%-1rem)] cursor-pointer group">
                     <div class="flex flex-col md:h-[450px] h-72 border border-gray-200">
                         <!-- 無庫存遮罩 -->
@@ -96,13 +97,21 @@
 import http from '@/api/http'
 import CustomModal from '@/components/CustomModal.vue';
 import SearchBar from '@/components/SearchBar.vue';
+// import { watch } from 'vue';
 
 export default {
-    name: 'TicketsPage',
+    name: 'ProductsPage',
+    props: {
+        type: {
+            type: String,
+            required: true,
+        }
+    },
     data() {
         return {
             apiBase: process.env.VUE_APP_API_PATH,
-            flights: "",
+            flights: [],
+            tours: [],
             likesList: [],
             isModalOpen: false,
             hasError: false,
@@ -116,8 +125,26 @@ export default {
     },
     methods: {
         async getFlights() {
-            const res = await http.get(`/product/flight`);
-            this.flights = res.data.items;
+            try {
+                const res = await http.get(`/product/flight`);
+                this.flights = res.data.items;
+            } catch (error) {
+                this.isModalOpen = true;
+                this.hasError = true;
+                this.modalContent = '伺服器錯誤，將轉跳回首頁';
+                this.isCatchError = true;
+            }
+        },
+        async getTours() {
+            try {
+                const res = await http.get(`/product/tour`);
+                this.tours = res.data.items;
+            } catch (error) {
+                this.isModalOpen = true;
+                this.hasError = true;
+                this.modalContent = '伺服器錯誤，將轉跳回首頁';
+                this.isCatchError = true;
+            }
         },
         async getLikes() {
             const token = localStorage.getItem('token');
@@ -150,7 +177,7 @@ export default {
             if (!token) {
                 this.isModalOpen = true;
                 this.hasError = true;
-                this.modalContent = '哇！登入才能使用收藏功能唷！';
+                this.modalContent = '修但幾咧！登入才能使用收藏功能！';
                 return;
             }
             try {
@@ -202,12 +229,34 @@ export default {
         handleModalClick() {
             if (!this.isCatchError) return;
             this.$router.push('/');
+        },
+        fetchType(){
+            if(this.type === 'tickets'){
+                this.getFlights();
+            } else if( this.type === 'tours'){
+                this.getTours();
+            }
         }
     },
     created() {
-        this.getFlights();
+        this.fetchType();
         this.getLikes();
+    },
+    computed: {
+        pageType(){
+            return this.type === 'tickets' ? 'ticket' : 'tour';
+        },  
+        pageList() {
+            return this.type === 'tickets' ? this.flights : this.tours;
+        },
+        pageTitle() {
+            return this.type === 'tickets' ? '機票' : '行程';
+        },
+    },
+    watch:{
+        type(){
+            this.fetchType();
+        }
     }
-
 }
 </script>

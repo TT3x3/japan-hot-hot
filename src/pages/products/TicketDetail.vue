@@ -321,7 +321,7 @@ export default {
                     this.seconds--;
                     if (this.seconds === 0) {
                         clearInterval(timer);
-                        this.$router.push('/tickets');
+                        this.$router.push('/products/tickets');
                     }
                 }, 1000);
             }

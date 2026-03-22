@@ -295,7 +295,7 @@ export default {
                     this.seconds--;
                     if (this.seconds === 0) {
                         clearInterval(timer);
-                        this.$router.push('/tours');
+                        this.$router.push('/products/tours');
                     }
                 }, 1000);
             }

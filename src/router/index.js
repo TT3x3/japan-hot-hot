@@ -2,14 +2,12 @@ import Vue from "vue";
 import Router from "vue-router";
 import { useOrderStore } from "@/stores/order";
 
-
 // import 頁面
 import AppHome from "@/pages/AppHome.vue";
 import AppLogin from "@/pages/AppLogin.vue";
 import AppSignup from "@/pages/AppSignup.vue";
-import ToursPage from "@/pages/products/ToursPage.vue";
+import ProductsPage from "@/pages/products/ProductsPage.vue";
 import TourDetail from "@/pages/products/TourDetail.vue";
-import TicketsPage from "@/pages/products/TicketsPage.vue";
 import TicketDetail from "@/pages/products/TicketDetail.vue";
 import MemberCenter from "@/pages/users/MemberCenter.vue";
 import MemberProfile from "@/pages/users/MemberProfile.vue";
@@ -79,19 +77,15 @@ const router = new Router({
       meta: { requiresAuth: true },
     },
     {
-      path: "/tours",
-      name: "tours",
-      component: ToursPage,
+      path: "/products/:type(tours|tickets)",
+      name: "ProductsPage",
+      component: ProductsPage,
+      props: route => ({ type: route.params.type }) 
     },
     {
       path: "/tour-detail/:id",
       name: "tour-detail",
       component: TourDetail,
-    },
-    {
-      path: "/tickets",
-      name: "tickets",
-      component: TicketsPage,
     },
     {
       path: "/ticket-detail/:id",
