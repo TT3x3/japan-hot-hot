@@ -1,5 +1,5 @@
 <template>
-    <div v-if="flights" class="flex flex-col md:gap-32 gap-12 w-full">
+    <div class="flex flex-col md:gap-32 gap-12 w-full">
         <CustomModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
             @close="isModalOpen = false" @confirm="handleModalClick()" />
         <div class="flex justify-center items-center pt-8">
@@ -13,7 +13,7 @@
         </div>
 
         <!-- 搜尋框 -->
-        <SearchBar />
+        <SearchBar :placeholderType="pageTitle" :allProducts="pageList" :search="search" @update:search="val => search = val" />
 
         <!-- 分類 -->
         <div class="max-w-[80%] w-full mx-auto">
@@ -51,7 +51,8 @@
                         <div v-if="item.status !== 'active'" class="absolute inset-0 bg-black/30 z-2"></div>
 
                         <div class="relative h-72 w-full">
-                            <img :src="`${apiBase}${item.thumbnail}`" alt="" class="object-cover object-top w-full h-full">
+                            <img :src="`${apiBase}${item.thumbnail}`" alt=""
+                                class="object-cover object-top w-full h-full">
                             <div
                                 class="absolute inset-0 bg-white/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                             </div>
@@ -117,6 +118,7 @@ export default {
             hasError: false,
             modalContent: '',
             isCatchError: false,
+            search: '',
         };
     },
     components: {
@@ -252,6 +254,9 @@ export default {
         pageTitle() {
             return this.type === 'tickets' ? '機票' : '行程';
         },
+        showType(){
+            return this.type;
+        }
     },
     watch: {
         type() {

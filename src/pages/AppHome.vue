@@ -2,7 +2,8 @@
   <div class="flex flex-col md:gap-56 gap-12">
     <div class="flex md:flex-col flex-col-reverse md:gap-32 gap-12">
       <!-- 搜尋框 -->
-      <SearchBar />
+      <SearchBar :productType="productType" :placeholderType="placeholderType" :allProducts="products" :search="search"
+        @update:search="val => search = val" />
       <img src="../assets/images/home-banner.jpg" class="w-full h-72 relative object-cover" alt="home-banner">
     </div>
 
@@ -31,10 +32,10 @@
 </template>
 
 <script>
+import http from '@/api/http'
 import HomeActivity from '@/components/HomeActivity.vue';
 import HomeCarousel from '@/components/HomeCarousel.vue';
 import SearchBar from '@/components/SearchBar.vue';
-
 
 export default {
   name: 'AppHome',
@@ -45,9 +46,38 @@ export default {
   },
   data() {
     return {
+      products: [],
+      productType: '',
+      placeholderType: '旅程',
+      search: '',
     };
   },
   methods: {
+    async getFlights() {
+      try {
+        const res = await http.get(`/product/flight`);
+        this.products = res.data.items;
+        this.productType = this.typeTranslate(res.data.items[0].type);
+        // console.log(this.productType)
+        console.log(res.data.items[0].type)
+      } catch (error) {
+        this.isModalOpen = true;
+        this.hasError = true;
+        this.modalContent = '伺服器錯誤，將轉跳回首頁';
+        this.isCatchError = true;
+      }
+    },
+  },
+  created(){
+    this.getFlights();
+  },
+  computed: {
+    typeTranslate(){
+      return {
+        Flight: 'tickets',
+        Tour: 'tours'
+      }
+    }
   }
 }
 </script>
