@@ -13,27 +13,42 @@
         </div>
 
         <!-- 搜尋框 -->
-        <SearchBar :placeholderType="pageTitle" :allProducts="pageList" :search="search" @update:search="val => search = val" />
+        <SearchBar :placeholderType="pageTitle" :allProducts="pageList" :search="search"
+            @update:search="val => search = val" />
 
         <!-- 分類 -->
         <div class="max-w-[80%] w-full mx-auto">
             <div class="flex md:flex-row flex-col md:gap-8 gap-2">
-                <div class="relative bg-gray-500 flex-1 overflow-hidden">
-                    <img src="../../assets/images/carousel-1.jpg" alt="" class="object-cover w-full md:h-full h-16">
-                    <h2 class="absolute left-5 bottom-5 font-bold text-white">日本本州</h2>
-                </div>
-                <div class="relative bg-gray-500 flex-1 overflow-hidden">
-                    <img src="../../assets/images/carousel-2.jpg" alt="" class="object-cover w-full md:h-full h-16">
-                    <h2 class="absolute left-5 bottom-5 font-bold text-white">四國/九州</h2>
-                </div>
-                <div class="relative bg-gray-500 flex-1 overflow-hidden">
-                    <img src="../../assets/images/carousel-3.jpg" alt="" class="object-cover w-full md:h-full h-16">
-                    <h2 class="absolute left-5 bottom-5 font-bold text-white">北海道</h2>
-                </div>
-                <div class="relative bg-gray-500 flex-1 overflow-hidden">
-                    <img src="../../assets/images/carousel-4.jpg" alt="" class="object-cover w-full md:h-full h-16">
-                    <h2 class="absolute left-5 bottom-5 font-bold text-white">沖繩</h2>
-                </div>
+                <button type='button' @click.prevent="changeCategory('全部')"
+                    class="relative bg-gray-500 flex-1 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1568190002605-b51fa38eac46?q=80&w=769&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        alt="" class="object-cover object-top w-full md:h-20 h-16">
+                    <h2 class="absolute left-5 bottom-5 font-bold text-white">全部</h2>
+                </button>
+                <button v-if="pageType==='tour'" type='button' @click.prevent="changeCategory('一日遊')"
+                    class="relative bg-gray-500 flex-1 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1568190002605-b51fa38eac46?q=80&w=769&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        alt="" class="object-cover object-center w-full md:h-20 h-16">
+                    <h2 class="absolute left-5 bottom-5 font-bold text-white">一日遊</h2>
+                </button>
+                <button v-if="pageType==='tour'" type='button' @click.prevent="changeCategory('半日遊')"
+                    class="relative bg-gray-500 flex-1 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1568190002605-b51fa38eac46?q=80&w=769&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        alt="" class="object-cover object-bottom w-full md:h-20 h-16">
+                    <h2 class="absolute left-5 bottom-5 font-bold text-white">半日遊</h2>
+                </button>
+                <button v-if="pageType==='ticket'" type='button' @click.prevent="changeCategory('高雄出發')"
+                    class="relative bg-gray-500 flex-1 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1568190002605-b51fa38eac46?q=80&w=769&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        alt="" class="object-cover object-center w-full md:h-20 h-16">
+                    <h2 class="absolute left-5 bottom-5 font-bold text-white">高雄出發</h2>
+                </button>
+                <button v-if="pageType==='ticket'" type='button' @click.prevent="changeCategory('桃園出發')"
+                    class="relative bg-gray-500 flex-1 overflow-hidden">
+                    <img src="https://images.unsplash.com/photo-1568190002605-b51fa38eac46?q=80&w=769&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        alt="" class="object-cover object-bottom w-full md:h-20 h-16">
+                    <h2 class="absolute left-5 bottom-5 font-bold text-white">桃園出發</h2>
+                </button>
             </div>
         </div>
 
@@ -41,7 +56,7 @@
         <div class="max-w-[80%] w-full mx-auto flex flex-col gap-12">
             <ul class="flex flex-wrap md:gap-x-6 md:gap-y-12 gap-4 md:justify-start justify-center">
                 <!-- 卡片 -->
-                <router-link :to="`/${pageType}-detail/${item.productId}`" v-for="item in pageList"
+                <router-link :to="`/${pageType}-detail/${item.productId}`" v-for="item in filerCategory"
                     :key="item.productId" class="relative md:flex-[0_0_calc(33.333%-1rem)] w-full cursor-pointer group">
                     <div class="flex flex-col md:h-[450px] border border-gray-200">
                         <!-- 無庫存遮罩 -->
@@ -119,6 +134,7 @@ export default {
             modalContent: '',
             isCatchError: false,
             search: '',
+            selectCategory: '全部',
         };
     },
     components: {
@@ -238,25 +254,45 @@ export default {
             } else if (this.type === 'tours') {
                 this.getTours();
             }
-        }
+        },
+        changeCategory(category) {
+            this.selectCategory = category;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        },
+        aaa() {
+            let eee = this.tours.filter(item => {
+                return item.tags.some(tag => tag.includes(this.selectCategory))
+            })
+            console.log(eee)
+        },
     },
     created() {
         this.fetchType();
         this.getLikes();
+
     },
     computed: {
-        pageType() {
-            return this.type === 'tickets' ? 'ticket' : 'tour';
-        },
         pageList() {
             return this.type === 'tickets' ? this.flights : this.tours;
+        },
+        pageType() {
+            return this.type === 'tickets' ? 'ticket' : 'tour';
         },
         pageTitle() {
             return this.type === 'tickets' ? '機票' : '行程';
         },
-        showType(){
+        showType() {
             return this.type;
+        },
+        filerCategory() {
+            let findType = (this.type === 'tickets' ? this.flights : this.tours);
+            if (!findType) return [];
+            if (this.selectCategory === '全部') return findType
+            return findType.filter(item => {
+                return item.tags.some(tag => tag.includes(this.selectCategory))
+            })
         }
+
     },
     watch: {
         type() {

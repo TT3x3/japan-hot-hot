@@ -157,13 +157,6 @@
                         <p class="font-bold">{{ ticket.title }}</p>
                     </div>
                     <div class="flex flex-col gap-2">
-                        <p class="text-sm text-gray-500">旅途天數</p>
-                        <div
-                            class="flex md:flex-row flex-col justify-between items-center md:gap-12 gap-4 bg-white md:px-8 py-6 text-base-heavy">
-                            <p class="font-bold text-base-heavy">{{ ticket.fixedDays }} 日</p>
-                        </div>
-                    </div>
-                    <div class="flex flex-col gap-2">
                         <p class="text-sm text-gray-500">行程日期</p>
                         <div class="relative border" :class="isError.date ? 'border-red-500' : 'border-none'">
                             <v-date-picker v-model="date" :columns="1" :min-date="minDate" :max-date="maxDate"
