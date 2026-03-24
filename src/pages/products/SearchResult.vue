@@ -115,7 +115,6 @@ export default {
             totalPages: 1,
             currentPage: 1,
             checkList: [],
-            store: null,
         };
     },
     components: {
@@ -228,6 +227,9 @@ export default {
         }
     },
     computed: {
+        store() {
+            return useResultStore();
+        },
         filterCheckbox() {
             return this.products.filter(product => {
                 if (!product) return [];
@@ -251,19 +253,25 @@ export default {
     },
     created() {
         this.getLikes();
-        this.store = useResultStore();
         const keyword = this.$route.query.search
         if (keyword) {
             this.search = keyword;
             this.getSearchResult(keyword, parseInt(this.$route.query.page) || 1);
         }
-        this.products = this.store.products || [];
     },
     watch: {
         async currentPage(newPage) {
             await this.store.getResult(this.store.isSearch, newPage)
             this.products = this.store.products;
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        },
+        '$route.query': {
+            immediate: true,
+            handler(query) {
+                const keyword = query.search || '';
+                const page = parseInt(query.page) || 1;
+                this.getSearchResult(keyword, page);
+            }
         },
     }
 }
