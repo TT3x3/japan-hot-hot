@@ -3,7 +3,7 @@
     <div class="flex md:flex-col flex-col-reverse md:gap-32 gap-12">
       <!-- 搜尋框 -->
       <SearchBar :productType="productType" :placeholderType="placeholderType" :allProducts="products" :search="search"
-        @update:search="val => search = val" />
+        @update:search="val => search = val" @search-result="getSearchResult" />
       <img src="../assets/images/home-banner.jpg" class="w-full h-72 relative object-cover" alt="home-banner">
     </div>
 
@@ -33,6 +33,7 @@
 
 <script>
 import http from '@/api/http'
+import { useResultStore } from '@/stores/search'
 import HomeActivity from '@/components/HomeActivity.vue';
 import HomeCarousel from '@/components/HomeCarousel.vue';
 import SearchBar from '@/components/SearchBar.vue';
@@ -53,7 +54,7 @@ export default {
     };
   },
   methods: {
-    async getFlights() {
+    async getProducts() {
       try {
         const res = await http.get(`/product/flight`);
         this.products = res.data.items;
@@ -67,12 +68,23 @@ export default {
         this.isCatchError = true;
       }
     },
+    async getSearchResult(keyword) {
+      await this.store.getResult(keyword);
+      this.$router.push({
+        path: '/products/result',
+        query: {
+          search: keyword,
+          page: 1
+        }
+      }).catch(() => { });
+    },
   },
-  created(){
-    this.getFlights();
+  created() {
+    this.getProducts();
+    this.store = useResultStore();
   },
   computed: {
-    typeTranslate(){
+    typeTranslate() {
       return {
         Flight: 'tickets',
         Tour: 'tours'

@@ -7,6 +7,7 @@ import AppHome from "@/pages/AppHome.vue";
 import AppLogin from "@/pages/AppLogin.vue";
 import AppSignup from "@/pages/AppSignup.vue";
 import ProductsPage from "@/pages/products/ProductsPage.vue";
+import SearchResult from "@/pages/products/SearchResult.vue";
 import TourDetail from "@/pages/products/TourDetail.vue";
 import TicketDetail from "@/pages/products/TicketDetail.vue";
 import MemberCenter from "@/pages/users/MemberCenter.vue";
@@ -81,6 +82,11 @@ const router = new Router({
       name: "ProductsPage",
       component: ProductsPage,
       props: route => ({ type: route.params.type }) 
+    },
+    {
+      path: "/products/result",
+      name:"searchResult",
+      component: SearchResult,
     },
     {
       path: "/tour-detail/:id",
