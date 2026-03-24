@@ -7,36 +7,36 @@
         <SearchBar :placeholderType="pageTitle" :allProducts="products" :search="search"
             @update:search="val => search = val" @search-result="getSearchResult" />
 
-        <div class="bg-gray-200 py-12">
+        <div class="bg-gray-200 py-12 flex flex-col justify-center items-center gap-12">
             <div class="max-w-[80%] w-full mx-auto flex flex-col gap-4">
 
                 <p v-if="store.isSearch" class="text-xl text-base-light">以下是 <span class="font-bold text-hot-red">{{
                     store.isSearch
                         }}</span> 相關</p>
 
-                <div class="flex gap-8 w-full h-full flex-1">
+                <div class="flex md:flex-row flex-col gap-8 w-full h-full flex-1">
                     <!-- sidebar -->
-                    <div class="bg-white h-full w-[32%] py-6 px-8 text-base-heavy flex flex-col gap-8">
-                        <div class="flex flex-col gap-4">
-                            <p class="font-bold text-gray-400">嘿皮類型</p>
-                            <div class="flex flex-col gap-2">
-                                <label for="tourInput" class="flex items-center gap-2"><input v-model="checkList"
+                    <div class="bg-white h-full md:w-[32%] w-full py-6 md:px-8 px-6 text-base-heavy flex md:flex-col flex-col md:gap-8 gap-2">
+                        <div class="flex md:flex-col gap-4">
+                            <p class="font-bold text-gray-400 min-w-16">嘿皮類型</p>
+                            <div class="flex md:flex-col gap-2 flex-wrap">
+                                <label for="tourInput" class="flex items-center gap-2 min-w-8"><input v-model="checkList"
                                         value="Tour" type="checkbox" id="tourInput">行程</label>
-                                <label for="flightInput" class="flex items-center gap-2"><input v-model="checkList"
+                                <label for="flightInput" class="flex items-center gap-2 min-w-8"><input v-model="checkList"
                                         value="Flight" type="checkbox" id="flightInput">機票</label>
                             </div>
                         </div>
-                        <div class="bg-gray-100 w-full h-px"></div>
-                        <div class="flex flex-col gap-4">
-                            <p class="font-bold text-gray-400">標籤類型</p>
-                            <div class="flex flex-col gap-2">
-                                <label for="dayInput" class="flex items-center gap-2"><input v-model="checkList"
+                        <div class="hidden md:block bg-gray-100 w-full h-px"></div>
+                        <div class="flex md:flex-col gap-4">
+                            <p class="font-bold text-gray-400 min-w-16">標籤類型</p>
+                            <div class="flex md:flex-col gap-2 flex-wrap">
+                                <label for="dayInput" class="flex items-center gap-2  min-w-16"><input v-model="checkList"
                                         value="一日遊" type="checkbox" id="dayInput">一日遊</label>
-                                <label for="halfInput" class="flex items-center gap-2"><input v-model="checkList"
+                                <label for="halfInput" class="flex items-center gap-2  min-w-16"><input v-model="checkList"
                                         value="半日遊" type="checkbox" id="halfInput">半日遊</label>
-                                <label for="kaoInput" class="flex items-center gap-2"><input v-model="checkList"
+                                <label for="kaoInput" class="flex items-center gap-2  min-w-16"><input v-model="checkList"
                                         value="高雄出發" type="checkbox" id="kaoInput">高雄出發</label>
-                                <label for="taoInput" class="flex items-center gap-2"><input v-model="checkList"
+                                <label for="taoInput" class="flex items-center gap-2  min-w-16"><input v-model="checkList"
                                         value="桃園出發" type="checkbox" id="taoInput">桃園出發</label>
                             </div>
                         </div>
@@ -50,23 +50,23 @@
                     <div v-if="filterCheckbox.length > 0" class="w-full h-full flex flex-1 flex-col gap-5">
                         <div v-for="product in filterCheckbox" :key="product.id" class="flex bg-white">
                             <img :src="`${apiBase}/${product.thumbnail}`" alt=""
-                                class="h-56 w-96 object-cover overflow-hidden">
-                            <div class="p-6 w-full flex flex-col justify-between text-base-heavy">
+                                class="md:h-56 h-36 md:w-96 w-60 object-cover overflow-hidden">
+                            <div class="md:p-6 p-2 w-full flex flex-col justify-between text-base-heavy">
                                 <div class="flex flex-col gap-2">
                                     <div class="flex gap-1 justify-between items-center">
-                                        <p class="font-bold text-xl">{{ product.title }}</p>
+                                        <p class="font-bold md:text-xl line-clamp-2">{{ product.title }}</p>
                                         <button type="button" @click.prevent.stop="toggleLike(product.productId)"
-                                            class="text-red-300 hover:text-red-500 transition-colors duration-200 ">
+                                            class=" text-red-300 hover:text-red-500 transition-colors duration-200 ">
                                             <i v-if="findLike(product.productId)"
                                                 class="fa-solid fa-heart fa-xl text-red-500 cursor-pointer"></i>
                                             <i v-else class="fa-regular fa-heart fa-xl cursor-pointer"></i>
                                         </button>
                                     </div>
-                                    <div class="flex gap-2 items-center">
+                                    <div class="flex flex-row gap-2 items-center">
                                         <p class="font-thin text-sm px-1 inline-block bg-gray-400 text-white">
                                             {{ typeTranslate[product.type] }}</p>
                                         <p v-for="(tag, index) in product.tags" :key="index"
-                                            class="font-thin text-sm px-1 inline-block border border-gray-300 text-gray-400">
+                                            class="hidden md:inline-block font-thin text-sm px-1 border border-gray-300 text-gray-400">
                                             {{ tag }}</p>
 
                                     </div>
@@ -85,9 +85,10 @@
 
                 </div>
             </div>
+            <CustomPagination class="w-full flex justify-center" :totalPages="totalPages"
+                :currentPage.sync="currentPage" />
 
         </div>
-        <CustomPagination class="w-full flex justify-center" :totalPages="totalPages" :currentPage.sync="currentPage" />
     </div>
 </template>
 
