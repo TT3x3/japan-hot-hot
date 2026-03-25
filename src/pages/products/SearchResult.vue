@@ -16,28 +16,29 @@
 
                 <div class="flex md:flex-row flex-col gap-8 w-full h-full flex-1">
                     <!-- sidebar -->
-                    <div class="bg-white h-full md:w-[32%] w-full py-6 md:px-8 px-6 text-base-heavy flex md:flex-col flex-col md:gap-8 gap-2">
+                    <div
+                        class="bg-white h-full md:w-[32%] w-full py-6 md:px-8 px-6 text-base-heavy flex md:flex-col flex-col md:gap-8 gap-2">
                         <div class="flex md:flex-col gap-4">
                             <p class="font-bold text-gray-400 min-w-16">嘿皮類型</p>
                             <div class="flex md:flex-col gap-2 flex-wrap">
-                                <label for="tourInput" class="flex items-center gap-2 min-w-8"><input v-model="checkList"
-                                        value="Tour" type="checkbox" id="tourInput">行程</label>
-                                <label for="flightInput" class="flex items-center gap-2 min-w-8"><input v-model="checkList"
-                                        value="Flight" type="checkbox" id="flightInput">機票</label>
+                                <label for="tourInput" class="flex items-center gap-2 min-w-8"><input
+                                        v-model="checkList" value="Tour" type="checkbox" id="tourInput">行程</label>
+                                <label for="flightInput" class="flex items-center gap-2 min-w-8"><input
+                                        v-model="checkList" value="Flight" type="checkbox" id="flightInput">機票</label>
                             </div>
                         </div>
                         <div class="hidden md:block bg-gray-100 w-full h-px"></div>
                         <div class="flex md:flex-col gap-4">
                             <p class="font-bold text-gray-400 min-w-16">標籤類型</p>
                             <div class="flex md:flex-col gap-2 flex-wrap">
-                                <label for="dayInput" class="flex items-center gap-2  min-w-16"><input v-model="checkList"
-                                        value="一日遊" type="checkbox" id="dayInput">一日遊</label>
-                                <label for="halfInput" class="flex items-center gap-2  min-w-16"><input v-model="checkList"
-                                        value="半日遊" type="checkbox" id="halfInput">半日遊</label>
-                                <label for="kaoInput" class="flex items-center gap-2  min-w-16"><input v-model="checkList"
-                                        value="高雄出發" type="checkbox" id="kaoInput">高雄出發</label>
-                                <label for="taoInput" class="flex items-center gap-2  min-w-16"><input v-model="checkList"
-                                        value="桃園出發" type="checkbox" id="taoInput">桃園出發</label>
+                                <label for="dayInput" class="flex items-center gap-2  min-w-16"><input
+                                        v-model="checkList" value="一日遊" type="checkbox" id="dayInput">一日遊</label>
+                                <label for="halfInput" class="flex items-center gap-2  min-w-16"><input
+                                        v-model="checkList" value="半日遊" type="checkbox" id="halfInput">半日遊</label>
+                                <label for="kaoInput" class="flex items-center gap-2  min-w-16"><input
+                                        v-model="checkList" value="高雄出發" type="checkbox" id="kaoInput">高雄出發</label>
+                                <label for="taoInput" class="flex items-center gap-2  min-w-16"><input
+                                        v-model="checkList" value="桃園出發" type="checkbox" id="taoInput">桃園出發</label>
                             </div>
                         </div>
                         <button type="button" @click.prevent="handleCheckTags()"
@@ -48,7 +49,8 @@
 
                     <!-- result -->
                     <div v-if="filterCheckbox.length > 0" class="w-full h-full flex flex-1 flex-col gap-5">
-                        <div v-for="product in filterCheckbox" :key="product.id" class="flex bg-white">
+                        <router-link :to="`/${routerTypeTranslate[product.type]}-detail/${product.productId}`"
+                            v-for="product in filterCheckbox" :key="product.id" class="flex bg-white">
                             <img :src="`${apiBase}/${product.thumbnail}`" alt=""
                                 class="md:h-56 h-36 md:w-96 w-60 object-cover overflow-hidden">
                             <div class="md:p-6 p-2 w-full flex flex-col justify-between text-base-heavy">
@@ -73,7 +75,7 @@
                                 </div>
                                 <p class="font-bold text-end text-xl text-hot-red">$ 22,230 NTD</p>
                             </div>
-                        </div>
+                        </router-link>
                     </div>
 
                     <div v-else class="flex justify-center items-center w-full flex-1 h-96">
@@ -246,6 +248,12 @@ export default {
             return {
                 Flight: '機票',
                 Tour: '行程'
+            }
+        },
+        routerTypeTranslate() {
+            return {
+                Flight: 'ticket',
+                Tour: 'tour'
             }
         },
         paginationPages() {
