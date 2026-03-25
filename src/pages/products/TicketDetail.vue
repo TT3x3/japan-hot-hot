@@ -1,5 +1,6 @@
 <template>
     <div>
+        <AppLoading :isLoading="isLoading" />
         <CustomModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
             @close="isModalOpen = false" @confirm="handleModalClick()" />
         <div v-if="ticket" class="flex flex-col gap-32 w-full">
@@ -265,14 +266,16 @@
 import http from '@/api/http'
 import { useOrderStore } from '@/stores/order';
 import CustomModal from '@/components/CustomModal.vue';
+import AppLoading from '@/components/AppLoading.vue';
 
 export default {
     name: 'TicketDetail',
     data() {
         return {
+            isLoading: false,
             store: '',
             apiBase: process.env.VUE_APP_API_PATH,
-            token:'',
+            token: '',
             ticket: '',
             highlighted: false,
             range: {
@@ -302,9 +305,11 @@ export default {
     },
     components: {
         CustomModal,
+        AppLoading,
     },
     methods: {
         async findProduct(id) {
+            this.isLoading = true;
             try {
                 const res = await http.get(`/product/flight/${id}`);
                 this.ticket = res.data;
@@ -317,9 +322,12 @@ export default {
                         this.$router.push('/products/tickets');
                     }
                 }, 1000);
+            } finally {
+                this.isLoading = false;
             }
         },
         async createOrder() {
+            this.isLoading = true;
             this.confirmBooking();
             if (!this.isFormValid) return;
             if (!this.token) {
@@ -341,9 +349,12 @@ export default {
                 this.hasError = true;
                 this.modalContent = '伺服器錯誤，將轉跳回首頁';
                 this.isCatchError = true;
+            } finally {
+                this.isLoading = false;
             }
         },
         async getLikes() {
+            this.isLoading = true;
             if (!this.token) return;
             try {
                 const res = await http.get(`/cart`, {
@@ -360,6 +371,8 @@ export default {
                 this.hasError = true;
                 this.modalContent = '伺服器錯誤，將轉跳回首頁';
                 this.isCatchError = true;
+            } finally {
+                this.isLoading = false;
             }
         },
         findLike(id) {

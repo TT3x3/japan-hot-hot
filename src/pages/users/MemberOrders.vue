@@ -1,5 +1,8 @@
 <template>
-    <div v-if="orderList" class="flex flex-col md:gap-32 gap-12 w-full bg-gray-100">
+    <div class="flex flex-col md:gap-32 gap-12 w-full bg-gray-100">
+        <AppLoading :isLoading="isLoading" />
+        <CustomModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
+            @close="isModalOpen = false;" @confirm="handleModalClick()" />
         <!-- top -->
         <div class="relative  md:h-80 h-40 overflow-hidden">
             <img src="../../assets/images/carousel-4.jpg" alt="tour-banner" class=" w-full h-full object-cover">
@@ -7,13 +10,13 @@
         <div class="flex justify-center items-center ">
             <h1 class="text-3xl text-center tracking-[2rem] pl-[2rem] text-base-heavy">訂單</h1>
         </div>
-        <div class="flex flex-col gap-8">
+        <div v-if="orderList" class="flex flex-col gap-8">
             <div class="text-base-heavy">
                 <!-- <div class="flex flex-col pb-4"> -->
-                    <!-- <div class="flex items-center justify-center"> -->
-                    <!-- <router-link to="/member"
+                <!-- <div class="flex items-center justify-center"> -->
+                <!-- <router-link to="/member"
                                 class="cursor-pointer bg-gray-400 text-white text-center px-10 py-3  hover:bg-gray-300 active:bg-gray-500 transition-colors">返回會員中心</router-link> -->
-                    <!-- <div class="flex gap-2 items-center">
+                <!-- <div class="flex gap-2 items-center">
                                 <label for="numberSelect" class="text-base-light md:text-base text-sm">每頁顯示</label>
                                 <select id="numberSelect" v-model.number="perPage"
                                     class="border border-gray-300 bg-white px-3 py-1">
@@ -21,7 +24,7 @@
                                         num }}</option>
                                 </select>
                             </div> -->
-                    <!-- </div> -->
+                <!-- </div> -->
                 <!-- </div> -->
 
                 <!-- orders list -->
@@ -96,36 +99,62 @@
 </template>
 
 <script>
+import AppLoading from '@/components/AppLoading.vue';
+import CustomModal from '@/components/CustomModal.vue';
+
 import http from '@/api/http'
 
 export default {
     name: 'MemberOrders',
     data() {
         return {
+            isLoading: false,
             orderList: '',
             selectNum: [5, 10, 20, 40],
             currentPage: 1,
             perPage: 10,
             totalNum: 1,
+            isModalOpen: false,
+            modalContent: '',
+            hasError: false,
         }
+    },
+    components: {
+        CustomModal,
+        AppLoading,
     },
     methods: {
         async getOrders() {
+            this.isLoading = true;
             const token = localStorage.getItem('token');
-            const res = await http.get(`/members/orders`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-            this.orderList = res.data.data;
-            const pages = res.data.pagination;
-            this.totalNum = parseInt(pages.total);
-            this.currentPage = parseInt(pages.page);
-            this.perPage = parseInt(pages.limit);
+            try {
+                const res = await http.get(`/members/orders`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                this.orderList = res.data.data;
+                const pages = res.data.pagination;
+                this.totalNum = parseInt(pages.total);
+                this.currentPage = parseInt(pages.page);
+                this.perPage = parseInt(pages.limit);
+            } catch {
+                this.isModalOpen = true;
+                this.hasError = true;
+                this.modalContent = '伺服器錯誤，將轉跳回首頁';
+            } finally {
+                this.isLoading = false;
+            }
+
         },
         dateToISO(date) {
             const isoDate = new Date(date).toISOString().split('T')[0];
             return isoDate;
+        },
+        handleModalClick() {
+            if (!this.isCatchError) return;
+            if(this.$route.path === '/') return;
+            this.$router.push('/');
         },
     },
     created() {

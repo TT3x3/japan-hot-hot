@@ -1,5 +1,8 @@
 <template>
     <div class="flex flex-col gap-32 w-full bg-gray-100">
+        <AppLoading :isLoading="isLoading" />
+        <CustomModal :isModalOpen="isModalOpen" :hasError="hasError" :hasSuccess="hasSuccess"
+            :modalContent="modalContent" @close="isModalOpen = false;" @confirm="handleModalClick()" />
         <!-- top -->
         <div class="relative  md:h-80 h-40 overflow-hidden">
             <img src="../../assets/images/carousel-4.jpg" alt="tour-banner" class=" w-full h-full object-cover">
@@ -79,11 +82,14 @@
 
 <script>
 import http from '@/api/http'
+import AppLoading from '@/components/AppLoading.vue';
+import CustomModal from '@/components/CustomModal.vue';
 
 export default {
     name: 'MemberPassword',
     data() {
         return {
+            isLoading: false,
             passwordInfo: {
                 oldPassword: '',
                 newPassword: '',
@@ -96,8 +102,15 @@ export default {
             },
             changeList: {},
             isFormValid: false,
+            isModalOpen: false,
+            modalContent: '',
+            hasError: false,
+            hasSuccess: false,
         }
-
+    },
+    components: {
+        AppLoading,
+        CustomModal,
     },
     methods: {
         async changePassword() {
@@ -114,7 +127,10 @@ export default {
                         Authorization: `Bearer ${token}`
                     }
                 });
-                alert('密碼修改成功！');
+                this.isModalOpen = true;
+                this.hasSuccess = true;
+                this.hasError = false;
+                this.modalContent = '恭喜內！密碼更改成功！';
                 this.passwordInfo = {
                     oldPassword: '',
                     newPassword: '',
@@ -122,8 +138,13 @@ export default {
                 };
                 this.changeList = {};
                 this.isFormValid = false;
-            } catch (error) {
-                alert(error);
+            } catch {
+                this.isModalOpen = true;
+                this.hasError = true;
+                this.hasSuccess = false;
+                this.modalContent = '伺服器錯誤，將轉跳回首頁';
+            } finally {
+                this.isLoading = false;
             }
         },
         validateForm() {
@@ -177,6 +198,10 @@ export default {
             }
 
             if (!this.isFormValid) return;
+        },
+        handleModalClick() {
+            if (!this.isCatchError) return;
+            this.$router.push('/');
         },
     },
 }

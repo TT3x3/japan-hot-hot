@@ -1,5 +1,6 @@
 <template>
     <div>
+        <AppLoading :isLoading="isLoading" />
         <CustomModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
             @close="isModalOpen = false;" @confirm="handleModalClick()" />
         <div v-if="items" class="flex flex-col md:gap-32 gap-12 w-full bg-gray-100">
@@ -16,17 +17,17 @@
                 <div class="flex md:gap-8 gap-4">
                     <div @click.prevent="changeCategory('全部')"
                         class="relative flex-1 h-24 overflow-hidden cursor-pointer">
-                        <img src="../../assets/images/carousel-5.jpg" alt="" class="object-cover w-full h-full">
+                        <img src="https://images.unsplash.com/photo-1678294076595-dc322d298943?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" class="object-cover object-top w-full h-full">
                         <h2 class="absolute left-5 bottom-5 md:font-black font-bold text-white">不分類</h2>
                     </div>
                     <div @click.prevent="changeCategory('Tour')"
                         class="relative flex-1 h-24 overflow-hidden cursor-pointer">
-                        <img src="../../assets/images/carousel-5.jpg" alt="" class="object-cover w-full h-full">
+                        <img src="https://images.unsplash.com/photo-1678294076595-dc322d298943?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" class="object-cover object-center w-full h-full">
                         <h2 class="absolute left-5 bottom-5 md:font-black font-bold text-white">行程</h2>
                     </div>
                     <div @click.prevent="changeCategory('Flight')"
                         class="relative flex-1 h-24 overflow-hidden cursor-pointer">
-                        <img src="../../assets/images/carousel-5.jpg" alt="" class="object-cover w-full h-full">
+                        <img src="https://images.unsplash.com/photo-1678294076595-dc322d298943?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" class="object-cover object-bottom w-full h-full">
                         <h2 class="absolute left-5 bottom-5 md:font-black font-bold text-white">機票</h2>
                     </div>
                 </div>
@@ -63,10 +64,10 @@
                             <div class="flex flex-col flex-1 gap-4 p-5 bg-white">
                                 <div class="flex justify-between">
                                     <p class="font-bold md:text-md text-lg line-clamp-1 text-base-heavy">{{ item.title
-                                        }}</p>
+                                    }}</p>
                                     <!-- md 以下移除收藏 -->
                                     <button type="button" @click.prevent.stop="delLike(item.productId)"
-                                        class="text-gray-400 transition-colors duration-200 cursor-pointer">
+                                        class="block md:hidden text-gray-400 transition-colors duration-200 cursor-pointer">
                                         <i class="fa-solid fa-trash fa-md"></i>
                                     </button>
                                 </div>
@@ -97,11 +98,13 @@
 <script>
 import http from '@/api/http'
 import CustomModal from '@/components/CustomModal.vue';
+import AppLoading from '@/components/AppLoading.vue';
 
 export default {
     name: 'MemberLikes',
     data() {
         return {
+            isLoading: false,
             apiBase: process.env.VUE_APP_API_PATH,
             currentPage: 1,
             perPage: 9,
@@ -117,9 +120,11 @@ export default {
     },
     components: {
         CustomModal,
+        AppLoading,
     },
     methods: {
         async getLikes() {
+            this.isLoading = true;
             const token = localStorage.getItem('token');
             if (!token) return;
             try {
@@ -134,6 +139,8 @@ export default {
                 this.hasError = true;
                 this.modalContent = '伺服器錯誤，將轉跳回首頁';
                 this.isCatchError = true;
+            } finally {
+                this.isLoading = false;
             }
         },
         async delLike(id) {

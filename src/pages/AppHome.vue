@@ -1,5 +1,6 @@
 <template>
   <div class="flex flex-col md:gap-56 gap-12">
+    <AppLoading :isLoading="isLoading" />
     <div class="flex md:flex-col flex-col-reverse md:gap-32 gap-12">
       <!-- 搜尋框 -->
       <SearchBar :productType="productType" :placeholderType="placeholderType" :allProducts="products" :search="search"
@@ -37,6 +38,7 @@ import { useResultStore } from '@/stores/search'
 import HomeActivity from '@/components/HomeActivity.vue';
 import HomeCarousel from '@/components/HomeCarousel.vue';
 import SearchBar from '@/components/SearchBar.vue';
+import AppLoading from '@/components/AppLoading.vue';
 
 export default {
   name: 'AppHome',
@@ -44,6 +46,7 @@ export default {
     HomeActivity,
     HomeCarousel,
     SearchBar,
+    AppLoading,
   },
   data() {
     return {
@@ -51,6 +54,7 @@ export default {
       productType: '',
       placeholderType: '旅程',
       search: '',
+      isLoading: false,
     };
   },
   methods: {
@@ -93,5 +97,3 @@ export default {
   }
 }
 </script>
-
-<style scoped></style>

@@ -1,5 +1,6 @@
 <template>
     <div class="flex flex-col md:gap-32 gap-12 w-full bg-gray-100">
+        <AppLoading :isLoading="isLoading" />
         <CustomModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
             @close="isModalOpen = false;" @confirm="handleModalClick()" />
         <!-- top -->
@@ -185,21 +186,14 @@
 <script>
 import http from '@/api/http'
 import CustomModal from '@/components/CustomModal.vue';
+import AppLoading from '@/components/AppLoading.vue';
 
 export default {
     name: 'MemberOrderDetail',
     data() {
         return {
+            isLoading: false,
             orderDetail: '',
-            purchaseInfo: {
-                name: '黃飛貓',
-                phone: '0912345678',
-                email: 'fly_dragon2000@gmail.com',
-                address: '飛天市昇龍區雲海里飛龍大道999號',
-                note: '請小心保護好票券，我不喜歡被折到的票券，如果折到我會退貨，最好是保護好。',
-                receive: '貨到付款',
-                payment: '貨到付款',
-            },
             isCatchError: false,
             isModalOpen: false,
             hasError: false,
@@ -208,10 +202,12 @@ export default {
     },
     components: {
         CustomModal,
+        AppLoading,
     },
     methods: {
         async getOrderDetail(id) {
             try {
+                this.isLoading = true;
                 const token = localStorage.getItem('token');
                 const res = await http.get(`/members/orders/${id}`, {
                     headers: {
@@ -224,6 +220,8 @@ export default {
                 this.hasError = true;
                 this.modalContent = '伺服器錯誤，將轉跳回首頁';
                 this.isCatchError = true;
+            } finally {
+                this.isLoading = false;
             }
         },
         dateToISO(date) {
@@ -232,6 +230,7 @@ export default {
         },
         handleModalClick() {
             if (!this.isCatchError) return;
+            if(this.$route.path === '/') return;
             this.$router.push('/');
         },
     },

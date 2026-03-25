@@ -1,5 +1,6 @@
 <template>
     <div class="flex flex-col md:gap-32 gap-12 w-full bg-gray-100">
+        <AppLoading :isLoading="isLoading" />
         <CustomModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
             @close="isModalOpen = false" />
         <!-- top -->
@@ -71,11 +72,13 @@
 import http from '@/api/http'
 import { login } from '@/utils/auth'
 import CustomModal from '@/components/CustomModal.vue';
+import AppLoading from '@/components/AppLoading.vue';
 
 export default {
     name: 'AppLogin',
     data() {
         return {
+            isLoading: false,
             isModalOpen: false,
             hasError: false,
             modalContent: '',
@@ -95,6 +98,7 @@ export default {
     },
     components: {
         CustomModal,
+        AppLoading,
     },
     methods: {
         validateForm() {
@@ -118,6 +122,7 @@ export default {
             }
         },
         async postLogin() {
+            this.isLoading = true;
             this.validateForm();
             if (this.isError) return;
             try {
@@ -134,6 +139,8 @@ export default {
                 this.modalContent = error.response?.data?.message;
                 this.loginInfo.email = '';
                 this.loginInfo.password = '';
+            } finally {
+                this.isLoading = false;
             }
         },
     }

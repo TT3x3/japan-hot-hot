@@ -1,5 +1,6 @@
 <template>
     <div>
+        <AppLoading :isLoading="isLoading" />
         <CustomModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
             @close="isModalOpen = false" @confirm="handleModalClick()" />
         <div v-if="tour" class="flex flex-col gap-32w-full">
@@ -162,7 +163,7 @@
                             :class="isError.peopleCount ? 'border border-red-500' : 'border-none'">
                             <p class="text-base-heavy">每人<span class=" text-gray-400">（{{ tour.price | dollarSign
                                 |
-                                currency }}
+                                    currency }}
                                     / 人）</span>
                             </p>
                             <div class="flex flex-row gap-12 items-center">
@@ -247,11 +248,13 @@
 import http from '@/api/http'
 import { useOrderStore } from '@/stores/order.js';
 import CustomModal from '@/components/CustomModal.vue';
+import AppLoading from '@/components/AppLoading.vue';
 
 export default {
     name: 'TourDetail',
     data() {
         return {
+            isLoading: false,
             apiBase: process.env.VUE_APP_API_PATH,
             store: '',
             token: '',
@@ -277,6 +280,7 @@ export default {
     },
     components: {
         CustomModal,
+        AppLoading,
     },
     created() {
         this.token = localStorage.getItem('token');
@@ -286,6 +290,7 @@ export default {
     },
     methods: {
         async findProduct(id) {
+            this.isLoading = true;
             try {
                 const res = await http.get(`/product/tour/${id}`);
                 this.tour = res.data;
@@ -298,9 +303,12 @@ export default {
                         this.$router.push('/products/tours');
                     }
                 }, 1000);
+            } finally {
+                this.isLoading = false;
             }
         },
         async createOrder() {
+            this.isLoading = true;
             this.confirmBooking();
             if (!this.isFormValid) return;
             if (!this.token) {
@@ -321,9 +329,12 @@ export default {
                 this.hasError = true;
                 this.modalContent = '伺服器錯誤，將轉跳回首頁';
                 this.isCatchError = true;
+            } finally {
+                this.isLoading = false;
             }
         },
         async getLikes() {
+            this.isLoading = true;
             if (!this.token) return;
             try {
                 const res = await http.get(`/cart`, {
@@ -340,6 +351,8 @@ export default {
                 this.hasError = true;
                 this.modalContent = '伺服器錯誤，將轉跳回首頁';
                 this.isCatchError = true;
+            } finally {
+                this.isLoading = false;
             }
         },
         findLike(id) {

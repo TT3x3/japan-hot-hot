@@ -1,5 +1,6 @@
 <template>
     <div class="flex flex-col gap-32 w-full">
+        <AppLoading :isLoading="isLoading" />
         <CustomModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
             @close="isModalOpen = false;" @confirm="handleModalClick()" />
         <div v-if="orderDetail" class="max-w-[80%] w-full mx-auto flex flex-col gap-12">
@@ -179,6 +180,7 @@
 import http from '@/api/http'
 import { useOrderStore } from '@/stores/order';
 import CustomModal from '@/components/CustomModal.vue';
+import AppLoading from '@/components/AppLoading.vue';
 
 export default {
     name: 'CheckoutChecked',
@@ -188,20 +190,23 @@ export default {
             selectCity: null,
             selectArea: null,
             date: null,
-                    isCatchError: false,
-                    isModalOpen: false,
+            isCatchError: false,
+            isModalOpen: false,
             hasError: false,
             modalContent: '',
+            isLoading: false,
         }
     },
     components: {
         CustomModal,
+        AppLoading,
     },
     created() {
         this.store = useOrderStore();
     },
     methods: {
         async submitOrder() {
+            this.isLoading = true;
             try {
                 const token = localStorage.getItem('token');
                 await http.post(`/orders/${this.orderId}/submit`, {}, {
@@ -217,6 +222,8 @@ export default {
                 this.hasError = true;
                 this.modalContent = '伺服器錯誤，將轉跳回首頁';
                 this.isCatchError = true;
+            } finally {
+                this.isLoading = false;
             }
         },
         handleModalClick() {

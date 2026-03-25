@@ -1,5 +1,6 @@
 <template>
     <div class="flex flex-col md:gap-32 gap-12 w-full bg-gray-100">
+        <AppLoading :isLoading="isLoading" />
         <CustomModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
             @close="isModalOpen = false;" @confirm="handleModalClick()" />
         <!-- top -->
@@ -171,12 +172,13 @@
 <script>
 import http from '@/api/http'
 import CustomModal from '@/components/CustomModal.vue';
-
+import AppLoading from '@/components/AppLoading.vue';
 
 export default {
     name: 'MemberProfile',
     data() {
         return {
+            isLoading: false,
             userInfo: {},
             isError: {
                 name: '',
@@ -199,12 +201,14 @@ export default {
     },
     components: {
         CustomModal,
+        AppLoading,
     },
     created() {
         this.getUser();
     },
     methods: {
         async getUser() {
+            this.isLoading = true;
             try {
                 const token = localStorage.getItem('token')
                 const res = await http.get(`/members/me`, {
@@ -219,9 +223,12 @@ export default {
                 this.hasError = true;
                 this.modalContent = '伺服器錯誤，將轉跳回首頁';
                 this.isCatchError = true;
+            } finally {
+                this.isLoading = false;
             }
         },
         async patchUser() {
+            this.isLoading = true;
             this.validateForm();
             if (!this.isFormValid) return;
             try {
@@ -244,6 +251,8 @@ export default {
                 this.hasError = true;
                 this.modalContent = '伺服器錯誤，將轉跳回首頁';
                 this.isCatchError = true;
+            } finally {
+                this.isLoading = false;
             }
 
         },
