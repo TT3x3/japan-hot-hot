@@ -87,8 +87,8 @@
         </div>
         <div v-else
             class=" text-base-light flex flex-col gap-4 items-center justify-center bg-white py-20 md:w-[480px] md:mx-auto w-full">
-            <i class="fa-regular fa-face-laugh-squint fa-5x"></i>
-            <p>收藏清單空空如也捏！快去尋寶！</p>
+            <i class="fa-regular fa-face-surprise fa-5x"></i>
+            <p class="font-bold text-xl">收藏清單空空如也捏！快去尋寶！</p>
         </div>
         <div></div>
     </div>
@@ -132,7 +132,6 @@ export default {
                         Authorization: `Bearer ${token}`
                     }
                 });
-                // console.log(res)
                 this.items = res.data.items;
             } catch (error) {
                 this.isModalOpen = true;

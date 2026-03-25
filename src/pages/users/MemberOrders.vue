@@ -93,6 +93,11 @@
             <CustomPagination class="w-full flex justify-center" :totalPages="totalPages"
                 :currentPage.sync="currentPage" />
         </div>
+        <div v-else
+            class=" text-base-light flex flex-col gap-4 items-center justify-center py-20 px-10 w-full">
+            <i class="fa-regular fa-face-surprise fa-5x"></i>
+            <p class="font-bold text-xl">那A安捏，居然還沒有訂單？快去買東西！</p>
+        </div>
         <div></div>
 
     </div>
@@ -153,7 +158,7 @@ export default {
         },
         handleModalClick() {
             if (!this.isCatchError) return;
-            if(this.$route.path === '/') return;
+            if (this.$route.path === '/') return;
             this.$router.push('/');
         },
     },
