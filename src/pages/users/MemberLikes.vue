@@ -17,17 +17,20 @@
                 <div class="flex md:gap-8 gap-4">
                     <div @click.prevent="changeCategory('全部')"
                         class="relative flex-1 h-24 overflow-hidden cursor-pointer">
-                        <img src="https://images.unsplash.com/photo-1678294076595-dc322d298943?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" class="object-cover object-top w-full h-full">
+                        <img src="https://images.unsplash.com/photo-1678294076595-dc322d298943?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                            alt="" class="object-cover object-top w-full h-full">
                         <h2 class="absolute left-5 bottom-5 md:font-black font-bold text-white">不分類</h2>
                     </div>
                     <div @click.prevent="changeCategory('Tour')"
                         class="relative flex-1 h-24 overflow-hidden cursor-pointer">
-                        <img src="https://images.unsplash.com/photo-1678294076595-dc322d298943?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" class="object-cover object-center w-full h-full">
+                        <img src="https://images.unsplash.com/photo-1678294076595-dc322d298943?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                            alt="" class="object-cover object-center w-full h-full">
                         <h2 class="absolute left-5 bottom-5 md:font-black font-bold text-white">行程</h2>
                     </div>
                     <div @click.prevent="changeCategory('Flight')"
                         class="relative flex-1 h-24 overflow-hidden cursor-pointer">
-                        <img src="https://images.unsplash.com/photo-1678294076595-dc322d298943?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D" alt="" class="object-cover object-bottom w-full h-full">
+                        <img src="https://images.unsplash.com/photo-1678294076595-dc322d298943?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                            alt="" class="object-cover object-bottom w-full h-full">
                         <h2 class="absolute left-5 bottom-5 md:font-black font-bold text-white">機票</h2>
                     </div>
                 </div>
@@ -64,7 +67,7 @@
                             <div class="flex flex-col flex-1 gap-4 p-5 bg-white">
                                 <div class="flex justify-between">
                                     <p class="font-bold md:text-md text-lg line-clamp-1 text-base-heavy">{{ item.title
-                                    }}</p>
+                                        }}</p>
                                     <!-- md 以下移除收藏 -->
                                     <button type="button" @click.prevent.stop="delLike(item.productId)"
                                         class="block md:hidden text-gray-400 transition-colors duration-200 cursor-pointer">
@@ -81,17 +84,13 @@
                 <CustomPagination :totalPages="totalPages" :currentPage.sync="currentPage" />
 
             </div>
-            <div v-else
-                class=" text-base-light flex flex-col gap-4 items-center justify-center bg-white py-20 md:w-[480px] md:mx-auto w-full">
-                <i class="fa-regular fa-face-laugh-squint fa-5x"></i>
-                <p>收藏清單空空如也捏！快去尋寶！</p>
-            </div>
-            <div></div>
         </div>
-        <div v-else class="text-base-light flex justify-center items-center gap-2">
-            <i class="fa-solid fa-spinner fa-lg"></i>
-            <p>loading…</p>
+        <div v-else
+            class=" text-base-light flex flex-col gap-4 items-center justify-center bg-white py-20 md:w-[480px] md:mx-auto w-full">
+            <i class="fa-regular fa-face-laugh-squint fa-5x"></i>
+            <p>收藏清單空空如也捏！快去尋寶！</p>
         </div>
+        <div></div>
     </div>
 </template>
 
@@ -133,6 +132,7 @@ export default {
                         Authorization: `Bearer ${token}`
                     }
                 });
+                // console.log(res)
                 this.items = res.data.items;
             } catch (error) {
                 this.isModalOpen = true;
