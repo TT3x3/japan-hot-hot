@@ -35,11 +35,13 @@ const router = new Router({
       path: "/login",
       name: "login",
       component: AppLogin,
+      meta: { requiresGuest: true },
     },
     {
       path: "/signup",
       name: "signup",
       component: AppSignup,
+      meta: { requiresGuest: true },
     },
     {
       path: "/member",
@@ -81,11 +83,11 @@ const router = new Router({
       path: "/products/:type(tours|tickets)",
       name: "ProductsPage",
       component: ProductsPage,
-      props: route => ({ type: route.params.type }) 
+      props: (route) => ({ type: route.params.type }),
     },
     {
       path: "/products/result",
-      name:"searchResult",
+      name: "searchResult",
       component: SearchResult,
     },
     {
@@ -132,6 +134,8 @@ router.beforeEach((to, from, next) => {
   if (to.meta.requiresAuth && !isLogin) {
     next("/");
   } else if (to.path.includes("/checkout") && !orderStore.isCheckoutStarted) {
+    next("/");
+  } else if (to.meta.requiresGuest && isLogin) {
     next("/");
   } else {
     next();
