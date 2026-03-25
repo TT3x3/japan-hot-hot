@@ -67,7 +67,7 @@
                             <div class="flex flex-col flex-1 gap-4 p-5 bg-white">
                                 <div class="flex justify-between">
                                     <p class="font-bold md:text-md text-lg line-clamp-1 text-base-heavy">{{ item.title
-                                        }}</p>
+                                    }}</p>
                                     <!-- md 以下移除收藏 -->
                                     <button type="button" @click.prevent.stop="delLike(item.productId)"
                                         class="block md:hidden text-gray-400 transition-colors duration-200 cursor-pointer">
@@ -86,9 +86,11 @@
             </div>
         </div>
         <div v-else
-            class=" text-base-light flex flex-col gap-4 items-center justify-center bg-white py-20 md:w-[480px] md:mx-auto w-full">
-            <i class="fa-regular fa-face-surprise fa-5x"></i>
-            <p class="font-bold text-xl">收藏清單空空如也捏！快去尋寶！</p>
+            class=" text-base-light bg-white py-20 md:w-[480px] md:mx-auto w-full">
+            <div v-if="isLoading === false" class="flex flex-col gap-4 items-center justify-center">
+                <i class="fa-regular fa-face-surprise fa-5x"></i>
+                <p class="font-bold text-xl">收藏清單空空如也捏！快去尋寶！</p>
+            </div>
         </div>
         <div></div>
     </div>
@@ -133,6 +135,7 @@ export default {
                     }
                 });
                 this.items = res.data.items;
+                // console.log(res)
             } catch (error) {
                 this.isModalOpen = true;
                 this.hasError = true;
