@@ -21,31 +21,31 @@
         <div class="max-w-[80%] w-full mx-auto">
             <div class="flex md:flex-row flex-col md:gap-8 gap-2">
                 <button type='button' @click.prevent="changeCategory('全部')"
-                    class="relative bg-gray-500 flex-1 overflow-hidden">
+                    class="relative bg-gray-500 flex-1 overflow-hidden cursor-pointer">
                     <img src="https://images.unsplash.com/photo-1568190002605-b51fa38eac46?q=80&w=769&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                         alt="" class="object-cover object-top w-full md:h-20 h-16">
                     <h2 class="absolute left-5 bottom-5 font-bold text-white">全部</h2>
                 </button>
                 <button v-if="pageType === 'tour'" type='button' @click.prevent="changeCategory('一日遊')"
-                    class="relative bg-gray-500 flex-1 overflow-hidden">
+                    class="relative bg-gray-500 flex-1 overflow-hidden cursor-pointer">
                     <img src="https://images.unsplash.com/photo-1568190002605-b51fa38eac46?q=80&w=769&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                         alt="" class="object-cover object-center w-full md:h-20 h-16">
                     <h2 class="absolute left-5 bottom-5 font-bold text-white">一日遊</h2>
                 </button>
                 <button v-if="pageType === 'tour'" type='button' @click.prevent="changeCategory('半日遊')"
-                    class="relative bg-gray-500 flex-1 overflow-hidden">
+                    class="relative bg-gray-500 flex-1 overflow-hidden cursor-pointer">
                     <img src="https://images.unsplash.com/photo-1568190002605-b51fa38eac46?q=80&w=769&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                         alt="" class="object-cover object-bottom w-full md:h-20 h-16">
                     <h2 class="absolute left-5 bottom-5 font-bold text-white">半日遊</h2>
                 </button>
                 <button v-if="pageType === 'ticket'" type='button' @click.prevent="changeCategory('高雄出發')"
-                    class="relative bg-gray-500 flex-1 overflow-hidden">
+                    class="relative bg-gray-500 flex-1 overflow-hidden cursor-pointer">
                     <img src="https://images.unsplash.com/photo-1568190002605-b51fa38eac46?q=80&w=769&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                         alt="" class="object-cover object-center w-full md:h-20 h-16">
                     <h2 class="absolute left-5 bottom-5 font-bold text-white">高雄出發</h2>
                 </button>
                 <button v-if="pageType === 'ticket'" type='button' @click.prevent="changeCategory('桃園出發')"
-                    class="relative bg-gray-500 flex-1 overflow-hidden">
+                    class="relative bg-gray-500 flex-1 overflow-hidden cursor-pointer">
                     <img src="https://images.unsplash.com/photo-1568190002605-b51fa38eac46?q=80&w=769&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
                         alt="" class="object-cover object-bottom w-full md:h-20 h-16">
                     <h2 class="absolute left-5 bottom-5 font-bold text-white">桃園出發</h2>
