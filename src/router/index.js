@@ -4,6 +4,7 @@ import { useOrderStore } from "@/stores/order";
 
 // import 頁面
 import AppHome from "@/pages/AppHome.vue";
+import AppAbout from "@/pages/AppAbout.vue";
 import AppLogin from "@/pages/AppLogin.vue";
 import AppSignup from "@/pages/AppSignup.vue";
 import ProductsPage from "@/pages/products/ProductsPage.vue";
@@ -30,6 +31,11 @@ const router = new Router({
       path: "/",
       name: "home",
       component: AppHome,
+    },
+        {
+      path: "/about",
+      name: "about",
+      component: AppAbout,
     },
     {
       path: "/login",
