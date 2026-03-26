@@ -45,8 +45,10 @@
             </div>
             <div class="rolling-line-01 md:w-20 w-10 h-px bg-gray-400/60 mx-auto"></div>
             <div class="flex md:flex-row flex-col-reverse mx-auto justify-center items-center md:gap-8 gap-4">
-                <img src="../assets/images/about-img-2.jpg" class="rolling-content-05 md:w-[50%] w-full relative object-cover">
-                <p class="rolling-content-06 text-base-light md:text-start text-center md:[writing-mode:vertical-rl] tracking-widest">
+                <img src="../assets/images/about-img-2.jpg"
+                    class="rolling-content-05 md:w-[50%] w-full relative object-cover">
+                <p
+                    class="rolling-content-06 text-base-light md:text-start text-center md:[writing-mode:vertical-rl] tracking-widest">
                     感謝你走進「日頭赤炎炎」的世界。<br /><br />願我們一起在烈日下啟程，<br />在微風中抵達，在旅行的路上，<br /><br />遇見那個最純粹、最自在的自己。</p>
                 <h2
                     class=" rolling-content-07 font-bold text-xl text-base-heavy tracking-widest md:[writing-mode:vertical-rl]">
@@ -83,25 +85,27 @@ export default {
     animation-delay: 0.3s;
 }
 
+.rolling-content-01 {
+    animation: rollInY linear both;
+    animation-timeline: view();
+    animation-range: entry 20% entry 100%;
+}
+
 @media (max-width: 768px) {
+
     .rolling-content-01,
     .rolling-content-02,
     .rolling-content-03 {
-        animation: rollInY linear both;
-        animation-timeline: view();
-        animation-range: entry 20% entry 100%;
+        opacity: 0;
+        animation: fadeIn 1s ease forwards;
+        animation-delay: 0.8s;
     }
 }
 
-.rolling-content-01 {
-    opacity: 0;
-    animation: fadeIn 1s ease forwards;
-    animation-delay: 0.8s;
-}
 .rolling-content-02 {
-        animation: rollInY-03 linear both;
-        animation-timeline: view();
-        animation-range: entry 80% entry 150%;
+    animation: rollInY-03 linear both;
+    animation-timeline: view();
+    animation-range: entry 80% entry 150%;
 }
 
 .rolling-content-05 {
@@ -135,10 +139,11 @@ export default {
     display: block;
     animation: none;
 }
+
 .rolling-content-04 {
     animation: rollInX linear both;
     animation-timeline: view();
-    animation-range: entry 0% entry 170%;
+    animation-range: entry 0% entry 100%;
 }
 
 @keyframes fadeIn {
@@ -156,12 +161,12 @@ export default {
 @keyframes rollInX {
     0% {
         opacity: 0;
-        transform: translateX(200px);
+        transform: translate3d(-200px, 0, 0);
     }
 
     100% {
         opacity: 1;
-        transform: translateX(0);
+        transform: translate3d(0, 0, 0);
     }
 }
 
@@ -188,6 +193,7 @@ export default {
         transform: translateY(0);
     }
 }
+
 @keyframes rollInY-03 {
     0% {
         opacity: 0;
