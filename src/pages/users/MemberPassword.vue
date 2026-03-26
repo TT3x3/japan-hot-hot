@@ -89,7 +89,7 @@ export default {
     name: 'MemberPassword',
     data() {
         return {
-            isLoading: false,
+            isLoading: true,
             passwordInfo: {
                 oldPassword: '',
                 newPassword: '',
@@ -204,5 +204,8 @@ export default {
             this.$router.push('/');
         },
     },
+    mounted() {
+        this.isLoading = false
+    }
 }
 </script>

@@ -54,7 +54,7 @@ export default {
       productType: '',
       placeholderType: '旅程',
       search: '',
-      isLoading: false,
+      isLoading: true,
     };
   },
   methods: {
@@ -86,6 +86,9 @@ export default {
   created() {
     this.getProducts();
     this.store = useResultStore();
+  },
+  mounted() {
+    this.isLoading = false
   },
   computed: {
     typeTranslate() {

@@ -1,5 +1,6 @@
 <template>
     <div class="flex flex-col md:gap-32 gap-12 w-full bg-gray-100">
+        <AppLoading :isLoading="isLoading" />
         <!-- top -->
         <div class="relative  md:h-80 h-40 overflow-hidden">
             <img src="../../assets/images/carousel-3.jpg" alt="tour-banner" class=" w-full h-full object-cover">
@@ -45,6 +46,8 @@
 </template>
 
 <script>
+import AppLoading from '@/components/AppLoading.vue';
+
 export default {
     name: 'MemberCenter',
     data() {
@@ -52,7 +55,14 @@ export default {
             isModalOpen: false,
             hasError: false,
             modalContent: '',
+            isLoading: true
         }
     },
+    components: {
+        AppLoading,
+    },
+    mounted() {
+        this.isLoading = false
+    }
 }
 </script>

@@ -1,5 +1,6 @@
 <template>
     <div class="flex flex-col justify-center items-center mx-auto md:gap-48 gap-12 text-base-heavy">
+        <AppLoading :isLoading="isLoading" />
         <div class="block md:hidden"></div>
         <div class="flex flex-col justify-center items-center gap-2 md:mt-0">
             <p class="font-extrabold md:text-3xl text-xl tracking-widest">日頭赤炎炎</p>
@@ -52,12 +53,20 @@
 </template>
 
 <script>
+import AppLoading from '@/components/AppLoading.vue';
+
 export default {
     name: 'AppAbout',
     data() {
         return {
+            isLoading: true
         };
     },
-    methods: {}
+    components: {
+        AppLoading,
+    },
+    mounted() {
+        this.isLoading = false
+    }
 }
 </script>

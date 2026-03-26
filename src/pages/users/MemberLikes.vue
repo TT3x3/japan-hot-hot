@@ -82,7 +82,7 @@
                     </router-link>
                 </ul>
                 <CustomPagination :totalPages="totalPages" :currentPage.sync="currentPage" />
-
+                <div></div>
             </div>
         </div>
         <div v-else
