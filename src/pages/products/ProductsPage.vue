@@ -14,8 +14,7 @@
         </div>
 
         <!-- 搜尋框 -->
-        <SearchBar :placeholderType="pageTitle" :allProducts="pageList" :search="search"
-            @update:search="val => search = val" @search-result="getSearchResult" />
+        <SearchBar :placeholderType="pageTitle" :allProducts="pageList" v-model="search" @search-result="getSearchResult" />
 
         <!-- 分類 -->
         <div class="max-w-[80%] w-full mx-auto">

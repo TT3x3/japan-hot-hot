@@ -5,8 +5,7 @@
             @close="isModalOpen = false" @confirm="handleModalClick()" />
 
         <!-- 搜尋框 -->
-        <SearchBar :placeholderType="pageTitle" :allProducts="products" :search="search"
-            @update:search="val => search = val" @search-result="getSearchResult" />
+        <SearchBar :placeholderType="pageTitle" :allProducts="products" v-model="search" @search-result="getSearchResult" />
 
         <div class="bg-gray-200 py-12 flex flex-col justify-center items-center gap-12">
             <div class="max-w-[80%] w-full mx-auto flex flex-col gap-4">

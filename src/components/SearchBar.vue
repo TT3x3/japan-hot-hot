@@ -8,8 +8,8 @@
                 <!-- 搜尋框 -->
                 <div class="flex items-center w-full border border-gray-300">
                     <div class="flex justify-between items-center w-full">
-                        <input type="search" v-model.trim="inputValue" @keyup.enter.prevent="getResult()" :placeholder="`尋找${placeholderType}`"
-                            class="py-2 px-4 w-full" />
+                        <input type="search" :value="value" @input="$emit('input', $event.target.value)" @keyup.enter.prevent="getResult()"
+                            :placeholder="`尋找${placeholderType}`" class="py-2 px-4 w-full" />
                     </div>
                     <button type="button" @click.prevent="getResult()" class="cursor-pointer px-3">
                         <i class="fa-solid fa-magnifying-glass fa-lg text-gray-600"></i>
@@ -37,7 +37,7 @@ import { useResultStore } from '@/stores/search'
 export default {
     name: 'SearchBar',
     props: {
-        search: {
+        value: {
             type: String,
             required: true,
         },
@@ -81,30 +81,30 @@ export default {
             }
         },
         async getResult() {
-            if(!this.search || !this.search.trim()) return;
-            this.$emit('search-result', this.search);
+            if (!this.value || !this.value.trim()) return;
+            this.$emit('search-result', this.value);
         }
     },
     computed: {
-        inputValue: {
-            get() {
-                return this.search;
-            },
-            set(val) {
-                this.$emit('update:search', val);
-            }
-        },
+        // inputValue: {
+        //     get() {
+        //         return this.search;
+        //     },
+        //     set(val) {
+        //         this.$emit('update:search', val);
+        //     }
+        // },
         filterProducts() {
-            if (!this.search) return [];
+            if (!this.value) return [];
             return this.allProducts.filter(item => {
-                const matchTitle = item.title && item.title.toLowerCase().includes(this.search.toLowerCase());
-                const matchNotice = item.notices && item.notices.some(list => list.includes(this.search.toLowerCase()))
-                const matchTags = item.tags && item.tags.some(tag => tag.includes(this.search.toLowerCase()));
+                const matchTitle = item.title && item.title.toLowerCase().includes(this.value.toLowerCase());
+                const matchNotice = item.notices && item.notices.some(list => list.includes(this.value.toLowerCase()))
+                const matchTags = item.tags && item.tags.some(tag => tag.includes(this.value.toLowerCase()));
                 return matchTitle || matchNotice || matchTags;
             })
         },
         showDropdown() {
-            return this.search && this.filterProducts.length > 0;
+            return this.value && this.filterProducts.length > 0;
         },
     },
     mounted() {
@@ -114,8 +114,8 @@ export default {
         this.store = useResultStore();
     },
     watch: {
-        search() {
-            if (this.search) {
+        value(newValue) {
+            if (newValue) {
                 this.isCompleted = true;
             }
         },
