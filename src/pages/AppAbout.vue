@@ -11,16 +11,17 @@
                 alt="home-banner">
             <div class="rolling-line-01 md:w-20 w-10 h-px bg-gray-400/60 mx-auto"></div>
             <div
-                class="rolling-content-01 flex flex-col md:gap-8 gap-4 md:[writing-mode:vertical-rl] md:w-[80%] md:justify-start md:items-start justify-center items-center">
-                <h2 class="font-bold text-xl text-base-heavy tracking-widest">影子越深的地方，光就越亮</h2>
-                <p class="md:leading-6.5 tracking-widest md:text-base text-sm text-base-light">
+                class="flex flex-col md:gap-8 gap-4 md:[writing-mode:vertical-rl] md:w-[80%] md:justify-start md:items-start justify-center items-center">
+                <h2 class="rolling-content-01 font-bold text-xl text-base-heavy tracking-widest">影子越深的地方，光就越亮</h2>
+                <p class="rolling-content-08 md:leading-6.5 tracking-widest md:text-base text-sm text-base-light">
                     旅行的意義，<br /><br />不是為了逃離這片「赤炎炎」的日常，<br /><br />而是為了在另一個國度，<br />
                     找到能與內心體溫相契合的風景。<br /><br />願這趟旅程，<br />能成為你心底那一抹曬不乾的清涼。
                 </p>
             </div>
             <div class="rolling-line-01 md:w-20 w-10 h-px bg-gray-400/60 mx-auto"></div>
             <div class="flex flex-col md:gap-8 gap-4 w-[80%] mx-auto">
-                <img src="../assets/images/pic-03.jpg" class="rolling-content-02 w-full h-96 relative object-cover">
+                <img src="../assets/images/pic-03.jpg"
+                    class="rolling-content-02 w-full md:h-96 h-40 relative object-cover">
                 <div class="rolling-content-03 flex flex-col gap-6">
                     <h2 class=" font-bold text-xl text-base-heavy tracking-widest">不被日常打擾的拾光</h2>
                     <p class=" md:leading-6.5 tracking-widest md:text-base text-sm text-base-light md:w-[60%]">
@@ -44,15 +45,18 @@
                 </div>
             </div>
             <div class="rolling-line-01 md:w-20 w-10 h-px bg-gray-400/60 mx-auto"></div>
-            <div class="flex md:flex-row flex-col-reverse mx-auto justify-center items-center md:gap-8 gap-4">
+            <div class="flex md:flex-row flex-col-reverse mx-auto justify-center items-center md:gap-8 gap-8">
+                <h2
+                    class=" rolling-content-07 font-bold text-xl text-base-heavy tracking-widest md:[writing-mode:vertical-rl]">
+                    抵達之後</h2>
+            </div>
+            <div class="rolling-line-01 md:w-20 w-10 h-px bg-gray-400/60 mx-auto"></div>
+            <div class="flex md:flex-row flex-col-reverse mx-auto justify-center items-center md:gap-8 gap-8">
                 <img src="../assets/images/about-img-2.jpg"
                     class="rolling-content-05 md:w-[50%] w-full relative object-cover">
                 <p
                     class="rolling-content-06 text-base-light md:text-start text-center md:[writing-mode:vertical-rl] tracking-widest">
                     感謝你走進「日頭赤炎炎」的世界。<br /><br />願我們一起在烈日下啟程，<br />在微風中抵達，在旅行的路上，<br /><br />遇見那個最純粹、最自在的自己。</p>
-                <h2
-                    class=" rolling-content-07 font-bold text-xl text-base-heavy tracking-widest md:[writing-mode:vertical-rl]">
-                    抵達之後</h2>
             </div>
             <div></div>
         </div>
@@ -86,45 +90,65 @@ export default {
 }
 
 .rolling-content-01 {
-    animation: rollInY linear both;
+    animation: rollInY-01 linear both;
     animation-timeline: view();
     animation-range: entry 20% entry 100%;
+}
+
+.rolling-content-08 {
+    animation: rollInY-01 linear both;
+    animation-timeline: view();
+    animation-range: entry 80% entry 140%;
 }
 
 @media (max-width: 768px) {
 
     .rolling-content-01,
-    .rolling-content-02,
-    .rolling-content-03 {
+    .rolling-content-08 {
         opacity: 0;
         animation: fadeIn 1s ease forwards;
         animation-delay: 0.8s;
+    }
+
+    .rolling-content-08 {
+        animation-delay: 1.2s;
     }
 }
 
 .rolling-content-02 {
     animation: rollInY-03 linear both;
     animation-timeline: view();
-    animation-range: entry 80% entry 150%;
+    animation-range: entry 0% entry 130%;
+}
+
+.rolling-content-03 {
+    animation: rollInY-03 linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 90%;
+}
+
+.rolling-content-04 {
+    animation: rollInX linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 150%;
 }
 
 .rolling-content-05 {
     animation: rollInY linear both;
     animation-timeline: view();
-    animation-range: entry 0% entry 140%;
-}
-
-.rolling-content-06 {
-    animation: rollInY linear both;
-    animation-timeline: view();
-    animation-range: entry 0% entry 120%;
-    overflow: hidden;
+    animation-range: entry 20% entry 120%;
 }
 
 .rolling-content-07 {
     animation: rollInY-02 linear both;
     animation-timeline: view();
-    animation-range: entry 0% entry 150%;
+    animation-range: entry 100% entry 300%;
+}
+
+.rolling-content-06 {
+    animation: rollInY-01 linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 120%;
 }
 
 @media (max-width: 768px) {
@@ -138,12 +162,6 @@ export default {
 .rolling-line-01 {
     display: block;
     animation: none;
-}
-
-.rolling-content-04 {
-    animation: rollInX linear both;
-    animation-timeline: view();
-    animation-range: entry 0% entry 100%;
 }
 
 @keyframes fadeIn {
@@ -161,7 +179,7 @@ export default {
 @keyframes rollInX {
     0% {
         opacity: 0;
-        transform: translate3d(-200px, 0, 0);
+        transform: translate3d(-100px, 0, 0);
     }
 
     100% {
@@ -170,7 +188,7 @@ export default {
     }
 }
 
-@keyframes rollInY {
+@keyframes rollInY-01 {
     0% {
         opacity: 0;
         transform: translateY(-200px);
@@ -197,7 +215,7 @@ export default {
 @keyframes rollInY-03 {
     0% {
         opacity: 0;
-        transform: translateY(-50px);
+        transform: translateY(-200px);
     }
 
     100% {
