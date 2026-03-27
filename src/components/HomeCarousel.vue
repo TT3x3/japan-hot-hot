@@ -1,6 +1,6 @@
 <template>
     <!-- 輪播圖 -->
-    <div class="flex md:flex-row flex-col gap-4 justify-center items-center">
+    <div class="rolling-content-01 flex md:flex-row flex-col gap-4 justify-center items-center">
         <div class="relative md:h-[500px] h-[240px] md:w-[80%] w-full">
             <div class="absolute left-4 bottom-4 z-21 bg-black/20 text-white px-3 py-1 text-sm">
                 {{ carouselImages[currentIndex].caption }}
@@ -73,3 +73,42 @@ export default {
     },
 }
 </script>
+<style scoped>
+.rolling-content-01 {
+    animation: rollY-01 1s linear both;
+    animation-timeline: view();
+    animation-range: entry 20% entry 100%;
+}
+
+@media (max-width: 768px) {
+    .rolling-content-01 {
+        opacity: 0;
+        animation: fadeIn 1s ease forwards;
+        animation-delay: 0.8s;
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes rollY-01 {
+    0% {
+        opacity: 0;
+        transform: translateY(-200px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+</style>

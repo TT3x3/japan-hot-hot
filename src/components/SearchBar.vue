@@ -1,5 +1,5 @@
 <template>
-    <div class="flex justify-center items-center max-w-[80%] w-full mx-auto">
+    <div class="fade-content-01 flex justify-center items-center max-w-[80%] w-full mx-auto">
         <div class="flex flex-col md:gap-4 gap-2 justify-center items-center w-full">
             <h3 class="font-bold md:text-3xl text-xl text-base-heavy">麥囉唆，直接講想去哪嘿皮？</h3>
 
@@ -8,8 +8,9 @@
                 <!-- 搜尋框 -->
                 <div class="flex items-center w-full border border-gray-300">
                     <div class="flex justify-between items-center w-full">
-                        <input type="search" :value="value" @input="$emit('input', $event.target.value)" @keyup.enter.prevent="getResult()"
-                            :placeholder="`尋找${placeholderType}`" class="py-2 px-4 w-full" />
+                        <input type="search" :value="value" @input="$emit('input', $event.target.value)"
+                            @keyup.enter.prevent="getResult()" :placeholder="`尋找${placeholderType}`"
+                            class="py-2 px-4 w-full" />
                     </div>
                     <button type="button" @click.prevent="getResult()" class="cursor-pointer px-3">
                         <i class="fa-solid fa-magnifying-glass fa-lg text-gray-600"></i>
@@ -86,14 +87,6 @@ export default {
         }
     },
     computed: {
-        // inputValue: {
-        //     get() {
-        //         return this.search;
-        //     },
-        //     set(val) {
-        //         this.$emit('update:search', val);
-        //     }
-        // },
         filterProducts() {
             if (!this.value) return [];
             return this.allProducts.filter(item => {
@@ -122,3 +115,22 @@ export default {
     }
 }
 </script>
+<style scope>
+.fade-content-01 {
+    animation: fadeIn linear both;
+    animation-timeline: view();
+    animation-range: entry 20% entry 100%;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-100px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+</style>

@@ -81,7 +81,7 @@ export default {
     }
 }
 </script>
-<style scope>
+<style scoped>
 .rolling-title,
 .rolling-img-1 {
     opacity: 0;
@@ -102,7 +102,6 @@ export default {
 }
 
 @media (max-width: 768px) {
-
     .rolling-content-01,
     .rolling-content-08 {
         opacity: 0;

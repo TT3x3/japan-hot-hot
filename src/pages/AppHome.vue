@@ -4,8 +4,9 @@
     <div class="flex md:flex-col flex-col-reverse md:gap-32 gap-12">
       <!-- 搜尋框 -->
       <SearchBar :productType="productType" :placeholderType="placeholderType" :allProducts="products" v-model="search"
-        search-result="getSearchResult" />
-      <img src="../assets/images/home-banner.jpg" class="w-full h-72 relative object-cover" alt="home-banner">
+        @search-result="getSearchResult" />
+      <img src="../assets/images/home-banner.jpg" class="fade-content-01 w-full h-72 relative object-cover"
+        alt="home-banner">
     </div>
 
     <!-- 輪播圖 -->
@@ -100,3 +101,22 @@ export default {
   }
 }
 </script>
+<style scoped>
+.fade-content-01 {
+  opacity: 0;
+  animation: fadeIn 1s ease forwards;
+  animation-delay: 0.3s;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+</style>
