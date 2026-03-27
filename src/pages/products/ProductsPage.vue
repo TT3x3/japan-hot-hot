@@ -4,17 +4,19 @@
         <CustomModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
             @close="isModalOpen = false" @confirm="handleModalClick()" />
         <div class="flex justify-center items-center pt-8">
-            <h1 class="text-3xl text-center tracking-[2rem] pl-[2rem] text-base-heavy">{{ pageTitle }}</h1>
+            <h1 class="fade-content-01 text-3xl text-center tracking-[2rem] pl-[2rem] text-base-heavy">{{ pageTitle }}
+            </h1>
         </div>
 
         <!-- top -->
-        <div class="relative md:h-80 h-40 overflow-hidden">
+        <div class=" relative md:h-80 h-40 overflow-hidden">
             <img :src="type === 'tickets' ? require('../../assets/images/carousel-2.jpg') : require('../../assets/images/carousel-3.jpg')"
-                class="w-full h-full object-cover">
+                class="fade-content-01 w-full h-full object-cover">
         </div>
 
         <!-- 搜尋框 -->
-        <SearchBar :placeholderType="pageTitle" :allProducts="pageList" v-model="search" @search-result="getSearchResult" />
+        <SearchBar :placeholderType="pageTitle" :allProducts="pageList" v-model="search"
+            @search-result="getSearchResult" />
 
         <!-- 分類 -->
         <div class="max-w-[80%] w-full mx-auto">
@@ -323,3 +325,10 @@ export default {
     }
 }
 </script>
+<style scoped>
+.fade-content-01 {
+    opacity: 0;
+    animation: fadeIn 1s ease forwards;
+    animation-delay: 0.3s;
+}
+</style>

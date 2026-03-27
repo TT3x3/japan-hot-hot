@@ -15,7 +15,7 @@
     <HomeActivity />
 
     <!-- 關於我 -->
-    <div class="bg-gray-200 overflow-x-hidden md:py-0 md:pb-24 md:pt-8 py-12">
+    <div class="rolling-home-01 bg-gray-200 overflow-x-hidden md:py-0 md:pb-24 md:pt-8 py-12">
       <div class="flex w-full justify-center items-center gap-8">
         <div class="flex flex-col md:items-end items-center">
           <img src="../assets/images/about-img-2.jpg" alt="about-img-2" class="md:h-72 h-96 object-cover md:pr-16">
@@ -108,10 +108,16 @@ export default {
   animation-delay: 0.3s;
 }
 
-@keyframes fadeIn {
+.rolling-home-01 {
+  animation: rollY-01 1s linear both;
+  animation-timeline: view();
+  animation-range: entry 20% entry 80%;
+}
+
+@keyframes rollY-01 {
   0% {
     opacity: 0;
-    transform: translateY(-50px);
+    transform: translateY(-200px);
   }
 
   100% {

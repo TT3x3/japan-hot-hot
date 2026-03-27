@@ -63,7 +63,7 @@ export default {
 .rolling-content-01 {
     animation: rollY-01 1s linear both;
     animation-timeline: view();
-    animation-range: entry 20% entry 100%;
+    animation-range: entry 40% entry 120%;
 }
 
 @keyframes rollY-01 {

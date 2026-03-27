@@ -85,18 +85,18 @@ export default {
 .rolling-title,
 .rolling-img-1 {
     opacity: 0;
-    animation: fadeIn 1s ease forwards;
+    animation: fadeIn 1s ease-in forwards;
     animation-delay: 0.3s;
 }
 
 .rolling-content-01 {
-    animation: rollInY-01 linear both;
+    animation: rollInY-01 ease-in both;
     animation-timeline: view();
     animation-range: entry 20% entry 100%;
 }
 
 .rolling-content-08 {
-    animation: rollInY-01 linear both;
+    animation: rollInY-01 ease-in both;
     animation-timeline: view();
     animation-range: entry 80% entry 140%;
 }
@@ -115,37 +115,37 @@ export default {
 }
 
 .rolling-content-02 {
-    animation: rollInY-03 linear both;
+    animation: rollInY-03 ease-in both;
     animation-timeline: view();
     animation-range: entry 0% entry 130%;
 }
 
 .rolling-content-03 {
-    animation: rollInY-03 linear both;
+    animation: rollInY-03 ease-in both;
     animation-timeline: view();
     animation-range: entry 0% entry 90%;
 }
 
 .rolling-content-04 {
-    animation: rollInX linear both;
+    animation: rollInX ease-in both;
     animation-timeline: view();
     animation-range: entry 0% entry 150%;
 }
 
 .rolling-content-05 {
-    animation: rollInY linear both;
+    animation: rollInY ease-in both;
     animation-timeline: view();
     animation-range: entry 20% entry 120%;
 }
 
 .rolling-content-07 {
-    animation: rollInY-02 linear both;
+    animation: rollInY-02 ease-in both;
     animation-timeline: view();
     animation-range: entry 100% entry 300%;
 }
 
 .rolling-content-06 {
-    animation: rollInY-01 linear both;
+    animation: rollInY-01 ease-in both;
     animation-timeline: view();
     animation-range: entry 0% entry 120%;
 }
@@ -153,7 +153,7 @@ export default {
 @media (max-width: 768px) {
     .rolling-line-01 {
         display: block;
-        animation: rollInY-02 0.6s ease-out both;
+        animation: rollInY-02 0.6s ease-in both;
         animation-timeline: view();
     }
 }
