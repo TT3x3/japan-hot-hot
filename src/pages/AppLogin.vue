@@ -78,7 +78,7 @@ export default {
     name: 'AppLogin',
     data() {
         return {
-            isLoading: false,
+            isLoading: true,
             isModalOpen: false,
             hasError: false,
             modalContent: '',
@@ -143,6 +143,9 @@ export default {
                 this.isLoading = false;
             }
         },
-    }
+    },
+    mounted() {
+        this.isLoading = false;
+    },
 }
 </script>

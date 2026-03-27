@@ -43,8 +43,8 @@ export default {
 
 .bubble-1,
 .bubble-3 {
-    width: 20px;
-    height: 20px;
+    width: 16px;
+    height: 16px;
     border-radius: 100%;
     background-color: #d6270a;
 }
@@ -82,7 +82,7 @@ export default {
 
     0%,
     100% {
-        transform: scale(0);
+        transform: scale(0.2);
     }
 
     50% {

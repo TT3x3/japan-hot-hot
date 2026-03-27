@@ -1,5 +1,6 @@
 <template>
     <div class="flex flex-col md:gap-32 gap-12 w-full bg-gray-100">
+        <AppLoading :isLoading="isLoading" />
         <!-- top -->
         <div class="relative md:h-80 h-40 overflow-hidden">
             <img src="../assets/images/carousel-5.jpg" alt="" class=" w-full h-full object-cover">
@@ -13,10 +14,12 @@
                     <div></div>
                     <!-- 登入區塊 -->
                     <div class="flex flex-col justify-center items-center gap-12">
-                        <form class="bg-white md:px-10 px-4 md:py-18 py-6  w-full max-w-3xl flex flex-col gap-6 justify-center">
+                        <form
+                            class="bg-white md:px-10 px-4 md:py-18 py-6  w-full max-w-3xl flex flex-col gap-6 justify-center">
                             <div class="flex flex-col gap-4">
                                 <div class="flex flex-col gap-1">
-                                    <div class="flex md:flex-row flex-col md:items-center items-start md:gap-0 gap-1 w-full">
+                                    <div
+                                        class="flex md:flex-row flex-col md:items-center items-start md:gap-0 gap-1 w-full">
                                         <label for="emailInput"
                                             class="inline-block w-24 font-bold text-base-light">Email</label>
                                         <input id="emailInput" type="email" v-model.trim="userInfo.email"
@@ -29,7 +32,8 @@
                                 </div>
                                 <div class="md:block hidden w-full h-px bg-gray-100"></div>
                                 <div class="flex flex-col gap-1">
-                                    <div class="flex md:flex-row flex-col md:items-center items-start md:gap-0 gap-1 w-full">
+                                    <div
+                                        class="flex md:flex-row flex-col md:items-center items-start md:gap-0 gap-1 w-full">
                                         <label for="passwordInput"
                                             class="inline-block w-24 font-bold text-base-light">密碼</label>
                                         <input id="passwordInput" type="password" v-model.trim="userInfo.password"
@@ -42,7 +46,8 @@
                                 </div>
                                 <div class="md:block hidden w-full h-px bg-gray-100"></div>
                                 <div class="flex flex-col gap-1">
-                                    <div class="flex md:flex-row flex-col md:items-center items-start md:gap-0 gap-1 w-full">
+                                    <div
+                                        class="flex md:flex-row flex-col md:items-center items-start md:gap-0 gap-1 w-full">
                                         <label for="confirmPasswordInput"
                                             class="inline-block w-24 font-bold text-base-light">確認密碼</label>
                                         <input id="confirmPasswordInput" type="password"
@@ -57,7 +62,8 @@
                                 </div>
                                 <div class="md:block hidden w-full h-px bg-gray-100"></div>
                                 <div class="flex flex-col gap-1">
-                                    <div class="flex md:flex-row flex-col md:items-center items-start md:gap-0 gap-1 w-full">
+                                    <div
+                                        class="flex md:flex-row flex-col md:items-center items-start md:gap-0 gap-1 w-full">
                                         <label for="usernameInput"
                                             class="inline-block w-24 font-bold text-base-light">會員名稱</label>
                                         <input id="usernameInput" type="text" v-model.trim="userInfo.username"
@@ -70,7 +76,8 @@
                                 </div>
                                 <div class="md:block hidden w-full h-px bg-gray-100"></div>
                                 <div class="flex flex-col gap-1">
-                                    <div class="flex md:flex-row flex-col md:items-center items-start md:gap-0 gap-1 w-full">
+                                    <div
+                                        class="flex md:flex-row flex-col md:items-center items-start md:gap-0 gap-1 w-full">
                                         <label for="phoneInput"
                                             class="inline-block w-24 font-bold text-base-light">手機號碼</label>
                                         <input id="phoneInput" type="tel" v-model.trim="userInfo.phone"
@@ -104,10 +111,13 @@
 </template>
 
 <script>
+import AppLoading from '@/components/AppLoading.vue';
+
 export default {
     name: 'AppLogin',
     data() {
         return {
+            isLoading: true,
             userInfo: {
                 email: '',
                 password: '',
@@ -123,7 +133,11 @@ export default {
                 phone: '',
             },
         };
-    }, methods: {
+    },
+    components: {
+        AppLoading,
+    },
+    methods: {
         validateForm() {
             const emailRule = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (this.userInfo.email.trim() === '') {
@@ -165,6 +179,9 @@ export default {
                 this.errorInfo.phone = '*請輸入正確的手機號碼';
             }
         },
-    }
+    },
+    mounted() {
+        this.isLoading = false;
+    },
 }
 </script>

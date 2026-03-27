@@ -3,6 +3,7 @@
     <div
       class="mx-auto max-w-[80%] md:pt-16 md:pb-28 py-3 flex justify-between items-center gap-4 tracking-widest md:min-h-[200px]">
       <router-link to="/" class="z-51">
+        <AppLoading :isLoading="isLoading" />
         <img src="../assets/images/logo-s.png" alt="logo-small" class="hidden md:block md:w-[160px]">
         <img src="../assets/images/logo-2-s.png" class="block md:hidden w-48">
       </router-link>
@@ -54,22 +55,32 @@
 
 <script>
 import { logout } from '@/utils/auth';
+import AppLoading from '@/components/AppLoading.vue';
 
 export default {
   name: 'AppHeader',
   data() {
     return {
+      isLoading: false,
       isOpen: false,
     }
+  },
+  components: {
+    AppLoading,
   },
   methods: {
     toggleMenu() {
       this.isOpen = !this.isOpen;
     },
-    handleLogout() {
+    async handleLogout() {
+      this.isLoading = true;
+
+      await this.$nextTick();
       logout();
       this.isOpen = false;
       this.$router.push('/login');
+
+      this.isLoading = false;
     }
   },
   watch: {
