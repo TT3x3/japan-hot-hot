@@ -2,12 +2,7 @@
     <div class="flex flex-col md:gap-32 gap-12 w-full bg-gray-100">
         <AppLoading :isLoading="isLoading" />
         <!-- top -->
-        <div class="relative  md:h-80 h-40 overflow-hidden">
-            <img src="../../assets/images/carousel-3.jpg" alt="tour-banner" class=" w-full h-full object-cover">
-        </div>
-        <div class="flex justify-center items-center ">
-            <h1 class="text-3xl text-center tracking-[2rem] pl-[2rem] text-base-heavy">會員中心</h1>
-        </div>
+        <MemberBanner :bannerImg="bannerImg" :pageTitle="pageTitle" />
         <div class="max-w-[80%] w-full mx-auto">
             <div class="flex items-center gap-4 ps-2 pb-4 text-base-heavy">
                 <i class="fa-solid fa-basket-shopping"></i>
@@ -47,6 +42,7 @@
 
 <script>
 import AppLoading from '@/components/AppLoading.vue';
+import MemberBanner from '@/components/MemberBanner.vue';
 
 export default {
     name: 'MemberCenter',
@@ -55,11 +51,14 @@ export default {
             isModalOpen: false,
             hasError: false,
             modalContent: '',
-            isLoading: true
+            isLoading: true,
+            pageTitle:'會員中心',
+            bannerImg: require('@/assets/images/carousel-3.jpg'),
         }
     },
     components: {
         AppLoading,
+        MemberBanner,
     },
     mounted() {
         this.isLoading = false

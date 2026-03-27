@@ -4,14 +4,7 @@
         <CustomModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
             @close="isModalOpen = false;" @confirm="handleModalClick()" />
         <div v-if="items" class="flex flex-col md:gap-32 gap-12 w-full bg-gray-100">
-            <!-- top -->
-            <div class="relative  md:h-80 h-40 overflow-hidden">
-                <img src="../../assets/images/carousel-4.jpg" alt="tour-banner" class=" w-full h-full object-cover">
-            </div>
-            <div class="flex justify-center items-center ">
-                <h1 class="text-3xl text-center tracking-[2rem] pl-[2rem] text-base-heavy">收藏清單</h1>
-            </div>
-
+            <MemberBanner :bannerImg="bannerImg" :pageTitle="pageTitle" />
             <div v-if="items.length > 0" class="max-w-[80%] w-full mx-auto flex flex-col gap-10">
                 <!-- 分類 -->
                 <div class="flex md:gap-8 gap-4">
@@ -34,7 +27,9 @@
                         <h2 class="absolute left-5 bottom-5 md:font-black font-bold text-white">機票</h2>
                     </div>
                 </div>
-                <div class="flex items-center justify-between">
+                <router-link to="/member"
+                    class="inline-block self-end cursor-pointer bg-gray-400 text-white text-center px-10 py-3 hover:bg-gray-300 active:bg-gray-500 transition-colors">返回會員中心</router-link>
+                <!-- <div class="flex items-center justify-between">
                     <router-link to="/member"
                         class="cursor-pointer bg-gray-400 text-white text-center px-10 py-3  hover:bg-gray-300 active:bg-gray-500 transition-colors">返回會員中心</router-link>
                     <div class="flex gap-2 items-center">
@@ -45,13 +40,13 @@
                                 num }}</option>
                         </select>
                     </div>
-                </div>
+                </div> -->
 
-                <ul class="flex flex-wrap md:justify-start justify-center gap-x-2 gap-y-12">
+                <ul class="flex flex-wrap md:justify-between justify-center gap-x-2 gap-y-12">
                     <!-- 卡片 -->
                     <router-link :to="`/${typeTranslate[item.type]}-detail/${item.productId}`" target="_blank"
                         rel="noopener noreferrer" v-for="(item, key) in paginationPages" :key="key"
-                        class="md:flex-[0_0_calc(33.333%-1rem)] h-[240px] flex cursor-pointer group">
+                        class="md:flex-[0_0_calc(33.333%-1rem)] h-[240px] flex cursor-pointer group ">
                         <div class="flex flex-col border border-gray-200">
                             <div class="relative h-72 overflow-hidden">
                                 <img :src="`${apiBase}${item.thumbnail}`" alt="" class="object-cover w-full">
@@ -67,11 +62,11 @@
                             <div class="flex flex-col flex-1 gap-4 p-5 bg-white">
                                 <div class="flex justify-between">
                                     <p class="font-bold md:text-md text-lg line-clamp-1 text-base-heavy">{{ item.title
-                                    }}</p>
+                                        }}</p>
                                     <!-- md 以下移除收藏 -->
                                     <button type="button" @click.prevent.stop="delLike(item.productId)"
                                         class="block md:hidden text-gray-400 transition-colors duration-200 cursor-pointer">
-                                        <i class="fa-solid fa-trash fa-md"></i>
+                                        <i class="fa-solid fa-trash fa-xl"></i>
                                     </button>
                                 </div>
                                 <p class="font-bold text-lg text-hot-red mt-auto text-end">{{
@@ -85,8 +80,7 @@
                 <div></div>
             </div>
         </div>
-        <div v-else
-            class=" text-base-light bg-white py-20 md:w-[480px] md:mx-auto w-full">
+        <div v-else class=" text-base-light bg-white py-20 md:w-[480px] md:mx-auto w-full">
             <div v-if="isLoading === false" class="flex flex-col gap-4 items-center justify-center">
                 <i class="fa-regular fa-face-surprise fa-5x"></i>
                 <p class="font-bold text-xl">收藏清單空空如也捏！快去尋寶！</p>
@@ -100,6 +94,7 @@
 import http from '@/api/http'
 import CustomModal from '@/components/CustomModal.vue';
 import AppLoading from '@/components/AppLoading.vue';
+import MemberBanner from '@/components/MemberBanner.vue';
 
 export default {
     name: 'MemberLikes',
@@ -107,6 +102,8 @@ export default {
         return {
             isLoading: false,
             apiBase: process.env.VUE_APP_API_PATH,
+            pageTitle: '收藏清單',
+            bannerImg: require('@/assets/images/pic-03.jpg'),
             currentPage: 1,
             perPage: 9,
             selectNum: [9, 18, 36, 45],
@@ -122,6 +119,7 @@ export default {
     components: {
         CustomModal,
         AppLoading,
+        MemberBanner,
     },
     methods: {
         async getLikes() {

@@ -4,12 +4,8 @@
         <CustomModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
             @close="isModalOpen = false;" @confirm="handleModalClick()" />
         <!-- top -->
-        <div class="relative  md:h-80 h-40 overflow-hidden">
-            <img src="../../assets/images/carousel-4.jpg" alt="tour-banner" class=" w-full h-full object-cover">
-        </div>
-        <div class="flex justify-center items-center ">
-            <h1 class="text-3xl text-center tracking-[2rem] pl-[2rem] text-base-heavy">會員資料</h1>
-        </div>
+        <MemberBanner :bannerImg="bannerImg" :pageTitle="pageTitle" />
+
         <div class="max-w-[80%] w-full mx-auto flex flex-col gap-8">
             <p class="font-bold text-2xl text-base-heavy">哩賀！甲奔未！{{ oldInfo.name }}！</p>
             <div class="text-base-heavy">
@@ -173,6 +169,7 @@
 import http from '@/api/http'
 import CustomModal from '@/components/CustomModal.vue';
 import AppLoading from '@/components/AppLoading.vue';
+import MemberBanner from '@/components/MemberBanner.vue';
 
 export default {
     name: 'MemberProfile',
@@ -197,11 +194,14 @@ export default {
             isModalOpen: false,
             hasError: false,
             modalContent: '',
+            pageTitle:'會員資料',
+            bannerImg: require('@/assets/images/carousel-4.jpg'),
         }
     },
     components: {
         CustomModal,
         AppLoading,
+        MemberBanner,
     },
     created() {
         this.getUser();

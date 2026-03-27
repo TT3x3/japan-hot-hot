@@ -4,12 +4,8 @@
         <CustomModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
             @close="isModalOpen = false;" @confirm="handleModalClick()" />
         <!-- top -->
-        <div class="relative  md:h-80 h-40 overflow-hidden">
-            <img src="../../assets/images/carousel-4.jpg" alt="tour-banner" class=" w-full h-full object-cover">
-        </div>
-        <div class="flex justify-center items-center ">
-            <h1 class="text-3xl text-center tracking-[2rem] pl-[2rem] text-base-heavy">訂單</h1>
-        </div>
+        <MemberBanner :bannerImg="bannerImg" :pageTitle="pageTitle" />
+
         <div v-if="orderList" class="flex flex-col gap-8">
             <div class="text-base-heavy">
                 <!-- <div class="flex flex-col pb-4"> -->
@@ -93,8 +89,7 @@
             <CustomPagination class="w-full flex justify-center" :totalPages="totalPages"
                 :currentPage.sync="currentPage" />
         </div>
-        <div v-else
-            class=" text-base-light flex flex-col gap-4 items-center justify-center py-20 px-10 w-full">
+        <div v-else class=" text-base-light flex flex-col gap-4 items-center justify-center py-20 px-10 w-full">
             <i class="fa-regular fa-face-surprise fa-5x"></i>
             <p class="font-bold text-xl">那A安捏，居然還沒有訂單？快去買東西！</p>
         </div>
@@ -106,6 +101,7 @@
 <script>
 import AppLoading from '@/components/AppLoading.vue';
 import CustomModal from '@/components/CustomModal.vue';
+import MemberBanner from '@/components/MemberBanner.vue';
 
 import http from '@/api/http'
 
@@ -122,11 +118,14 @@ export default {
             isModalOpen: false,
             modalContent: '',
             hasError: false,
+            pageTitle: '歷史訂單',
+            bannerImg: require('@/assets/images/pic-04.jpg'),
         }
     },
     components: {
         CustomModal,
         AppLoading,
+        MemberBanner,
     },
     methods: {
         async getOrders() {
