@@ -308,9 +308,9 @@ export default {
             }
         },
         async createOrder() {
-            this.isLoading = true;
             this.confirmBooking();
             if (!this.isFormValid) return;
+            this.isLoading = true;
             if (!this.token) {
                 this.isModalOpen = true;
                 this.hasError = true;
