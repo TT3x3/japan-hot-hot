@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col md:gap-32 gap-12 w-full">
-        <AppLoading :isLoading="isLoading" />
-        <CustomModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
+        <BaseLoading :isLoading="isLoading" />
+        <BaseModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
             @close="isModalOpen = false" @confirm="handleModalClick()" />
         <div class="flex justify-center items-center pt-8">
             <h1 class="fade-content-01 text-3xl text-center tracking-[2rem] pl-[2rem] text-base-heavy">{{ pageTitle }}
@@ -10,7 +10,7 @@
 
         <!-- top -->
         <div class=" relative md:h-80 h-40 overflow-hidden">
-            <img :src="type === 'tickets' ? require('../../assets/images/carousel-2.jpg') : require('../../assets/images/carousel-3.jpg')"
+            <img :src="type === 'tickets' ? require('@/assets/images/carousel-2.jpg') : require('@/assets/images/carousel-3.jpg')"
                 class="fade-content-01 w-full h-full object-cover">
         </div>
 
@@ -114,9 +114,9 @@
 <script>
 import http from '@/api/http'
 import { useResultStore } from '@/stores/search'
-import CustomModal from '@/components/CustomModal.vue';
-import SearchBar from '@/components/SearchBar.vue';
-import AppLoading from '@/components/AppLoading.vue';
+import BaseModal from '@/components/base/BaseModal.vue';
+import BaseLoading from '@/components/base/BaseLoading.vue';
+import SearchBar from '@/components/common/SearchBar.vue';
 
 export default {
     name: 'ProductsPage',
@@ -142,9 +142,9 @@ export default {
         };
     },
     components: {
-        CustomModal,
+        BaseModal,
         SearchBar,
-        AppLoading,
+        BaseLoading,
     },
     methods: {
         async getFlights() {

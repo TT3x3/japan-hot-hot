@@ -3,9 +3,9 @@
     <div
       class="mx-auto max-w-[80%] md:pt-16 md:pb-28 py-3 flex justify-between items-center gap-4 tracking-widest md:min-h-[200px]">
       <router-link to="/" class="z-51">
-        <AppLoading :isLoading="isLoading" />
-        <img src="../assets/images/logo-s.png" alt="logo-small" class="hidden md:block md:w-[160px]">
-        <img src="../assets/images/logo-2-s.png" class="block md:hidden w-48">
+        <BaseLoading :isLoading="isLoading" />
+        <img :src="require('@/assets/images/logo-s.png')" alt="logo-small" class="hidden md:block md:w-[160px]">
+        <img :src="require('@/assets/images/logo-2-s.png')" class="block md:hidden w-48">
       </router-link>
 
       <!-- md 以下菜單 -->
@@ -27,7 +27,7 @@
         :class="isOpen ? 'translate-y-0' : '-translate-y-full'">
         <ul
           class="pointer-events-auto absolute flex flex-col items-center gap-4 w-full py-16 bg-gray-400 text-lg text-white">
-          <img src="../assets/images/logo-pic.png" alt="" class="w-10">
+          <img :src="require('@/assets/images/logo-pic.png')" alt="" class="w-10">
           <router-link to="/products/tickets" class="hover:text-gray-300 py-2 w-full text-center">機票</router-link>
           <router-link to="/products/tours" class="hover:text-gray-300 py-2 w-full text-center">行程</router-link>
           <router-link v-if="$auth.isLoggedIn" to="/member"
@@ -55,7 +55,7 @@
 
 <script>
 import { logout } from '@/utils/auth';
-import AppLoading from '@/components/AppLoading.vue';
+import BaseLoading from '@/components/base/BaseLoading.vue';
 
 export default {
   name: 'AppHeader',
@@ -66,7 +66,7 @@ export default {
     }
   },
   components: {
-    AppLoading,
+    BaseLoading,
   },
   methods: {
     toggleMenu() {

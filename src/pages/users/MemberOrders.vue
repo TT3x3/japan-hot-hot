@@ -1,10 +1,10 @@
 <template>
     <div class="flex flex-col md:gap-32 gap-12 w-full bg-gray-100">
-        <AppLoading :isLoading="isLoading" />
-        <CustomModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
+        <BaseLoading :isLoading="isLoading" />
+        <BaseModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
             @close="isModalOpen = false;" @confirm="handleModalClick()" />
         <!-- top -->
-        <MemberBanner :bannerImg="bannerImg" :pageTitle="pageTitle" />
+        <MemberHero :bannerImg="bannerImg" :pageTitle="pageTitle" />
 
         <div v-if="orderList" class="flex flex-col gap-8">
             <div class="text-base-heavy">
@@ -99,9 +99,9 @@
 </template>
 
 <script>
-import AppLoading from '@/components/AppLoading.vue';
-import CustomModal from '@/components/CustomModal.vue';
-import MemberBanner from '@/components/MemberBanner.vue';
+import BaseLoading from '@/components/base/BaseLoading.vue';
+import BaseModal from '@/components/base/BaseModal.vue';
+import MemberHero from '@/components/layout/MemberHero.vue';
 
 import http from '@/api/http'
 
@@ -123,9 +123,9 @@ export default {
         }
     },
     components: {
-        CustomModal,
-        AppLoading,
-        MemberBanner,
+        BaseModal,
+        BaseLoading,
+        MemberHero,
     },
     methods: {
         async getOrders() {

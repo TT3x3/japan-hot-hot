@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col gap-32 w-full">
-        <AppLoading :isLoading="isLoading" />
-        <CustomModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
+        <BaseLoading :isLoading="isLoading" />
+        <BaseModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
             @close="isModalOpen = false;" @confirm="handleModalClick()" />
         <div v-if="orderDetail" class="max-w-[80%] w-full mx-auto flex flex-col gap-12">
             <!-- 進度條 -->
@@ -179,8 +179,8 @@
 <script>
 import http from '@/api/http'
 import { useOrderStore } from '@/stores/order';
-import CustomModal from '@/components/CustomModal.vue';
-import AppLoading from '@/components/AppLoading.vue';
+import BaseModal from '@/components/base/BaseModal.vue';
+import BaseLoading from '@/components/base/BaseLoading.vue';
 
 export default {
     name: 'CheckoutChecked',
@@ -198,8 +198,8 @@ export default {
         }
     },
     components: {
-        CustomModal,
-        AppLoading,
+        BaseModal,
+        BaseLoading,
     },
     created() {
         this.store = useOrderStore();

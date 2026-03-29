@@ -6,7 +6,7 @@
             class="bg-white/80 fixed top-0 left-0 flex justify-center items-center w-full h-full z-100">
             <div class="loading-style flex justify-center items-center">
                 <div class="bubble-1"></div>
-                <img src="@/assets/images/logo-pic.png" class="bubble-2 loading-img w-20 h-20">
+                <img :src="require('@/assets/images/logo-pic.png')" class="bubble-2 loading-img w-20 h-20">
                 <div class="bubble-3"></div>
             </div>
         </div>

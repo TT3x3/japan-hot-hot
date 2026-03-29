@@ -1,11 +1,11 @@
 <template>
     <div class="flex flex-col md:gap-32 gap-12 w-full bg-gray-100">
-        <AppLoading :isLoading="isLoading" />
-        <CustomModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
+        <BaseLoading :isLoading="isLoading" />
+        <BaseModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
             @close="isModalOpen = false" />
         <!-- top -->
         <div class="relative md:h-80 h-40 overflow-hidden">
-            <img src="../assets/images/carousel-5.jpg" alt="" class=" w-full h-full object-cover">
+            <img :src="require('@/assets/images/carousel-5.jpg')" alt="" class=" w-full h-full object-cover">
         </div>
         <div>
             <div class="flex justify-center items-center">
@@ -32,6 +32,8 @@
                                     <small v-if="errorInfo.email" class="text-sm text-end text-hot-red">{{
                                         errorInfo.email }}</small>
                                 </div>
+                                <LoginInput labelName="Email" inputKey="email" inputType="email" v-model="loginInfo.email"
+                                    :errorTitle="errorInfo.email" :clearErrorInfo="clearErrorInfo" />
                                 <div class="md:block hidden w-full h-px bg-gray-100"></div>
                                 <div class="flex flex-col gap-1 px-4">
                                     <div
@@ -71,8 +73,9 @@
 <script>
 import http from '@/api/http'
 import { login } from '@/utils/auth'
-import CustomModal from '@/components/CustomModal.vue';
-import AppLoading from '@/components/AppLoading.vue';
+import BaseModal from '@/components/base/BaseModal.vue';
+import BaseLoading from '@/components/base/BaseLoading.vue';
+import LoginInput from '@/components/ui/LoginInput.vue';
 
 export default {
     name: 'AppLogin',
@@ -97,8 +100,9 @@ export default {
         };
     },
     components: {
-        CustomModal,
-        AppLoading,
+        BaseModal,
+        BaseLoading,
+        LoginInput,
     },
     methods: {
         validateForm() {
@@ -122,9 +126,9 @@ export default {
             }
         },
         async postLogin() {
-            this.isLoading = true;
             this.validateForm();
             if (this.isError) return;
+            this.isLoading = true;
             try {
                 const res = await http.post(`/members/login`, this.loginInfo);
                 const token = res.data?.access_token;
@@ -142,6 +146,9 @@ export default {
             } finally {
                 this.isLoading = false;
             }
+        },
+        clearErrorInfo(key) {
+            this.errorInfo[key] = '';
         },
     },
     mounted() {

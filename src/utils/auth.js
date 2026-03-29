@@ -5,6 +5,7 @@ export const auth = Vue.observable({
     user: JSON.parse(localStorage.getItem("user")) || null,
 });
 
+
 // 登入
 export function login(token, user) {
     localStorage.setItem("token", token);
@@ -12,6 +13,7 @@ export function login(token, user) {
     auth.isLoggedIn = true;
     auth.user = user;
 }
+
 
 // 登出
 export function logout() {

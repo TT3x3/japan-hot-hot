@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col md:gap-32 gap-12 w-full">
-        <AppLoading :isLoading="isLoading" />
-        <CustomModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
+        <BaseLoading :isLoading="isLoading" />
+        <BaseModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
             @close="isModalOpen = false" @confirm="handleModalClick()" />
 
         <!-- 搜尋框 -->
@@ -96,9 +96,9 @@
 <script>
 import http from '@/api/http'
 import { useResultStore } from '@/stores/search'
-import CustomModal from '@/components/CustomModal.vue';
-import SearchBar from '@/components/SearchBar.vue';
-import AppLoading from '@/components/AppLoading.vue';
+import BaseModal from '@/components/base/BaseModal.vue';
+import BaseLoading from '@/components/base/BaseLoading.vue';
+import SearchBar from '@/components/common/SearchBar.vue';
 
 export default {
     name: 'ProductsPage',
@@ -122,9 +122,9 @@ export default {
         };
     },
     components: {
-        CustomModal,
+        BaseModal,
         SearchBar,
-        AppLoading,
+        BaseLoading,
     },
     methods: {
         async getSearchResult(keyword, page) {

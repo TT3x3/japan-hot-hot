@@ -1,13 +1,13 @@
 <template>
     <div class="flex flex-col justify-center items-center mx-auto md:gap-48 gap-16 text-base-heavy">
-        <AppLoading :isLoading="isLoading" />
+        <BaseLoading :isLoading="isLoading" />
         <div class="block md:hidden"></div>
         <div class="rolling-title flex flex-col justify-center items-center gap-2 md:mt-0">
             <p class="font-extrabold md:text-3xl text-xl tracking-widest">日頭赤炎炎</p>
             <p class="md:text-lg text-base-light">這句話是我們對這片土地及內心最直白的問候</p>
         </div>
         <div class="bg-gray-200 flex flex-col md:gap-48 gap-16 w-full">
-            <img src="../assets/images/pic-04.jpg" class="rolling-img-1 w-full md:h-96 h-64 relative object-cover"
+            <img :src="require('@/assets/images/pic-04.jpg')" class="rolling-img-1 w-full md:h-96 h-64 relative object-cover"
                 alt="home-banner">
             <div class="rolling-line-01 md:w-20 w-10 h-px bg-gray-400/60 mx-auto"></div>
             <div
@@ -20,7 +20,7 @@
             </div>
             <div class="rolling-line-01 md:w-20 w-10 h-px bg-gray-400/60 mx-auto"></div>
             <div class="flex flex-col md:gap-8 gap-4 w-[80%] mx-auto">
-                <img src="../assets/images/pic-03.jpg"
+                <img :src="require('@/assets/images/pic-03.jpg')"
                     class="rolling-content-02 w-full md:h-96 h-40 relative object-cover">
                 <div class="rolling-content-03 flex flex-col gap-6">
                     <h2 class=" font-bold text-xl text-base-heavy tracking-widest">不被日常打擾的拾光</h2>
@@ -36,7 +36,7 @@
             </div>
             <div class="rolling-line-01 md:w-20 w-10 h-px bg-gray-400/60 mx-auto"></div>
             <div class="flex md:gap-8 gap-4 md:w-[60%] mr-auto md:ml-32 ml-1">
-                <img src="../assets/images/pic-02.jpg" class="rolling-content-04 w-[40%] relative object-cover">
+                <img :src="require('@/assets/images/pic-02.jpg')" class="rolling-content-04 w-[40%] relative object-cover">
                 <div class=" rolling-content-04 flex flex-col md:gap-8 gap-4">
                     <h2 class="font-bold text-xl text-base-heavy tracking-widest">從出發到抵達的溫度</h2>
                     <p class="md:leading-6.5 tracking-widest md:text-base text-sm text-base-light">
@@ -52,7 +52,7 @@
             </div>
             <div class="rolling-line-01 md:w-20 w-10 h-px bg-gray-400/60 mx-auto"></div>
             <div class="flex md:flex-row flex-col-reverse mx-auto justify-center items-center md:gap-8 gap-8">
-                <img src="../assets/images/about-img-2.jpg"
+                <img :src="require('@/assets/images/about-img-2.jpg')"
                     class="rolling-content-05 md:w-[50%] w-full relative object-cover">
                 <p
                     class="rolling-content-06 text-base-light md:text-start text-center md:[writing-mode:vertical-rl] tracking-widest">
@@ -64,7 +64,7 @@
 </template>
 
 <script>
-import AppLoading from '@/components/AppLoading.vue';
+import BaseLoading from '@/components/base/BaseLoading.vue';
 
 export default {
     name: 'AppAbout',
@@ -74,7 +74,7 @@ export default {
         };
     },
     components: {
-        AppLoading,
+        BaseLoading,
     },
     mounted() {
         this.isLoading = false

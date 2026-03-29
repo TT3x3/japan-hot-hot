@@ -1,7 +1,7 @@
 <template>
     <div>
-        <AppLoading :isLoading="isLoading" />
-        <CustomModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
+        <BaseLoading :isLoading="isLoading" />
+        <BaseModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
             @close="isModalOpen = false" @confirm="handleModalClick()" />
         <div v-if="tour" class="flex flex-col gap-32w-full">
             <div class="max-w-[80%] w-full mx-auto flex flex-col md:gap-12 gap-6">
@@ -247,8 +247,8 @@
 <script>
 import http from '@/api/http'
 import { useOrderStore } from '@/stores/order.js';
-import CustomModal from '@/components/CustomModal.vue';
-import AppLoading from '@/components/AppLoading.vue';
+import BaseModal from '@/components/base/BaseModal.vue';
+import BaseLoading from '@/components/base/BaseLoading.vue';
 
 export default {
     name: 'TourDetail',
@@ -279,8 +279,8 @@ export default {
         }
     },
     components: {
-        CustomModal,
-        AppLoading,
+        BaseModal,
+        BaseLoading,
     },
     created() {
         this.token = localStorage.getItem('token');

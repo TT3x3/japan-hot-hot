@@ -1,9 +1,9 @@
 <template>
     <div class="flex flex-col md:gap-32 gap-12 w-full bg-gray-100">
-        <AppLoading :isLoading="isLoading" />
+        <BaseLoading :isLoading="isLoading" />
         <!-- top -->
         <div class="relative md:h-80 h-40 overflow-hidden">
-            <img src="../assets/images/carousel-5.jpg" alt="" class=" w-full h-full object-cover">
+            <img :src="require('@/assets/images/carousel-5.jpg')" alt="" class=" w-full h-full object-cover">
         </div>
         <div>
             <div class="flex justify-center items-center">
@@ -111,7 +111,7 @@
 </template>
 
 <script>
-import AppLoading from '@/components/AppLoading.vue';
+import BaseLoading from '@/components/base/BaseLoading.vue';
 
 export default {
     name: 'AppLogin',
@@ -135,7 +135,7 @@ export default {
         };
     },
     components: {
-        AppLoading,
+        BaseLoading,
     },
     methods: {
         validateForm() {

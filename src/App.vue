@@ -8,9 +8,9 @@
 </template>
 
 <script>
-import AppHeader from './components/AppHeader.vue';
-import AppFooter from './components/AppFooter.vue';
-import BackToTop from './components/BackToTop.vue';
+import AppHeader from './components/layout/AppHeader.vue';
+import AppFooter from './components/layout/AppFooter.vue';
+import BackToTop from './components/common/BackToTop.vue';
 
 export default {
   name: 'App',

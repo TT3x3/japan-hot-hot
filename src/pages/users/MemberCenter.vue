@@ -1,8 +1,8 @@
 <template>
     <div class="flex flex-col md:gap-32 gap-12 w-full bg-gray-100">
-        <AppLoading :isLoading="isLoading" />
+        <BaseLoading :isLoading="isLoading" />
         <!-- top -->
-        <MemberBanner :bannerImg="bannerImg" :pageTitle="pageTitle" />
+        <MemberHero :bannerImg="bannerImg" :pageTitle="pageTitle" />
         <div class="max-w-[80%] w-full mx-auto">
             <div class="flex items-center gap-4 ps-2 pb-4 text-base-heavy">
                 <i class="fa-solid fa-basket-shopping"></i>
@@ -41,8 +41,8 @@
 </template>
 
 <script>
-import AppLoading from '@/components/AppLoading.vue';
-import MemberBanner from '@/components/MemberBanner.vue';
+import BaseLoading from '@/components/base/BaseLoading.vue';
+import MemberHero from '@/components/layout/MemberHero.vue';
 
 export default {
     name: 'MemberCenter',
@@ -57,8 +57,8 @@ export default {
         }
     },
     components: {
-        AppLoading,
-        MemberBanner,
+        BaseLoading,
+        MemberHero,
     },
     mounted() {
         this.isLoading = false

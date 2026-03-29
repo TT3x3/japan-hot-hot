@@ -1,11 +1,11 @@
 <template>
   <div class="flex flex-col md:gap-56 gap-12">
-    <AppLoading :isLoading="isLoading" />
+    <BaseLoading :isLoading="isLoading" />
     <div class="flex md:flex-col flex-col-reverse md:gap-32 gap-12">
       <!-- 搜尋框 -->
       <SearchBar :productType="productType" :placeholderType="placeholderType" :allProducts="products" v-model="search"
         @search-result="getSearchResult" />
-      <img src="../assets/images/home-banner.jpg" class="fade-content-01 w-full h-72 relative object-cover"
+      <img :src="require('@/assets/images/home-banner.jpg')" class="fade-content-01 w-full h-72 relative object-cover"
         alt="home-banner">
     </div>
 
@@ -18,7 +18,7 @@
     <div class="rolling-home-01 bg-gray-200 overflow-x-hidden md:py-0 md:pb-24 md:pt-8 py-12">
       <div class="flex w-full justify-center items-center gap-8">
         <div class="flex flex-col md:items-end items-center">
-          <img src="../assets/images/about-img-2.jpg" alt="about-img-2" class="md:h-72 h-96 object-cover md:pr-16">
+          <img :src="require('@/assets/images/about-img-2.jpg')" alt="about-img-2" class="md:h-72 h-96 object-cover md:pr-16">
           <div class="flex flex-col md:gap-8 gap-4 h-[45%] md:[writing-mode:vertical-rl] md:px-12 md:py-0 p-8">
             <h2 class="font-bold text-xl text-base-heavy">日頭赤炎炎</h2>
             <p class="md:leading-6.5 tracking-widest md:text-base text-sm text-base-light">
@@ -26,7 +26,7 @@
             </p>
           </div>
         </div>
-        <img src="../assets/images/about-img-1.jpg" alt="about-img-1"
+        <img :src="require('@/assets/images/about-img-1.jpg')" alt="about-img-1"
           class="hidden md:block max-w-[30%] h-full object-cover">
       </div>
     </div>
@@ -36,10 +36,10 @@
 <script>
 import http from '@/api/http'
 import { useResultStore } from '@/stores/search'
-import HomeActivity from '@/components/HomeActivity.vue';
-import HomeCarousel from '@/components/HomeCarousel.vue';
-import SearchBar from '@/components/SearchBar.vue';
-import AppLoading from '@/components/AppLoading.vue';
+import HomeActivity from '@/components/home/HomeActivity.vue';
+import HomeCarousel from '@/components/home/HomeCarousel.vue';
+import SearchBar from '@/components/common/SearchBar.vue';
+import BaseLoading from '@/components/base/BaseLoading.vue';
 
 export default {
   name: 'AppHome',
@@ -47,7 +47,7 @@ export default {
     HomeActivity,
     HomeCarousel,
     SearchBar,
-    AppLoading,
+    BaseLoading,
   },
   data() {
     return {
@@ -64,7 +64,6 @@ export default {
         const res = await http.get(`/product/flight`);
         this.products = res.data.items;
         this.productType = this.typeTranslate(res.data.items[0].type);
-        // console.log(this.productType)
         console.log(res.data.items[0].type)
       } catch (error) {
         this.isModalOpen = true;

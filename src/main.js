@@ -7,8 +7,8 @@ import { createPinia, PiniaVuePlugin } from "pinia";
 import "vue-select/dist/vue-select.css";
 import "./assets/main.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import "./utils/filter";
-import CustomPagination from "./components/CustomPagination.vue";
+import "./filters/dollarFilter";
+import CustomPagination from "./components/base/BasePagination.vue";
 import { auth } from "@/utils/auth";
 import "@/assets/font.css";
 

@@ -1,10 +1,10 @@
 <template>
     <div class="flex flex-col md:gap-32 gap-12 w-full bg-gray-100">
-        <AppLoading :isLoading="isLoading" />
-        <CustomModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
+        <BaseLoading :isLoading="isLoading" />
+        <BaseModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
             @close="isModalOpen = false;" @confirm="handleModalClick()" />
         <!-- top -->
-        <MemberBanner :bannerImg="bannerImg" :pageTitle="pageTitle" />
+        <MemberHero :bannerImg="bannerImg" :pageTitle="pageTitle" />
 
         <div class="max-w-[80%] w-full mx-auto flex flex-col gap-8">
             <p class="font-bold text-2xl text-base-heavy">哩賀！甲奔未！{{ oldInfo.name }}！</p>
@@ -167,9 +167,9 @@
 
 <script>
 import http from '@/api/http'
-import CustomModal from '@/components/CustomModal.vue';
-import AppLoading from '@/components/AppLoading.vue';
-import MemberBanner from '@/components/MemberBanner.vue';
+import BaseModal from '@/components/base/BaseModal.vue';
+import BaseLoading from '@/components/base/BaseLoading.vue';
+import MemberHero from '@/components/layout/MemberHero.vue';
 
 export default {
     name: 'MemberProfile',
@@ -199,9 +199,9 @@ export default {
         }
     },
     components: {
-        CustomModal,
-        AppLoading,
-        MemberBanner,
+        BaseModal,
+        BaseLoading,
+        MemberHero,
     },
     created() {
         this.getUser();

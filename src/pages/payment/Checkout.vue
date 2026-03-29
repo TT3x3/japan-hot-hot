@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col gap-32 w-full">
-        <AppLoading :isLoading="isLoading" />
-        <CustomModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
+        <BaseLoading :isLoading="isLoading" />
+        <BaseModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
             @close="isModalOpen = false;" @confirm="handleModalClick()" />
         <div class="max-w-[80%] w-full mx-auto flex flex-col gap-12">
             <!-- 進度條 -->
@@ -37,7 +37,7 @@
             </div>
 
             <div class="flex flex-col gap-2">
-                <img src="../../assets/images/carousel-3.jpg" class="w-full h-64 object-cover" alt="">
+                <img :src="require('@/assets/images/carousel-3.jpg')" class="w-full h-64 object-cover" alt="">
                 <p class="font-extrabold text-xl text-base-heavy">高雄往返關西，極簡商務選航</p>
             </div>
 
@@ -196,8 +196,8 @@
 import http from '@/api/http'
 import cities from '@/json/city.json';
 import { useOrderStore } from '@/stores/order';
-import CustomModal from '@/components/CustomModal.vue';
-import AppLoading from '@/components/AppLoading.vue';
+import BaseModal from '@/components/base/BaseModal.vue';
+import BaseLoading from '@/components/base/BaseLoading.vue';
 
 export default {
     name: 'CheckoutPage',
@@ -233,8 +233,8 @@ export default {
         }
     },
     components: {
-        CustomModal,
-        AppLoading,
+        BaseModal,
+        BaseLoading,
     },
     created() {
         this.store = useOrderStore();

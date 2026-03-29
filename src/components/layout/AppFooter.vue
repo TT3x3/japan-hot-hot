@@ -2,7 +2,7 @@
     <footer class="w-full">
         <div class="mx-auto max-w-[80%] flex md:flex-row flex-col md:justify-between items-center gap-8 md:pt-16 md:pb-28 py-10">
             <div class="h-[218px] flex flex-col md:justify-between md:items-start items-center gap-8">
-                <img src="../assets/images/logo-2-s.png" alt="logo-small" class="w-[200px] pb-5">
+                <img :src="require('@/assets/images/logo-2-s.png')" alt="logo-small" class="w-[200px] pb-5">
                 <ul class="flex flex-col md:gap-1 gap-2 text-sm  text-base-light">
                     <li class="flex md:gap-2 gap-1 items-center"><i class="fa-solid fa-phone"></i><p>0912-345-678</p></li>
                     <li class="flex md:gap-2 gap-1 items-center"><i class="fa-solid fa-envelope"></i><p>japan-hothot@hot.com</p></li>

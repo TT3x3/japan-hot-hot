@@ -1,10 +1,10 @@
 <template>
     <div>
-        <AppLoading :isLoading="isLoading" />
-        <CustomModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
+        <BaseLoading :isLoading="isLoading" />
+        <BaseModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
             @close="isModalOpen = false;" @confirm="handleModalClick()" />
         <div v-if="items" class="flex flex-col md:gap-32 gap-12 w-full bg-gray-100">
-            <MemberBanner :bannerImg="bannerImg" :pageTitle="pageTitle" />
+            <MemberHero :bannerImg="bannerImg" :pageTitle="pageTitle" />
             <div v-if="items.length > 0" class="max-w-[80%] w-full mx-auto flex flex-col gap-10">
                 <!-- 分類 -->
                 <div class="flex md:gap-8 gap-4">
@@ -92,9 +92,9 @@
 
 <script>
 import http from '@/api/http'
-import CustomModal from '@/components/CustomModal.vue';
-import AppLoading from '@/components/AppLoading.vue';
-import MemberBanner from '@/components/MemberBanner.vue';
+import BaseModal from '@/components/base/BaseModal.vue';
+import BaseLoading from '@/components/base/BaseLoading.vue';
+import MemberHero from '@/components/layout/MemberHero.vue';
 
 export default {
     name: 'MemberLikes',
@@ -117,9 +117,9 @@ export default {
         };
     },
     components: {
-        CustomModal,
-        AppLoading,
-        MemberBanner,
+        BaseModal,
+        BaseLoading,
+        MemberHero,
     },
     methods: {
         async getLikes() {

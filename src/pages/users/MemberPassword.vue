@@ -1,10 +1,10 @@
 <template>
     <div class="flex flex-col gap-32 w-full bg-gray-100">
-        <AppLoading :isLoading="isLoading" />
-        <CustomModal :isModalOpen="isModalOpen" :hasError="hasError" :hasSuccess="hasSuccess"
+        <BaseLoading :isLoading="isLoading" />
+        <BaseModal :isModalOpen="isModalOpen" :hasError="hasError" :hasSuccess="hasSuccess"
             :modalContent="modalContent" @close="isModalOpen = false;" @confirm="handleModalClick()" />
         <!-- top -->
-        <MemberBanner :bannerImg="bannerImg" :pageTitle="pageTitle" />
+        <MemberHero :bannerImg="bannerImg" :pageTitle="pageTitle" />
         <div class="max-w-[80%] w-full mx-auto flex flex-col gap-8">
             <div class="text-base-heavy">
                 <div class="flex flex-row gap-4 ps-2 pb-4 items-center">
@@ -77,9 +77,9 @@
 
 <script>
 import http from '@/api/http'
-import AppLoading from '@/components/AppLoading.vue';
-import CustomModal from '@/components/CustomModal.vue';
-import MemberBanner from '@/components/MemberBanner.vue';
+import BaseLoading from '@/components/base/BaseLoading.vue';
+import BaseModal from '@/components/base/BaseModal.vue';
+import MemberHero from '@/components/layout/MemberHero.vue';
 
 export default {
     name: 'MemberPassword',
@@ -107,9 +107,9 @@ export default {
         }
     },
     components: {
-        AppLoading,
-        CustomModal,
-        MemberBanner,
+        BaseLoading,
+        BaseModal,
+        MemberHero,
     },
     methods: {
         async changePassword() {
