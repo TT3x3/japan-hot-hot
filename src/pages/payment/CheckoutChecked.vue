@@ -5,36 +5,7 @@
             @close="isModalOpen = false;" @confirm="handleModalClick()" />
         <div v-if="orderDetail" class="max-w-[80%] w-full mx-auto flex flex-col gap-12">
             <!-- 進度條 -->
-            <div class=" flex flex-row md:gap-4 gap-1">
-                <div class="flex flex-col gap-2 w-full">
-                    <div class="w-full h-1 bg-hot-red"></div>
-                    <div class="p-1">
-                        <p class="font-bold text-hot-red">Step 1</p>
-                        <p class="text-sm text-gray-400">結帳</p>
-                    </div>
-                </div>
-                <div class="flex flex-col gap-2 w-full">
-                    <div class="w-full h-1 bg-hot-red"></div>
-                    <div class="p-1">
-                        <p class="font-bold text-hot-red">Step 2</p>
-                        <p class="text-sm text-gray-400">填寫護照</p>
-                    </div>
-                </div>
-                <div class="flex flex-col gap-2 w-full">
-                    <div class="w-full h-1 bg-hot-red"></div>
-                    <div class="p-1">
-                        <p class="font-bold text-hot-red">Step 3</p>
-                        <p class="text-sm text-gray-400">訂單確認</p>
-                    </div>
-                </div>
-                <div class="flex flex-col gap-2 w-full">
-                    <div class="w-full h-1 bg-gray-400"></div>
-                    <div class="p-1">
-                        <p class="font-bold text-gray-400">Step 4</p>
-                        <p class="text-sm text-gray-400">完成！</p>
-                    </div>
-                </div>
-            </div>
+            <CheckoutStepBar :StepNum="3" />
 
             <!-- 購買資訊 -->
             <div class="flex flex-col gap-2">
@@ -181,6 +152,7 @@ import http from '@/api/http'
 import { useOrderStore } from '@/stores/order';
 import BaseModal from '@/components/base/BaseModal.vue';
 import BaseLoading from '@/components/base/BaseLoading.vue';
+import CheckoutStepBar from '@/components/ui/CheckoutStepBar.vue'
 
 export default {
     name: 'CheckoutChecked',
@@ -200,6 +172,7 @@ export default {
     components: {
         BaseModal,
         BaseLoading,
+        CheckoutStepBar,
     },
     created() {
         this.store = useOrderStore();

@@ -1,47 +1,12 @@
 <template>
     <div class="flex flex-col gap-32 w-full">
         <div class="max-w-[80%] w-full mx-auto flex flex-col gap-12">
-            <!-- 進度條 -->
-            <div class=" flex flex-row md:gap-4 gap-1">
-                <div class="flex flex-col gap-2 w-full">
-                    <div class="w-full h-1 bg-hot-red"></div>
-                    <div class="p-1">
-                        <p class="font-bold text-hot-red">Step 1</p>
-                        <p class="text-sm text-gray-400">結帳</p>
-                    </div>
-                </div>
-                <div class="flex flex-col gap-2 w-full">
-                    <div class="w-full h-1 bg-hot-red"></div>
-                    <div class="p-1">
-                        <p class="font-bold text-hot-red">Step 2</p>
-                        <p class="text-sm text-gray-400">填寫護照</p>
-                    </div>
-                </div>
-                <div class="flex flex-col gap-2 w-full">
-                    <div class="w-full h-1 bg-hot-red"></div>
-                    <div class="p-1">
-                        <p class="font-bold text-hot-red">Step 3</p>
-                        <p class="text-sm text-gray-400">訂單確認</p>
-                    </div>
-                </div>
-                <div v-if="isSuccessful === true" class="flex flex-col gap-2 w-full">
-                    <div class="w-full h-1 bg-hot-red"></div>
-                    <div class="p-1">
-                        <p class="font-bold text-hot-red">Step 4</p>
-                        <p class="text-sm text-gray-400">完成！</p>
-                    </div>
-                </div>
-                <div v-else class="flex flex-col gap-2 w-full">
-                    <div class="w-full h-1 bg-gray-400"></div>
-                    <div class="p-1">
-                        <p class="font-bold text-gray-400">Step 4</p>
-                        <p class="text-sm text-gray-400">失敗Q_Q</p>
-                    </div>
-                </div>
-            </div>
+<!-- 進度條 -->
+            <CheckoutStepBar :StepNum="4" />
+
             <div v-if="isSuccessful === true" class="flex flex-col justify-center items-center w-full">
-                <div class="flex flex-col items-center py-8">
-                    <i class="fa-solid fa-circle-check fa-8x text-hot-red"></i>
+                <div class="flex flex-col items-center md:py-20 py-8">
+                    <i class="fa-solid fa-circle-check fa-7x text-hot-red"></i>
                     <p class="py-8 font-extrabold md:text-3xl text-xl text-hot-red">訂購完成！</p>
                 </div>
                 <div class="flex md:flex-row flex-col gap-4 md:w-[70%] w-full">
@@ -52,8 +17,8 @@
                 </div>
             </div>
             <div v-else class="flex flex-col justify-center items-center w-full">
-                <div class="flex flex-col items-center py-8">
-                    <i class="fa-solid fa-heart-crack fa-8x text-gray-500"></i>
+                <div class="flex flex-col items-center md:py-20 py-8">
+                    <i class="fa-solid fa-heart-crack fa-7x text-gray-500"></i>
                     <div class="flex justify-center flex-col items-center">
                         <p class="pt-8 pb-2 font-extrabold md:text-3xl text-xl text-gray-500">挖咧，訂購失敗</p>
                         <p class="text-gray-400 pb-8">請洽管理員或稍後嘗試重新訂購。</p>
@@ -73,12 +38,17 @@
 </template>
 
 <script>
+import CheckoutStepBar from '@/components/ui/CheckoutStepBar.vue'
+
 export default {
     name: 'CheckoutFinished',
     data() {
         return {
             isSuccessful: true,
         }
+    },
+    components:{
+        CheckoutStepBar,
     },
     computed: {
         typeTranslate() {
