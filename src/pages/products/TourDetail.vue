@@ -315,6 +315,7 @@ export default {
                 this.isModalOpen = true;
                 this.hasError = true;
                 this.modalContent = '此功能僅限會員使用，請先登入';
+                this.isLoading = false;
                 return;
             }
             try {

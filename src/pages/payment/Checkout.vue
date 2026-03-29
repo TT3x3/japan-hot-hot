@@ -18,7 +18,7 @@
                     <div class="bg-gray-100 md:px-8 px-2 py-4 w-full">
                         <p class="text-sm text-base-light">出發日期</p>
                         <p class="font-bold md:text-xl text-md text-base-heavy">{{ orderInfo.startDate || orderInfo.date
-                            }}</p>
+                        }}</p>
                     </div>
                     <div class="bg-gray-100 md:px-8 px-2 py-4 w-full">
                         <p class="text-sm text-base-light">出發時間</p>
@@ -42,58 +42,28 @@
                         <p class="text-sm px-4 text-gray-400">* 為必填欄位</p>
                     </div>
                     <div class="flex flex-col gap-4 border border-gray-100 md:px-6 px-2 md:py-6 py-4">
-                        <div class="flex flex-col gap-1 px-4">
-                            <div class="flex md:flex-row flex-col w-full md:items-center items-start">
-                                <label for="nameInput"
-                                    class="inline-block w-24 font-bold text-base-light md:text-base text-sm">姓名<span
-                                        class="text-hot-red">*</span></label>
-                                <input id="nameInput" type="text" v-model.trim="userInfo.name"
-                                    @focus="errorInfo.name = ''" class="w-full border border-gray-300 px-2 py-1 "
-                                    :class="{ 'border-hot-red': errorInfo.name }" placeholder="請輸入姓名">
-                            </div>
-                            <small v-if="errorInfo.name" class="text-sm text-end text-hot-red">{{
-                                errorInfo.name }}</small>
-                        </div>
+                        <BaseInput labelName="姓名" inputKey="name" inputType="text" v-model="userInfo.name"
+                            :errorTitle="errorInfo.name" :clearErrorInfo="clearErrorInfo" required />
+
                         <div class="w-full h-px bg-gray-100"></div>
-                        <div class="flex flex-col gap-1 px-4">
-                            <div class="flex md:flex-row flex-col w-full md:items-center items-start">
-                                <label for="emailInput"
-                                    class="inline-block w-24 font-bold text-base-light md:text-base text-sm">Email<span
-                                        class="text-hot-red">*</span></label>
-                                <input id="emailInput" type="text" v-model.trim="userInfo.email"
-                                    @focus="errorInfo.email = ''" class="w-full border border-gray-300 px-2 py-1 "
-                                    :class="{ 'border-hot-red': errorInfo.email }" placeholder="請輸入Email">
-                            </div>
-                            <small v-if="errorInfo.email" class="text-sm text-end text-hot-red">{{
-                                errorInfo.email }}</small>
-                        </div>
+                        <BaseInput labelName="Email" inputKey="email" inputType="email" v-model="userInfo.email"
+                            :errorTitle="errorInfo.email" :clearErrorInfo="clearErrorInfo" required />
                         <div class="w-full h-px bg-gray-100"></div>
-                        <div class="flex flex-col gap-1 px-4">
-                            <div class="flex md:flex-row flex-col w-full md:items-center items-start">
-                                <label for="phoneInput"
-                                    class="inline-block w-24 font-bold text-base-light md:text-base text-sm">聯絡電話<span
-                                        class="text-hot-red">*</span></label>
-                                <input id="phoneInput" type="text" v-model.trim="userInfo.phone"
-                                    @focus="errorInfo.phone = ''" class="w-full border border-gray-300 px-2 py-1 "
-                                    :class="{ 'border-hot-red': errorInfo.phone }" placeholder="請輸入聯絡電話">
-                            </div>
-                            <small v-if="errorInfo.phone" class="text-sm text-end text-hot-red">{{
-                                errorInfo.phone }}</small>
-                        </div>
+                        <BaseInput labelName="連絡電話" inputKey="phone" inputType="tel" v-model="userInfo.phone"
+                            :errorTitle="errorInfo.phone" :clearErrorInfo="clearErrorInfo" required />
                         <div class="w-full h-px bg-gray-100"></div>
-                        <div class="flex flex-col gap-2 px-4"
-                            :class="{ 'border border-hot-red py-2': errorInfo.address }">
+                        <div class="flex flex-col gap-2" :class="{ 'border border-hot-red py-2': errorInfo.address }">
                             <div class="flex md:flex-row flex-col gap-4">
                                 <div class="flex flex-col w-full">
                                     <label for="citySelect"
-                                        class="inline-block w-24 font-bold text-base-light md:text-base text-sm">縣市<span
+                                        class="inline-block w-24 font-bold text-base-light text-base">縣市<span
                                             class="text-hot-red">*</span></label>
                                     <v-select id="citySelect" v-model="selectCity" @open="openCitySelect"
                                         label="CityName" placeholder="請選擇" :options="cities"></v-select>
                                 </div>
                                 <div class="flex flex-col w-full">
                                     <label for="citySelect"
-                                        class="inline-block w-24 font-bold text-base-light md:text-base text-sm">鄉鎮市<span
+                                        class="inline-block w-24 font-bold text-base-light text-base">鄉鎮市<span
                                             class="text-hot-red">*</span></label>
                                     <v-select label="AreaName" v-model="selectArea" :disabled="!selectCity"
                                         placeholder="請選擇" :options="areaOptions"></v-select>
@@ -101,7 +71,7 @@
                             </div>
                             <div class="flex flex-col w-full">
                                 <label for="citySelect"
-                                    class="inline-block w-24 font-bold text-base-light md:text-base text-sm">詳細地址<span
+                                    class="inline-block w-24 font-bold text-base-light text-base">詳細地址<span
                                         class="text-hot-red">*</span></label>
                                 <input id="addressInput" type="text" v-model.trim="userInfo.address"
                                     @focus="errorInfo.address = ''" class="w-full border border-gray-300 px-2 py-1"
@@ -111,10 +81,10 @@
                                 errorInfo.address }}</small>
                         </div>
                         <div class="w-full h-px bg-gray-100"></div>
-                        <div class="flex flex-col gap-1 px-4">
+                        <div class="flex flex-col gap-1">
                             <div class="flex md:flex-row flex-col w-full items-start">
                                 <label for="noteInput"
-                                    class="inline-block w-24 font-bold text-base-light md:text-base text-sm">備註</label>
+                                    class="inline-block w-24 font-bold text-base-light text-base">備註</label>
                                 <textarea id="noteInput" type="text" v-model.trim="userInfo.note" rows="5"
                                     maxlength="80" @focus="errorInfo.note = ''"
                                     class="w-full border border-gray-300 px-2 py-1 resize-none"
@@ -129,10 +99,10 @@
                 <!-- 付款資訊 -->
                 <div class="flex flex-col gap-2 w-full">
                     <p class="font-bold text-xl ">價格資訊</p>
-                    <div class="flex flex-col gap-4 border border-gray-100 p-6">
+                    <div class="flex flex-col gap-4 border border-gray-100 md:px-6 px-2 md:py-6 py-4">
                         <div class="flex md:flex-row flex-col w-full md:items-center items-start">
                             <label for="paymentInput"
-                                class="inline-block w-24 font-bold text-base-light md:text-base text-sm">支付方式</label>
+                                class="inline-block w-24 font-bold text-base-light text-base">支付方式</label>
                             <select id="paymentInput" type="text" v-model.trim="userInfo.payment"
                                 @focus="errorInfo.payment = ''"
                                 class="w-full border border-gray-300 px-2 py-1 text-base-heavy"
@@ -148,7 +118,7 @@
                             class="flex md:flex-row flex-col md:items-center items-start justify-between bg-gray-100 p-6">
                             <p>總金額</p>
                             <p class="font-bold text-xl text-hot-red">{{ orderInfo.totalAmount | dollarSign | currency
-                                }}</p>
+                            }}</p>
                         </div>
                     </div>
                     <div class="flex flex-row gap-4">
@@ -170,6 +140,7 @@ import { useOrderStore } from '@/stores/order';
 import BaseModal from '@/components/base/BaseModal.vue';
 import BaseLoading from '@/components/base/BaseLoading.vue';
 import CheckoutStepBar from '@/components/ui/CheckoutStepBar.vue'
+import BaseInput from '@/components/ui/BaseInput.vue';
 
 export default {
     name: 'CheckoutPage',
@@ -208,6 +179,7 @@ export default {
         BaseModal,
         BaseLoading,
         CheckoutStepBar,
+        BaseInput,
     },
     created() {
         this.store = useOrderStore();
@@ -218,6 +190,7 @@ export default {
             this.selectCity = '';
         },
         validateForm() {
+            this.isError = false;
             const nameRule = /^[A-Za-z\u4E00-\u9FFF\s-]{1,10}$/;
             if (this.userInfo.name.trim() === '') {
                 this.isError = true;
@@ -271,9 +244,9 @@ export default {
             }
         },
         async saveCheckoutInfo() {
-            this.isLoading = true;
             this.validateForm();
             if (this.isError === true) return;
+            this.isLoading = true;
             const info = {
                 name: this.userInfo.name,
                 email: this.userInfo.email,
@@ -302,7 +275,10 @@ export default {
         handleModalClick() {
             if (!this.isCatchError) return;
             this.$router.push('/');
-        }
+        },
+        clearErrorInfo(key) {
+            this.errorInfo[key] = '';
+        },
     },
     computed: {
         orderInfo() {

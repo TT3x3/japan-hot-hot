@@ -19,35 +19,13 @@
                         <form
                             class="bg-white md:px-10 px-4 md:py-18 py-6 w-full max-w-3xl flex flex-col gap-6 justify-center">
                             <div class="flex flex-col gap-4">
-                                <div class="flex flex-col gap-1 px-4">
-                                    <div
-                                        class="flex md:flex-row flex-col md:items-center items-start md:gap-0 gap-1 w-full">
-                                        <label for="emailInput"
-                                            class="inline-block w-24 font-bold text-base-light">Email</label>
-                                        <input id="emailInput" type="email" v-model.trim="loginInfo.email"
-                                            @focus="errorInfo.email = ''"
-                                            class="w-full border border-gray-300 px-2 py-1 text-base-heavy"
-                                            :class="{ 'border-hot-red': errorInfo.email }" placeholder="請輸入Email">
-                                    </div>
-                                    <small v-if="errorInfo.email" class="text-sm text-end text-hot-red">{{
-                                        errorInfo.email }}</small>
-                                </div>
-                                <LoginInput labelName="Email" inputKey="email" inputType="email" v-model="loginInfo.email"
-                                    :errorTitle="errorInfo.email" :clearErrorInfo="clearErrorInfo" />
+                                <BaseInput labelName="Email" inputKey="email" inputType="email"
+                                    v-model="loginInfo.email" :errorTitle="errorInfo.email"
+                                    :clearErrorInfo="clearErrorInfo" required  />
                                 <div class="md:block hidden w-full h-px bg-gray-100"></div>
-                                <div class="flex flex-col gap-1 px-4">
-                                    <div
-                                        class="flex md:flex-row flex-col md:items-center items-start md:gap-0 gap-1 w-full">
-                                        <label for="passwordInput"
-                                            class="inline-block w-24 font-bold text-base-light">密碼</label>
-                                        <input id="passwordInput" type="password" v-model.trim="loginInfo.password"
-                                            @focus="errorInfo.password = ''"
-                                            class="w-full border border-gray-300 px-2 py-1 text-base-heavy"
-                                            :class="{ 'border-hot-red': errorInfo.password }" placeholder="請輸入密碼">
-                                    </div>
-                                    <small v-if="errorInfo.password" class="text-sm text-end text-hot-red">{{
-                                        errorInfo.password }}</small>
-                                </div>
+                                <BaseInput labelName="密碼" inputKey="password" inputType="password"
+                                    v-model="loginInfo.password" :errorTitle="errorInfo.password"
+                                    :clearErrorInfo="clearErrorInfo" required  />
                             </div>
                             <div class="flex md:flex-row flex-col gap-4 justify-center items-center">
                                 <button type="submit" @click.prevent="postLogin()"
@@ -55,7 +33,6 @@
                                 <router-link to="/signup"
                                     class="md:w-36 w-full cursor-pointer bg-gray-400 text-center text-white py-3  hover:bg-gray-300 active:bg-gray-500 transition-colors">加入日頭</router-link>
                             </div>
-                            <!-- <p class="text-center text-sm px-4 cursor-pointer text-base-light">忘記密碼了嗎？</p> -->
                             <div class="w-full h-px bg-gray-100"></div>
                             <div>
                                 <p class="text-xs px-4 text-gray-400">＊請以半角字元輸入“@”符號。</p>
@@ -75,7 +52,7 @@ import http from '@/api/http'
 import { login } from '@/utils/auth'
 import BaseModal from '@/components/base/BaseModal.vue';
 import BaseLoading from '@/components/base/BaseLoading.vue';
-import LoginInput from '@/components/ui/LoginInput.vue';
+import BaseInput from '@/components/ui/BaseInput.vue';
 
 export default {
     name: 'AppLogin',
@@ -102,11 +79,12 @@ export default {
     components: {
         BaseModal,
         BaseLoading,
-        LoginInput,
+        BaseInput,
     },
     methods: {
         validateForm() {
             const emailRule = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            this.isError = false;
             if (this.loginInfo.email.trim() === '') {
                 this.errorInfo.email = '*請輸入電子郵件';
                 this.isError = true;

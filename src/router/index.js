@@ -4,6 +4,7 @@ import { useOrderStore } from "@/stores/order";
 
 // import 頁面
 import AppHome from "@/pages/AppHome.vue";
+import NotFound from "@/pages/NotFound.vue";
 import AppAbout from "@/pages/AppAbout.vue";
 import AppLogin from "@/pages/AppLogin.vue";
 import AppSignup from "@/pages/AppSignup.vue";
@@ -32,7 +33,12 @@ const router = new Router({
       name: "home",
       component: AppHome,
     },
-        {
+    {
+      path: "/404",
+      name: "notFound",
+      component: NotFound,
+    },
+    {
       path: "/about",
       name: "about",
       component: AppAbout,
@@ -129,6 +135,10 @@ const router = new Router({
       name: "checkoutFinished",
       component: CheckoutFinished,
       meta: { requiresAuth: true },
+    },
+    {
+      path: "*",
+      redirect: "/404",
     },
   ],
 });

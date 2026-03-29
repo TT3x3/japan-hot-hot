@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col gap-32 w-full">
         <div class="max-w-[80%] w-full mx-auto flex flex-col gap-12">
-<!-- 進度條 -->
+            <!-- 進度條 -->
             <CheckoutStepBar :StepNum="4" />
 
             <div v-if="isSuccessful === true" class="flex flex-col justify-center items-center w-full">
@@ -47,7 +47,7 @@ export default {
             isSuccessful: true,
         }
     },
-    components:{
+    components: {
         CheckoutStepBar,
     },
     computed: {

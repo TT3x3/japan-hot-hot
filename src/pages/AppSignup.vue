@@ -17,77 +17,25 @@
                         <form
                             class="bg-white md:px-10 px-4 md:py-18 py-6  w-full max-w-3xl flex flex-col gap-6 justify-center">
                             <div class="flex flex-col gap-4">
-                                <div class="flex flex-col gap-1">
-                                    <div
-                                        class="flex md:flex-row flex-col md:items-center items-start md:gap-0 gap-1 w-full">
-                                        <label for="emailInput"
-                                            class="inline-block w-24 font-bold text-base-light">Email</label>
-                                        <input id="emailInput" type="email" v-model.trim="userInfo.email"
-                                            @focus="errorInfo.email = ''"
-                                            class="w-full border border-gray-300 px-2 py-1 text-base-heavy"
-                                            :class="{ 'border-hot-red': errorInfo.email }" placeholder="請輸入Email">
-                                    </div>
-                                    <small v-if="errorInfo.email" class="text-sm text-end text-hot-red">{{
-                                        errorInfo.email }}</small>
-                                </div>
+                                <BaseInput labelName="Email" inputKey="email" inputType="email"
+                                    v-model="userInfo.email" :errorTitle="errorInfo.email"
+                                    :clearErrorInfo="clearErrorInfo" required  />
                                 <div class="md:block hidden w-full h-px bg-gray-100"></div>
-                                <div class="flex flex-col gap-1">
-                                    <div
-                                        class="flex md:flex-row flex-col md:items-center items-start md:gap-0 gap-1 w-full">
-                                        <label for="passwordInput"
-                                            class="inline-block w-24 font-bold text-base-light">密碼</label>
-                                        <input id="passwordInput" type="password" v-model.trim="userInfo.password"
-                                            @focus="errorInfo.password = ''"
-                                            class="w-full border border-gray-300 px-2 py-1 text-base-heavy"
-                                            :class="{ 'border-hot-red': errorInfo.password }" placeholder="請輸入密碼">
-                                    </div>
-                                    <small v-if="errorInfo.password" class="text-sm text-end text-hot-red">{{
-                                        errorInfo.password }}</small>
-                                </div>
+                                <BaseInput labelName="密碼" inputKey="password" inputType="password"
+                                    v-model="userInfo.password" :errorTitle="errorInfo.password"
+                                    :clearErrorInfo="clearErrorInfo" required  />
                                 <div class="md:block hidden w-full h-px bg-gray-100"></div>
-                                <div class="flex flex-col gap-1">
-                                    <div
-                                        class="flex md:flex-row flex-col md:items-center items-start md:gap-0 gap-1 w-full">
-                                        <label for="confirmPasswordInput"
-                                            class="inline-block w-24 font-bold text-base-light">確認密碼</label>
-                                        <input id="confirmPasswordInput" type="password"
-                                            v-model.trim="userInfo.confirmPassword"
-                                            @focus="errorInfo.confirmPassword = ''"
-                                            class="w-full border border-gray-300 px-2 py-1 text-base-heavy"
-                                            :class="{ 'border-hot-red': errorInfo.confirmPassword }"
-                                            placeholder="請輸入確認密碼">
-                                    </div>
-                                    <small v-if="errorInfo.confirmPassword" class="text-sm text-end text-hot-red">{{
-                                        errorInfo.confirmPassword }}</small>
-                                </div>
+                                <BaseInput labelName="確認密碼" inputKey="confirmPassword" inputType="password"
+                                    v-model="userInfo.confirmPassword" :errorTitle="errorInfo.confirmPassword"
+                                    :clearErrorInfo="clearErrorInfo" required  />
                                 <div class="md:block hidden w-full h-px bg-gray-100"></div>
-                                <div class="flex flex-col gap-1">
-                                    <div
-                                        class="flex md:flex-row flex-col md:items-center items-start md:gap-0 gap-1 w-full">
-                                        <label for="usernameInput"
-                                            class="inline-block w-24 font-bold text-base-light">會員名稱</label>
-                                        <input id="usernameInput" type="text" v-model.trim="userInfo.username"
-                                            @focus="errorInfo.username = ''"
-                                            class="w-full border border-gray-300 px-2 py-1 text-base-heavy"
-                                            :class="{ 'border-hot-red': errorInfo.username }" placeholder="請輸入會員名稱">
-                                    </div>
-                                    <small v-if="errorInfo.username" class="text-sm text-end text-hot-red">{{
-                                        errorInfo.username }}</small>
-                                </div>
+                                <BaseInput labelName="會員名稱" inputKey="username" inputType="text"
+                                    v-model="userInfo.username" :errorTitle="errorInfo.username"
+                                    :clearErrorInfo="clearErrorInfo" required  />
                                 <div class="md:block hidden w-full h-px bg-gray-100"></div>
-                                <div class="flex flex-col gap-1">
-                                    <div
-                                        class="flex md:flex-row flex-col md:items-center items-start md:gap-0 gap-1 w-full">
-                                        <label for="phoneInput"
-                                            class="inline-block w-24 font-bold text-base-light">手機號碼</label>
-                                        <input id="phoneInput" type="tel" v-model.trim="userInfo.phone"
-                                            @focus="errorInfo.phone = ''"
-                                            class="w-full border border-gray-300 px-2 py-1 text-base-heavy"
-                                            :class="{ 'border-hot-red': errorInfo.phone }" placeholder="請輸入手機號碼">
-                                    </div>
-                                    <small v-if="errorInfo.phone" class="text-sm text-end text-hot-red">{{
-                                        errorInfo.phone }}</small>
-                                </div>
+                                <BaseInput labelName="手機號碼" inputKey="phone" inputType="tel"
+                                    v-model="userInfo.phone" :errorTitle="errorInfo.phone"
+                                    :clearErrorInfo="clearErrorInfo" required  />
                             </div>
                             <div class="flex md:flex-row flex-col gap-4 justify-center items-center">
                                 <button type="submit" @click.prevent="validateForm()"
@@ -112,6 +60,7 @@
 
 <script>
 import BaseLoading from '@/components/base/BaseLoading.vue';
+import BaseInput from '@/components/ui/BaseInput.vue';
 
 export default {
     name: 'AppLogin',
@@ -132,52 +81,69 @@ export default {
                 username: '',
                 phone: '',
             },
+            isError: false,
         };
     },
     components: {
         BaseLoading,
+        BaseInput,
     },
     methods: {
         validateForm() {
+            this.isError = false;
             const emailRule = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
             if (this.userInfo.email.trim() === '') {
                 this.errorInfo.email = '*請輸入電子郵件';
+                this.isError = true;
             }
             if (!emailRule.test(this.userInfo.email)) {
                 this.errorInfo.email = '*請輸入正確的電子郵件格式';
+                this.isError = true;
             }
 
             if (this.userInfo.password.trim() === '') {
                 this.errorInfo.password = '*請輸入密碼';
+                this.isError = true;
             }
             if (this.userInfo.password.length < 6 || this.userInfo.password.length > 20) {
                 this.errorInfo.password = '*密碼長度需介於6到20個字元';
+                this.isError = true;
             }
 
             if (this.userInfo.confirmPassword.trim() === '') {
                 this.errorInfo.confirmPassword = '*請輸入確認密碼';
+                this.isError = true;
             }
             if (this.userInfo.confirmPassword.length < 6 || this.userInfo.confirmPassword.length > 20) {
                 this.errorInfo.confirmPassword = '*密碼長度需介於6到20個字元';
+                this.isError = true;
             }
             if (this.userInfo.password !== this.userInfo.confirmPassword) {
                 this.errorInfo.confirmPassword = '*確認密碼與密碼不一致';
+                this.isError = true;
             }
 
             if (this.userInfo.username.trim() === '') {
                 this.errorInfo.username = '*請輸入會員名稱';
+                this.isError = true;
             }
             if (this.userInfo.username.length < 2 || this.userInfo.username.length > 10) {
                 this.errorInfo.username = '*會員名稱長度需介於2到10個字元';
+                this.isError = true;
             }
 
             const phoneRule = /^09[0-9]{8}$/;
             if (this.userInfo.phone.trim() === '') {
                 this.errorInfo.phone = '*請輸入手機號碼';
+                this.isError = true;
             }
             if (!phoneRule.test(this.userInfo.phone)) {
                 this.errorInfo.phone = '*請輸入正確的手機號碼';
+                this.isError = true;
             }
+        },
+        clearErrorInfo(key) {
+            this.errorInfo[key] = '';
         },
     },
     mounted() {

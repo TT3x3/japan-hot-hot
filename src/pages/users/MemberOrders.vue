@@ -109,7 +109,7 @@ export default {
     name: 'MemberOrders',
     data() {
         return {
-            isLoading: false,
+            isLoading: true,
             orderList: '',
             selectNum: [5, 10, 20, 40],
             currentPage: 1,
@@ -121,6 +121,12 @@ export default {
             pageTitle: '歷史訂單',
             bannerImg: require('@/assets/images/pic-04.jpg'),
         }
+    },
+    created() {
+        this.getOrders();
+    },
+    mounted() {
+        this.isLoading = false;
     },
     components: {
         BaseModal,
@@ -160,9 +166,6 @@ export default {
             if (this.$route.path === '/') return;
             this.$router.push('/');
         },
-    },
-    created() {
-        this.getOrders();
     },
     computed: {
         typeTranslate() {

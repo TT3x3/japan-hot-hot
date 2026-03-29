@@ -72,7 +72,7 @@
                             class="bg-gray-300 flex md:flex-row flex-col md:items-center gap-2 md:px-10 px-6 md:py-6 py-4 text-sm text-base-light">
                             <p class="text-base-light">購買資訊</p>
                         </div>
-                        <div
+                        <div v-if="orderDetail.contact"
                             class="bg-white flex flex-col justify-between md:items-center md:px-10 px-6 md:py-6 py-4 md:text-base text-sm">
                             <div class="flex flex-col md:gap-4 gap-2 w-full">
                                 <div class="flex items-center">
@@ -102,13 +102,18 @@
                                 </div>
                             </div>
                         </div>
+                        <div v-else
+                            class="bg-white flex flex-col justify-between md:items-center md:px-10 px-6 md:py-6 py-4 md:text-base text-sm text-base-light">
+                            尚未填寫資料
+                        </div>
 
                         <!-- passport info -->
                         <div
                             class="mt-4 bg-gray-300 flex md:flex-row flex-col md:items-center gap-2 md:px-10 px-6 md:py-6 py-4 text-sm text-base-light">
                             <p class="text-base-light">護照資訊</p>
                         </div>
-                        <div class=" flex flex-col gap-2 justify-between md:items-center md:text-base text-sm">
+                        <div v-if="orderDetail.purchaseInfo.travelers.length !== 0"
+                            class=" flex flex-col gap-2 justify-between md:items-center md:text-base text-sm">
                             <div v-for="traveler in orderDetail.purchaseInfo.travelers" :key="traveler.idNumber"
                                 class="bg-white flex flex-col md:gap-4 gap-2 w-full md:px-10 px-6 md:py-6 py-4">
                                 <div class="flex items-center">
@@ -132,6 +137,10 @@
                                     <p>{{ traveler.passportExpiry }}</p>
                                 </div>
                             </div>
+                        </div>
+                        <div v-else
+                            class="bg-white flex flex-col justify-between md:items-center md:px-10 px-6 md:py-6 py-4 md:text-base text-sm text-base-light">
+                            尚未填寫資料
                         </div>
 
                         <!-- notice info -->
@@ -230,7 +239,7 @@ export default {
         },
         handleModalClick() {
             if (!this.isCatchError) return;
-            if(this.$route.path === '/') return;
+            if (this.$route.path === '/') return;
             this.$router.push('/');
         },
     },

@@ -303,6 +303,13 @@ export default {
             modalContent: '',
         }
     },
+    created() {
+        this.token = localStorage.getItem('token');
+        this.findProduct(this.$route.params.id);
+        this.getLikes();
+        this.store = useOrderStore();
+        // console.log('token',localStorage.getItem('token'))
+    },
     components: {
         BaseModal,
         BaseLoading,
@@ -334,6 +341,7 @@ export default {
                 this.isModalOpen = true;
                 this.hasError = true;
                 this.modalContent = '此功能僅限會員使用，請先登入';
+                this.isLoading = false;
                 return;
             }
             try {
@@ -490,12 +498,6 @@ export default {
             maxMonth.setMonth(maxMonth.getMonth() + 6);
             return maxMonth;
         },
-    },
-    created() {
-        this.findProduct(this.$route.params.id);
-        this.getLikes();
-        this.store = useOrderStore();
-        this.token = localStorage.getItem('token');
     },
     watch: {
         date(newDate) {

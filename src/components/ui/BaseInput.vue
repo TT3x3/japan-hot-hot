@@ -1,7 +1,8 @@
 <template>
-    <div class="flex flex-col gap-1 px-4">
+    <div class="flex flex-col gap-1">
         <div class="flex md:flex-row flex-col md:items-center items-start md:gap-0 gap-1 w-full">
-            <label :for="inputId" class="inline-block w-24 font-bold text-base-light">{{ labelName }}</label>
+            <label :for="inputId" class="inline-block w-24 font-bold text-base-light">{{ labelName }}<span
+                    v-if="required" class="text-hot-red">*</span> </label>
             <input :id="inputId" :type="inputType" :value="value" @input="$emit('input', $event.target.value)"
                 @focus="clearErrorInfo(inputKey)" class="w-full border border-gray-300 px-2 py-1 text-base-heavy"
                 :class="{ 'border-hot-red': errorTitle }" :placeholder="`請輸入${labelName}`">
@@ -12,7 +13,7 @@
 </template>
 <script>
 export default {
-    name: 'CustomInput',
+    name: 'BaseInput',
     props: {
         labelName: {
             type: String,
@@ -38,6 +39,10 @@ export default {
             type: Function,
             default: () => { },
         },
+        required: {
+            type: Boolean,
+            default: false
+        }
     },
     data() {
         return {
