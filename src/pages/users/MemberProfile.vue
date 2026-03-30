@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col md:gap-32 gap-12 w-full bg-gray-100">
         <BaseLoading :isLoading="isLoading" />
-        <BaseModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
+        <BaseModal :isModalOpen="isModalOpen" :hasSuccess="hasSuccess" :hasError="hasError" :modalContent="modalContent"
             @close="isModalOpen = false;" @confirm="handleModalClick()" />
         <!-- top -->
         <MemberHero :bannerImg="bannerImg" :pageTitle="pageTitle" />
@@ -20,85 +20,34 @@
                             <div class="flex flex-col gap-1">
                                 <div class="flex md:flex-row flex-col md:items-center item-start w-full">
                                     <label for="emailInput"
-                                        class="inline-block w-28 font-bold text-base-light">Email</label>
+                                        class="inline-block w-24 font-bold text-base-light">Email</label>
                                     <input id="emailInput" type="email" v-model.trim="userInfo.email"
                                         class="w-full border border-gray-300 bg-gray-200 px-2 py-1 text-base-light" D
                                         disabled="disabled">
                                 </div>
                             </div>
                             <div class="w-full h-px bg-gray-100"></div>
-                            <div class="flex flex-col gap-1">
-                                <div class="flex md:flex-row flex-col md:items-center item-start w-full">
-                                    <label for="usernameInput"
-                                        class="inline-block w-28 font-bold text-base-light">會員名稱<span
-                                            class="text-red-500">*</span></label>
-                                    <input id="usernameInput" type="text" v-model.trim="userInfo.name"
-                                        @focus="isError.name = ''"
-                                        class="w-full border border-gray-300 px-2 py-1 text-base-heavy"
-                                        :class="{ 'border-hot-red': isError.name }" placeholder="請輸入會員名稱">
-                                </div>
-                                <small v-if="isError.name" class="text-sm text-end text-hot-red">{{
-                                    isError.name }}</small>
-                            </div>
+                            <BaseInput labelName="會員名稱" inputKey="name" inputType="text" v-model="userInfo.name"
+                                :errorTitle="isError.name" :clearErrorInfo="clearErrorInfo" required />
                             <div class="w-full h-px bg-gray-100"></div>
-                            <div class="flex flex-col gap-1">
-                                <div class="flex md:flex-row flex-col md:items-center item-start w-full">
-                                    <label for="realNameInput"
-                                        class="inline-block w-28 font-bold text-base-light">真實姓名</label>
-                                    <input id="realNameInput" type="text" v-model.trim="userInfo.realName"
-                                        @focus="isError.realName = ''"
-                                        class="w-full border border-gray-300 px-2 py-1 text-base-heavy"
-                                        :class="{ 'border-hot-red': isError.realName }" placeholder="請輸入真實姓名">
-                                </div>
-                                <small v-if="isError.realName" class="text-sm text-end text-hot-red">{{
-                                    isError.realName }}</small>
-                            </div>
+                            <BaseInput labelName="真實姓名" inputKey="realName" inputType="text" v-model="userInfo.realName"
+                                :errorTitle="isError.realName" :clearErrorInfo="clearErrorInfo" />
                             <div class="w-full h-px bg-gray-100"></div>
-                            <div class="flex flex-col gap-1">
-                                <div class="flex md:flex-row flex-col md:items-center item-start w-full">
-                                    <label for="passportNameInput"
-                                        class="inline-block w-28 font-bold text-base-light">護照名稱</label>
-                                    <input id="passportNameInput" type="text" v-model.trim="userInfo.passportName"
-                                        @focus="isError.passportName = ''"
-                                        @input="userInfo.passportName = $event.target.value.toUpperCase()"
-                                        class="w-full border border-gray-300 px-2 py-1 text-base-heavy"
-                                        :class="{ 'border-hot-red': isError.passportName }" placeholder="請輸入護照名稱">
-                                </div>
-                                <small v-if="isError.passportName" class="text-sm text-end text-hot-red">{{
-                                    isError.passportName }}</small>
-                            </div>
+                            <BaseInput labelName="護照名稱" inputKey="passportName" inputType="text"
+                                v-model="userInfo.passportName" :errorTitle="isError.passportName"
+                                :clearErrorInfo="clearErrorInfo" />
                             <div class="w-full h-px bg-gray-100"></div>
-                            <div class="flex flex-col gap-1">
-                                <div class="flex md:flex-row flex-col md:items-center item-start w-full">
-                                    <label for="passportNumberInput"
-                                        class="inline-block w-28 font-bold text-base-light">護照號碼</label>
-                                    <input id="passportNumberInput" type="text" v-model.trim="userInfo.passportNumber"
-                                        @focus="isError.passportNumber = ''"
-                                        class="w-full border border-gray-300 px-2 py-1 text-base-heavy"
-                                        :class="{ 'border-hot-red': isError.passportNumber }" placeholder="請輸入護照號碼">
-                                </div>
-                                <small v-if="isError.passportNumber" class="text-sm text-end text-hot-red">{{
-                                    isError.passportNumber }}</small>
-                            </div>
+                            <BaseInput labelName="護照號碼" inputKey="passportNumber" inputType="text"
+                                v-model="userInfo.passportNumber" :errorTitle="isError.passportNumber"
+                                :clearErrorInfo="clearErrorInfo" />
                             <div class="w-full h-px bg-gray-100"></div>
-                            <div class="flex flex-col gap-1">
-                                <div class="flex md:flex-row flex-col md:items-center item-start w-full">
-                                    <label for="idNumberInput"
-                                        class="inline-block w-28 font-bold text-base-light">身分證號碼</label>
-                                    <input id="idNumberInput" type="text" v-model.trim="userInfo.idNumber"
-                                        @focus="isError.idNumber = ''"
-                                        @input="userInfo.idNumber = $event.target.value.toUpperCase()"
-                                        class="w-full border border-gray-300 px-2 py-1 text-base-heavy"
-                                        :class="{ 'border-hot-red': isError.idNumber }" placeholder="請輸入身分證號碼">
-                                </div>
-                                <small v-if="isError.idNumber" class="text-sm text-end text-hot-red">{{
-                                    isError.idNumber }}</small>
-                            </div>
+                            <BaseInput labelName="身分證" inputKey="idNumber" inputType="text" v-model="userInfo.idNumber"
+                                :errorTitle="isError.idNumber" :clearErrorInfo="clearErrorInfo" />
                             <div class="w-full h-px bg-gray-100"></div>
                             <div class="flex flex-col gap-1">
                                 <div class="flex md:flex-row flex-col md:items-center item-start w-full">
                                     <label for="birthdayInput"
-                                        class="inline-block w-28 font-bold text-base-light">出生日期</label>
+                                        class="inline-block w-24 font-bold text-base-light">出生日期<span class="text-hot-red">*</span></label>
                                     <div class="relative w-full"
                                         :class="isError.birthDate ? 'border border-red-500' : 'border-none'">
                                         <v-date-picker v-model="userInfo.birthDate" :columns="1" :min-date="minDate"
@@ -118,32 +67,11 @@
                                     isError.birthDate }}</small>
                             </div>
                             <div class="w-full h-px bg-gray-100"></div>
-                            <div class="flex flex-col gap-1">
-                                <div class="flex md:flex-row flex-col md:items-center item-start w-full">
-                                    <label for="phoneInput"
-                                        class="inline-block w-28 font-bold text-base-light">手機號碼<span
-                                            class="text-red-500">*</span></label>
-                                    <input id="phoneInput" type="tel" v-model.trim="userInfo.phone"
-                                        @focus="isError.phone = ''"
-                                        class="w-full border border-gray-300 px-2 py-1 text-base-heavy"
-                                        :class="{ 'border-hot-red': isError.phone }" placeholder="請輸入手機號碼">
-                                </div>
-                                <small v-if="isError.phone" class="text-sm text-end text-hot-red">{{
-                                    isError.phone }}</small>
-                            </div>
+                            <BaseInput labelName="手機號碼" inputKey="phone" inputType="tel" v-model="userInfo.phone"
+                                :errorTitle="isError.phone" :clearErrorInfo="clearErrorInfo" required />
                             <div class="w-full h-px bg-gray-100"></div>
-                            <div class="flex flex-col gap-1">
-                                <div class="flex md:flex-row flex-col md:items-center item-start w-full">
-                                    <label for="addressInput"
-                                        class="inline-block w-28 font-bold text-base-light">地址</label>
-                                    <input id="addressInput" type="text" v-model.trim="userInfo.address"
-                                        @focus="isError.address = ''"
-                                        class="w-full border border-gray-300 px-2 py-1 text-base-heavy"
-                                        :class="{ 'border-hot-red': isError.address }" placeholder="請輸入地址">
-                                </div>
-                                <small v-if="isError.address" class="text-sm text-end text-hot-red">{{
-                                    isError.address }}</small>
-                            </div>
+                            <BaseInput labelName="地址" inputKey="address" inputType="text" v-model="userInfo.address"
+                                :errorTitle="isError.address" :clearErrorInfo="clearErrorInfo" />
                         </div>
                         <div class="flex gap-4 justify-center items-center md:py-0 py-4">
                             <button type="submit" @click.prevent="patchUser()"
@@ -170,13 +98,24 @@ import http from '@/api/http'
 import BaseModal from '@/components/base/BaseModal.vue';
 import BaseLoading from '@/components/base/BaseLoading.vue';
 import MemberHero from '@/components/layout/MemberHero.vue';
+import BaseInput from '@/components/ui/BaseInput.vue';
 
 export default {
     name: 'MemberProfile',
     data() {
         return {
             isLoading: false,
-            userInfo: {},
+            userInfo: {
+                email: '',
+                name: '',
+                realName: '',
+                passportName: '',
+                passportNumber: '',
+                idNumber: '',
+                birthDate: null,
+                phone: '',
+                address: ''
+            },
             isError: {
                 name: '',
                 realName: '',
@@ -187,24 +126,37 @@ export default {
                 phone: '',
                 address: '',
             },
-            oldInfo: {},
+            oldInfo: {
+                email: '',
+                name: '',
+                realName: '',
+                passportName: '',
+                passportNumber: '',
+                idNumber: '',
+                birthDate: null,
+                phone: '',
+                address: ''
+            },
             changeList: {},
             isFormValid: false,
             isCatchError: false,
             isModalOpen: false,
             hasError: false,
+            hasSuccess: false,
             modalContent: '',
-            pageTitle:'會員資料',
+            pageTitle: '會員資料',
             bannerImg: require('@/assets/images/carousel-4.jpg'),
+            isChanged: false,
         }
+    },
+    created() {
+        this.getUser();
     },
     components: {
         BaseModal,
         BaseLoading,
         MemberHero,
-    },
-    created() {
-        this.getUser();
+        BaseInput,
     },
     methods: {
         async getUser() {
@@ -216,11 +168,23 @@ export default {
                         Authorization: `Bearer ${token}`
                     }
                 })
-                this.userInfo = res.data;
-                this.oldInfo = { ...res.data }
+                const info = {
+                    email: res.data.email || '',
+                    name: res.data.name || '',
+                    realName: res.data.realName || '',
+                    passportName: res.data.passportName || '',
+                    passportNumber: res.data.passportNumber || '',
+                    idNumber: res.data.idNumber || '',
+                    birthDate: res.data.birthDate ? new Date(res.data.birthDate) : '',
+                    phone: res.data.phone || '',
+                    address: res.data.address || '',
+                }
+                this.userInfo = { ...info };
+                this.oldInfo = { ...info };
             } catch (error) {
                 this.isModalOpen = true;
                 this.hasError = true;
+                this.hasSuccess = false;
                 this.modalContent = '伺服器錯誤，將轉跳回首頁';
                 this.isCatchError = true;
             } finally {
@@ -228,9 +192,9 @@ export default {
             }
         },
         async patchUser() {
-            this.isLoading = true;
             this.validateForm();
-            if (!this.isFormValid) return;
+            if (!this.validateForm()) return;
+            this.isLoading = true;
             try {
                 Object.keys(this.userInfo).forEach(key => {
                     if (this.userInfo[key] !== this.oldInfo[key]) {
@@ -238,42 +202,48 @@ export default {
                     }
                 });
                 const token = localStorage.getItem('token');
-                http.patch(`/members/me`, this.changeList, {
+                await http.patch(`/members/me`, this.changeList, {
                     headers: {
                         Authorization: `Bearer ${token}`
                     }
                 })
                 this.getUser();
                 this.changeList = {};
-                alert('會員資料更新成功！');
+                this.isModalOpen = true;
+                this.hasError = false;
+                this.hasSuccess = true;
+                this.isCatchError = false;
+                this.modalContent = '資料更新成功！';
             } catch (error) {
                 this.isModalOpen = true;
                 this.hasError = true;
+                this.hasSuccess = false;
                 this.modalContent = '伺服器錯誤，將轉跳回首頁';
                 this.isCatchError = true;
             } finally {
                 this.isLoading = false;
             }
-
         },
         validateForm() {
-            this.isFormValid = true;
-
+            this.isLoading = true;
+            this.isChanged = true;
+            let isValid = true;
             const name = (this.userInfo.name || '').trim();
             if (name === '') {
                 this.isError.name = '*請輸入會員名稱';
-                this.isFormValid = false;
+                isValid = false;
             }
             if (this.userInfo.name.length < 2 || this.userInfo.name.length > 10) {
                 this.isError.name = '*會員名稱長度需介於2到10個字元';
-                this.isFormValid = false;
+                isValid = false;
             }
 
             const realName = (this.userInfo.realName || '').trim();
             if (realName !== '') {
                 if (this.userInfo.realName.length < 2 || this.userInfo.realName.length > 5) {
                     this.isError.realName = '*真實名稱長度需介於2到5個字元';
-                    this.isFormValid = false;
+
+                    isValid = false;
                 }
             }
 
@@ -281,14 +251,16 @@ export default {
             if (passportName !== '') {
                 if (this.userInfo.passportName.length < 4 || this.userInfo.passportName.length > 39) {
                     this.isError.passportName = '*護照名稱長度需介於4到39個字元';
-                    this.isFormValid = false;
+
+                    isValid = false;
                 }
             }
             const passportNameRule = /^[A-Z,\-\s]+$/;
             if (passportName !== '') {
                 if (!passportNameRule.test(this.userInfo.passportName)) {
                     this.isError.passportName = '*護照名稱只能包含大寫英文字母、逗號(,)或連字號(-)';
-                    this.isFormValid = false;
+
+                    isValid = false;
                 }
             }
 
@@ -298,10 +270,13 @@ export default {
             if (passportNumber !== '') {
                 if (!numberRule.test(this.userInfo.passportNumber)) {
                     this.isError.passportNumber = '*護照號碼只能包含數字';
-                    this.isFormValid = false;
+
+                    isValid = false;
+
                 } else if (!passportNumberRule.test(this.userInfo.passportNumber)) {
                     this.isError.passportNumber = '*護照號碼長度需為9個數字';
-                    this.isFormValid = false;
+
+                    isValid = false;
                 }
             }
 
@@ -310,41 +285,54 @@ export default {
             if (idNumber !== '') {
                 if (!idRule.test(this.userInfo.idNumber)) {
                     this.isError.idNumber = '*不符合台灣身分證格式'
-                    this.isFormValid = false;
+
+                    isValid = false;
                 }
             }
 
-            // if (!this.userInfo.birthDate) {
-            //     this.isError.birthDate = '*請選擇出生日期';
-            //     this.isFormValid = false;
-            // }
+            if (!this.userInfo.birthDate) {
+                this.isError.birthDate = '*請選擇出生日期';
+                isValid = false;
+            }
 
             const phone = (this.userInfo.phone || '').trim();
             const phoneRule = /^09[0-9]{8}$/;
             if (phone === '') {
                 this.isError.phone = '*請輸入手機號碼';
-                this.isFormValid = false;
+                isValid = false;
+
             }
             if (!phoneRule.test(this.userInfo.phone)) {
                 this.isError.phone = '*請輸入正確的手機號碼';
-                this.isFormValid = false;
+                isValid = false;
             }
-
-            // if (this.userInfo.address.trim() === '') {
-            //     this.isError.address = '*請輸入地址';
-            //     this.isFormValid = false;
-            // }
-
-            if (!this.isFormValid) return;
-            if (JSON.stringify(this.userInfo) === JSON.stringify(this.oldInfo)) {
-                alert('資料未變更');
-                return;
+            const isSame = Object.keys(this.userInfo).every(key =>
+                this.userInfo[key] === this.oldInfo[key] ||
+                (this.userInfo[key] instanceof Date &&
+                    this.oldInfo[key] instanceof Date &&
+                    this.userInfo[key].getTime() === this.oldInfo[key].getTime())
+            )
+            if (isSame) {
+                this.isModalOpen = true;
+                this.hasError = true;
+                this.hasSuccess = false;
+                this.modalContent = '資料尚未變更';
+                this.isCatchError = true;
+                this.isChanged = false;
+                isValid = false;
             }
+            if (!isValid) this.isLoading = false;
+            return isValid;
         },
         handleModalClick() {
             if (!this.isCatchError) return;
-            this.$router.push('/');
-        }
+            if (this.isChanged) {
+                this.$router.push('/');
+            }
+        },
+        clearErrorInfo(key) {
+            this.isError[key] = '';
+        },
     },
     computed: {
         minDate() {

@@ -1,8 +1,8 @@
 <template>
     <div class="flex flex-col gap-32 w-full bg-gray-100">
         <BaseLoading :isLoading="isLoading" />
-        <BaseModal :isModalOpen="isModalOpen" :hasError="hasError" :hasSuccess="hasSuccess"
-            :modalContent="modalContent" @close="isModalOpen = false;" @confirm="handleModalClick()" />
+        <BaseModal :isModalOpen="isModalOpen" :hasError="hasError" :hasSuccess="hasSuccess" :modalContent="modalContent"
+            @close="isModalOpen = false;" @confirm="handleModalClick()" />
         <!-- top -->
         <MemberHero :bannerImg="bannerImg" :pageTitle="pageTitle" />
         <div class="max-w-[80%] w-full mx-auto flex flex-col gap-8">
@@ -15,48 +15,17 @@
                     <form
                         class="bg-white md:px-10 px-8 md:py-18 py-12 w-full max-w-3xl flex flex-col gap-6 justify-center">
                         <div class="flex flex-col gap-4">
-                            <div class="flex flex-col gap-1">
-                                <div class="flex md:flex-row flex-col md:items-center item-start w-full">
-                                    <label for="usernameInput"
-                                        class="inline-block w-28 font-bold text-base-light">舊密碼<span
-                                            class="text-red-500">*</span></label>
-                                    <input id="usernameInput" type="password" v-model.trim="passwordInfo.oldPassword"
-                                        @focus="isError.oldPassword = ''"
-                                        class="w-full border border-gray-300 px-2 py-1 text-base-heavy"
-                                        :class="{ 'border-hot-red': isError.oldPassword }" placeholder="請輸入舊密碼">
-                                </div>
-                                <small v-if="isError.oldPassword" class="text-sm text-end text-hot-red">{{
-                                    isError.oldPassword }}</small>
-                            </div>
+                            <BaseInput labelName="舊密碼" inputKey="oldPassword" inputType="password"
+                                v-model="passwordInfo.oldPassword" :errorTitle="isError.oldPassword"
+                                :clearErrorInfo="clearErrorInfo" required />
                             <div class="w-full h-px bg-gray-100"></div>
-                            <div class="flex flex-col gap-1">
-                                <div class="flex md:flex-row flex-col md:items-center item-start w-full">
-                                    <label for="usernameInput"
-                                        class="inline-block w-28 font-bold text-base-light">新密碼<span
-                                            class="text-red-500">*</span></label>
-                                    <input id="usernameInput" type="password" v-model.trim="passwordInfo.newPassword"
-                                        @focus="isError.newPassword = ''"
-                                        class="w-full border border-gray-300 px-2 py-1 text-base-heavy"
-                                        :class="{ 'border-hot-red': isError.newPassword }" placeholder="請輸入新密碼">
-                                </div>
-                                <small v-if="isError.newPassword" class="text-sm text-end text-hot-red">{{
-                                    isError.newPassword }}</small>
-                            </div>
+                            <BaseInput labelName="新密碼" inputKey="newPassword" inputType="password"
+                                v-model="passwordInfo.newPassword" :errorTitle="isError.newPassword"
+                                :clearErrorInfo="clearErrorInfo" required />
                             <div class="w-full h-px bg-gray-100"></div>
-                            <div class="flex flex-col gap-1">
-                                <div class="flex md:flex-row flex-col md:items-center item-start w-full">
-                                    <label for="realNameInput"
-                                        class="inline-block w-28 font-bold text-base-light">確認新密碼<span
-                                            class="text-red-500">*</span></label>
-                                    <input id="realNameInput" type="password"
-                                        v-model.trim="passwordInfo.checkedPassword"
-                                        @focus="isError.checkedPassword = ''"
-                                        class="w-full border border-gray-300 px-2 py-1 text-base-heavy"
-                                        :class="{ 'border-hot-red': isError.checkedPassword }" placeholder="請再次輸入新密碼">
-                                </div>
-                                <small v-if="isError.checkedPassword" class="text-sm text-end text-hot-red">{{
-                                    isError.checkedPassword }}</small>
-                            </div>
+                            <BaseInput labelName="確認密碼" inputKey="checkedPassword" inputType="password"
+                                v-model="passwordInfo.checkedPassword" :errorTitle="isError.checkedPassword"
+                                :clearErrorInfo="clearErrorInfo" required />
                             <div class="flex gap-4 justify-center items-center md:py-0 py-4">
                                 <button type="submit" @click.prevent="changePassword()"
                                     class="md:w-36 w-full cursor-pointer bg-hot-red text-white py-3 hover:bg-red-500 active:bg-red-700 transition-colors">確認變更</button>
@@ -80,6 +49,7 @@ import http from '@/api/http'
 import BaseLoading from '@/components/base/BaseLoading.vue';
 import BaseModal from '@/components/base/BaseModal.vue';
 import MemberHero from '@/components/layout/MemberHero.vue';
+import BaseInput from '@/components/ui/BaseInput.vue';
 
 export default {
     name: 'MemberPassword',
@@ -106,10 +76,14 @@ export default {
             bannerImg: require('@/assets/images/pic-05.jpg'),
         }
     },
+    created() {
+        this.isLoading = false
+    },
     components: {
         BaseLoading,
         BaseModal,
         MemberHero,
+        BaseInput,
     },
     methods: {
         async changePassword() {
@@ -202,9 +176,9 @@ export default {
             if (!this.isCatchError) return;
             this.$router.push('/');
         },
+        clearErrorInfo(key) {
+            this.isError[key] = '';
+        },
     },
-    mounted() {
-        this.isLoading = false
-    }
 }
 </script>
