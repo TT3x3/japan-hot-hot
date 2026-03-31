@@ -233,8 +233,7 @@ export default {
             if (name === '') {
                 this.isError.name = '*請輸入會員名稱';
                 isValid = false;
-            }
-            if (this.userInfo.name.length < 2 || this.userInfo.name.length > 10) {
+            } else if (this.userInfo.name.length < 2 || this.userInfo.name.length > 10) {
                 this.isError.name = '*會員名稱長度需介於2到10個字元';
                 isValid = false;
             }
@@ -248,18 +247,15 @@ export default {
             }
 
             const passportName = (this.userInfo.passportName || '').trim();
+            const passportNameRule = /^[A-Z,\-\s]+$/;
             if (passportName !== '') {
                 if (this.userInfo.passportName.length < 4 || this.userInfo.passportName.length > 39) {
                     this.isError.passportName = '*護照名稱長度需介於4到39個字元';
                     isValid = false;
                 }
-            }
-            const passportNameRule = /^[A-Z,\-\s]+$/;
-            if (passportName !== '') {
-                if (!passportNameRule.test(this.userInfo.passportName)) {
-                    this.isError.passportName = '*護照名稱只能包含大寫英文字母、逗號(,)或連字號(-)';
-                    isValid = false;
-                }
+            } else if (!passportNameRule.test(this.userInfo.passportName)) {
+                this.isError.passportName = '*護照名稱只能包含大寫英文字母、逗號(,)或連字號(-)';
+                isValid = false;
             }
 
             const passportNumber = (this.userInfo.passportNumber || '').trim();
@@ -295,12 +291,11 @@ export default {
             if (phone === '') {
                 this.isError.phone = '*請輸入手機號碼';
                 isValid = false;
-
-            }
-            if (!phoneRule.test(this.userInfo.phone)) {
+            } else if (!phoneRule.test(this.userInfo.phone)) {
                 this.isError.phone = '*請輸入正確的手機號碼';
                 isValid = false;
             }
+            
             const isSame = Object.keys(this.userInfo).every(key =>
                 this.userInfo[key] === this.oldInfo[key] ||
                 (this.userInfo[key] instanceof Date &&

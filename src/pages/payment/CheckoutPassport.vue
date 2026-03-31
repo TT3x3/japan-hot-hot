@@ -167,8 +167,7 @@ export default {
                     isValid = false;
                     this.isCatchError = true;
                     p.errors.firstName = '姓氏不可空白';
-                }
-                if (p.firstName && !nameRule.test(p.firstName)) {
+                } else if (p.firstName && !nameRule.test(p.firstName)) {
                     isValid = false;
                     this.isCatchError = true;
                     p.errors.firstName = '名稱格式錯誤';
@@ -178,39 +177,36 @@ export default {
                     isValid = false;
                     this.isCatchError = true;
                     p.errors.lastName = '名字不可空白';
-                }
-                if (p.lastName && !nameRule.test(p.lastName)) {
+                } else if (p.lastName && !nameRule.test(p.lastName)) {
                     isValid = false;
                     this.isCatchError = true;
                     p.errors.lastName = '名稱格式錯誤';
                 }
 
+                const idRule = /^[A-Z]\d{9}$/;
                 if (!p.idNumber || p.idNumber.trim() === '') {
                     p.errors.idNumber = '*請輸入身份證字號'
                     isValid = false;
                     this.isCatchError = true;
-                }
-                const idRule = /^[A-Z]\d{9}$/;
-                if (!idRule.test(p.idNumber)) {
+                } else if (!idRule.test(p.idNumber)) {
                     p.errors.idNumber = '*不符合台灣身分證格式'
                     isValid = false;
                     this.isCatchError = true;
                 }
 
+                const passportNumberRule = /^\d{9}$/;
                 if (!p.passportNumber || p.passportNumber.trim() === '') {
                     p.errors.passportNumber = '*請輸入護照號碼';
                     isValid = false;
                     this.isCatchError = true;
-                }
-                const passportNumberRule = /^\d{9}$/;
-                if (!passportNumberRule.test(p.passportNumber)) {
+                } else if (!passportNumberRule.test(p.passportNumber)) {
                     p.errors.passportNumber = '*護照必須是9碼數字';
                     isValid = false;
                     this.isCatchError = true;
                 }
 
                 if (!p.passportExpiry) {
-                    p.errors.passportExpiry = '*請輸入護照號碼';
+                    p.errors.passportExpiry = '*請輸入護照有效期限';
                     isValid = false;
                     this.isCatchError = true;
                 }
