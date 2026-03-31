@@ -5,18 +5,12 @@
         <div v-if="items" class="flex flex-col md:gap-32 gap-12 w-full bg-gray-100">
             <MemberHero :bannerImg="bannerImg" :pageTitle="pageTitle" />
             <div v-if="items.length > 0" class="max-w-[80%] w-full mx-auto flex flex-col gap-10">
-                <!-- 分類 -->
-                <div class="flex md:flex-row flex-col md:gap-8 gap-4">
-                    <BaseCategory
-                        categoryImg="https://images.unsplash.com/photo-1678294076595-dc322d298943?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                        CategoryName="全部" @select="selectCategory = $event" />
-                    <BaseCategory
-                        categoryImg="https://images.unsplash.com/photo-1678294076595-dc322d298943?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                        CategoryName="行程" @select="selectCategory = $event" />
-                    <BaseCategory
-                        categoryImg="https://images.unsplash.com/photo-1678294076595-dc322d298943?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                        CategoryName="機票" @select="selectCategory = $event" />
+                <div class="flex md:gap-8 gap-4">
+                    <BaseCategory CategoryName="全部" :isSelected="selectCategory" @select="selectCategory = $event" />
+                    <BaseCategory CategoryName="行程" :isSelected="selectCategory" @select="selectCategory = $event" />
+                    <BaseCategory CategoryName="機票" :isSelected="selectCategory" @select="selectCategory = $event" />
                 </div>
+                <!-- 分類 -->
                 <router-link to="/member"
                     class="inline-block self-end cursor-pointer bg-gray-400 text-white text-center px-10 py-3 hover:bg-gray-300 active:bg-gray-500 transition-colors">返回會員中心</router-link>
                 <!-- <div class="flex items-center justify-between">
@@ -179,7 +173,7 @@ export default {
             return this.items.filter(item => item.type === type);
         },
         totalPages() {
-            return Math.ceil(this.items.length / this.perPage);
+            return Math.ceil(this.filterItems.length / this.perPage);
         },
         paginationPages() {
             const start = (this.currentPage - 1) * this.perPage;

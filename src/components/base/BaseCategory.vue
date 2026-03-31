@@ -1,22 +1,21 @@
 <template>
     <button type='button' @click.prevent="$emit('select', CategoryName)"
-        class="relative bg-gray-500 flex-1 overflow-hidden cursor-pointer">
-        <img :src="categoryImg" alt="" class="object-cover object-top w-full md:h-20 h-16">
-        <h2 class="absolute left-5 bottom-5 font-bold text-white">{{ CategoryName }}</h2>
+        class="flex-1 text-start pt-5 pb-1 md:pl-5 pl-2 cursor-pointer border-b-3 border-gray-300 hover:border-gray-300 text-gray-400 hover:bg-gray-100 duration-200"
+        :class="{ 'bg-gray-200 border-gray-500 text-gray-500': isSelected === CategoryName }">
+        <h2 class="font-bold md:text-lg ">{{ CategoryName }}</h2>
     </button>
 </template>
 <script>
 export default {
     props: {
-        categoryImg: {
-            type: String,
-            required: true,
-        },
         CategoryName: {
             type: String,
             required: true,
+        },
+        isSelected: {
+            type: String,
+            required: true,
         }
-
     },
     methods: {
         changeCategory(category) {

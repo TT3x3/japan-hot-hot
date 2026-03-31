@@ -19,22 +19,16 @@
 
         <!-- 分類 -->
         <div class="max-w-[80%] w-full mx-auto">
-            <div class="flex md:flex-row flex-col md:gap-8 gap-2">
-                <BaseCategory
-                    categoryImg="https://images.unsplash.com/photo-1568190002605-b51fa38eac46?q=80&w=769&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                    CategoryName="全部" @select="selectCategory = $event" />
-                <BaseCategory v-if="pageType === 'tour'"
-                    categoryImg="https://images.unsplash.com/photo-1568190002605-b51fa38eac46?q=80&w=769&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3"
-                    CategoryName="一日遊" @select="selectCategory = $event" />
-                <BaseCategory v-if="pageType === 'tour'"
-                    categoryImg="https://images.unsplash.com/photo-1568190002605-b51fa38eac46?q=80&w=769&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3"
-                    CategoryName="半日遊" @select="selectCategory = $event" />
-                <BaseCategory v-if="pageType === 'ticket'"
-                    categoryImg="https://images.unsplash.com/photo-1568190002605-b51fa38eac46?q=80&w=769&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                    CategoryName="高雄出發" @select="selectCategory = $event" />
-                <BaseCategory v-if="pageType === 'ticket'"
-                    categoryImg="https://images.unsplash.com/photo-1568190002605-b51fa38eac46?q=80&w=769&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                    CategoryName="桃園出發" @select="selectCategory = $event" />
+            <div class="flex md:gap-8 gap-2">
+                <BaseCategory CategoryName="全部" :isSelected="selectCategory" @select="selectCategory = $event" />
+                <BaseCategory v-if="pageType === 'tour'" CategoryName="一日遊" :isSelected="selectCategory"
+                    @select="selectCategory = $event" />
+                <BaseCategory v-if="pageType === 'tour'" CategoryName="半日遊" :isSelected="selectCategory"
+                    @select="selectCategory = $event" />
+                <BaseCategory v-if="pageType === 'ticket'" CategoryName="高雄出發" :isSelected="selectCategory"
+                    @select="selectCategory = $event" />
+                <BaseCategory v-if="pageType === 'ticket'" CategoryName="桃園出發" :isSelected="selectCategory"
+                    @select="selectCategory = $event" />
             </div>
         </div>
 
