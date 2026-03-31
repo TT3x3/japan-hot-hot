@@ -7,24 +7,15 @@
             <div v-if="items.length > 0" class="max-w-[80%] w-full mx-auto flex flex-col gap-10">
                 <!-- 分類 -->
                 <div class="flex md:flex-row flex-col md:gap-8 gap-4">
-                    <div @click.prevent="changeCategory('全部')"
-                        class="relative flex-1 overflow-hidden cursor-pointer">
-                        <img src="https://images.unsplash.com/photo-1678294076595-dc322d298943?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                            alt="" class="object-cover object-top w-full md:h-20 h-16">
-                        <h2 class="absolute left-5 bottom-5 md:font-black font-bold text-white">不分類</h2>
-                    </div>
-                    <div @click.prevent="changeCategory('Tour')"
-                        class="relative flex-1 overflow-hidden cursor-pointer">
-                        <img src="https://images.unsplash.com/photo-1678294076595-dc322d298943?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                            alt="" class="object-cover object-center w-full md:h-20 h-16">
-                        <h2 class="absolute left-5 bottom-5 md:font-black font-bold text-white">行程</h2>
-                    </div>
-                    <div @click.prevent="changeCategory('Flight')"
-                        class="relative flex-1 overflow-hidden cursor-pointer">
-                        <img src="https://images.unsplash.com/photo-1678294076595-dc322d298943?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                            alt="" class="object-cover object-bottom w-full md:h-20 h-16">
-                        <h2 class="absolute left-5 bottom-5 md:font-black font-bold text-white">機票</h2>
-                    </div>
+                    <BaseCategory
+                        categoryImg="https://images.unsplash.com/photo-1678294076595-dc322d298943?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        CategoryName="全部" @select="selectCategory = $event" />
+                    <BaseCategory
+                        categoryImg="https://images.unsplash.com/photo-1678294076595-dc322d298943?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        CategoryName="行程" @select="selectCategory = $event" />
+                    <BaseCategory
+                        categoryImg="https://images.unsplash.com/photo-1678294076595-dc322d298943?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                        CategoryName="機票" @select="selectCategory = $event" />
                 </div>
                 <router-link to="/member"
                     class="inline-block self-end cursor-pointer bg-gray-400 text-white text-center px-10 py-3 hover:bg-gray-300 active:bg-gray-500 transition-colors">返回會員中心</router-link>
@@ -61,7 +52,7 @@
                             <div class="flex flex-col flex-1 gap-4 p-5 bg-white">
                                 <div class="flex justify-between">
                                     <p class="font-bold md:text-md text-lg line-clamp-1 text-base-heavy">{{ item.title
-                                        }}</p>
+                                    }}</p>
                                     <!-- md 以下移除收藏 -->
                                     <button type="button" @click.prevent.stop="delLike(item.productId)"
                                         class="block md:hidden text-gray-400 transition-colors duration-200 cursor-pointer">
@@ -93,9 +84,10 @@
 
 <script>
 import http from '@/api/http'
-import BaseModal from '@/components/base/BaseModal.vue';
-import MemberHero from '@/components/layout/MemberHero.vue';
 import { useLoadingStore } from '@/stores/loading';
+import BaseModal from '@/components/base/BaseModal.vue';
+import BaseCategory from '@/components/base/BaseCategory.vue';
+import MemberHero from '@/components/layout/MemberHero.vue';
 
 export default {
     name: 'MemberLikes',
@@ -122,6 +114,7 @@ export default {
     components: {
         BaseModal,
         MemberHero,
+        BaseCategory,
     },
     methods: {
         async getLikes() {
@@ -168,11 +161,6 @@ export default {
                 this.isCatchError = true;
             }
         },
-        changeCategory(category) {
-            this.selectCategory = category;
-            this.currentPage = 1;
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        },
         handleModalClick() {
             if (!this.isCatchError) return;
             this.$router.push('/');
@@ -180,8 +168,15 @@ export default {
     },
     computed: {
         filterItems() {
-            if (this.selectCategory === '全部') return this.items;
-            return this.items.filter(item => item.type === this.selectCategory);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            const categoryMap = {
+                全部: 'all',
+                行程: 'Tour',
+                機票: 'Flight'
+            };
+            const type = categoryMap[this.selectCategory];
+            if (type === 'all') return this.items;
+            return this.items.filter(item => item.type === type);
         },
         totalPages() {
             return Math.ceil(this.items.length / this.perPage);
