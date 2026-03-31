@@ -6,23 +6,23 @@
             <MemberHero :bannerImg="bannerImg" :pageTitle="pageTitle" />
             <div v-if="items.length > 0" class="max-w-[80%] w-full mx-auto flex flex-col gap-10">
                 <!-- 分類 -->
-                <div class="flex md:gap-8 gap-4">
+                <div class="flex md:flex-row flex-col md:gap-8 gap-4">
                     <div @click.prevent="changeCategory('全部')"
-                        class="relative flex-1 h-24 overflow-hidden cursor-pointer">
+                        class="relative flex-1 overflow-hidden cursor-pointer">
                         <img src="https://images.unsplash.com/photo-1678294076595-dc322d298943?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                            alt="" class="object-cover object-top w-full h-full">
+                            alt="" class="object-cover object-top w-full md:h-20 h-16">
                         <h2 class="absolute left-5 bottom-5 md:font-black font-bold text-white">不分類</h2>
                     </div>
                     <div @click.prevent="changeCategory('Tour')"
-                        class="relative flex-1 h-24 overflow-hidden cursor-pointer">
+                        class="relative flex-1 overflow-hidden cursor-pointer">
                         <img src="https://images.unsplash.com/photo-1678294076595-dc322d298943?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                            alt="" class="object-cover object-center w-full h-full">
+                            alt="" class="object-cover object-center w-full md:h-20 h-16">
                         <h2 class="absolute left-5 bottom-5 md:font-black font-bold text-white">行程</h2>
                     </div>
                     <div @click.prevent="changeCategory('Flight')"
-                        class="relative flex-1 h-24 overflow-hidden cursor-pointer">
+                        class="relative flex-1 overflow-hidden cursor-pointer">
                         <img src="https://images.unsplash.com/photo-1678294076595-dc322d298943?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-                            alt="" class="object-cover object-bottom w-full h-full">
+                            alt="" class="object-cover object-bottom w-full md:h-20 h-16">
                         <h2 class="absolute left-5 bottom-5 md:font-black font-bold text-white">機票</h2>
                     </div>
                 </div>
@@ -41,14 +41,14 @@
                     </div>
                 </div> -->
 
-                <ul class="flex flex-wrap md:justify-start justify-center gap-x-2 gap-y-12">
+                <ul class="grid md:grid-cols-3 grid-cols-1 md:gap-y-8 gap-4">
                     <!-- 卡片 -->
                     <router-link :to="`/${typeTranslate[item.type]}-detail/${item.productId}`" target="_blank"
                         rel="noopener noreferrer" v-for="(item, key) in paginationPages" :key="key"
-                        class="md:flex-[0_0_calc(33.333%-1rem)] h-[360px] flex cursor-pointer group ">
+                        class="block w-full cursor-pointer group ">
                         <div class="flex flex-col border border-gray-200">
-                            <div class="relative h-72 overflow-hidden">
-                                <img :src="`${apiBase}${item.thumbnail}`" alt="" class="object-cover w-full">
+                            <div class="relative md:h-72 h-36 overflow-hidden">
+                                <img :src="`${apiBase}${item.thumbnail}`" alt="" class="object-cover h-full w-full">
                                 <div
                                     class="absolute inset-0 bg-white/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300 ">
                                 </div>
@@ -61,11 +61,11 @@
                             <div class="flex flex-col flex-1 gap-4 p-5 bg-white">
                                 <div class="flex justify-between">
                                     <p class="font-bold md:text-md text-lg line-clamp-1 text-base-heavy">{{ item.title
-                                    }}</p>
+                                        }}</p>
                                     <!-- md 以下移除收藏 -->
                                     <button type="button" @click.prevent.stop="delLike(item.productId)"
                                         class="block md:hidden text-gray-400 transition-colors duration-200 cursor-pointer">
-                                        <i class="fa-solid fa-trash fa-xl"></i>
+                                        <i class="fa-solid fa-trash fa-lg"></i>
                                     </button>
                                 </div>
                                 <p class="font-bold text-lg text-hot-red mt-auto text-end">{{
@@ -74,6 +74,8 @@
                             </div>
                         </div>
                     </router-link>
+                    <li class="md:flex-[0_0_calc(33.333%-1rem)] invisible"></li>
+                    <li class="md:flex-[0_0_calc(33.333%-1rem)] invisible"></li>
                 </ul>
                 <CustomPagination :totalPages="totalPages" :currentPage.sync="currentPage" />
                 <div></div>

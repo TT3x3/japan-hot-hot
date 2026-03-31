@@ -54,10 +54,10 @@
         </div>
 
         <div class="max-w-[80%] w-full mx-auto flex flex-col gap-12">
-            <ul class="flex flex-wrap md:gap-x-6 md:gap-y-12 gap-4 md:justify-start justify-center">
+            <ul class="grid md:grid-cols-3 grid-cols-1 md:gap-x-6 md:gap-y-12 gap-4">
                 <!-- 卡片 -->
                 <router-link :to="`/${pageType}-detail/${item.productId}`" v-for="item in filerCategory"
-                    :key="item.productId" class="relative md:flex-[0_0_calc(33.333%-1rem)] w-full cursor-pointer group">
+                    :key="item.productId" class="relative w-full cursor-pointer group">
                     <div class="flex flex-col md:h-[450px] border border-gray-200">
                         <!-- 無庫存遮罩 -->
                         <p v-if="item.status !== 'active'"
