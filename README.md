@@ -1,25 +1,27 @@
 # Japan-Hot-Hot
-Japan-Hot-Hot 是一個基於 Vue 2 開發的日本旅遊資訊/預約平台（專案名稱暗示了可能有溫泉或熱門景點資訊）。
-本專案整合了現代化的前端開發工具，提供流暢的用戶體驗與響應式介面。
+Japan-Hot-Hot 是一個基於 Vue 2 開發的日本旅遊資訊/預約平台。本專案整合了現代化的前端開發工具，提供流暢的用戶體驗與響應式介面。
 
 ## ✨ 功能特色
-- **旅遊資訊瀏覽**：提供日本景點、溫泉、活動等詳細資訊
+- **旅遊資訊瀏覽**：提供日本景點、活動等詳細資訊
 - **票券預約與購買**：支援票券與行程的線上預約及結帳流程
 - **會員系統**：用戶登入/註冊、個人中心管理訂單與收藏
 - **搜尋與過濾**：強大的搜尋功能，支援關鍵字、分類篩選
 - **響應式設計**：支援桌面與行動裝置，提供一致的使用體驗
 
+
 ## 🚀 技術棧
-* 核心框架: ***Vue.js 2.6*** (搭配 Composition API 支援)
-* 狀態管理: ***Pinia*** (Vue 官方推薦的狀態管理工具)
-* 路由管理: ***Vue Router 3***
-* 樣式處理: ***Tailwind CSS 4.0 & PostCSS***
-* 網路請求: ***Axios***
+* 核心框架: **Vue.js 2.6** (搭配 Composition API 支援)
+* 狀態管理: **Pinia** (Vue 官方推薦的狀態管理工具)
+* 路由管理: **Vue Router 3**
+* 樣式處理: **Tailwind CSS 4.0 & PostCSS**
+* 網路請求: **Axios**
+
 
 ## 📦 環境需求
 - **Node.js**: >= 14.0.0
 - **npm**: >= 6.0.0
 - **瀏覽器**: 支援現代瀏覽器 (Chrome 90+, Firefox 88+, Safari 14+, Edge 90+)
+
 
 ## 🛠️ 安裝與開發流程
 ```bash
@@ -42,10 +44,14 @@ npm run build
 npm run lint
 ```
 
+
 ## 📂 專案重點配置
-***Tailwind CSS 4.0***: 使用了最新的 PostCSS 整合方案，確保極速的樣式編譯。
-***Composition API***: 雖然是 Vue 2，但已引入 @vue/composition-api，讓開發者可以使用 Vue 3 的邏輯複用模式。
-***Browser Compatibility***: 支援全球流量大於 1% 的瀏覽器版本，確保大多數用戶皆能正常訪問。
+**Tailwind CSS 4.0**: 使用了最新的 PostCSS 整合方案，確保極速的樣式編譯。
+
+**Composition API**: 雖然是 Vue 2，但已引入 @vue/composition-api，讓開發者可以使用 Vue 3 的邏輯複用模式。
+
+**Browser Compatibility**: 支援全球流量大於 1% 的瀏覽器版本，確保大多數用戶皆能正常訪問。
+
 
 ## 📁 專案資料夾結構
 ```bash
@@ -119,5 +125,6 @@ japan-hot-hot/
         └── auth.js             # 認證 Hook
 ```
 
+
 ## 📄 授權協議 (License)
-這是一個***私有專案 ("private": true)***。未經授權禁止轉載或商用。
+這是一個**私有專案 ("private": true)**。未經授權禁止轉載或商用。
