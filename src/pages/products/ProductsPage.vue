@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col md:gap-32 gap-12 w-full">
+    <div v-if="tours.length !== 0 || flights.length !== 0" class="flex flex-col md:gap-32 gap-12 w-full">
         <BaseModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
             @close="isModalOpen = false" @confirm="handleModalClick()" />
         <div class="flex justify-center items-center pt-8">
@@ -304,6 +304,11 @@ export default {
         }
     },
     watch: {
+        $route(to, from) {
+            if (to.path !== from.path) {
+                this.selectCategory = '全部'
+            }
+        },
         type() {
             this.fetchType();
         }

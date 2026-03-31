@@ -46,7 +46,7 @@
                             <div class="flex flex-col flex-1 gap-4 p-5 bg-white">
                                 <div class="flex justify-between">
                                     <p class="font-bold md:text-md text-lg line-clamp-1 text-base-heavy">{{ item.title
-                                    }}</p>
+                                        }}</p>
                                     <!-- md 以下移除收藏 -->
                                     <button type="button" @click.prevent.stop="delLike(item.productId)"
                                         class="block md:hidden text-gray-400 transition-colors duration-200 cursor-pointer">
@@ -194,6 +194,11 @@ export default {
         }
     },
     watch: {
+        $route(to, from) {
+            if (to.path !== from.path) {
+                this.selectCategory = 'all'
+            }
+        },
         currentPage() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         },
