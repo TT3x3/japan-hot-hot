@@ -14,6 +14,12 @@ export default {
             showTopBtn: false,
         };
     },
+    mounted() {
+        window.addEventListener('scroll', this.handleTopBtn);
+    },
+    beforeUnmount() {
+        window.removeEventListener('scroll', this.handleScroll);
+    },
     methods: {
         backToTop() {
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -21,12 +27,6 @@ export default {
         handleTopBtn() {
             this.showTopBtn = window.scrollY > 160;
         },
-    },
-    mounted() {
-        window.addEventListener('scroll', this.handleTopBtn);
-    },
-    beforeUnmount() {
-        window.removeEventListener('scroll', this.handleScroll);
     },
 }
 </script>

@@ -55,14 +55,6 @@ export default {
             ]
         };
     },
-    methods: {
-        carouselPrev() {
-            this.currentIndex = (this.currentIndex - 1 + this.carouselImages.length) % this.carouselImages.length;
-        },
-        carouselNext() {
-            this.currentIndex = (this.currentIndex + 1) % this.carouselImages.length;
-        }
-    },
     mounted() {
         this.intervalId = setInterval(() => {
             this.currentIndex = (this.currentIndex + 1) % this.carouselImages.length;
@@ -70,6 +62,14 @@ export default {
     },
     beforeDestroy() {
         clearInterval(this.intervalId);
+    },
+    methods: {
+        carouselPrev() {
+            this.currentIndex = (this.currentIndex - 1 + this.carouselImages.length) % this.carouselImages.length;
+        },
+        carouselNext() {
+            this.currentIndex = (this.currentIndex + 1) % this.carouselImages.length;
+        }
     },
 }
 </script>

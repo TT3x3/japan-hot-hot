@@ -52,14 +52,6 @@ export default {
     this.getProducts();
     this.store = useResultStore();
   },
-  async mounted() {
-    const loading = useLoadingStore()
-    try {
-      await this.getProducts()
-    } finally {
-      loading.hidePage()
-    }
-  },
   data() {
     return {
       products: [],

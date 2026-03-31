@@ -21,7 +21,6 @@ export default {
     mounted() {
         document.body.style.overflow = this.isLoading ? 'hidden' : ''
     },
-
     beforeDestroy() {
         document.body.style.overflow = ''
     },

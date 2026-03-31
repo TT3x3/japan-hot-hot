@@ -285,14 +285,6 @@ export default {
         this.getLikes();
         this.store = useOrderStore();
     },
-    async mounted() {
-        const loading = useLoadingStore()
-        try {
-            await this.tour
-        } finally {
-            loading.hidePage()
-        }
-    },
     methods: {
         async findProduct(id) {
             const loading = useLoadingStore()

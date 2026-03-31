@@ -16,25 +16,23 @@
                         <form
                             class="bg-white md:px-10 px-4 md:py-18 py-6  w-full max-w-3xl flex flex-col gap-6 justify-center">
                             <div class="flex flex-col gap-4">
-                                <BaseInput labelName="Email" inputKey="email" inputType="email"
-                                    v-model="userInfo.email" :errorTitle="errorInfo.email"
-                                    :clearErrorInfo="clearErrorInfo" required  />
+                                <BaseInput labelName="Email" inputKey="email" inputType="email" v-model="userInfo.email"
+                                    :errorTitle="errorInfo.email" :clearErrorInfo="clearErrorInfo" required />
                                 <div class="md:block hidden w-full h-px bg-gray-100"></div>
                                 <BaseInput labelName="密碼" inputKey="password" inputType="password"
                                     v-model="userInfo.password" :errorTitle="errorInfo.password"
-                                    :clearErrorInfo="clearErrorInfo" required  />
+                                    :clearErrorInfo="clearErrorInfo" required />
                                 <div class="md:block hidden w-full h-px bg-gray-100"></div>
                                 <BaseInput labelName="確認密碼" inputKey="confirmPassword" inputType="password"
                                     v-model="userInfo.confirmPassword" :errorTitle="errorInfo.confirmPassword"
-                                    :clearErrorInfo="clearErrorInfo" required  />
+                                    :clearErrorInfo="clearErrorInfo" required />
                                 <div class="md:block hidden w-full h-px bg-gray-100"></div>
                                 <BaseInput labelName="會員名稱" inputKey="username" inputType="text"
                                     v-model="userInfo.username" :errorTitle="errorInfo.username"
-                                    :clearErrorInfo="clearErrorInfo" required  />
+                                    :clearErrorInfo="clearErrorInfo" required />
                                 <div class="md:block hidden w-full h-px bg-gray-100"></div>
-                                <BaseInput labelName="手機號碼" inputKey="phone" inputType="tel"
-                                    v-model="userInfo.phone" :errorTitle="errorInfo.phone"
-                                    :clearErrorInfo="clearErrorInfo" required  />
+                                <BaseInput labelName="手機號碼" inputKey="phone" inputType="tel" v-model="userInfo.phone"
+                                    :errorTitle="errorInfo.phone" :clearErrorInfo="clearErrorInfo" required />
                             </div>
                             <div class="flex md:flex-row flex-col gap-4 justify-center items-center">
                                 <button type="submit" @click.prevent="validateForm()"
@@ -84,6 +82,10 @@ export default {
     },
     components: {
         BaseInput,
+    },
+    mounted() {
+        const loading = useLoadingStore()
+        loading.hidePage()
     },
     methods: {
         validateForm() {
@@ -142,11 +144,6 @@ export default {
         clearErrorInfo(key) {
             this.errorInfo[key] = '';
         },
-    },
-    mounted() {
-        const loading = useLoadingStore()
-      loading.hidePage()
-
     },
 }
 </script>
