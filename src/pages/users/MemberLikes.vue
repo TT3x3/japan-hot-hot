@@ -1,6 +1,5 @@
 <template>
     <div>
-        <BaseLoading :isLoading="isLoading" />
         <BaseModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
             @close="isModalOpen = false;" @confirm="handleModalClick()" />
         <div v-if="items" class="flex flex-col md:gap-32 gap-12 w-full bg-gray-100">
@@ -42,11 +41,11 @@
                     </div>
                 </div> -->
 
-                <ul class="flex flex-wrap md:justify-between justify-center gap-x-2 gap-y-12">
+                <ul class="flex flex-wrap md:justify-start justify-center gap-x-2 gap-y-12">
                     <!-- 卡片 -->
                     <router-link :to="`/${typeTranslate[item.type]}-detail/${item.productId}`" target="_blank"
                         rel="noopener noreferrer" v-for="(item, key) in paginationPages" :key="key"
-                        class="md:flex-[0_0_calc(33.333%-1rem)] h-[240px] flex cursor-pointer group ">
+                        class="md:flex-[0_0_calc(33.333%-1rem)] h-[360px] flex cursor-pointer group ">
                         <div class="flex flex-col border border-gray-200">
                             <div class="relative h-72 overflow-hidden">
                                 <img :src="`${apiBase}${item.thumbnail}`" alt="" class="object-cover w-full">
@@ -62,7 +61,7 @@
                             <div class="flex flex-col flex-1 gap-4 p-5 bg-white">
                                 <div class="flex justify-between">
                                     <p class="font-bold md:text-md text-lg line-clamp-1 text-base-heavy">{{ item.title
-                                        }}</p>
+                                    }}</p>
                                     <!-- md 以下移除收藏 -->
                                     <button type="button" @click.prevent.stop="delLike(item.productId)"
                                         class="block md:hidden text-gray-400 transition-colors duration-200 cursor-pointer">
@@ -93,14 +92,13 @@
 <script>
 import http from '@/api/http'
 import BaseModal from '@/components/base/BaseModal.vue';
-import BaseLoading from '@/components/base/BaseLoading.vue';
 import MemberHero from '@/components/layout/MemberHero.vue';
+import { useLoadingStore } from '@/stores/loading';
 
 export default {
     name: 'MemberLikes',
     data() {
         return {
-            isLoading: false,
             apiBase: process.env.VUE_APP_API_PATH,
             pageTitle: '收藏清單',
             bannerImg: require('@/assets/images/pic-03.jpg'),
@@ -116,14 +114,17 @@ export default {
             modalContent: '',
         };
     },
+    mounted() {
+        this.getLikes();
+    },
     components: {
         BaseModal,
-        BaseLoading,
         MemberHero,
     },
     methods: {
         async getLikes() {
-            this.isLoading = true;
+            const loading = useLoadingStore()
+            loading.showPage()
             const token = localStorage.getItem('token');
             if (!token) return;
             try {
@@ -140,7 +141,7 @@ export default {
                 this.modalContent = '伺服器錯誤，將轉跳回首頁';
                 this.isCatchError = true;
             } finally {
-                this.isLoading = false;
+                loading.hidePage();
             }
         },
         async delLike(id) {
@@ -194,6 +195,12 @@ export default {
                 Flight: 'ticket',
             }
         },
+        loadingStore() {
+            return useLoadingStore()
+        },
+        isLoading() {
+            return this.loadingStore.isLoading
+        }
     },
     watch: {
         currentPage() {
@@ -203,8 +210,5 @@ export default {
             this.currentPage = 1;
         }
     },
-    mounted() {
-        this.getLikes();
-    }
 }
 </script>

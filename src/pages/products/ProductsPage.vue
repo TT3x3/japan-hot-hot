@@ -1,6 +1,5 @@
 <template>
     <div class="flex flex-col md:gap-32 gap-12 w-full">
-        <BaseLoading :isLoading="isLoading" />
         <BaseModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
             @close="isModalOpen = false" @confirm="handleModalClick()" />
         <div class="flex justify-center items-center pt-8">
@@ -54,7 +53,6 @@
             </div>
         </div>
 
-        <!-- banner -->
         <div class="max-w-[80%] w-full mx-auto flex flex-col gap-12">
             <ul class="flex flex-wrap md:gap-x-6 md:gap-y-12 gap-4 md:justify-start justify-center">
                 <!-- 卡片 -->
@@ -114,8 +112,8 @@
 <script>
 import http from '@/api/http'
 import { useResultStore } from '@/stores/search'
+import { useLoadingStore } from '@/stores/loading';
 import BaseModal from '@/components/base/BaseModal.vue';
-import BaseLoading from '@/components/base/BaseLoading.vue';
 import SearchBar from '@/components/common/SearchBar.vue';
 
 export default {
@@ -128,7 +126,6 @@ export default {
     },
     data() {
         return {
-            isLoading: false,
             apiBase: process.env.VUE_APP_API_PATH,
             flights: [],
             tours: [],
@@ -144,11 +141,13 @@ export default {
     components: {
         BaseModal,
         SearchBar,
-        BaseLoading,
+    },
+    mounted() {
+        const loading = useLoadingStore()
+        loading.hideData()
     },
     methods: {
         async getFlights() {
-            this.isLoading = true;
             try {
                 const res = await http.get(`/product/flight`);
                 this.flights = res.data.items;
@@ -157,12 +156,9 @@ export default {
                 this.hasError = true;
                 this.modalContent = '伺服器錯誤，將轉跳回首頁';
                 this.isCatchError = true;
-            } finally {
-                this.isLoading = false;
             }
         },
         async getTours() {
-            this.isLoading = true;
             try {
                 const res = await http.get(`/product/tour`);
                 this.tours = res.data.items;
@@ -171,12 +167,9 @@ export default {
                 this.hasError = true;
                 this.modalContent = '伺服器錯誤，將轉跳回首頁';
                 this.isCatchError = true;
-            } finally {
-                this.isLoading = false;
             }
         },
         async getLikes() {
-            this.isLoading = true;
             const token = localStorage.getItem('token');
             if (!token) return;
             try {
@@ -194,8 +187,6 @@ export default {
                 this.hasError = true;
                 this.modalContent = '伺服器錯誤，將轉跳回首頁';
                 this.isCatchError = true;
-            } finally {
-                this.isLoading = false;
             }
         },
         findLike(id) {
@@ -205,11 +196,14 @@ export default {
             }
         },
         async addToLikes(id) {
+            const loading = useLoadingStore()
+            loading.showData()
             const token = localStorage.getItem('token');
             if (!token) {
                 this.isModalOpen = true;
                 this.hasError = true;
                 this.modalContent = '修但幾咧！登入才能使用收藏功能！';
+                loading.hideData()
                 return;
             }
             try {
@@ -227,12 +221,16 @@ export default {
                 this.hasError = true;
                 this.modalContent = '伺服器錯誤，將轉跳回首頁';
                 this.isCatchError = true;
+            } finally {
+                loading.hideData()
             }
         },
         async delLike(id) {
             const token = localStorage.getItem('token');
             if (!token) return;
             if (this.findLike(id)) {
+                const loading = useLoadingStore()
+                loading.showData()
                 try {
                     await http.delete(`/cart/items`, {
                         headers: {
@@ -247,6 +245,8 @@ export default {
                     this.hasError = true;
                     this.modalContent = '伺服器錯誤，將轉跳回首頁';
                     this.isCatchError = true;
+                } finally {
+                    loading.hideData()
                 }
                 this.getLikes();
             }
@@ -262,11 +262,18 @@ export default {
             if (!this.isCatchError) return;
             this.$router.push('/');
         },
-        fetchType() {
-            if (this.type === 'tickets') {
-                this.getFlights();
-            } else if (this.type === 'tours') {
-                this.getTours();
+        async fetchType() {
+            const loading = useLoadingStore()
+            loading.showPage()
+
+            try {
+                if (this.type === 'tickets') {
+                    await this.getFlights();
+                } else if (this.type === 'tours') {
+                    await this.getTours();
+                }
+            } finally {
+                loading.hidePage()
             }
         },
         changeCategory(category) {
@@ -274,7 +281,8 @@ export default {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         },
         async getSearchResult(keyword) {
-            this.isLoading = true;
+            const loading = useLoadingStore()
+            loading.showData()
             try {
                 await this.store.getResult(keyword);
                 this.$router.push({
@@ -286,7 +294,7 @@ export default {
                 }).catch(() => { });
 
             } finally {
-                this.isLoading = false;
+                loading.hideData()
             }
         },
     },
@@ -316,7 +324,6 @@ export default {
                 return item.tags.some(tag => tag.includes(this.selectCategory))
             })
         }
-
     },
     watch: {
         type() {

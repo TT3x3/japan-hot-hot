@@ -1,6 +1,5 @@
 <template>
     <div class="flex flex-col md:gap-32 gap-12 w-full bg-gray-100">
-        <BaseLoading :isLoading="isLoading" />
         <!-- top -->
         <div class="relative md:h-80 h-40 overflow-hidden">
             <img :src="require('@/assets/images/carousel-5.jpg')" alt="" class=" w-full h-full object-cover">
@@ -59,14 +58,13 @@
 </template>
 
 <script>
-import BaseLoading from '@/components/base/BaseLoading.vue';
+import { useLoadingStore } from '@/stores/loading';
 import BaseInput from '@/components/ui/BaseInput.vue';
 
 export default {
     name: 'AppLogin',
     data() {
         return {
-            isLoading: true,
             userInfo: {
                 email: '',
                 password: '',
@@ -85,7 +83,6 @@ export default {
         };
     },
     components: {
-        BaseLoading,
         BaseInput,
     },
     methods: {
@@ -147,7 +144,9 @@ export default {
         },
     },
     mounted() {
-        this.isLoading = false;
+        const loading = useLoadingStore()
+      loading.hidePage()
+
     },
 }
 </script>

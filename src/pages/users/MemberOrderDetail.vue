@@ -1,6 +1,5 @@
 <template>
     <div class="flex flex-col md:gap-32 gap-12 w-full bg-gray-100">
-        <BaseLoading :isLoading="isLoading" />
         <BaseModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
             @close="isModalOpen = false;" @confirm="handleModalClick()" />
         <!-- top -->
@@ -195,13 +194,12 @@
 <script>
 import http from '@/api/http'
 import BaseModal from '@/components/base/BaseModal.vue';
-import BaseLoading from '@/components/base/BaseLoading.vue';
+import { useLoadingStore } from '@/stores/loading';
 
 export default {
     name: 'MemberOrderDetail',
     data() {
         return {
-            isLoading: false,
             orderDetail: '',
             isCatchError: false,
             isModalOpen: false,
@@ -211,12 +209,15 @@ export default {
     },
     components: {
         BaseModal,
-        BaseLoading,
+    },
+    created() {
+        this.getOrderDetail(this.$route.params.orderId);
     },
     methods: {
         async getOrderDetail(id) {
+            const loading = useLoadingStore()
+            loading.showPage()
             try {
-                this.isLoading = true;
                 const token = localStorage.getItem('token');
                 const res = await http.get(`/members/orders/${id}`, {
                     headers: {
@@ -230,7 +231,7 @@ export default {
                 this.modalContent = '伺服器錯誤，將轉跳回首頁';
                 this.isCatchError = true;
             } finally {
-                this.isLoading = false;
+                loading.hidePage()
             }
         },
         dateToISO(date) {
@@ -242,9 +243,6 @@ export default {
             if (this.$route.path === '/') return;
             this.$router.push('/');
         },
-    },
-    created() {
-        this.getOrderDetail(this.$route.params.orderId);
     },
     computed: {
         typeTranslate() {

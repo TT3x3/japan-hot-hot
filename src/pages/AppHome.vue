@@ -1,6 +1,5 @@
 <template>
   <div class="flex flex-col md:gap-56 gap-12">
-    <BaseLoading :isLoading="isLoading" />
     <div class="flex md:flex-col flex-col-reverse md:gap-32 gap-12">
       <!-- 搜尋框 -->
       <SearchBar :productType="productType" :placeholderType="placeholderType" :allProducts="products" v-model="search"
@@ -18,7 +17,8 @@
     <div class="rolling-home-01 bg-gray-200 overflow-x-hidden md:py-0 md:pb-24 md:pt-8 py-12">
       <div class="flex w-full justify-center items-center gap-8">
         <div class="flex flex-col md:items-end items-center">
-          <img :src="require('@/assets/images/about-img-2.jpg')" alt="about-img-2" class="md:h-72 h-96 object-cover md:pr-16">
+          <img :src="require('@/assets/images/about-img-2.jpg')" alt="about-img-2"
+            class="md:h-72 h-96 object-cover md:pr-16">
           <div class="flex flex-col md:gap-8 gap-4 h-[45%] md:[writing-mode:vertical-rl] md:px-12 md:py-0 p-8">
             <h2 class="font-bold text-xl text-base-heavy">日頭赤炎炎</h2>
             <p class="md:leading-6.5 tracking-widest md:text-base text-sm text-base-light">
@@ -36,10 +36,10 @@
 <script>
 import http from '@/api/http'
 import { useResultStore } from '@/stores/search'
+import { useLoadingStore } from '@/stores/loading'
 import HomeActivity from '@/components/home/HomeActivity.vue';
 import HomeCarousel from '@/components/home/HomeCarousel.vue';
 import SearchBar from '@/components/common/SearchBar.vue';
-import BaseLoading from '@/components/base/BaseLoading.vue';
 
 export default {
   name: 'AppHome',
@@ -47,7 +47,18 @@ export default {
     HomeActivity,
     HomeCarousel,
     SearchBar,
-    BaseLoading,
+  },
+  created() {
+    this.getProducts();
+    this.store = useResultStore();
+  },
+  async mounted() {
+    const loading = useLoadingStore()
+    try {
+      await this.getProducts()
+    } finally {
+      loading.hidePage()
+    }
   },
   data() {
     return {
@@ -55,11 +66,12 @@ export default {
       productType: '',
       placeholderType: '旅程',
       search: '',
-      isLoading: true,
     };
   },
   methods: {
     async getProducts() {
+      const loading = useLoadingStore()
+      loading.showData()
       try {
         const res = await http.get(`/product/flight`);
         this.products = res.data.items;
@@ -70,6 +82,8 @@ export default {
         this.hasError = true;
         this.modalContent = '伺服器錯誤，將轉跳回首頁';
         this.isCatchError = true;
+      } finally {
+        loading.hideData();
       }
     },
     async getSearchResult(keyword) {
@@ -83,20 +97,13 @@ export default {
       }).catch(() => { });
     },
   },
-  created() {
-    this.getProducts();
-    this.store = useResultStore();
-  },
-  mounted() {
-    this.isLoading = false
-  },
   computed: {
     typeTranslate() {
       return {
         Flight: 'tickets',
         Tour: 'tours'
       }
-    }
+    },
   }
 }
 </script>

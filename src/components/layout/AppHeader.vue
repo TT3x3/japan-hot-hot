@@ -3,7 +3,6 @@
     <div
       class="mx-auto max-w-[80%] md:pt-16 md:pb-28 py-3 flex justify-between items-center gap-4 tracking-widest md:min-h-[200px]">
       <router-link to="/" class="z-51">
-        <BaseLoading :isLoading="isLoading" />
         <img :src="require('@/assets/images/logo-s.png')" alt="logo-small" class="hidden md:block md:w-[160px]">
         <img :src="require('@/assets/images/logo-2-s.png')" class="block md:hidden w-48">
       </router-link>
@@ -55,48 +54,47 @@
 
 <script>
 import { logout } from '@/utils/auth';
-import BaseLoading from '@/components/base/BaseLoading.vue';
+import { useLoadingStore } from '@/stores/loading';
 
 export default {
   name: 'AppHeader',
   data() {
     return {
-      isLoading: false,
       isOpen: false,
     }
   },
-  components: {
-    BaseLoading,
+  beforeDestroy() {
+    document.body.style.overflow = ''
   },
   methods: {
     toggleMenu() {
       this.isOpen = !this.isOpen;
     },
     async handleLogout() {
-      this.isLoading = true;
+      const loading = useLoadingStore()
+      loading.showPage()
 
       await this.$nextTick();
       logout();
       this.isOpen = false;
       this.$router.push('/login');
 
-      this.isLoading = false;
+      loading.hidePage()
     }
   },
   watch: {
-    $route() {
-      this.isOpen = false
+    $route(to, from) {
+      this.isOpen = false;
+      if (to.path !== from.path) {
+        const loading = useLoadingStore()
+        loading.showPage()
+        setTimeout(() => loading.hidePage(), 300)
+      }
     },
     isOpen(val) {
       document.body.style.overflow = val ? 'hidden' : ''
     },
   },
-  beforeDestroy() {
-    document.body.style.overflow = ''
-  },
-  created() {
-
-  }
 }
 </script>
 

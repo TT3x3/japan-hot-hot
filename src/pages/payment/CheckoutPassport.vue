@@ -1,6 +1,5 @@
 <template>
     <div class="flex flex-col gap-32 w-full">
-        <BaseLoading :isLoading="isLoading" />
         <BaseModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
             @close="isModalOpen = false;" @confirm="handleModalClick()" />
         <div class="max-w-[80%] w-full mx-auto flex flex-col gap-12">
@@ -112,20 +111,18 @@
 
 <script>
 import { useOrderStore } from '@/stores/order';
+import { useLoadingStore } from '@/stores/loading';
 import BaseModal from '@/components/base/BaseModal.vue';
-import BaseLoading from '@/components/base/BaseLoading.vue';
 import CheckoutStepBar from '@/components/ui/CheckoutStepBar.vue'
 
 export default {
     name: 'CheckoutPage',
     components: {
         BaseModal,
-        BaseLoading,
         CheckoutStepBar,
     },
     data() {
         return {
-            isLoading: false,
             store: '',
             date: null,
             passportInfo: [],
@@ -225,7 +222,8 @@ export default {
             if (!this.validateForm()) return;
             if (this.findPassport()) return;
             if (this.isError) return;
-            this.isLoading = true;
+            const loading = useLoadingStore()
+            loading.showPage()
             try {
                 await this.store.savePassportInfo({
                     passportInfo: this.passportInfo,
@@ -233,7 +231,7 @@ export default {
                     router: this.$router,
                 })
             } finally {
-                this.isLoading = false;
+                loading.hidePage()
             }
         },
         findPassport() {

@@ -1,6 +1,5 @@
 <template>
     <div class="flex flex-col gap-32 w-full">
-        <BaseLoading :isLoading="isLoading" />
         <BaseModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
             @close="isModalOpen = false;" @confirm="handleModalClick()" />
         <div class="max-w-[80%] w-full mx-auto flex flex-col gap-12">
@@ -18,7 +17,7 @@
                     <div class="bg-gray-100 md:px-8 px-2 py-4 w-full">
                         <p class="text-sm text-base-light">出發日期</p>
                         <p class="font-bold md:text-xl text-md text-base-heavy">{{ orderInfo.startDate || orderInfo.date
-                        }}</p>
+                            }}</p>
                     </div>
                     <div class="bg-gray-100 md:px-8 px-2 py-4 w-full">
                         <p class="text-sm text-base-light">出發時間</p>
@@ -118,7 +117,7 @@
                             class="flex md:flex-row flex-col md:items-center items-start justify-between bg-gray-100 p-6">
                             <p>總金額</p>
                             <p class="font-bold text-xl text-hot-red">{{ orderInfo.totalAmount | dollarSign | currency
-                            }}</p>
+                                }}</p>
                         </div>
                     </div>
                     <div class="flex flex-row gap-4">
@@ -137,8 +136,8 @@
 import http from '@/api/http'
 import cities from '@/json/city.json';
 import { useOrderStore } from '@/stores/order';
+import { useLoadingStore } from '@/stores/loading';
 import BaseModal from '@/components/base/BaseModal.vue';
-import BaseLoading from '@/components/base/BaseLoading.vue';
 import CheckoutStepBar from '@/components/ui/CheckoutStepBar.vue'
 import BaseInput from '@/components/ui/BaseInput.vue';
 
@@ -146,7 +145,6 @@ export default {
     name: 'CheckoutPage',
     data() {
         return {
-            isLoading: false,
             store: '',
             cities,
             selectCity: null,
@@ -177,7 +175,6 @@ export default {
     },
     components: {
         BaseModal,
-        BaseLoading,
         CheckoutStepBar,
         BaseInput,
     },
@@ -195,8 +192,7 @@ export default {
             if (this.userInfo.name.trim() === '') {
                 this.isError = true;
                 this.errorInfo.name = '姓名不可空白';
-            }
-            if (!nameRule.test(this.userInfo.name)) {
+            } else if (!nameRule.test(this.userInfo.name)) {
                 this.isError = true;
                 this.errorInfo.name = '姓名不可使用英文/中文以外的文字';
             }
@@ -205,8 +201,7 @@ export default {
             if (this.userInfo.email.trim() === '') {
                 this.isError = true;
                 this.errorInfo.email = 'Email不可空白';
-            }
-            if (!emailRule.test(this.userInfo.email)) {
+            } else if (!emailRule.test(this.userInfo.email)) {
                 this.isError = true;
                 this.errorInfo.email = '請輸入正確的Email格式';
             }
@@ -215,8 +210,7 @@ export default {
             if (this.userInfo.phone.trim() === '') {
                 this.isError = true;
                 this.errorInfo.phone = '電話不可空白';
-            }
-            if (!phoneRule.test(this.userInfo.phone)) {
+            } else if (!phoneRule.test(this.userInfo.phone)) {
                 this.isError = true;
                 this.errorInfo.phone = '請輸入正確的電話格式';
             }
@@ -246,7 +240,8 @@ export default {
         async saveCheckoutInfo() {
             this.validateForm();
             if (this.isError === true) return;
-            this.isLoading = true;
+            const loading = useLoadingStore()
+            loading.showPage()
             const info = {
                 name: this.userInfo.name,
                 email: this.userInfo.email,
@@ -269,7 +264,7 @@ export default {
                 this.modalContent = '伺服器錯誤，將轉跳回首頁';
                 this.isCatchError = true;
             } finally {
-                this.isLoading = false;
+                loading.hidePage()
             }
         },
         handleModalClick() {

@@ -1,11 +1,11 @@
 <template>
     <div class="flex flex-col md:gap-32 gap-12 w-full">
-        <BaseLoading :isLoading="isLoading" />
         <BaseModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
             @close="isModalOpen = false" @confirm="handleModalClick()" />
 
         <!-- 搜尋框 -->
-        <SearchBar :placeholderType="pageTitle" :allProducts="products" v-model="search" @search-result="getSearchResult" />
+        <SearchBar :placeholderType="pageTitle" :allProducts="products" v-model="search"
+            @search-result="getSearchResult" />
 
         <div class="bg-gray-200 py-12 flex flex-col justify-center items-center gap-12">
             <div class="max-w-[80%] w-full mx-auto flex flex-col gap-4">
@@ -79,7 +79,8 @@
                     </div>
 
                     <div v-else class="flex justify-center items-center w-full flex-1 h-96">
-                        <div v-if="isLoading === false" class="flex flex-col justify-center items-center text-base-light">
+                        <div v-if="isLoading === false"
+                            class="flex flex-col justify-center items-center text-base-light">
                             <i class="fa-solid fa-heart-crack fa-5x"></i>
                             <p class="text-xl">糟糕！沒有符合的內容！</p>
                         </div>
@@ -96,15 +97,14 @@
 <script>
 import http from '@/api/http'
 import { useResultStore } from '@/stores/search'
+import { useLoadingStore } from '@/stores/loading';
 import BaseModal from '@/components/base/BaseModal.vue';
-import BaseLoading from '@/components/base/BaseLoading.vue';
 import SearchBar from '@/components/common/SearchBar.vue';
 
 export default {
     name: 'ProductsPage',
     data() {
         return {
-            isLoading: false,
             apiBase: process.env.VUE_APP_API_PATH,
             flights: [],
             tours: [],
@@ -121,14 +121,22 @@ export default {
             checkList: [],
         };
     },
+    created() {
+        this.getLikes();
+        const keyword = this.$route.query.search
+        if (keyword) {
+            this.search = keyword;
+            this.getSearchResult(keyword, parseInt(this.$route.query.page) || 1);
+        }
+    },
     components: {
         BaseModal,
         SearchBar,
-        BaseLoading,
     },
     methods: {
         async getSearchResult(keyword, page) {
-            this.isLoading = true;
+            const loading = useLoadingStore()
+            loading.showPage()
             try {
                 await this.store.getResult(keyword, page = 1);
                 this.products = this.store.products;
@@ -143,11 +151,10 @@ export default {
                 this.totalPages = this.store.totalPages;
                 this.currentPage = page;
             } finally {
-                this.isLoading = false;
+                loading.hidePage()
             }
         },
         async getLikes() {
-            this.isLoading = true;
             const token = localStorage.getItem('token');
             if (!token) return;
             try {
@@ -165,8 +172,6 @@ export default {
                 this.hasError = true;
                 this.modalContent = '伺服器錯誤，將轉跳回首頁';
                 this.isCatchError = true;
-            } finally {
-                this.isLoading = false;
             }
         },
         findLike(id) {
@@ -176,11 +181,14 @@ export default {
             }
         },
         async addToLikes(id) {
+            const loading = useLoadingStore()
+            loading.showData()
             const token = localStorage.getItem('token');
             if (!token) {
                 this.isModalOpen = true;
                 this.hasError = true;
                 this.modalContent = '修但幾咧！登入才能使用收藏功能！';
+                loading.hideData()
                 return;
             }
             try {
@@ -198,12 +206,16 @@ export default {
                 this.hasError = true;
                 this.modalContent = '伺服器錯誤，將轉跳回首頁';
                 this.isCatchError = true;
+            } finally {
+                loading.hideData()
             }
         },
         async delLike(id) {
             const token = localStorage.getItem('token');
             if (!token) return;
             if (this.findLike(id)) {
+                const loading = useLoadingStore()
+                loading.showData()
                 try {
                     await http.delete(`/cart/items`, {
                         headers: {
@@ -218,6 +230,8 @@ export default {
                     this.hasError = true;
                     this.modalContent = '伺服器錯誤，將轉跳回首頁';
                     this.isCatchError = true;
+                } finally {
+                    loading.hideData()
                 }
                 this.getLikes();
             }
@@ -269,13 +283,9 @@ export default {
         paginationPages() {
             return this.products;
         },
-    },
-    created() {
-        this.getLikes();
-        const keyword = this.$route.query.search
-        if (keyword) {
-            this.search = keyword;
-            this.getSearchResult(keyword, parseInt(this.$route.query.page) || 1);
+        isLoading() {
+            const store = useLoadingStore()
+            return store.pageLoading
         }
     },
     watch: {

@@ -1,6 +1,5 @@
 <template>
     <div class="flex flex-col gap-32 w-full">
-        <BaseLoading :isLoading="isLoading" />
         <BaseModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
             @close="isModalOpen = false;" @confirm="handleModalClick()" />
         <div v-if="orderDetail" class="max-w-[80%] w-full mx-auto flex flex-col gap-12">
@@ -150,8 +149,8 @@
 <script>
 import http from '@/api/http'
 import { useOrderStore } from '@/stores/order';
+import { useLoadingStore } from '@/stores/loading';
 import BaseModal from '@/components/base/BaseModal.vue';
-import BaseLoading from '@/components/base/BaseLoading.vue';
 import CheckoutStepBar from '@/components/ui/CheckoutStepBar.vue'
 
 export default {
@@ -166,12 +165,10 @@ export default {
             isModalOpen: false,
             hasError: false,
             modalContent: '',
-            isLoading: false,
         }
     },
     components: {
         BaseModal,
-        BaseLoading,
         CheckoutStepBar,
     },
     created() {
@@ -179,7 +176,8 @@ export default {
     },
     methods: {
         async submitOrder() {
-            this.isLoading = true;
+            const loading = useLoadingStore()
+            loading.showPage()
             try {
                 const token = localStorage.getItem('token');
                 await http.post(`/orders/${this.orderId}/submit`, {}, {
@@ -196,7 +194,7 @@ export default {
                 this.modalContent = '伺服器錯誤，將轉跳回首頁';
                 this.isCatchError = true;
             } finally {
-                this.isLoading = false;
+                loading.hidePage()
             }
         },
         handleModalClick() {

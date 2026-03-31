@@ -1,6 +1,5 @@
 <template>
     <div>
-        <BaseLoading :isLoading="isLoading" />
         <BaseModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
             @close="isModalOpen = false" @confirm="handleModalClick()" />
         <div v-if="ticket" class="flex flex-col gap-32 w-full">
@@ -265,14 +264,13 @@
 <script>
 import http from '@/api/http'
 import { useOrderStore } from '@/stores/order';
+import { useLoadingStore } from '@/stores/loading';
 import BaseModal from '@/components/base/BaseModal.vue';
-import BaseLoading from '@/components/base/BaseLoading.vue';
 
 export default {
     name: 'TicketDetail',
     data() {
         return {
-            isLoading: false,
             store: '',
             apiBase: process.env.VUE_APP_API_PATH,
             token: '',
@@ -303,20 +301,19 @@ export default {
             modalContent: '',
         }
     },
-    created() {
+    async created() {
         this.token = localStorage.getItem('token');
         this.findProduct(this.$route.params.id);
         this.getLikes();
         this.store = useOrderStore();
-        // console.log('token',localStorage.getItem('token'))
     },
     components: {
         BaseModal,
-        BaseLoading,
     },
     methods: {
         async findProduct(id) {
-            this.isLoading = true;
+            const loading = useLoadingStore()
+            loading.showPage()
             try {
                 const res = await http.get(`/product/flight/${id}`);
                 this.ticket = res.data;
@@ -330,18 +327,19 @@ export default {
                     }
                 }, 1000);
             } finally {
-                this.isLoading = false;
+                loading.hidePage()
             }
         },
         async createOrder() {
             this.confirmBooking();
             if (!this.isFormValid) return;
-            this.isLoading = true;
+            const loading = useLoadingStore()
+            loading.showPage()
             if (!this.token) {
                 this.isModalOpen = true;
                 this.hasError = true;
                 this.modalContent = '此功能僅限會員使用，請先登入';
-                this.isLoading = false;
+                loading.hidePage()
                 return;
             }
             try {
@@ -358,11 +356,10 @@ export default {
                 this.modalContent = '伺服器錯誤，將轉跳回首頁';
                 this.isCatchError = true;
             } finally {
-                this.isLoading = false;
+                loading.hidePage()
             }
         },
         async getLikes() {
-            this.isLoading = true;
             if (!this.token) return;
             try {
                 const res = await http.get(`/cart`, {
@@ -379,8 +376,6 @@ export default {
                 this.hasError = true;
                 this.modalContent = '伺服器錯誤，將轉跳回首頁';
                 this.isCatchError = true;
-            } finally {
-                this.isLoading = false;
             }
         },
         findLike(id) {
@@ -389,10 +384,13 @@ export default {
             }
         },
         async addToLikes(id) {
+            const loading = useLoadingStore()
+            loading.showData()
             if (!this.token) {
                 this.isModalOpen = true;
                 this.hasError = true;
                 this.modalContent = '哇！登入才能使用收藏功能唷！';
+                loading.hideData()
                 return;
             }
             try {
@@ -410,11 +408,15 @@ export default {
                 this.hasError = true;
                 this.modalContent = '伺服器錯誤，將轉跳回首頁';
                 this.isCatchError = true;
+            } finally {
+                loading.hideData()
             }
         },
         async delLike(id) {
             if (!this.token) return;
             if (this.findLike(id)) {
+                const loading = useLoadingStore()
+                loading.showData()
                 try {
                     await http.delete(`/cart/items`, {
                         headers: {
@@ -429,6 +431,8 @@ export default {
                     this.hasError = true;
                     this.modalContent = '伺服器錯誤，將轉跳回首頁';
                     this.isCatchError = true;
+                } finally {
+                    loading.hideData()
                 }
                 this.getLikes();
             }

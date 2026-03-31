@@ -1,6 +1,5 @@
 <template>
     <div class="flex flex-col md:gap-32 gap-12 w-full bg-gray-100">
-        <BaseLoading :isLoading="isLoading" />
         <BaseModal :isModalOpen="isModalOpen" :hasSuccess="hasSuccess" :hasError="hasError" :modalContent="modalContent"
             @close="isModalOpen = false;" @confirm="handleModalClick()" />
         <!-- top -->
@@ -47,7 +46,8 @@
                             <div class="flex flex-col gap-1">
                                 <div class="flex md:flex-row flex-col md:items-center item-start w-full">
                                     <label for="birthdayInput"
-                                        class="inline-block w-24 font-bold text-base-light">出生日期<span class="text-hot-red">*</span></label>
+                                        class="inline-block w-24 font-bold text-base-light">出生日期<span
+                                            class="text-hot-red">*</span></label>
                                     <div class="relative w-full"
                                         :class="isError.birthDate ? 'border border-red-500' : 'border-none'">
                                         <v-date-picker v-model="userInfo.birthDate" :columns="1" :min-date="minDate"
@@ -95,8 +95,8 @@
 
 <script>
 import http from '@/api/http'
+import { useLoadingStore } from '@/stores/loading'
 import BaseModal from '@/components/base/BaseModal.vue';
-import BaseLoading from '@/components/base/BaseLoading.vue';
 import MemberHero from '@/components/layout/MemberHero.vue';
 import BaseInput from '@/components/ui/BaseInput.vue';
 
@@ -104,7 +104,6 @@ export default {
     name: 'MemberProfile',
     data() {
         return {
-            isLoading: false,
             userInfo: {
                 email: '',
                 name: '',
@@ -154,13 +153,13 @@ export default {
     },
     components: {
         BaseModal,
-        BaseLoading,
         MemberHero,
         BaseInput,
     },
     methods: {
         async getUser() {
-            this.isLoading = true;
+            const loading = useLoadingStore()
+            loading.showPage()
             try {
                 const token = localStorage.getItem('token')
                 const res = await http.get(`/members/me`, {
@@ -188,13 +187,14 @@ export default {
                 this.modalContent = '伺服器錯誤，將轉跳回首頁';
                 this.isCatchError = true;
             } finally {
-                this.isLoading = false;
+                loading.hidePage()
             }
         },
         async patchUser() {
             this.validateForm();
             if (!this.validateForm()) return;
-            this.isLoading = true;
+            const loading = useLoadingStore()
+            loading.showData()
             try {
                 Object.keys(this.userInfo).forEach(key => {
                     if (this.userInfo[key] !== this.oldInfo[key]) {
@@ -221,11 +221,12 @@ export default {
                 this.modalContent = '伺服器錯誤，將轉跳回首頁';
                 this.isCatchError = true;
             } finally {
-                this.isLoading = false;
+                loading.hideData()
             }
         },
         validateForm() {
-            this.isLoading = true;
+            const loading = useLoadingStore()
+            loading.showData()
             this.isChanged = true;
             let isValid = true;
             const name = (this.userInfo.name || '').trim();
@@ -242,7 +243,6 @@ export default {
             if (realName !== '') {
                 if (this.userInfo.realName.length < 2 || this.userInfo.realName.length > 5) {
                     this.isError.realName = '*真實名稱長度需介於2到5個字元';
-
                     isValid = false;
                 }
             }
@@ -251,7 +251,6 @@ export default {
             if (passportName !== '') {
                 if (this.userInfo.passportName.length < 4 || this.userInfo.passportName.length > 39) {
                     this.isError.passportName = '*護照名稱長度需介於4到39個字元';
-
                     isValid = false;
                 }
             }
@@ -259,7 +258,6 @@ export default {
             if (passportName !== '') {
                 if (!passportNameRule.test(this.userInfo.passportName)) {
                     this.isError.passportName = '*護照名稱只能包含大寫英文字母、逗號(,)或連字號(-)';
-
                     isValid = false;
                 }
             }
@@ -270,12 +268,10 @@ export default {
             if (passportNumber !== '') {
                 if (!numberRule.test(this.userInfo.passportNumber)) {
                     this.isError.passportNumber = '*護照號碼只能包含數字';
-
                     isValid = false;
 
                 } else if (!passportNumberRule.test(this.userInfo.passportNumber)) {
                     this.isError.passportNumber = '*護照號碼長度需為9個數字';
-
                     isValid = false;
                 }
             }
@@ -285,7 +281,6 @@ export default {
             if (idNumber !== '') {
                 if (!idRule.test(this.userInfo.idNumber)) {
                     this.isError.idNumber = '*不符合台灣身分證格式'
-
                     isValid = false;
                 }
             }
@@ -321,7 +316,7 @@ export default {
                 this.isChanged = false;
                 isValid = false;
             }
-            if (!isValid) this.isLoading = false;
+            if (!isValid) loading.hideData();
             return isValid;
         },
         handleModalClick() {

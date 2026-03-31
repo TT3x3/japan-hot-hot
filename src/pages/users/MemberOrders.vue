@@ -1,6 +1,5 @@
 <template>
     <div class="flex flex-col md:gap-32 gap-12 w-full bg-gray-100">
-        <BaseLoading :isLoading="isLoading" />
         <BaseModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
             @close="isModalOpen = false;" @confirm="handleModalClick()" />
         <!-- top -->
@@ -99,9 +98,9 @@
 </template>
 
 <script>
-import BaseLoading from '@/components/base/BaseLoading.vue';
 import BaseModal from '@/components/base/BaseModal.vue';
 import MemberHero from '@/components/layout/MemberHero.vue';
+import { useLoadingStore } from '@/stores/loading';
 
 import http from '@/api/http'
 
@@ -109,7 +108,6 @@ export default {
     name: 'MemberOrders',
     data() {
         return {
-            isLoading: true,
             orderList: '',
             selectNum: [5, 10, 20, 40],
             currentPage: 1,
@@ -125,17 +123,14 @@ export default {
     created() {
         this.getOrders();
     },
-    mounted() {
-        this.isLoading = false;
-    },
     components: {
         BaseModal,
-        BaseLoading,
         MemberHero,
     },
     methods: {
         async getOrders() {
-            this.isLoading = true;
+            const loading = useLoadingStore()
+            loading.showPage()
             const token = localStorage.getItem('token');
             try {
                 const res = await http.get(`/members/orders`, {
@@ -153,7 +148,7 @@ export default {
                 this.hasError = true;
                 this.modalContent = '伺服器錯誤，將轉跳回首頁';
             } finally {
-                this.isLoading = false;
+                loading.hidePage();
             }
 
         },

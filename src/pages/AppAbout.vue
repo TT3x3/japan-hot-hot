@@ -1,14 +1,13 @@
 <template>
     <div class="flex flex-col justify-center items-center mx-auto md:gap-48 gap-16 text-base-heavy">
-        <BaseLoading :isLoading="isLoading" />
         <div class="block md:hidden"></div>
         <div class="rolling-title flex flex-col justify-center items-center gap-2 md:mt-0">
             <p class="font-extrabold md:text-3xl text-xl tracking-widest">日頭赤炎炎</p>
             <p class="md:text-lg text-base-light">這句話是我們對這片土地及內心最直白的問候</p>
         </div>
         <div class="bg-gray-200 flex flex-col md:gap-48 gap-16 w-full">
-            <img :src="require('@/assets/images/pic-04.jpg')" class="rolling-img-1 w-full md:h-96 h-64 relative object-cover"
-                alt="home-banner">
+            <img :src="require('@/assets/images/pic-04.jpg')"
+                class="rolling-img-1 w-full md:h-96 h-64 relative object-cover" alt="home-banner">
             <div class="rolling-line-01 md:w-20 w-10 h-px bg-gray-400/60 mx-auto"></div>
             <div
                 class="flex flex-col md:gap-8 gap-4 md:[writing-mode:vertical-rl] md:w-[80%] md:justify-start md:items-start justify-center items-center">
@@ -36,7 +35,8 @@
             </div>
             <div class="rolling-line-01 md:w-20 w-10 h-px bg-gray-400/60 mx-auto"></div>
             <div class="flex md:gap-8 gap-4 md:w-[60%] mr-auto md:ml-32 ml-1">
-                <img :src="require('@/assets/images/pic-02.jpg')" class="rolling-content-04 w-[40%] relative object-cover">
+                <img :src="require('@/assets/images/pic-02.jpg')"
+                    class="rolling-content-04 w-[40%] relative object-cover">
                 <div class=" rolling-content-04 flex flex-col md:gap-8 gap-4">
                     <h2 class="font-bold text-xl text-base-heavy tracking-widest">從出發到抵達的溫度</h2>
                     <p class="md:leading-6.5 tracking-widest md:text-base text-sm text-base-light">
@@ -64,20 +64,13 @@
 </template>
 
 <script>
-import BaseLoading from '@/components/base/BaseLoading.vue';
+import { useLoadingStore } from '@/stores/loading';
 
 export default {
     name: 'AppAbout',
-    data() {
-        return {
-            isLoading: true
-        };
-    },
-    components: {
-        BaseLoading,
-    },
     mounted() {
-        this.isLoading = false
+        const loading = useLoadingStore()
+        loading.hidePage()
     }
 }
 </script>
@@ -102,6 +95,7 @@ export default {
 }
 
 @media (max-width: 768px) {
+
     .rolling-content-01,
     .rolling-content-08 {
         opacity: 0;

@@ -1,6 +1,5 @@
 <template>
     <div class="flex flex-col md:gap-32 gap-12 w-full bg-gray-100">
-        <BaseLoading :isLoading="isLoading" />
         <!-- top -->
         <MemberHero :bannerImg="bannerImg" :pageTitle="pageTitle" />
         <div class="max-w-[80%] w-full mx-auto">
@@ -41,7 +40,7 @@
 </template>
 
 <script>
-import BaseLoading from '@/components/base/BaseLoading.vue';
+import { useLoadingStore } from '@/stores/loading';
 import MemberHero from '@/components/layout/MemberHero.vue';
 
 export default {
@@ -51,17 +50,16 @@ export default {
             isModalOpen: false,
             hasError: false,
             modalContent: '',
-            isLoading: true,
-            pageTitle:'會員中心',
+            pageTitle: '會員中心',
             bannerImg: require('@/assets/images/carousel-3.jpg'),
         }
     },
     components: {
-        BaseLoading,
         MemberHero,
     },
     mounted() {
-        this.isLoading = false
-    }
+        const loading = useLoadingStore()
+        loading.hidePage()
+    },
 }
 </script>

@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Router from "vue-router";
 import { useOrderStore } from "@/stores/order";
+import { useLoadingStore } from "@/stores/loading";
 
 // import 頁面
 import AppHome from "@/pages/AppHome.vue";
@@ -146,6 +147,8 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   const isLogin = !!localStorage.getItem("token");
   const orderStore = useOrderStore();
+  const loading = useLoadingStore();
+  loading.showPage();
 
   if (to.meta.requiresAuth && !isLogin) {
     next("/");
@@ -156,6 +159,13 @@ router.beforeEach((to, from, next) => {
   } else {
     next();
   }
+});
+
+router.afterEach(() => {
+  const loading = useLoadingStore();
+  setTimeout(() => {
+    loading.hidePage();
+  }, 300);
 });
 
 export default router;

@@ -1,6 +1,5 @@
 <template>
     <div class="flex flex-col md:gap-32 gap-12 w-full bg-gray-100">
-        <BaseLoading :isLoading="isLoading" />
         <BaseModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
             @close="isModalOpen = false" />
         <!-- top -->
@@ -21,11 +20,11 @@
                             <div class="flex flex-col gap-4">
                                 <BaseInput labelName="Email" inputKey="email" inputType="email"
                                     v-model="loginInfo.email" :errorTitle="errorInfo.email"
-                                    :clearErrorInfo="clearErrorInfo" required  />
+                                    :clearErrorInfo="clearErrorInfo" required />
                                 <div class="md:block hidden w-full h-px bg-gray-100"></div>
                                 <BaseInput labelName="密碼" inputKey="password" inputType="password"
                                     v-model="loginInfo.password" :errorTitle="errorInfo.password"
-                                    :clearErrorInfo="clearErrorInfo" required  />
+                                    :clearErrorInfo="clearErrorInfo" required />
                             </div>
                             <div class="flex md:flex-row flex-col gap-4 justify-center items-center">
                                 <button type="submit" @click.prevent="postLogin()"
@@ -50,15 +49,14 @@
 <script>
 import http from '@/api/http'
 import { login } from '@/utils/auth'
+import { useLoadingStore } from '@/stores/loading';
 import BaseModal from '@/components/base/BaseModal.vue';
-import BaseLoading from '@/components/base/BaseLoading.vue';
 import BaseInput from '@/components/ui/BaseInput.vue';
 
 export default {
     name: 'AppLogin',
     data() {
         return {
-            isLoading: true,
             isModalOpen: false,
             hasError: false,
             modalContent: '',
@@ -78,8 +76,11 @@ export default {
     },
     components: {
         BaseModal,
-        BaseLoading,
         BaseInput,
+    },
+    mounted() {
+        const loading = useLoadingStore()
+        loading.hidePage()
     },
     methods: {
         validateForm() {
@@ -106,7 +107,8 @@ export default {
         async postLogin() {
             this.validateForm();
             if (this.isError) return;
-            this.isLoading = true;
+            const loading = useLoadingStore()
+            loading.showPage()
             try {
                 const res = await http.post(`/members/login`, this.loginInfo);
                 const token = res.data?.access_token;
@@ -122,15 +124,12 @@ export default {
                 this.loginInfo.email = '';
                 this.loginInfo.password = '';
             } finally {
-                this.isLoading = false;
+                loading.hidePage()
             }
         },
         clearErrorInfo(key) {
             this.errorInfo[key] = '';
         },
-    },
-    mounted() {
-        this.isLoading = false;
     },
 }
 </script>

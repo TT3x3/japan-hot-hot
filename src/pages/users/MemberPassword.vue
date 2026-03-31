@@ -1,6 +1,5 @@
 <template>
     <div class="flex flex-col gap-32 w-full bg-gray-100">
-        <BaseLoading :isLoading="isLoading" />
         <BaseModal :isModalOpen="isModalOpen" :hasError="hasError" :hasSuccess="hasSuccess" :modalContent="modalContent"
             @close="isModalOpen = false;" @confirm="handleModalClick()" />
         <!-- top -->
@@ -46,16 +45,15 @@
 
 <script>
 import http from '@/api/http'
-import BaseLoading from '@/components/base/BaseLoading.vue';
 import BaseModal from '@/components/base/BaseModal.vue';
 import MemberHero from '@/components/layout/MemberHero.vue';
 import BaseInput from '@/components/ui/BaseInput.vue';
+import { useLoadingStore } from '@/stores/loading';
 
 export default {
     name: 'MemberPassword',
     data() {
         return {
-            isLoading: true,
             passwordInfo: {
                 oldPassword: '',
                 newPassword: '',
@@ -76,11 +74,11 @@ export default {
             bannerImg: require('@/assets/images/pic-05.jpg'),
         }
     },
-    created() {
-        this.isLoading = false
+    mounted() {
+        const loading = useLoadingStore()
+        loading.hidePage()
     },
     components: {
-        BaseLoading,
         BaseModal,
         MemberHero,
         BaseInput,
@@ -88,7 +86,9 @@ export default {
     methods: {
         async changePassword() {
             this.validateForm();
-            if (!this.isFormValid) return;
+            if (!this.validateForm()) return;
+            const loading = useLoadingStore()
+            loading.showData()
             try {
                 this.changeList = {
                     oldPassword: this.passwordInfo.oldPassword,
@@ -110,67 +110,68 @@ export default {
                     checkedPassword: '',
                 };
                 this.changeList = {};
-                this.isFormValid = false;
             } catch {
                 this.isModalOpen = true;
                 this.hasError = true;
                 this.hasSuccess = false;
                 this.modalContent = '伺服器錯誤，將轉跳回首頁';
             } finally {
-                this.isLoading = false;
+                loading.hideData();
             }
         },
         validateForm() {
-            this.isFormValid = true;
+            let isValid = true;
+            const loading = useLoadingStore()
+            loading.showData()
             const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,20}$/;
             if (this.passwordInfo.oldPassword.trim() === '') {
                 this.isError.oldPassword = '*請輸入舊密碼';
-                this.isFormValid = false;
+                isValid = false;
             }
             else if (this.passwordInfo.oldPassword.length < 6 || this.passwordInfo.oldPassword.length > 20) {
                 this.isError.oldPassword = '*密碼長度需介於6到20個字元';
-                this.isFormValid = false;
+                isValid = false;
             }
             else if (!passwordRegex.test(this.passwordInfo.oldPassword)) {
                 this.isError.oldPassword = '*密碼需包含至少一個字母和一個數字';
-                this.isFormValid = false;
+                isValid = false;
             }
 
             if (this.passwordInfo.newPassword.trim() === '') {
                 this.isError.newPassword = '*請輸入新密碼';
-                this.isFormValid = false;
+                isValid = false;
             }
             else if (this.passwordInfo.newPassword.length < 6 || this.passwordInfo.newPassword.length > 20) {
                 this.isError.newPassword = '*密碼長度需介於6到20個字元';
-                this.isFormValid = false;
+                isValid = false;
             }
             else if (!passwordRegex.test(this.passwordInfo.newPassword)) {
                 this.isError.newPassword = '*密碼需包含至少一個字母和一個數字';
-                this.isFormValid = false;
+                isValid = false;
             }
             else if (this.passwordInfo.newPassword === this.passwordInfo.password) {
                 this.isError.newPassword = '*新密碼與舊密碼不可相同';
-                this.isFormValid = false;
+                isValid = false;
             }
 
             if (this.passwordInfo.checkedPassword.trim() === '') {
                 this.isError.checkedPassword = '*請輸入確認密碼';
-                this.isFormValid = false;
+                isValid = false;
             }
             else if (this.passwordInfo.checkedPassword.length < 6 || this.passwordInfo.checkedPassword.length > 20) {
                 this.isError.checkedPassword = '*密碼長度需介於6到20個字元';
-                this.isFormValid = false;
+                isValid = false;
             }
             else if (!passwordRegex.test(this.passwordInfo.checkedPassword)) {
                 this.isError.checkedPassword = '*密碼需包含至少一個字母和一個數字';
-                this.isFormValid = false;
+                isValid = false;
             }
             else if (this.passwordInfo.newPassword !== this.passwordInfo.checkedPassword) {
                 this.isError.checkedPassword = '*確認密碼與新密碼不一致';
-                this.isFormValid = false;
+                isValid = false;
             }
-
-            if (!this.isFormValid) return;
+            if (!this.isValid) loading.hideData();
+            return isValid;
         },
         handleModalClick() {
             if (!this.isCatchError) return;

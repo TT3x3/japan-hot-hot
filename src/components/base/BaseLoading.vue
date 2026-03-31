@@ -3,7 +3,7 @@
         leave-active-class="transition-opacity duration-300" enter-from-class="opacity-0" enter-to-class="opacity-100"
         leave-from-class="opacity-100" leave-to-class="opacity-0">
         <div v-if="isLoading"
-            class="bg-white/80 fixed top-0 left-0 flex justify-center items-center w-full h-full z-100">
+            class="bg-white/70 fixed top-0 left-0 flex justify-center items-center w-full h-full z-100">
             <div class="loading-style flex justify-center items-center">
                 <div class="bubble-1"></div>
                 <img :src="require('@/assets/images/logo-pic.png')" class="bubble-2 loading-img w-20 h-20">
@@ -14,24 +14,27 @@
 </template>
 
 <script>
+import { useLoadingStore } from '@/stores/loading'
+
 export default {
     name: 'AppLoading',
-    props: {
-        isLoading: {
-            type: Boolean,
-            default: false,
-        }
-    },
     mounted() {
-        if (this.isLoading) document.body.style.overflow = 'hidden';
+        document.body.style.overflow = this.isLoading ? 'hidden' : ''
+    },
+
+    beforeDestroy() {
+        document.body.style.overflow = ''
+    },
+    computed: {
+        isLoading() {
+            const store = useLoadingStore()
+            return store.pageLoading || store.dataLoading
+        }
     },
     watch: {
         isLoading(val) {
             document.body.style.overflow = val ? 'hidden' : ''
-        },
-    },
-    beforeDestroy() {
-        document.body.style.overflow = ''
+        }
     },
 }
 </script>
