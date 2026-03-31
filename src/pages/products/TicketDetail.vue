@@ -464,7 +464,7 @@ export default {
             }
         },
         subCount() {
-            if (this.ticketCount < 1) {
+            if (this.ticketCount <= 1) {
                 this.isError.ticketCount = true;
                 this.isError.countErrMsg = `* 最少需選擇 1 張`;
             } else {
