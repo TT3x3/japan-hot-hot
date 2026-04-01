@@ -284,7 +284,7 @@ export default {
             },
             isFormValid: false,
             isNotFound: false,
-            seconds: 5,
+            seconds: 3,
             likesList: [],
             isCatchError: false,
             isModalOpen: false,
