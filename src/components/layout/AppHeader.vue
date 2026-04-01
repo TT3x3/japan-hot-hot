@@ -73,12 +73,9 @@ export default {
     async handleLogout() {
       const loading = useLoadingStore()
       loading.showPage()
-
-      await this.$nextTick();
       logout();
       this.isOpen = false;
-      this.$router.push('/login');
-
+      await this.$router.push('/login');
       loading.hidePage()
     }
   },
