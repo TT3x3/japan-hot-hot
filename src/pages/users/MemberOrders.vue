@@ -3,9 +3,9 @@
         <BaseModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
             @close="isModalOpen = false;" @confirm="handleModalClick()" />
         <!-- top -->
-        <MemberHero :bannerImg="require('@/assets/images/pic-04.jpg')" pageTitle="歷史訂單" />
-
-        <div v-if="orderList" class="flex flex-col gap-8">
+        <MemberHero :bannerImg="require('@/assets/images/pic-04.jpg')" pageTitle="訂單總覽" />
+        <div v-if="!orderList"></div>
+        <div v-else-if="orderList" class="flex flex-col gap-8">
             <div class="text-base-heavy">
                 <!-- <div class="flex flex-col pb-4"> -->
                     <!-- <div class="flex items-center justify-center"> -->
