@@ -6,10 +6,7 @@
         <div class="relative  md:h-80 h-40 overflow-hidden">
             <img :src="require('@/assets/images/carousel-4.jpg')" alt="tour-banner" class=" w-full h-full object-cover">
         </div>
-        <div class="flex justify-center items-center ">
-            <h1 class="text-3xl text-center tracking-[2rem] pl-[2rem] text-base-heavy">訂單</h1>
-        </div>
-        <div class="max-w-[80%] mx-auto w-full flex flex-col gap-8">
+        <div v-if="orderDetail" class="max-w-[80%] mx-auto w-full flex flex-col gap-8">
             <div class="text-base-heavy">
                 <div class="flex justify-between items-center pb-4">
                     <div class=" flex md:flex-row flex-col gap-4 md:items-center items-start justify-between w-full">
@@ -19,7 +16,7 @@
                         </div>
                     </div>
                 </div>
-                <div v-if="orderDetail" class="flex md:flex-row flex-col w-full gap-5 items-start">
+                <div class="flex md:flex-row flex-col w-full gap-5 items-start">
                     <!-- orders -->
                     <div class="flex gap-4 flex-col justify-center text-base-heavy md:w-[85%] w-full">
                         <div
@@ -191,6 +188,12 @@
                 <BaseRouterLink class="flex-1" goToPath="/member/orders" buttonName="返回訂單總覽" :isRed="false" />
             </div>
         </div>
+        <div v-if="isNotFound === true" class="flex flex-col justify-center items-center w-full">
+            <div class="flex flex-col items-center justify-center py-8">
+                <p class="pb-2 font-bold md:text-3xl text-xl text-hot-red">查無此訂單編號</p>
+                <p class="text-xl text-gray-500">{{ seconds }} 秒後自動轉跳回訂單總覽</p>
+            </div>
+        </div>
         <div></div>
 
     </div>
@@ -211,6 +214,8 @@ export default {
             isModalOpen: false,
             hasError: false,
             modalContent: '',
+            isNotFound: false,
+            seconds: 3,
         }
     },
     components: {
@@ -233,9 +238,14 @@ export default {
                 });
                 this.orderDetail = res.data;
             } catch (error) {
-                this.isModalOpen = true;
-                this.hasError = true;
-                this.modalContent = '伺服器錯誤，將轉跳回首頁';
+                this.isNotFound = true;
+                const timer = setInterval(() => {
+                    this.seconds--;
+                    if (this.seconds === 0) {
+                        clearInterval(timer);
+                        this.$router.push('/member/orders');
+                    }
+                }, 1000);
                 this.isCatchError = true;
             } finally {
                 loading.hidePage()
