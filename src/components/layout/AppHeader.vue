@@ -70,13 +70,10 @@ export default {
     toggleMenu() {
       this.isOpen = !this.isOpen;
     },
-    async handleLogout() {
-      const loading = useLoadingStore()
-      loading.showPage()
+    handleLogout() {
       logout();
       this.isOpen = false;
-      await this.$router.push('/login');
-      loading.hidePage()
+      this.$router.push('/login');
     }
   },
   watch: {
