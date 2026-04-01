@@ -43,11 +43,12 @@
                             <p class="font-bold text-3xl text-hot-red w-full whitespace-nowrap">{{ ticket.price |
                                 dollarSign | currency }}～</p>
                             <div class="flex items-center md:gap-0 gap-3 w-full">
-                                <button type="button" v-if="ticket.status === 'active'"
-                                    @click.prevent="scrollToBooking()"
-                                    class="bg-hot-red text-white px-10 py-3 hover:bg-red-400 active:bg-red-700 cursor-pointer w-full">立即購票</button>
-                                <button type="button" v-else class="bg-gray-400 text-gray-300 px-10 py-3 w-full"
-                                    disabled>無法購買</button>
+                                <BaseButton v-if="ticket.status === 'active'" @click="scrollToBooking" buttonName="立即購票"
+                                    isRed />
+                                <BaseButton v-else @click="scrollToBooking" buttonName="無法購買" :isRed="false"
+                                    isDisabled />
+
+                                <!-- md 以下愛心 -->
                                 <button type="button" @click.prevent.stop="toggleLike(ticket.productId)"
                                     class="md:hidden block text-red-300  hover:text-red-500 transition-colors duration-200 ">
                                     <i v-if="findLike(ticket.productId)"
@@ -174,17 +175,6 @@
                         <p v-if="isError.date" class="text-xs text-red-700">{{ isError.dateErrMsg }}</p>
                         <p class="text-xs text-gray-500">* 僅可訂購1個月後至6個月以內的機票。</p>
                     </div>
-                    <!-- <div class="flex flex-col gap-2">
-                        <p class="text-sm text-gray-500">回程日期</p>
-                        <div
-                            class="flex md:flex-row flex-col justify-between items-center md:gap-12 gap-4 bg-white md:px-8 px-2 py-6 text-base-heavy">
-                            <div v-if="!date" class="flex flex-col">
-                                <p class="md:text-start text-center font-bold text-hot-red">尚未選擇去程日期</p>
-                                <span class="md:text-sm text-xs text-gray-400">*選擇去程日期後系統將自動計算回程日期。</span>
-                            </div>
-                            <p v-if="returnDate" class="font-bold text-base-heavy">{{ returnDate }}</p>
-                        </div>
-                    </div> -->
                     <div class="flex flex-col gap-2">
                         <p class="text-sm text-gray-500">選擇數量</p>
                         <div class="flex md:flex-row flex-col justify-between items-center md:gap-12 gap-4 bg-white md:px-8 py-6 text-base-heavy"
@@ -211,8 +201,7 @@
                         <p class="text-sm text-gray-500">總金額</p>
                         <p class="font-bold text-xl">{{ ticket.price * ticketCount | dollarSign | currency }}</p>
                     </div>
-                    <button @click.prevent="createOrder()" type="button"
-                        class="bg-hot-red self-end text-white px-10 py-3 hover:bg-red-400 active:bg-red-700 w-full cursor-pointer">確認購買</button>
+                    <BaseButton @click="createOrder" buttonName="確認購買" isRed />
                 </div>
                 <div v-else class=" bg-gray-100 flex flex-col gap-4 justify-center items-center p-14 text-base-heavy">
                     <i class="fa-solid fa-face-sad-tear fa-5x"></i>
@@ -248,8 +237,9 @@
                         </tbody>
                     </table>
                 </div>
-                <button type="button" @click.prevent="$router.back(-1)"
-                    class="inline-block self-center bg-gray-400 px-10 py-3 hover:bg-gray-300 active:bg-gray-500 text-white cursor-pointer">返回上頁</button>
+                <div class="flex justify-center">
+                    <BaseButton @click="$router.back(-1)" buttonName="返回上頁" :isRed="false" />
+                </div>
             </div>
         </div>
         <div v-if="isNotFound === true" class="flex flex-col justify-center items-center w-full">
@@ -266,6 +256,7 @@ import http from '@/api/http'
 import { useOrderStore } from '@/stores/order';
 import { useLoadingStore } from '@/stores/loading';
 import BaseModal from '@/components/base/BaseModal.vue';
+import BaseButton from '@/components/ui/BaseButton.vue';
 
 export default {
     name: 'TicketDetail',
@@ -309,6 +300,7 @@ export default {
     },
     components: {
         BaseModal,
+        BaseButton,
     },
     methods: {
         async findProduct(id) {

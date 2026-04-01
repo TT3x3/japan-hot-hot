@@ -17,7 +17,7 @@
                     <div class="bg-gray-100 md:px-8 px-2 py-4 w-full">
                         <p class="text-sm text-base-light">出發日期</p>
                         <p class="font-bold md:text-xl text-md text-base-heavy">{{ orderInfo.startDate || orderInfo.date
-                            }}</p>
+                        }}</p>
                     </div>
                     <div class="bg-gray-100 md:px-8 px-2 py-4 w-full">
                         <p class="text-sm text-base-light">出發時間</p>
@@ -117,14 +117,12 @@
                             class="flex md:flex-row flex-col md:items-center items-start justify-between bg-gray-100 p-6">
                             <p>總金額</p>
                             <p class="font-bold text-xl text-hot-red">{{ orderInfo.totalAmount | dollarSign | currency
-                                }}</p>
+                            }}</p>
                         </div>
                     </div>
-                    <div class="flex flex-row gap-4">
-                        <button type="button" @click.prevent="saveCheckoutInfo()"
-                            class="bg-hot-red hover:bg-red-500 active:bg-red-700 px-10 py-3 w-full font-bold text-center text-white">確認</button>
-                        <button type="button" @click.prevent="$router.back(-1)"
-                            class="bg-gray-400 hover:bg-gray-300 active:bg-gray-500 px-10 py-3 w-full text-center text-white">返回</button>
+                    <div class="flex md:flex-row flex-col gap-4 w-full">
+                        <BaseButton class="flex-1" @click="saveCheckoutInfo" buttonName="確認" isRed />
+                        <BaseButton class="flex-1" @click="$router.back(-1)" buttonName="返回" :isRed="false" />
                     </div>
                 </div>
             </div>
@@ -140,6 +138,7 @@ import { useLoadingStore } from '@/stores/loading';
 import BaseModal from '@/components/base/BaseModal.vue';
 import CheckoutStepBar from '@/components/ui/CheckoutStepBar.vue'
 import BaseInput from '@/components/ui/BaseInput.vue';
+import BaseButton from '@/components/ui/BaseButton.vue';
 
 export default {
     name: 'CheckoutPage',
@@ -177,6 +176,7 @@ export default {
         BaseModal,
         CheckoutStepBar,
         BaseInput,
+        BaseButton,
     },
     created() {
         this.store = useOrderStore();

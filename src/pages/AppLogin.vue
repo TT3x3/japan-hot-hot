@@ -27,10 +27,9 @@
                                     :clearErrorInfo="clearErrorInfo" required />
                             </div>
                             <div class="flex md:flex-row flex-col gap-4 justify-center items-center">
-                                <button type="submit" @click.prevent="postLogin()"
-                                    class="md:w-36 w-full cursor-pointer bg-hot-red text-center text-white py-3  hover:bg-red-500 active:bg-red-700 transition-colors">登入</button>
-                                <router-link to="/signup"
-                                    class="md:w-36 w-full cursor-pointer bg-gray-400 text-center text-white py-3  hover:bg-gray-300 active:bg-gray-500 transition-colors">加入日頭</router-link>
+                                <BaseButton @click="postLogin" buttonName="登入" isRed />
+                                <BaseRouterLink goToPath="/signup" buttonName="加入我們" :isRed="false" />
+
                             </div>
                             <div class="w-full h-px bg-gray-100"></div>
                             <div>
@@ -52,6 +51,8 @@ import { login } from '@/utils/auth'
 import { useLoadingStore } from '@/stores/loading';
 import BaseModal from '@/components/base/BaseModal.vue';
 import BaseInput from '@/components/ui/BaseInput.vue';
+import BaseButton from '@/components/ui/BaseButton.vue';
+import BaseRouterLink from '@/components/ui/BaseRouterLink.vue';
 
 export default {
     name: 'AppLogin',
@@ -77,6 +78,8 @@ export default {
     components: {
         BaseModal,
         BaseInput,
+        BaseButton,
+        BaseRouterLink,
     },
     mounted() {
         const loading = useLoadingStore()

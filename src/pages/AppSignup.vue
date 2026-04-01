@@ -35,10 +35,8 @@
                                     :errorTitle="errorInfo.phone" :clearErrorInfo="clearErrorInfo" required />
                             </div>
                             <div class="flex md:flex-row flex-col gap-4 justify-center items-center">
-                                <button type="submit" @click.prevent="validateForm()"
-                                    class="md:w-36 w-full cursor-pointer bg-hot-red text-center text-white py-3 hover:bg-red-500 active:bg-red-700 transition-colors">加入日頭</button>
-                                <router-link to="/login"
-                                    class="md:w-36 w-full cursor-pointer bg-gray-400 text-center text-white py-3 hover:bg-gray-300 active:bg-gray-500 transition-colors">已有會員</router-link>
+                                <BaseButton @click="validateForm" buttonName="註冊" isRed />
+                                <BaseRouterLink goToPath="/login" buttonName="已有會員" :isRed="false" />
                             </div>
                             <!-- <p class="text-center text-sm px-4 cursor-pointer text-base-light">忘記密碼了嗎？</p> -->
                             <div class="md:block hidden w-full h-px bg-gray-100"></div>
@@ -58,6 +56,8 @@
 <script>
 import { useLoadingStore } from '@/stores/loading';
 import BaseInput from '@/components/ui/BaseInput.vue';
+import BaseRouterLink from '@/components/ui/BaseRouterLink.vue';
+import BaseButton from '@/components/ui/BaseButton.vue';
 
 export default {
     name: 'AppLogin',
@@ -82,6 +82,8 @@ export default {
     },
     components: {
         BaseInput,
+        BaseRouterLink,
+        BaseButton,
     },
     mounted() {
         const loading = useLoadingStore()

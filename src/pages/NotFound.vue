@@ -8,8 +8,7 @@
                         <p class=" font-extrabold md:text-3xl text-xl text-gray-500">挖哩咧，好像沒這個地方捏？</p>
                         <p class="text-gray-400">請點擊下方按鈕回首頁，不要再迷路囉！</p>
                     </div>
-                    <router-link to="/"
-                        class=" bg-hot-red hover:bg-red-500 active:bg-red-700 md:px-10 px-4 py-3 w-full font-bold text-center text-white">回到首頁</router-link>
+                    <BaseRouterLink goToPath="/" buttonName="回到首頁" isRed />
                 </div>
             </div>
         </div>
@@ -17,7 +16,12 @@
 </template>
 
 <script>
+import BaseRouterLink from '@/components/ui/BaseRouterLink.vue';
+
 export default {
     name: 'NotFound',
+    components: {
+        BaseRouterLink,
+    }
 }
 </script>

@@ -10,10 +10,8 @@
                     <p class="py-8 font-extrabold md:text-3xl text-xl text-hot-red">訂購完成！</p>
                 </div>
                 <div class="flex md:flex-row flex-col gap-4 md:w-[70%] w-full">
-                    <router-link to="/member/orders"
-                        class="bg-hot-red hover:bg-red-500 active:bg-red-700 md:px-10 px-4 py-3 w-full font-bold text-center text-white">查看訂單</router-link>
-                    <router-link to="/"
-                        class=" border border-hot-red hover:bg-red-100 active:bg-red-300 md:px-10 px-4 py-3 w-full font-bold text-center text-hot-red">繼續尋寶</router-link>
+                    <BaseRouterLink class="flex-1" goToPath="/" buttonName="繼續尋寶" isRed />
+                    <BaseRouterLink class="flex-1" goToPath="/member/orders" buttonName="查看訂單" :isRed="false" />
                 </div>
             </div>
             <div v-else class="flex flex-col justify-center items-center w-full">
@@ -25,10 +23,8 @@
                     </div>
                 </div>
                 <div class="flex md:flex-row flex-col gap-4 md:w-[70%] w-full">
-                    <router-link to="/member/orders"
-                        class="bg-hot-red hover:bg-red-500 active:bg-red-700 md:px-10 px-4 py-3 w-full font-bold text-center text-white">查看訂單</router-link>
-                    <router-link to="/"
-                        class=" border border-hot-red hover:bg-red-100 active:bg-red-300 md:px-10 px-4 py-3 w-full font-bold text-center text-hot-red">繼續尋寶</router-link>
+                    <BaseRouterLink class="flex-1" goToPath="/" buttonName="繼續尋寶" isRed />
+                    <BaseRouterLink class="flex-1" goToPath="/member/orders" buttonName="查看訂單" :isRed="false" />
                 </div>
             </div>
 
@@ -39,6 +35,7 @@
 
 <script>
 import CheckoutStepBar from '@/components/ui/CheckoutStepBar.vue'
+import BaseRouterLink from '@/components/ui/BaseRouterLink.vue';
 
 export default {
     name: 'CheckoutFinished',
@@ -49,6 +46,7 @@ export default {
     },
     components: {
         CheckoutStepBar,
+        BaseRouterLink,
     },
     computed: {
         typeTranslate() {

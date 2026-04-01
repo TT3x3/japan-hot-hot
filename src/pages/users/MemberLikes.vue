@@ -10,9 +10,9 @@
                     <BaseCategory CategoryName="行程" :isSelected="selectCategory" @select="selectCategory = $event" />
                     <BaseCategory CategoryName="機票" :isSelected="selectCategory" @select="selectCategory = $event" />
                 </div>
-                <!-- 分類 -->
-                <router-link to="/member"
-                    class="inline-block self-end cursor-pointer bg-gray-400 text-white text-center px-10 py-3 hover:bg-gray-300 active:bg-gray-500 transition-colors">返回會員中心</router-link>
+                <div class="flex md:justify-end">
+                    <BaseRouterLink goToPath="/member" buttonName="返回會員中心" :isRed="false" />
+                </div>
                 <!-- <div class="flex items-center justify-between">
                     <router-link to="/member"
                         class="cursor-pointer bg-gray-400 text-white text-center px-10 py-3  hover:bg-gray-300 active:bg-gray-500 transition-colors">返回會員中心</router-link>
@@ -82,6 +82,7 @@ import { useLoadingStore } from '@/stores/loading';
 import BaseModal from '@/components/base/BaseModal.vue';
 import BaseCategory from '@/components/base/BaseCategory.vue';
 import MemberHero from '@/components/layout/MemberHero.vue';
+import BaseRouterLink from '@/components/ui/BaseRouterLink.vue';
 
 export default {
     name: 'MemberLikes',
@@ -109,6 +110,7 @@ export default {
         BaseModal,
         MemberHero,
         BaseCategory,
+        BaseRouterLink,
     },
     methods: {
         async getLikes() {

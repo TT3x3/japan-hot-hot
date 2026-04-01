@@ -136,11 +136,9 @@
                 </div>
             </div>
 
-            <div class="flex flex-row gap-4">
-                <button type="button" @click.prevent="submitOrder()"
-                    class="bg-hot-red hover:bg-red-500 active:bg-red-700 px-10 py-3 w-full font-bold text-center text-white">確認</button>
-                <button type="button" @click.prevent="$router.back(-1)"
-                    class="bg-gray-400 hover:bg-gray-300 active:bg-gray-500 px-10 py-3 w-full text-center text-white">返回</button>
+            <div class="flex md:flex-row flex-col gap-4 w-full">
+                <BaseButton class="flex-1" @click="submitOrder" buttonName="確認" isRed />
+                <BaseButton class="flex-1" @click="$router.back(-1)" buttonName="返回" :isRed="false" />
             </div>
         </div>
     </div>
@@ -152,6 +150,7 @@ import { useOrderStore } from '@/stores/order';
 import { useLoadingStore } from '@/stores/loading';
 import BaseModal from '@/components/base/BaseModal.vue';
 import CheckoutStepBar from '@/components/ui/CheckoutStepBar.vue'
+import BaseButton from '@/components/ui/BaseButton.vue';
 
 export default {
     name: 'CheckoutChecked',
@@ -170,6 +169,7 @@ export default {
     components: {
         BaseModal,
         CheckoutStepBar,
+        BaseButton,
     },
     created() {
         this.store = useOrderStore();

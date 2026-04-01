@@ -73,11 +73,9 @@
                             <BaseInput labelName="地址" inputKey="address" inputType="text" v-model="userInfo.address"
                                 :errorTitle="isError.address" :clearErrorInfo="clearErrorInfo" />
                         </div>
-                        <div class="flex gap-4 justify-center items-center md:py-0 py-4">
-                            <button type="submit" @click.prevent="patchUser()"
-                                class="md:w-36 w-full cursor-pointer bg-hot-red text-white py-3  hover:bg-red-500 active:bg-red-700 transition-colors">確認變更</button>
-                            <router-link to="/member"
-                                class="md:w-36 w-full cursor-pointer bg-gray-400 text-white text-center py-3  hover:bg-gray-300 active:bg-gray-500 transition-colors">返回</router-link>
+                        <div class="flex md:flex-row flex-col gap-4 justify-center items-center md:py-0 py-4">
+                            <BaseButton @click="patchUser" buttonName="確認變更" isRed />
+                            <BaseRouterLink goToPath="/member" buttonName="返回會員中心" :isRed="false" />
                         </div>
                         <div class="w-full h-px bg-gray-100"></div>
                         <div>
@@ -99,6 +97,8 @@ import { useLoadingStore } from '@/stores/loading'
 import BaseModal from '@/components/base/BaseModal.vue';
 import MemberHero from '@/components/layout/MemberHero.vue';
 import BaseInput from '@/components/ui/BaseInput.vue';
+import BaseButton from '@/components/ui/BaseButton.vue';
+import BaseRouterLink from '@/components/ui/BaseRouterLink.vue';
 
 export default {
     name: 'MemberProfile',
@@ -155,6 +155,8 @@ export default {
         BaseModal,
         MemberHero,
         BaseInput,
+        BaseButton,
+        BaseRouterLink,
     },
     methods: {
         async getUser() {
@@ -295,7 +297,7 @@ export default {
                 this.isError.phone = '*請輸入正確的手機號碼';
                 isValid = false;
             }
-            
+
             const isSame = Object.keys(this.userInfo).every(key =>
                 this.userInfo[key] === this.oldInfo[key] ||
                 (this.userInfo[key] instanceof Date &&

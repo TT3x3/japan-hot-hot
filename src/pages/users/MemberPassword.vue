@@ -25,11 +25,9 @@
                             <BaseInput labelName="確認密碼" inputKey="checkedPassword" inputType="password"
                                 v-model="passwordInfo.checkedPassword" :errorTitle="isError.checkedPassword"
                                 :clearErrorInfo="clearErrorInfo" required />
-                            <div class="flex gap-4 justify-center items-center md:py-0 py-4">
-                                <button type="submit" @click.prevent="changePassword()"
-                                    class="md:w-36 w-full cursor-pointer bg-hot-red text-white py-3 hover:bg-red-500 active:bg-red-700 transition-colors">確認變更</button>
-                                <router-link to="/member"
-                                    class="md:w-36 w-full cursor-pointer bg-gray-400 text-white text-center py-3  hover:bg-gray-300 active:bg-gray-500 transition-colors">返回</router-link>
+                            <div class="flex md:flex-row flex-col gap-4 justify-center items-center md:py-0 py-4">
+                                <BaseButton @click="changePassword" buttonName="確認變更" isRed />
+                                <BaseRouterLink goToPath="/member" buttonName="返回會員中心" :isRed="false" />
                             </div>
                             <div class="w-full h-px bg-gray-100"></div>
                             <p class="text-sm font-thin px-4 text-red-500">* 為必填欄位。</p>
@@ -45,10 +43,12 @@
 
 <script>
 import http from '@/api/http'
+import { useLoadingStore } from '@/stores/loading';
 import BaseModal from '@/components/base/BaseModal.vue';
 import MemberHero from '@/components/layout/MemberHero.vue';
 import BaseInput from '@/components/ui/BaseInput.vue';
-import { useLoadingStore } from '@/stores/loading';
+import BaseButton from '@/components/ui/BaseButton.vue';
+import BaseRouterLink from '@/components/ui/BaseRouterLink.vue';
 
 export default {
     name: 'MemberPassword',
@@ -82,6 +82,8 @@ export default {
         BaseModal,
         MemberHero,
         BaseInput,
+        BaseButton,
+        BaseRouterLink,
     },
     methods: {
         async changePassword() {

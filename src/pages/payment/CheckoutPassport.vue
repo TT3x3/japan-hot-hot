@@ -97,11 +97,9 @@
                                 people.errors.passportExpiry }}</small>
                         </div>
                     </div>
-                    <div class="flex flex-row gap-4">
-                        <button @click.prevent="savePassportInfo()" type="button"
-                            class=" px-10 py-3 w-full bg-hot-red hover:bg-red-500 active:bg-red-700  text-white">確認送出</button>
-                        <button @click.prevent="$router.back(-1)" type="button"
-                            class="bg-gray-400 hover:bg-gray-300 active:bg-gray-500 px-10 py-3 w-full text-center text-white">返回</button>
+                    <div class="flex md:flex-row flex-col gap-4 w-full">
+                        <BaseButton class="flex-1" @click="savePassportInfo" buttonName="確認" isRed />
+                        <BaseButton class="flex-1" @click="$router.back(-1)" buttonName="返回" :isRed="false" />
                     </div>
                 </div>
             </div>
@@ -114,13 +112,10 @@ import { useOrderStore } from '@/stores/order';
 import { useLoadingStore } from '@/stores/loading';
 import BaseModal from '@/components/base/BaseModal.vue';
 import CheckoutStepBar from '@/components/ui/CheckoutStepBar.vue'
+import BaseButton from '@/components/ui/BaseButton.vue';
 
 export default {
     name: 'CheckoutPage',
-    components: {
-        BaseModal,
-        CheckoutStepBar,
-    },
     data() {
         return {
             store: '',
@@ -137,6 +132,11 @@ export default {
     created() {
         this.store = useOrderStore();
         this.initPassport();
+    },
+    components: {
+        BaseModal,
+        CheckoutStepBar,
+        BaseButton,
     },
     methods: {
         initPassport() {

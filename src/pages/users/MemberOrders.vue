@@ -3,29 +3,30 @@
         <BaseModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
             @close="isModalOpen = false;" @confirm="handleModalClick()" />
         <!-- top -->
-        <MemberHero :bannerImg="bannerImg" :pageTitle="pageTitle" />
+        <MemberHero :bannerImg="require('@/assets/images/pic-04.jpg')" pageTitle="歷史訂單" />
 
         <div v-if="orderList" class="flex flex-col gap-8">
             <div class="text-base-heavy">
                 <!-- <div class="flex flex-col pb-4"> -->
-                <!-- <div class="flex items-center justify-center"> -->
-                <!-- <router-link to="/member"
-                                class="cursor-pointer bg-gray-400 text-white text-center px-10 py-3  hover:bg-gray-300 active:bg-gray-500 transition-colors">返回會員中心</router-link> -->
-                <!-- <div class="flex gap-2 items-center">
-                                <label for="numberSelect" class="text-base-light md:text-base text-sm">每頁顯示</label>
-                                <select id="numberSelect" v-model.number="perPage"
-                                    class="border border-gray-300 bg-white px-3 py-1">
-                                    <option v-for="num in perPage" :key="num" :value="num">{{
-                                        num }}</option>
-                                </select>
-                            </div> -->
-                <!-- </div> -->
+                    <!-- <div class="flex items-center justify-center"> -->
+                    <!-- <router-link to="/member"
+                                    class="cursor-pointer bg-gray-400 text-white text-center px-10 py-3  hover:bg-gray-300 active:bg-gray-500 transition-colors">返回會員中心</router-link> -->
+                    <!-- <div class="flex gap-2 items-center">
+                                    <label for="numberSelect" class="text-base-light md:text-base text-sm">每頁顯示</label>
+                                    <select id="numberSelect" v-model.number="perPage"
+                                        class="border border-gray-300 bg-white px-3 py-1">
+                                        <option v-for="num in perPage" :key="num" :value="num">{{
+                                            num }}</option>
+                                    </select>
+                                </div> -->
+                    <!-- </div> -->
                 <!-- </div> -->
 
                 <!-- orders list -->
                 <div class="flex flex-col gap-6 justify-center text-base-heavy md:w-[60%] w-[80%] mx-auto">
-                    <router-link to="/member"
-                        class="cursor-pointer md:self-end self-start bg-gray-400 text-white text-center px-10 py-3 hover:bg-gray-300 active:bg-gray-500 transition-colors">返回會員中心</router-link>
+                    <div class="flex md:justify-end">
+                        <BaseRouterLink goToPath="/member" buttonName="返回會員中心" :isRed="false" />
+                    </div>
                     <!-- md 以上 -->
                     <router-link :to="`/member/orders/${order.orderId}`" v-for="(order) in paginationPages"
                         :key="order.orderId"
@@ -88,7 +89,7 @@
             <CustomPagination class="w-full flex justify-center" :totalPages="totalPages"
                 :currentPage.sync="currentPage" />
         </div>
-        <div v-else class=" text-base-light flex flex-col gap-4 items-center justify-center py-20 px-10 w-full">
+        <div v-else class="text-base-light flex flex-col gap-4 items-center justify-center py-20 px-10 w-full">
             <i class="fa-regular fa-face-surprise fa-5x"></i>
             <p class="font-bold text-xl">那A安捏，居然還沒有訂單？快去買東西！</p>
         </div>
@@ -98,9 +99,10 @@
 </template>
 
 <script>
-import BaseModal from '@/components/base/BaseModal.vue';
-import MemberHero from '@/components/layout/MemberHero.vue';
 import { useLoadingStore } from '@/stores/loading';
+import BaseModal from '@/components/base/BaseModal.vue';
+import BaseRouterLink from '@/components/ui/BaseRouterLink.vue';
+import MemberHero from '@/components/layout/MemberHero.vue';
 
 import http from '@/api/http'
 
@@ -116,8 +118,6 @@ export default {
             isModalOpen: false,
             modalContent: '',
             hasError: false,
-            pageTitle: '歷史訂單',
-            bannerImg: require('@/assets/images/pic-04.jpg'),
         }
     },
     created() {
@@ -126,6 +126,7 @@ export default {
     components: {
         BaseModal,
         MemberHero,
+        BaseRouterLink,
     },
     methods: {
         async getOrders() {

@@ -17,13 +17,11 @@
                             <i class="fa-solid fa-clipboard-list"></i>
                             <p class="font-bold text-lg text-base-heavy">訂單詳情</p>
                         </div>
-                        <router-link to="/member/orders"
-                            class="cursor-pointer bg-gray-400 text-white text-center px-10 py-3  hover:bg-gray-300 active:bg-gray-500 transition-colors">返回訂單總覽</router-link>
                     </div>
                 </div>
                 <div v-if="orderDetail" class="flex md:flex-row flex-col w-full gap-5 items-start">
                     <!-- orders -->
-                    <div class="flex flex-col justify-center text-base-heavy md:w-[85%] w-full">
+                    <div class="flex gap-4 flex-col justify-center text-base-heavy md:w-[85%] w-full">
                         <div
                             class="bg-gray-300 flex md:flex-row flex-col md:items-center gap-2 md:px-10 px-6 md:py-6 py-4 text-sm text-base-light">
                             <p class="text-base-light">訂單編號 {{ orderDetail.orderId }} </p>
@@ -58,10 +56,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="w-full flex gap-4 pt-4">
-                            <router-link v-if="orderDetail.productType === 'Flight'"
-                                :to="orderDetail.productType === 'Flight' ? `/ticket-detail/${orderDetail.productId}` : `/tour-detail/${orderDetail.productId}`"
-                                class="cursor-pointer bg-hot-red text-white text-center px-10 py-3 w-full  hover:bg-red-500 active:bg-red-700 transition-colors">重新下單</router-link>
+                        <div class="hidden md:flex flex-row gap-4 w-full">
+                            <BaseRouterLink class="flex-1" v-if="orderDetail.productType === 'Flight'"
+                                :goToPath="orderDetail.productType === 'Flight' ? `/ticket-detail/${orderDetail.productId}` : `/tour-detail/${orderDetail.productId}`"
+                                buttonName="重新下單" isRed />
+                            <BaseRouterLink class="flex-1" goToPath="/member/orders" buttonName="返回訂單總覽"
+                                :isRed="false" />
                         </div>
                     </div>
 
@@ -183,7 +183,12 @@
                         </div>
                     </div>
                 </div>
-
+            </div>
+            <div class="flex md:hidden flex-col gap-4 w-full">
+                <BaseRouterLink class="flex-1" v-if="orderDetail.productType === 'Flight'"
+                    :goToPath="orderDetail.productType === 'Flight' ? `/ticket-detail/${orderDetail.productId}` : `/tour-detail/${orderDetail.productId}`"
+                    buttonName="重新下單" isRed />
+                <BaseRouterLink class="flex-1" goToPath="/member/orders" buttonName="返回訂單總覽" :isRed="false" />
             </div>
         </div>
         <div></div>
@@ -193,8 +198,9 @@
 
 <script>
 import http from '@/api/http'
-import BaseModal from '@/components/base/BaseModal.vue';
 import { useLoadingStore } from '@/stores/loading';
+import BaseModal from '@/components/base/BaseModal.vue';
+import BaseRouterLink from '@/components/ui/BaseRouterLink.vue';
 
 export default {
     name: 'MemberOrderDetail',
@@ -209,6 +215,7 @@ export default {
     },
     components: {
         BaseModal,
+        BaseRouterLink,
     },
     created() {
         this.getOrderDetail(this.$route.params.orderId);

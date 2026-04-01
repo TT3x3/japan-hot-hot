@@ -42,7 +42,7 @@
                             </div>
                         </div>
                         <button type="button" @click.prevent="handleCheckTags()"
-                            class="border border-gray-300 py-2 text-gray-400 bg-gray-50 hover:bg-gray-100 active:bg-gray-200"
+                            class="border border-gray-300 py-2 text-gray-400 bg-gray-50 hover:bg-gray-100 active:bg-gray-200 cursor-pointer"
                             :class="{ 'opacity-50 pointer-events-none': checkList.length === 0 }"
                             :disabled="checkList.length === 0">清除選取項目</button>
                     </div>
