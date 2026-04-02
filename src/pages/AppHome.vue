@@ -2,7 +2,7 @@
   <div class="flex flex-col md:gap-56 gap-12">
     <div class="flex md:flex-col flex-col-reverse md:gap-32 gap-12">
       <!-- 搜尋框 -->
-      <SearchBar :productType="productType" :placeholderType="placeholderType" :allProducts="products" v-model="search"
+      <SearchBar :productType="productType" :placeholder-type="placeholderType" :all-products="products" v-model="search"
         @search-result="getSearchResult" />
       <img :src="require('@/assets/images/home-banner.jpg')" class="fade-content-01 w-full h-72 relative object-cover"
         alt="home-banner">

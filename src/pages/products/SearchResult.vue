@@ -1,10 +1,10 @@
 <template>
     <div class="flex flex-col md:gap-32 gap-12 w-full">
-        <BaseModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
+        <BaseModal :is-modal-open="isModalOpen" :has-error="hasError" :modal-content="modalContent"
             @close="isModalOpen = false" @confirm="handleModalClick()" />
 
         <!-- 搜尋框 -->
-        <SearchBar :placeholderType="pageTitle" :allProducts="products" v-model="search"
+        <SearchBar :placeholder-type="pageTitle" :all-products="products" v-model="search"
             @search-result="getSearchResult" />
 
         <div class="bg-gray-200 py-12 flex flex-col justify-center items-center gap-12">
@@ -88,8 +88,8 @@
 
                 </div>
             </div>
-            <CustomPagination class="w-full flex justify-center" :totalPages="totalPages"
-                :currentPage.sync="currentPage" />
+            <CustomPagination class="w-full flex justify-center" :total-pages="totalPages"
+                :current-page.sync="currentPage" />
         </div>
     </div>
 </template>

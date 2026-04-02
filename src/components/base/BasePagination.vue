@@ -37,7 +37,7 @@ export default {
     methods: {
         changePages(page) {
             if (page < 1 || page > this.totalPages) return;
-            this.$emit('update:currentPage', page);
+            this.$emit('update:current-page', page);
         }
     },
 }

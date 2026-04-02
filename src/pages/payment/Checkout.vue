@@ -1,10 +1,10 @@
 <template>
     <div class="flex flex-col gap-32 w-full">
-        <BaseModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
+        <BaseModal :is-modal-open="isModalOpen" :has-error="hasError" :modal-content="modalContent"
             @close="isModalOpen = false;" @confirm="handleModalClick()" />
         <div class="max-w-[80%] w-full mx-auto flex flex-col gap-12">
             <!-- 進度條 -->
-            <CheckoutStepBar :StepNum="1" />
+            <CheckoutStepBar :step-num="1" />
 
             <div class="flex flex-col gap-2">
                 <img :src="require('@/assets/images/carousel-3.jpg')" class="w-full h-64 object-cover" alt="">
@@ -41,15 +41,15 @@
                         <p class="text-sm px-4 text-gray-400">* 為必填欄位</p>
                     </div>
                     <div class="flex flex-col gap-4 border border-gray-100 md:px-6 px-2 md:py-6 py-4">
-                        <BaseInput labelName="姓名" inputKey="name" inputType="text" v-model="userInfo.name"
-                            :errorTitle="errorInfo.name" :clearErrorInfo="clearErrorInfo" required />
+                        <BaseInput label-name="姓名" input-key="name" input-type="text" v-model="userInfo.name"
+                            :error-title="errorInfo.name" :clear-error-info="clearErrorInfo" required />
 
                         <div class="w-full h-px bg-gray-100"></div>
-                        <BaseInput labelName="Email" inputKey="email" inputType="email" v-model="userInfo.email"
-                            :errorTitle="errorInfo.email" :clearErrorInfo="clearErrorInfo" required />
+                        <BaseInput label-name="Email" input-key="email" input-type="email" v-model="userInfo.email"
+                            :error-title="errorInfo.email" :clear-error-info="clearErrorInfo" required />
                         <div class="w-full h-px bg-gray-100"></div>
-                        <BaseInput labelName="連絡電話" inputKey="phone" inputType="tel" v-model="userInfo.phone"
-                            :errorTitle="errorInfo.phone" :clearErrorInfo="clearErrorInfo" required />
+                        <BaseInput label-name="連絡電話" input-key="phone" input-type="tel" v-model="userInfo.phone"
+                            :error-title="errorInfo.phone" :clear-error-info="clearErrorInfo" required />
                         <div class="w-full h-px bg-gray-100"></div>
                         <div class="flex flex-col gap-2" :class="{ 'border border-hot-red py-2': errorInfo.address }">
                             <div class="flex md:flex-row flex-col gap-4">
@@ -121,8 +121,8 @@
                         </div>
                     </div>
                     <div class="flex md:flex-row flex-col gap-4 w-full">
-                        <BaseButton class="flex-1" @click="saveCheckoutInfo" buttonName="確認" isRed />
-                        <BaseButton class="flex-1" @click="$router.back(-1)" buttonName="返回" :isRed="false" />
+                        <BaseButton class="flex-1" @click="saveCheckoutInfo" button-name="確認" is-red />
+                        <BaseButton class="flex-1" @click="$router.back(-1)" button-name="返回" :is-red="false" />
                     </div>
                 </div>
             </div>

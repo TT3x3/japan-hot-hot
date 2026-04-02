@@ -1,17 +1,17 @@
 <template>
     <div>
-        <BaseModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
+        <BaseModal :is-modal-open="isModalOpen" :has-error="hasError" :modal-content="modalContent"
             @close="isModalOpen = false;" @confirm="handleModalClick()" />
         <div v-if="items" class="flex flex-col md:gap-32 gap-12 w-full bg-gray-100">
-            <MemberHero :bannerImg="bannerImg" :pageTitle="pageTitle" />
+            <MemberHero :banner-img="require('@/assets/images/pic-03.jpg')" :page-title="pageTitle" />
             <div v-if="items.length > 0" class="max-w-[80%] w-full mx-auto flex flex-col gap-10">
                 <div class="flex md:gap-8 gap-4">
-                    <BaseCategory CategoryName="全部" :isSelected="selectCategory" @select="selectCategory = $event" />
-                    <BaseCategory CategoryName="行程" :isSelected="selectCategory" @select="selectCategory = $event" />
-                    <BaseCategory CategoryName="機票" :isSelected="selectCategory" @select="selectCategory = $event" />
+                    <BaseCategory category-name="全部" :is-selected="selectCategory" @select="selectCategory = $event" />
+                    <BaseCategory category-name="行程" :is-selected="selectCategory" @select="selectCategory = $event" />
+                    <BaseCategory category-name="機票" :is-selected="selectCategory" @select="selectCategory = $event" />
                 </div>
                 <div class="flex md:justify-end">
-                    <BaseRouterLink goToPath="/member" buttonName="返回會員中心" :isRed="false" />
+                    <BaseRouterLink go-to-path="/member" button-name="返回會員中心" :is-red="false" />
                 </div>
                 <!-- <div class="flex items-center justify-between">
                     <router-link to="/member"
@@ -62,7 +62,7 @@
                     <li class="md:flex-[0_0_calc(33.333%-1rem)] invisible"></li>
                     <li class="md:flex-[0_0_calc(33.333%-1rem)] invisible"></li>
                 </ul>
-                <CustomPagination :totalPages="totalPages" :currentPage.sync="currentPage" />
+                <CustomPagination :total-pages="totalPages" :current-page.sync="currentPage" />
                 <div></div>
             </div>
         </div>
@@ -90,7 +90,6 @@ export default {
         return {
             apiBase: process.env.VUE_APP_API_PATH,
             pageTitle: '收藏清單',
-            bannerImg: require('@/assets/images/pic-03.jpg'),
             currentPage: 1,
             perPage: 9,
             selectNum: [9, 18, 36, 45],

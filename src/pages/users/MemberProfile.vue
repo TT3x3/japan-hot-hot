@@ -1,9 +1,9 @@
 <template>
     <div class="flex flex-col md:gap-32 gap-12 w-full bg-gray-100">
-        <BaseModal :isModalOpen="isModalOpen" :hasSuccess="hasSuccess" :hasError="hasError" :modalContent="modalContent"
-            @close="isModalOpen = false;" @confirm="handleModalClick()" />
+        <BaseModal :is-modal-open="isModalOpen" :has-success="hasSuccess" :has-error="hasError"
+            :modal-content="modalContent" @close="isModalOpen = false;" @confirm="handleModalClick()" />
         <!-- top -->
-        <MemberHero :bannerImg="bannerImg" :pageTitle="pageTitle" />
+        <MemberHero :banner-img="require('@/assets/images/carousel-4.jpg')" :page-title="pageTitle" />
 
         <div class="max-w-[80%] w-full mx-auto flex flex-col gap-8">
             <p class="font-bold text-2xl text-base-heavy">哩賀！甲奔未！{{ oldInfo.name }}！</p>
@@ -26,22 +26,24 @@
                                 </div>
                             </div>
                             <div class="w-full h-px bg-gray-100"></div>
-                            <BaseInput labelName="會員名稱" inputKey="name" inputType="text" v-model="userInfo.name"
-                                :errorTitle="isError.name" :clearErrorInfo="clearErrorInfo" required />
+                            <BaseInput label-name="會員名稱" input-key="name" input-type="text" v-model="userInfo.name"
+                                :error-title="isError.name" :clear-error-info="clearErrorInfo" required />
                             <div class="w-full h-px bg-gray-100"></div>
-                            <BaseInput labelName="真實姓名" inputKey="realName" inputType="text" v-model="userInfo.realName"
-                                :errorTitle="isError.realName" :clearErrorInfo="clearErrorInfo" />
+                            <BaseInput label-name="真實姓名" input-key="realName" input-type="text"
+                                v-model="userInfo.realName" :error-title="isError.realName"
+                                :clear-error-info="clearErrorInfo" />
                             <div class="w-full h-px bg-gray-100"></div>
-                            <BaseInput labelName="護照名稱" inputKey="passportName" inputType="text"
-                                v-model="userInfo.passportName" :errorTitle="isError.passportName"
-                                :clearErrorInfo="clearErrorInfo" />
+                            <BaseInput label-name="護照名稱" input-key="passportName" input-type="text"
+                                v-model="userInfo.passportName" :error-title="isError.passportName"
+                                :clear-error-info="clearErrorInfo" />
                             <div class="w-full h-px bg-gray-100"></div>
-                            <BaseInput labelName="護照號碼" inputKey="passportNumber" inputType="text"
-                                v-model="userInfo.passportNumber" :errorTitle="isError.passportNumber"
-                                :clearErrorInfo="clearErrorInfo" />
+                            <BaseInput label-name="護照號碼" input-key="passportNumber" input-type="text"
+                                v-model="userInfo.passportNumber" :error-title="isError.passportNumber"
+                                :clear-error-info="clearErrorInfo" />
                             <div class="w-full h-px bg-gray-100"></div>
-                            <BaseInput labelName="身分證" inputKey="idNumber" inputType="text" v-model="userInfo.idNumber"
-                                :errorTitle="isError.idNumber" :clearErrorInfo="clearErrorInfo" />
+                            <BaseInput label-name="身分證" input-key="idNumber" input-type="text"
+                                v-model="userInfo.idNumber" :error-title="isError.idNumber"
+                                :clear-error-info="clearErrorInfo" />
                             <div class="w-full h-px bg-gray-100"></div>
                             <div class="flex flex-col gap-1">
                                 <div class="flex md:flex-row flex-col md:items-center item-start w-full">
@@ -67,15 +69,15 @@
                                     isError.birthDate }}</small>
                             </div>
                             <div class="w-full h-px bg-gray-100"></div>
-                            <BaseInput labelName="手機號碼" inputKey="phone" inputType="tel" v-model="userInfo.phone"
-                                :errorTitle="isError.phone" :clearErrorInfo="clearErrorInfo" required />
+                            <BaseInput label-name="手機號碼" input-key="phone" input-type="tel" v-model="userInfo.phone"
+                                :error-title="isError.phone" :clear-error-info="clearErrorInfo" required />
                             <div class="w-full h-px bg-gray-100"></div>
-                            <BaseInput labelName="地址" inputKey="address" inputType="text" v-model="userInfo.address"
-                                :errorTitle="isError.address" :clearErrorInfo="clearErrorInfo" />
+                            <BaseInput label-name="地址" input-key="address" input-type="text" v-model="userInfo.address"
+                                :error-title="isError.address" :clear-error-info="clearErrorInfo" />
                         </div>
                         <div class="flex md:flex-row flex-col gap-4 justify-center items-center md:py-0 py-4">
-                            <BaseButton @click="patchUser" buttonName="確認變更" isRed />
-                            <BaseRouterLink goToPath="/member" buttonName="返回會員中心" :isRed="false" />
+                            <BaseButton @click="patchUser" button-name="確認變更" is-red />
+                            <BaseRouterLink go-to-path="/member" button-name="返回會員中心" :is-red="false" />
                         </div>
                         <div class="w-full h-px bg-gray-100"></div>
                         <div>
@@ -144,7 +146,6 @@ export default {
             hasSuccess: false,
             modalContent: '',
             pageTitle: '會員資料',
-            bannerImg: require('@/assets/images/carousel-4.jpg'),
             isChanged: false,
         }
     },
@@ -251,20 +252,26 @@ export default {
             const passportName = (this.userInfo.passportName || '').trim();
             const passportNameRule = /^[A-Z,\-\s]+$/;
             if (passportName !== '') {
-                if (this.userInfo.passportName.length < 4 || this.userInfo.passportName.length > 39) {
+                if (passportName.trim() === '') {
+                    this.isError.passportName = '*請輸入護照號碼';
+                    isValid = false;
+                } else if (this.userInfo.passportName.length < 4 || this.userInfo.passportName.length > 39) {
                     this.isError.passportName = '*護照名稱長度需介於4到39個字元';
                     isValid = false;
+                } else if (!passportNameRule.test(this.userInfo.passportName)) {
+                    this.isError.passportName = '*護照名稱只能包含大寫英文字母、逗號(,)或連字號(-)';
+                    isValid = false;
                 }
-            } else if (!passportNameRule.test(this.userInfo.passportName)) {
-                this.isError.passportName = '*護照名稱只能包含大寫英文字母、逗號(,)或連字號(-)';
-                isValid = false;
             }
 
             const passportNumber = (this.userInfo.passportNumber || '').trim();
             const numberRule = /^\d+$/;
             const passportNumberRule = /^\d{9}$/;
             if (passportNumber !== '') {
-                if (!numberRule.test(this.userInfo.passportNumber)) {
+                if (passportNumber.trim() === '') {
+                    this.isError.passportNumber = '*請輸入護照號碼';
+                    isValid = false;
+                } else if (!numberRule.test(this.userInfo.passportNumber)) {
                     this.isError.passportNumber = '*護照號碼只能包含數字';
                     isValid = false;
 

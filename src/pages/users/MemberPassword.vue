@@ -1,9 +1,9 @@
 <template>
     <div class="flex flex-col gap-32 w-full bg-gray-100">
-        <BaseModal :isModalOpen="isModalOpen" :hasError="hasError" :hasSuccess="hasSuccess" :modalContent="modalContent"
+        <BaseModal :is-modal-open="isModalOpen" :has-error="hasError" :has-success="hasSuccess" :modal-content="modalContent"
             @close="isModalOpen = false;" @confirm="handleModalClick()" />
         <!-- top -->
-        <MemberHero :bannerImg="bannerImg" :pageTitle="pageTitle" />
+        <MemberHero :banner-img="require('@/assets/images/pic-05.jpg')" :page-title="pageTitle" />
         <div class="max-w-[80%] w-full mx-auto flex flex-col gap-8">
             <div class="text-base-heavy">
                 <div class="flex flex-row gap-4 ps-2 pb-4 items-center">
@@ -14,20 +14,20 @@
                     <form
                         class="bg-white md:px-10 px-8 md:py-18 py-12 w-full max-w-3xl flex flex-col gap-6 justify-center">
                         <div class="flex flex-col gap-4">
-                            <BaseInput labelName="舊密碼" inputKey="oldPassword" inputType="password"
-                                v-model="passwordInfo.oldPassword" :errorTitle="isError.oldPassword"
-                                :clearErrorInfo="clearErrorInfo" required />
+                            <BaseInput label-name="舊密碼" input-key="oldPassword" input-type="password"
+                                v-model="passwordInfo.oldPassword" :error-title="isError.oldPassword"
+                                :clear-error-info="clearErrorInfo" required />
                             <div class="w-full h-px bg-gray-100"></div>
-                            <BaseInput labelName="新密碼" inputKey="newPassword" inputType="password"
-                                v-model="passwordInfo.newPassword" :errorTitle="isError.newPassword"
-                                :clearErrorInfo="clearErrorInfo" required />
+                            <BaseInput label-name="新密碼" input-key="newPassword" input-type="password"
+                                v-model="passwordInfo.newPassword" :error-title="isError.newPassword"
+                                :clear-error-info="clearErrorInfo" required />
                             <div class="w-full h-px bg-gray-100"></div>
-                            <BaseInput labelName="確認密碼" inputKey="checkedPassword" inputType="password"
-                                v-model="passwordInfo.checkedPassword" :errorTitle="isError.checkedPassword"
-                                :clearErrorInfo="clearErrorInfo" required />
+                            <BaseInput label-name="確認密碼" input-key="checkedPassword" input-type="password"
+                                v-model="passwordInfo.checkedPassword" :error-title="isError.checkedPassword"
+                                :clear-error-info="clearErrorInfo" required />
                             <div class="flex md:flex-row flex-col gap-4 justify-center items-center md:py-0 py-4">
-                                <BaseButton @click="changePassword" buttonName="確認變更" isRed />
-                                <BaseRouterLink goToPath="/member" buttonName="返回會員中心" :isRed="false" />
+                                <BaseButton @click="changePassword" button-name="確認變更" is-red />
+                                <BaseRouterLink go-to-path="/member" button-name="返回會員中心" :is-red="false" />
                             </div>
                             <div class="w-full h-px bg-gray-100"></div>
                             <p class="text-sm font-thin px-4 text-red-500">* 為必填欄位。</p>
@@ -71,7 +71,6 @@ export default {
             hasError: false,
             hasSuccess: false,
             pageTitle: '密碼管理',
-            bannerImg: require('@/assets/images/pic-05.jpg'),
         }
     },
     mounted() {

@@ -8,7 +8,7 @@
                         <p class=" font-extrabold md:text-3xl text-xl text-gray-500">挖哩咧，好像沒這個地方捏？</p>
                         <p class="text-gray-400">請點擊下方按鈕回首頁，不要再迷路囉！</p>
                     </div>
-                    <BaseRouterLink goToPath="/" buttonName="回到首頁" isRed />
+                    <BaseRouterLink go-to-path="/" button-name="回到首頁" is-red />
                 </div>
             </div>
         </div>

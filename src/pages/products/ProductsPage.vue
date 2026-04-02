@@ -1,6 +1,6 @@
 <template>
     <div v-if="tours.length !== 0 || flights.length !== 0" class="flex flex-col md:gap-32 gap-12 w-full">
-        <BaseModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
+        <BaseModal :is-modal-open="isModalOpen" :has-error="hasError" :modal-content="modalContent"
             @close="isModalOpen = false" @confirm="handleModalClick()" />
         <div class="flex justify-center items-center pt-8">
             <h1 class="fade-content-01 text-3xl text-center tracking-[2rem] pl-[2rem] text-base-heavy">{{ pageTitle }}
@@ -14,20 +14,20 @@
         </div>
 
         <!-- 搜尋框 -->
-        <SearchBar :placeholderType="pageTitle" :allProducts="pageList" v-model="search"
+        <SearchBar :placeholder-type="pageTitle" :all-products="pageList" v-model="search"
             @search-result="getSearchResult" />
 
         <!-- 分類 -->
         <div class="max-w-[80%] w-full mx-auto">
             <div class="flex md:gap-8 gap-2">
-                <BaseCategory CategoryName="全部" :isSelected="selectCategory" @select="selectCategory = $event" />
-                <BaseCategory v-if="pageType === 'tour'" CategoryName="一日遊" :isSelected="selectCategory"
+                <BaseCategory category-name="全部" :is-selected="selectCategory" @select="selectCategory = $event" />
+                <BaseCategory v-if="pageType === 'tour'" category-name="一日遊" :is-selected="selectCategory"
                     @select="selectCategory = $event" />
-                <BaseCategory v-if="pageType === 'tour'" CategoryName="半日遊" :isSelected="selectCategory"
+                <BaseCategory v-if="pageType === 'tour'" category-name="半日遊" :is-selected="selectCategory"
                     @select="selectCategory = $event" />
-                <BaseCategory v-if="pageType === 'ticket'" CategoryName="高雄出發" :isSelected="selectCategory"
+                <BaseCategory v-if="pageType === 'ticket'" category-name="高雄出發" :is-selected="selectCategory"
                     @select="selectCategory = $event" />
-                <BaseCategory v-if="pageType === 'ticket'" CategoryName="桃園出發" :isSelected="selectCategory"
+                <BaseCategory v-if="pageType === 'ticket'" category-name="桃園出發" :is-selected="selectCategory"
                     @select="selectCategory = $event" />
             </div>
         </div>

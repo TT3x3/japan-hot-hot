@@ -1,9 +1,9 @@
 <template>
     <div class="flex flex-col md:gap-32 gap-12 w-full bg-gray-100">
-        <BaseModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
+        <BaseModal :is-modal-open="isModalOpen" :has-error="hasError" :modal-content="modalContent"
             @close="isModalOpen = false;" @confirm="handleModalClick()" />
         <!-- top -->
-        <MemberHero :bannerImg="require('@/assets/images/pic-04.jpg')" pageTitle="訂單總覽" />
+        <MemberHero :banner-img="require('@/assets/images/pic-04.jpg')" pageTitle="訂單總覽" />
         <div v-if="!orderList"></div>
         <div v-else-if="orderList" class="flex flex-col gap-8">
             <div class="text-base-heavy">
@@ -25,7 +25,7 @@
                 <!-- orders list -->
                 <div class="flex flex-col gap-6 justify-center text-base-heavy md:w-[60%] w-[80%] mx-auto">
                     <div class="flex md:justify-end">
-                        <BaseRouterLink goToPath="/member" buttonName="返回會員中心" :isRed="false" />
+                        <BaseRouterLink go-to-path="/member" button-name="返回會員中心" :is-red="false" />
                     </div>
                     <!-- md 以上 -->
                     <router-link :to="`/member/orders/${order.orderId}`" v-for="(order) in paginationPages"
@@ -86,8 +86,8 @@
 
                 </div>
             </div>
-            <CustomPagination class="w-full flex justify-center" :totalPages="totalPages"
-                :currentPage.sync="currentPage" />
+            <CustomPagination class="w-full flex justify-center" :total-pages="totalPages"
+                :current-page.sync="currentPage" />
         </div>
         <div v-else class="text-base-light flex flex-col gap-4 items-center justify-center py-20 px-10 w-full">
             <i class="fa-regular fa-face-surprise fa-5x"></i>

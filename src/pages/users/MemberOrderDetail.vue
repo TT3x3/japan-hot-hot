@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col md:gap-32 gap-12 w-full bg-gray-100">
-        <BaseModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
+        <BaseModal :is-modal-open="isModalOpen" :has-error="hasError" :modal-content="modalContent"
             @close="isModalOpen = false;" @confirm="handleModalClick()" />
         <!-- top -->
         <div class="relative  md:h-80 h-40 overflow-hidden">
@@ -55,10 +55,10 @@
                         </div>
                         <div class="hidden md:flex flex-row gap-4 w-full">
                             <BaseRouterLink class="flex-1" v-if="orderDetail.productType === 'Flight'"
-                                :goToPath="orderDetail.productType === 'Flight' ? `/ticket-detail/${orderDetail.productId}` : `/tour-detail/${orderDetail.productId}`"
-                                buttonName="重新下單" isRed />
-                            <BaseRouterLink class="flex-1" goToPath="/member/orders" buttonName="返回訂單總覽"
-                                :isRed="false" />
+                                :go-to-path="orderDetail.productType === 'Flight' ? `/ticket-detail/${orderDetail.productId}` : `/tour-detail/${orderDetail.productId}`"
+                                button-name="重新下單" is-red />
+                            <BaseRouterLink class="flex-1" go-to-path="/member/orders" button-name="返回訂單總覽"
+                                :is-red="false" />
                         </div>
                     </div>
 
@@ -183,9 +183,9 @@
             </div>
             <div class="flex md:hidden flex-col gap-4 w-full">
                 <BaseRouterLink class="flex-1" v-if="orderDetail.productType === 'Flight'"
-                    :goToPath="orderDetail.productType === 'Flight' ? `/ticket-detail/${orderDetail.productId}` : `/tour-detail/${orderDetail.productId}`"
-                    buttonName="重新下單" isRed />
-                <BaseRouterLink class="flex-1" goToPath="/member/orders" buttonName="返回訂單總覽" :isRed="false" />
+                    :go-to-path="orderDetail.productType === 'Flight' ? `/ticket-detail/${orderDetail.productId}` : `/tour-detail/${orderDetail.productId}`"
+                    button-name="重新下單" is-red />
+                <BaseRouterLink class="flex-1" go-to-path="/member/orders" button-name="返回訂單總覽" :is-red="false" />
             </div>
         </div>
         <div v-if="isNotFound === true" class="flex flex-col justify-center items-center w-full">

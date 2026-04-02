@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col md:gap-32 gap-12 w-full bg-gray-100">
-        <BaseModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
+        <BaseModal :is-modal-open="isModalOpen" :has-error="hasError" :modal-content="modalContent"
             @close="isModalOpen = false" />
         <!-- top -->
         <div class="relative md:h-80 h-40 overflow-hidden">
@@ -18,17 +18,17 @@
                         <form
                             class="bg-white md:px-10 px-4 md:py-18 py-6 w-full max-w-3xl flex flex-col gap-6 justify-center">
                             <div class="flex flex-col gap-4">
-                                <BaseInput labelName="Email" inputKey="email" inputType="email"
-                                    v-model="loginInfo.email" :errorTitle="errorInfo.email"
-                                    :clearErrorInfo="clearErrorInfo" required />
+                                <BaseInput label-name="Email" input-key="email" input-type="email"
+                                    v-model="loginInfo.email" :error-title="errorInfo.email"
+                                    :clear-error-info="clearErrorInfo" required />
                                 <div class="md:block hidden w-full h-px bg-gray-100"></div>
-                                <BaseInput labelName="密碼" inputKey="password" inputType="password"
-                                    v-model="loginInfo.password" :errorTitle="errorInfo.password"
-                                    :clearErrorInfo="clearErrorInfo" required />
+                                <BaseInput label-name="密碼" input-key="password" input-type="password"
+                                    v-model="loginInfo.password" :error-title="errorInfo.password"
+                                    :clear-error-info="clearErrorInfo" required />
                             </div>
                             <div class="flex md:flex-row flex-col gap-4 justify-center items-center">
-                                <BaseButton @click="postLogin" buttonName="登入" isRed />
-                                <BaseRouterLink goToPath="/signup" buttonName="加入我們" :isRed="false" />
+                                <BaseButton @click="postLogin" button-name="登入" is-red />
+                                <BaseRouterLink go-to-path="/signup" button-name="加入我們" :is-red="false" />
 
                             </div>
                             <div class="w-full h-px bg-gray-100"></div>
@@ -123,7 +123,7 @@ export default {
             } catch (error) {
                 this.isModalOpen = true;
                 this.hasError = true;
-                this.modalContent = error.response?.data?.message;
+                this.modalContent = '帳號或密碼錯誤，請重新輸入';
                 this.loginInfo.email = '';
                 this.loginInfo.password = '';
             } finally {

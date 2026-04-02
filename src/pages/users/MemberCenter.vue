@@ -1,7 +1,7 @@
 <template>
     <div class="flex flex-col md:gap-32 gap-12 w-full bg-gray-100">
         <!-- top -->
-        <MemberHero :bannerImg="bannerImg" :pageTitle="pageTitle" />
+        <MemberHero :banner-img="require('@/assets/images/carousel-3.jpg')" :page-title="pageTitle" />
         <div class="max-w-[80%] w-full mx-auto">
             <div class="flex items-center gap-4 ps-2 pb-4 text-base-heavy">
                 <i class="fa-solid fa-basket-shopping"></i>
@@ -51,7 +51,6 @@ export default {
             hasError: false,
             modalContent: '',
             pageTitle: '會員中心',
-            bannerImg: require('@/assets/images/carousel-3.jpg'),
         }
     },
     components: {

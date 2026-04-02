@@ -16,27 +16,27 @@
                         <form
                             class="bg-white md:px-10 px-4 md:py-18 py-6  w-full max-w-3xl flex flex-col gap-6 justify-center">
                             <div class="flex flex-col gap-4">
-                                <BaseInput labelName="Email" inputKey="email" inputType="email" v-model="userInfo.email"
-                                    :errorTitle="errorInfo.email" :clearErrorInfo="clearErrorInfo" required />
+                                <BaseInput label-name="Email" input-key="email" input-type="email" v-model="userInfo.email"
+                                    :error-title="errorInfo.email" :clear-error-info="clearErrorInfo" required />
                                 <div class="md:block hidden w-full h-px bg-gray-100"></div>
-                                <BaseInput labelName="密碼" inputKey="password" inputType="password"
-                                    v-model="userInfo.password" :errorTitle="errorInfo.password"
-                                    :clearErrorInfo="clearErrorInfo" required />
+                                <BaseInput label-name="密碼" input-key="password" input-type="password"
+                                    v-model="userInfo.password" :error-title="errorInfo.password"
+                                    :clear-error-info="clearErrorInfo" required />
                                 <div class="md:block hidden w-full h-px bg-gray-100"></div>
-                                <BaseInput labelName="確認密碼" inputKey="confirmPassword" inputType="password"
-                                    v-model="userInfo.confirmPassword" :errorTitle="errorInfo.confirmPassword"
-                                    :clearErrorInfo="clearErrorInfo" required />
+                                <BaseInput label-name="確認密碼" input-key="confirmPassword" input-type="password"
+                                    v-model="userInfo.confirmPassword" :error-title="errorInfo.confirmPassword"
+                                    :clear-error-info="clearErrorInfo" required />
                                 <div class="md:block hidden w-full h-px bg-gray-100"></div>
-                                <BaseInput labelName="會員名稱" inputKey="username" inputType="text"
-                                    v-model="userInfo.username" :errorTitle="errorInfo.username"
-                                    :clearErrorInfo="clearErrorInfo" required />
+                                <BaseInput label-name="會員名稱" input-key="username" input-type="text"
+                                    v-model="userInfo.username" :error-title="errorInfo.username"
+                                    :clear-error-info="clearErrorInfo" required />
                                 <div class="md:block hidden w-full h-px bg-gray-100"></div>
-                                <BaseInput labelName="手機號碼" inputKey="phone" inputType="tel" v-model="userInfo.phone"
-                                    :errorTitle="errorInfo.phone" :clearErrorInfo="clearErrorInfo" required />
+                                <BaseInput label-name="手機號碼" input-key="phone" input-type="tel" v-model="userInfo.phone"
+                                    :error-title="errorInfo.phone" :clearErrorInfo="clearErrorInfo" required />
                             </div>
                             <div class="flex md:flex-row flex-col gap-4 justify-center items-center">
-                                <BaseButton @click="validateForm" buttonName="註冊" isRed />
-                                <BaseRouterLink goToPath="/login" buttonName="已有會員" :isRed="false" />
+                                <BaseButton @click="validateForm" button-name="註冊" is-red />
+                                <BaseRouterLink go-to-path="/login" button-name="已有會員" :is-red="false" />
                             </div>
                             <!-- <p class="text-center text-sm px-4 cursor-pointer text-base-light">忘記密碼了嗎？</p> -->
                             <div class="md:block hidden w-full h-px bg-gray-100"></div>

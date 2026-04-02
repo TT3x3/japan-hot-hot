@@ -2,7 +2,7 @@
     <div class="flex flex-col gap-32 w-full">
         <div class="max-w-[80%] w-full mx-auto flex flex-col gap-12">
             <!-- 進度條 -->
-            <CheckoutStepBar :StepNum="4" />
+            <CheckoutStepBar :step-num="4" />
 
             <div v-if="isSuccessful === true" class="flex flex-col justify-center items-center w-full">
                 <div class="flex flex-col items-center md:py-20 py-8">
@@ -10,8 +10,8 @@
                     <p class="py-8 font-extrabold md:text-3xl text-xl text-hot-red">訂購完成！</p>
                 </div>
                 <div class="flex md:flex-row flex-col gap-4 md:w-[70%] w-full">
-                    <BaseRouterLink class="flex-1" goToPath="/" buttonName="繼續尋寶" isRed />
-                    <BaseRouterLink class="flex-1" goToPath="/member/orders" buttonName="查看訂單" :isRed="false" />
+                    <BaseRouterLink class="flex-1" go-to-path="/" button-name="繼續尋寶" is-red />
+                    <BaseRouterLink class="flex-1" go-to-path="/member/orders" button-name="查看訂單" :is-red="false" />
                 </div>
             </div>
             <div v-else class="flex flex-col justify-center items-center w-full">
@@ -23,8 +23,8 @@
                     </div>
                 </div>
                 <div class="flex md:flex-row flex-col gap-4 md:w-[70%] w-full">
-                    <BaseRouterLink class="flex-1" goToPath="/" buttonName="繼續尋寶" isRed />
-                    <BaseRouterLink class="flex-1" goToPath="/member/orders" buttonName="查看訂單" :isRed="false" />
+                    <BaseRouterLink class="flex-1" go-to-path="/" button-name="繼續尋寶" is-red />
+                    <BaseRouterLink class="flex-1" go-to-path="/member/orders" button-name="查看訂單" :is-red="false" />
                 </div>
             </div>
 

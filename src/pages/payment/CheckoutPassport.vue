@@ -1,10 +1,10 @@
 <template>
     <div class="flex flex-col gap-32 w-full">
-        <BaseModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
+        <BaseModal :is-modal-open="isModalOpen" :has-error="hasError" :modal-content="modalContent"
             @close="isModalOpen = false;" @confirm="handleModalClick()" />
         <div class="max-w-[80%] w-full mx-auto flex flex-col gap-12">
             <!-- 進度條 -->
-            <CheckoutStepBar :StepNum="2" />
+            <CheckoutStepBar :step-num="2" />
 
             <!-- 資訊欄 -->
             <div class="flex justify-center">
@@ -98,8 +98,8 @@
                         </div>
                     </div>
                     <div class="flex md:flex-row flex-col gap-4 w-full">
-                        <BaseButton class="flex-1" @click="savePassportInfo" buttonName="確認" isRed />
-                        <BaseButton class="flex-1" @click="$router.back(-1)" buttonName="返回" :isRed="false" />
+                        <BaseButton class="flex-1" @click="savePassportInfo" button-name="確認" is-red />
+                        <BaseButton class="flex-1" @click="$router.back(-1)" button-name="返回" :is-red="false" />
                     </div>
                 </div>
             </div>

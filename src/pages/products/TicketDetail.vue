@@ -1,6 +1,6 @@
 <template>
     <div>
-        <BaseModal :isModalOpen="isModalOpen" :hasError="hasError" :modalContent="modalContent"
+        <BaseModal :is-modal-open="isModalOpen" :has-error="hasError" :modal-content="modalContent"
             @close="isModalOpen = false" @confirm="handleModalClick()" />
         <div v-if="ticket" class="flex flex-col gap-32 w-full">
             <div class="max-w-[80%] w-full mx-auto flex flex-col md:gap-12 gap-6">
@@ -43,10 +43,10 @@
                             <p class="font-bold text-3xl text-hot-red w-full whitespace-nowrap">{{ ticket.price |
                                 dollarSign | currency }}～</p>
                             <div class="flex items-center md:gap-0 gap-3 w-full">
-                                <BaseButton v-if="ticket.status === 'active'" @click="scrollToBooking" buttonName="立即購票"
-                                    isRed />
-                                <BaseButton v-else @click="scrollToBooking" buttonName="無法購買" :isRed="false"
-                                    isDisabled />
+                                <BaseButton v-if="ticket.status === 'active'" @click="scrollToBooking" button-name="立即購票"
+                                    is-red />
+                                <BaseButton v-else @click="scrollToBooking" button-name="無法購買" :is-red="false"
+                                    is-disabled />
 
                                 <!-- md 以下愛心 -->
                                 <button type="button" @click.prevent.stop="toggleLike(ticket.productId)"
@@ -201,7 +201,7 @@
                         <p class="text-sm text-gray-500">總金額</p>
                         <p class="font-bold text-xl">{{ ticket.price * ticketCount | dollarSign | currency }}</p>
                     </div>
-                    <BaseButton @click="createOrder" buttonName="確認購買" isRed />
+                    <BaseButton @click="createOrder" button-name="確認購買" is-red />
                 </div>
                 <div v-else class=" bg-gray-100 flex flex-col gap-4 justify-center items-center p-14 text-base-heavy">
                     <i class="fa-solid fa-face-sad-tear fa-5x"></i>
@@ -238,7 +238,7 @@
                     </table>
                 </div>
                 <div class="flex justify-center">
-                    <BaseButton @click="$router.back(-1)" buttonName="返回上頁" :isRed="false" />
+                    <BaseButton @click="$router.back(-1)" button-name="返回上頁" :is-red="false" />
                 </div>
             </div>
         </div>
