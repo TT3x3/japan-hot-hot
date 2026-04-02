@@ -54,7 +54,7 @@
                             </div>
                         </div>
                         <div class="hidden md:flex flex-row gap-4 w-full">
-                            <BaseRouterLink class="flex-1" v-if="orderDetail.productType === 'Flight'"
+                            <BaseRouterLink class="flex-1"
                                 :go-to-path="orderDetail.productType === 'Flight' ? `/ticket-detail/${orderDetail.productId}` : `/tour-detail/${orderDetail.productId}`"
                                 button-name="重新下單" is-red />
                             <BaseRouterLink class="flex-1" go-to-path="/member/orders" button-name="返回訂單總覽"
