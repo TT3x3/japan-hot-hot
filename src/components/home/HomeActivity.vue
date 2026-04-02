@@ -1,6 +1,6 @@
 <template>
     <div
-        class="rolling-content-01 flex flex-col justify-center md:items-center items-stretch  bg-gradient-to-t from-white from-50% to-gray-200 to-50%">
+        class="flex flex-col justify-center md:items-center items-stretch  bg-gradient-to-t from-white from-50% to-gray-200 to-50%">
         <div class="flex flex-col gap-10 md:pt-48 pt-10">
             <h2 class="font-bold text-center text-2xl text-base-heavy">最新活動</h2>
             <!-- 卡片區 -->
@@ -58,23 +58,5 @@ export default {
 .no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
-}
-
-.rolling-content-01 {
-    animation: rollY-01 1s linear both;
-    animation-timeline: view();
-    animation-range: entry 40% entry 120%;
-}
-
-@keyframes rollY-01 {
-    0% {
-        opacity: 0;
-        transform: translateY(-200px);
-    }
-
-    100% {
-        opacity: 1;
-        transform: translateY(0);
-    }
 }
 </style>

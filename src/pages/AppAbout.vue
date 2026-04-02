@@ -85,13 +85,13 @@ export default {
 .rolling-content-01 {
     animation: rollInY-01 ease-in-out both;
     animation-timeline: view();
-    animation-range: entry 20% entry 100%;
+    animation-range: entry 0% entry 100%;
 }
 
 .rolling-content-08 {
     animation: rollInY-01 ease-in-out both;
     animation-timeline: view();
-    animation-range: entry 80% entry 140%;
+    animation-range: entry 80% entry 180%;
 }
 
 @media (max-width: 768px) {
@@ -135,7 +135,7 @@ export default {
 .rolling-content-07 {
     animation: rollInY-02 ease-in-out both;
     animation-timeline: view();
-    animation-range: entry 100% entry 300%;
+    animation-range: entry 0% entry 400%;
 }
 
 .rolling-content-06 {
