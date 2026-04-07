@@ -294,7 +294,6 @@ export default {
             return this.type;
         },
         filerCategory() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
             let findType = (this.type === 'tickets' ? this.flights : this.tours);
             if (!findType) return [];
             if (this.selectCategory === '全部') return findType

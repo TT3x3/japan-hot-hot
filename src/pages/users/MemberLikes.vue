@@ -163,7 +163,6 @@ export default {
     },
     computed: {
         filterItems() {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
             const categoryMap = {
                 全部: 'all',
                 行程: 'Tour',
