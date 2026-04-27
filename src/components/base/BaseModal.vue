@@ -54,7 +54,7 @@ export default {
     },
     watch: {
         isModalOpen(val) {
-            document.body.style.overflow = val ? 'hidden' : ''
+            document.body.style.overflow = val ? 'hidden' : '';
         },
     },
 }

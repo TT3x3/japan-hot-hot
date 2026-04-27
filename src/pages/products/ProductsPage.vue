@@ -89,8 +89,8 @@
 </template>
 
 <script>
-import http from '@/api/http'
-import { useResultStore } from '@/stores/search'
+import http from '@/api/http';
+import { useResultStore } from '@/stores/search';
 import { useLoadingStore } from '@/stores/loading';
 import BaseModal from '@/components/base/BaseModal.vue';
 import BaseCategory from '@/components/base/BaseCategory.vue';
@@ -124,8 +124,8 @@ export default {
         BaseCategory,
     },
     mounted() {
-        const loading = useLoadingStore()
-        loading.hideData()
+        const loading = useLoadingStore();
+        loading.hideData();
     },
     methods: {
         async getFlights() {
@@ -173,12 +173,12 @@ export default {
         findLike(id) {
             const token = localStorage.getItem('token');
             if (token) {
-                return this.likesList.find(item => item.productId === id)
+                return this.likesList.find(item => item.productId === id);
             }
         },
         async addToLikes(id) {
-            const loading = useLoadingStore()
-            loading.showData()
+            const loading = useLoadingStore();
+            loading.showData();
             const token = localStorage.getItem('token');
             if (!token) {
                 this.isModalOpen = true;
@@ -203,15 +203,15 @@ export default {
                 this.modalContent = '伺服器錯誤，將轉跳回首頁';
                 this.isCatchError = true;
             } finally {
-                loading.hideData()
+                loading.hideData();
             }
         },
         async delLike(id) {
             const token = localStorage.getItem('token');
             if (!token) return;
             if (this.findLike(id)) {
-                const loading = useLoadingStore()
-                loading.showData()
+                const loading = useLoadingStore();
+                loading.showData();
                 try {
                     await http.delete(`/cart/items`, {
                         headers: {
@@ -244,8 +244,8 @@ export default {
             this.$router.push('/');
         },
         async fetchType() {
-            const loading = useLoadingStore()
-            loading.showPage()
+            const loading = useLoadingStore();
+            loading.showPage();
 
             try {
                 if (this.type === 'tickets') {
@@ -254,12 +254,12 @@ export default {
                     await this.getTours();
                 }
             } finally {
-                loading.hidePage()
+                loading.hidePage();
             }
         },
         async getSearchResult(keyword) {
-            const loading = useLoadingStore()
-            loading.showData()
+            const loading = useLoadingStore();
+            loading.showData();
             try {
                 await this.store.getResult(keyword);
                 this.$router.push({
@@ -271,7 +271,7 @@ export default {
                 }).catch(() => { });
 
             } finally {
-                loading.hideData()
+                loading.hideData();
             }
         },
     },
@@ -296,16 +296,16 @@ export default {
         filerCategory() {
             let findType = (this.type === 'tickets' ? this.flights : this.tours);
             if (!findType) return [];
-            if (this.selectCategory === '全部') return findType
+            if (this.selectCategory === '全部') return findType;
             return findType.filter(item => {
-                return item.tags.some(tag => tag.includes(this.selectCategory))
+                return item.tags.some(tag => tag.includes(this.selectCategory));
             })
         }
     },
     watch: {
         $route(to, from) {
             if (to.path !== from.path) {
-                this.selectCategory = '全部'
+                this.selectCategory = '全部';
             }
         },
         type() {

@@ -111,7 +111,7 @@
 import { useOrderStore } from '@/stores/order';
 import { useLoadingStore } from '@/stores/loading';
 import BaseModal from '@/components/base/BaseModal.vue';
-import CheckoutStepBar from '@/components/ui/CheckoutStepBar.vue'
+import CheckoutStepBar from '@/components/ui/CheckoutStepBar.vue';
 import BaseButton from '@/components/ui/BaseButton.vue';
 
 export default {
@@ -218,8 +218,8 @@ export default {
             if (!this.validateForm()) return;
             if (this.findPassport()) return;
             if (this.isError) return;
-            const loading = useLoadingStore()
-            loading.showPage()
+            const loading = useLoadingStore();
+            loading.showPage();
             try {
                 await this.store.savePassportInfo({
                     passportInfo: this.passportInfo,
@@ -227,7 +227,7 @@ export default {
                     router: this.$router,
                 })
             } finally {
-                loading.hidePage()
+                loading.hidePage();
             }
         },
         findPassport() {

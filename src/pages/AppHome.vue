@@ -34,9 +34,9 @@
 </template>
 
 <script>
-import http from '@/api/http'
-import { useResultStore } from '@/stores/search'
-import { useLoadingStore } from '@/stores/loading'
+import http from '@/api/http';
+import { useResultStore } from '@/stores/search';
+import { useLoadingStore } from '@/stores/loading';
 import HomeActivity from '@/components/home/HomeActivity.vue';
 import HomeCarousel from '@/components/home/HomeCarousel.vue';
 import SearchBar from '@/components/common/SearchBar.vue';
@@ -62,13 +62,12 @@ export default {
   },
   methods: {
     async getProducts() {
-      const loading = useLoadingStore()
-      loading.showData()
+      const loading = useLoadingStore();
+      loading.showData();
       try {
         const res = await http.get(`/product/flight`);
         this.products = res.data.items;
         this.productType = this.typeTranslate(res.data.items[0].type);
-        console.log(res.data.items[0].type)
       } catch (error) {
         this.isModalOpen = true;
         this.hasError = true;
@@ -84,7 +83,7 @@ export default {
         path: '/products/result',
         query: {
           search: keyword,
-          page: 1
+          page: 1,
         }
       }).catch(() => { });
     },
@@ -93,7 +92,7 @@ export default {
     typeTranslate() {
       return {
         Flight: 'tickets',
-        Tour: 'tours'
+        Tour: 'tours',
       }
     },
   }

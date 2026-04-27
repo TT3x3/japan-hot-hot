@@ -57,8 +57,8 @@ export default {
         MemberHero,
     },
     mounted() {
-        const loading = useLoadingStore()
-        loading.hidePage()
+        const loading = useLoadingStore();
+        loading.hidePage();
     },
 }
 </script>

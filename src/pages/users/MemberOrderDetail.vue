@@ -200,7 +200,7 @@
 </template>
 
 <script>
-import http from '@/api/http'
+import http from '@/api/http';
 import { useLoadingStore } from '@/stores/loading';
 import BaseModal from '@/components/base/BaseModal.vue';
 import BaseRouterLink from '@/components/ui/BaseRouterLink.vue';
@@ -227,8 +227,8 @@ export default {
     },
     methods: {
         async getOrderDetail(id) {
-            const loading = useLoadingStore()
-            loading.showPage()
+            const loading = useLoadingStore();
+            loading.showPage();
             try {
                 const token = localStorage.getItem('token');
                 const res = await http.get(`/members/orders/${id}`, {
@@ -248,7 +248,7 @@ export default {
                 }, 1000);
                 this.isCatchError = true;
             } finally {
-                loading.hidePage()
+                loading.hidePage();
             }
         },
         dateToISO(date) {

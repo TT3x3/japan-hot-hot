@@ -95,8 +95,8 @@
 </template>
 
 <script>
-import http from '@/api/http'
-import { useResultStore } from '@/stores/search'
+import http from '@/api/http';
+import { useResultStore } from '@/stores/search';
 import { useLoadingStore } from '@/stores/loading';
 import BaseModal from '@/components/base/BaseModal.vue';
 import SearchBar from '@/components/common/SearchBar.vue';
@@ -123,7 +123,7 @@ export default {
     },
     created() {
         this.getLikes();
-        const keyword = this.$route.query.search
+        const keyword = this.$route.query.search;
         if (keyword) {
             this.search = keyword;
             this.getSearchResult(keyword, parseInt(this.$route.query.page) || 1);
@@ -135,8 +135,8 @@ export default {
     },
     methods: {
         async getSearchResult(keyword, page) {
-            const loading = useLoadingStore()
-            loading.showPage()
+            const loading = useLoadingStore();
+            loading.showPage();
             try {
                 await this.store.getResult(keyword, page = 1);
                 this.products = this.store.products;
@@ -151,7 +151,7 @@ export default {
                 this.totalPages = this.store.totalPages;
                 this.currentPage = page;
             } finally {
-                loading.hidePage()
+                loading.hidePage();
             }
         },
         async getLikes() {
@@ -181,14 +181,14 @@ export default {
             }
         },
         async addToLikes(id) {
-            const loading = useLoadingStore()
-            loading.showData()
+            const loading = useLoadingStore();
+            loading.showData();
             const token = localStorage.getItem('token');
             if (!token) {
                 this.isModalOpen = true;
                 this.hasError = true;
                 this.modalContent = '修但幾咧！登入才能使用收藏功能！';
-                loading.hideData()
+                loading.hideData();
                 return;
             }
             try {
@@ -207,15 +207,15 @@ export default {
                 this.modalContent = '伺服器錯誤，將轉跳回首頁';
                 this.isCatchError = true;
             } finally {
-                loading.hideData()
+                loading.hideData();
             }
         },
         async delLike(id) {
             const token = localStorage.getItem('token');
             if (!token) return;
             if (this.findLike(id)) {
-                const loading = useLoadingStore()
-                loading.showData()
+                const loading = useLoadingStore();
+                loading.showData();
                 try {
                     await http.delete(`/cart/items`, {
                         headers: {
@@ -231,7 +231,7 @@ export default {
                     this.modalContent = '伺服器錯誤，將轉跳回首頁';
                     this.isCatchError = true;
                 } finally {
-                    loading.hideData()
+                    loading.hideData();
                 }
                 this.getLikes();
             }
@@ -284,8 +284,8 @@ export default {
             return this.products;
         },
         isLoading() {
-            const store = useLoadingStore()
-            return store.pageLoading
+            const store = useLoadingStore();
+            return store.pageLoading;
         }
     },
     watch: {

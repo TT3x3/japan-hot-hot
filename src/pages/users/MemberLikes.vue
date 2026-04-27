@@ -77,7 +77,7 @@
 </template>
 
 <script>
-import http from '@/api/http'
+import http from '@/api/http';
 import { useLoadingStore } from '@/stores/loading';
 import BaseModal from '@/components/base/BaseModal.vue';
 import BaseCategory from '@/components/base/BaseCategory.vue';
@@ -113,8 +113,8 @@ export default {
     },
     methods: {
         async getLikes() {
-            const loading = useLoadingStore()
-            loading.showPage()
+            const loading = useLoadingStore();
+            loading.showPage();
             const token = localStorage.getItem('token');
             if (!token) return;
             try {
@@ -124,7 +124,6 @@ export default {
                     }
                 });
                 this.items = res.data.items;
-                // console.log(res)
             } catch (error) {
                 this.isModalOpen = true;
                 this.hasError = true;
@@ -187,10 +186,10 @@ export default {
             }
         },
         loadingStore() {
-            return useLoadingStore()
+            return useLoadingStore();
         },
         isLoading() {
-            return this.loadingStore.isLoading
+            return this.loadingStore.isLoading;
         }
     },
     watch: {

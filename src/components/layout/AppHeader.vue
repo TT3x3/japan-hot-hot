@@ -64,7 +64,7 @@ export default {
     }
   },
   beforeDestroy() {
-    document.body.style.overflow = ''
+    document.body.style.overflow = '';
   },
   methods: {
     toggleMenu() {
@@ -80,13 +80,13 @@ export default {
     $route(to, from) {
       this.isOpen = false;
       if (to.path !== from.path) {
-        const loading = useLoadingStore()
-        loading.showPage()
+        const loading = useLoadingStore();
+        loading.showPage();
         setTimeout(() => loading.hidePage(), 300)
       }
     },
     isOpen(val) {
-      document.body.style.overflow = val ? 'hidden' : ''
+      document.body.style.overflow = val ? 'hidden' : '';
     },
   },
 }

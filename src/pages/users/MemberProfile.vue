@@ -94,8 +94,8 @@
 </template>
 
 <script>
-import http from '@/api/http'
-import { useLoadingStore } from '@/stores/loading'
+import http from '@/api/http';
+import { useLoadingStore } from '@/stores/loading';
 import BaseModal from '@/components/base/BaseModal.vue';
 import MemberHero from '@/components/layout/MemberHero.vue';
 import BaseInput from '@/components/ui/BaseInput.vue';
@@ -161,10 +161,10 @@ export default {
     },
     methods: {
         async getUser() {
-            const loading = useLoadingStore()
-            loading.showPage()
+            const loading = useLoadingStore();
+            loading.showPage();
             try {
-                const token = localStorage.getItem('token')
+                const token = localStorage.getItem('token');
                 const res = await http.get(`/members/me`, {
                     headers: {
                         Authorization: `Bearer ${token}`
@@ -190,14 +190,14 @@ export default {
                 this.modalContent = '伺服器錯誤，將轉跳回首頁';
                 this.isCatchError = true;
             } finally {
-                loading.hidePage()
+                loading.hidePage();
             }
         },
         async patchUser() {
             this.validateForm();
             if (!this.validateForm()) return;
-            const loading = useLoadingStore()
-            loading.showData()
+            const loading = useLoadingStore();
+            loading.showData();
             try {
                 Object.keys(this.userInfo).forEach(key => {
                     if (this.userInfo[key] !== this.oldInfo[key]) {
@@ -224,12 +224,12 @@ export default {
                 this.modalContent = '伺服器錯誤，將轉跳回首頁';
                 this.isCatchError = true;
             } finally {
-                loading.hideData()
+                loading.hideData();
             }
         },
         validateForm() {
-            const loading = useLoadingStore()
-            loading.showData()
+            const loading = useLoadingStore();
+            loading.showData();
             this.isChanged = true;
             let isValid = true;
             const name = (this.userInfo.name || '').trim();

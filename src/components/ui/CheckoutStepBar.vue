@@ -33,12 +33,12 @@
 </template>
 <script>
 export default {
+    name: 'CheckoutStepBar',
     props: {
         StepNum: {
             type: Number,
             required: true,
         },
     },
-    name: 'CheckoutStepBar',
 }
 </script>

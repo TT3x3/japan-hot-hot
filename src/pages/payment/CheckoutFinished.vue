@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import CheckoutStepBar from '@/components/ui/CheckoutStepBar.vue'
+import CheckoutStepBar from '@/components/ui/CheckoutStepBar.vue';
 import BaseRouterLink from '@/components/ui/BaseRouterLink.vue';
 
 export default {

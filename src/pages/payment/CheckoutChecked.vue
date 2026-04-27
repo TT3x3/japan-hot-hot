@@ -145,11 +145,11 @@
 </template>
 
 <script>
-import http from '@/api/http'
+import http from '@/api/http';
 import { useOrderStore } from '@/stores/order';
 import { useLoadingStore } from '@/stores/loading';
 import BaseModal from '@/components/base/BaseModal.vue';
-import CheckoutStepBar from '@/components/ui/CheckoutStepBar.vue'
+import CheckoutStepBar from '@/components/ui/CheckoutStepBar.vue';
 import BaseButton from '@/components/ui/BaseButton.vue';
 
 export default {
@@ -176,8 +176,8 @@ export default {
     },
     methods: {
         async submitOrder() {
-            const loading = useLoadingStore()
-            loading.showPage()
+            const loading = useLoadingStore();
+            loading.showPage();
             try {
                 const token = localStorage.getItem('token');
                 await http.post(`/orders/${this.orderId}/submit`, {}, {
@@ -194,7 +194,7 @@ export default {
                 this.modalContent = '伺服器錯誤，將轉跳回首頁';
                 this.isCatchError = true;
             } finally {
-                loading.hidePage()
+                loading.hidePage();
             }
         },
         handleModalClick() {

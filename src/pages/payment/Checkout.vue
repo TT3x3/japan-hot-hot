@@ -131,12 +131,12 @@
 </template>
 
 <script>
-import http from '@/api/http'
+import http from '@/api/http';
 import cities from '@/json/city.json';
 import { useOrderStore } from '@/stores/order';
 import { useLoadingStore } from '@/stores/loading';
 import BaseModal from '@/components/base/BaseModal.vue';
-import CheckoutStepBar from '@/components/ui/CheckoutStepBar.vue'
+import CheckoutStepBar from '@/components/ui/CheckoutStepBar.vue';
 import BaseInput from '@/components/ui/BaseInput.vue';
 import BaseButton from '@/components/ui/BaseButton.vue';
 
@@ -240,8 +240,8 @@ export default {
         async saveCheckoutInfo() {
             this.validateForm();
             if (this.isError === true) return;
-            const loading = useLoadingStore()
-            loading.showPage()
+            const loading = useLoadingStore();
+            loading.showPage();
             const info = {
                 name: this.userInfo.name,
                 email: this.userInfo.email,
@@ -264,7 +264,7 @@ export default {
                 this.modalContent = '伺服器錯誤，將轉跳回首頁';
                 this.isCatchError = true;
             } finally {
-                loading.hidePage()
+                loading.hidePage();
             }
         },
         handleModalClick() {

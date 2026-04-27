@@ -69,8 +69,8 @@ import { useLoadingStore } from '@/stores/loading';
 export default {
     name: 'AppAbout',
     mounted() {
-        const loading = useLoadingStore()
-        loading.hidePage()
+        const loading = useLoadingStore();
+        loading.hidePage();
     }
 }
 </script>

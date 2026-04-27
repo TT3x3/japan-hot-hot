@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import http from '@/api/http'
+import http from '@/api/http';
 import { useLoadingStore } from '@/stores/loading';
 import BaseModal from '@/components/base/BaseModal.vue';
 import MemberHero from '@/components/layout/MemberHero.vue';
@@ -74,8 +74,8 @@ export default {
         }
     },
     mounted() {
-        const loading = useLoadingStore()
-        loading.hidePage()
+        const loading = useLoadingStore();
+        loading.hidePage();
     },
     components: {
         BaseModal,
@@ -88,8 +88,8 @@ export default {
         async changePassword() {
             this.validateForm();
             if (!this.validateForm()) return;
-            const loading = useLoadingStore()
-            loading.showData()
+            const loading = useLoadingStore();
+            loading.showData();
             try {
                 this.changeList = {
                     oldPassword: this.passwordInfo.oldPassword,
@@ -122,8 +122,8 @@ export default {
         },
         validateForm() {
             let isValid = true;
-            const loading = useLoadingStore()
-            loading.showData()
+            const loading = useLoadingStore();
+            loading.showData();
             const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{6,20}$/;
             if (this.passwordInfo.oldPassword.trim() === '') {
                 this.isError.oldPassword = '*請輸入舊密碼';

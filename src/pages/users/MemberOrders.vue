@@ -7,20 +7,6 @@
         <div v-if="!orderList"></div>
         <div v-else-if="orderList" class="flex flex-col gap-8">
             <div class="text-base-heavy">
-                <!-- <div class="flex flex-col pb-4"> -->
-                    <!-- <div class="flex items-center justify-center"> -->
-                    <!-- <router-link to="/member"
-                                    class="cursor-pointer bg-gray-400 text-white text-center px-10 py-3  hover:bg-gray-300 active:bg-gray-500 transition-colors">返回會員中心</router-link> -->
-                    <!-- <div class="flex gap-2 items-center">
-                                    <label for="numberSelect" class="text-base-light md:text-base text-sm">每頁顯示</label>
-                                    <select id="numberSelect" v-model.number="perPage"
-                                        class="border border-gray-300 bg-white px-3 py-1">
-                                        <option v-for="num in perPage" :key="num" :value="num">{{
-                                            num }}</option>
-                                    </select>
-                                </div> -->
-                    <!-- </div> -->
-                <!-- </div> -->
 
                 <!-- orders list -->
                 <div class="flex flex-col gap-6 justify-center text-base-heavy md:w-[60%] w-[80%] mx-auto">
@@ -104,7 +90,7 @@ import BaseModal from '@/components/base/BaseModal.vue';
 import BaseRouterLink from '@/components/ui/BaseRouterLink.vue';
 import MemberHero from '@/components/layout/MemberHero.vue';
 
-import http from '@/api/http'
+import http from '@/api/http';
 
 export default {
     name: 'MemberOrders',
@@ -130,8 +116,8 @@ export default {
     },
     methods: {
         async getOrders() {
-            const loading = useLoadingStore()
-            loading.showPage()
+            const loading = useLoadingStore();
+            loading.showPage();
             const token = localStorage.getItem('token');
             try {
                 const res = await http.get(`/members/orders`, {

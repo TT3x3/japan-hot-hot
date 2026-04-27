@@ -14,25 +14,25 @@
 </template>
 
 <script>
-import { useLoadingStore } from '@/stores/loading'
+import { useLoadingStore } from '@/stores/loading';
 
 export default {
     name: 'AppLoading',
     mounted() {
-        document.body.style.overflow = this.isLoading ? 'hidden' : ''
+        document.body.style.overflow = this.isLoading ? 'hidden' : '';
     },
     beforeDestroy() {
-        document.body.style.overflow = ''
+        document.body.style.overflow = '';
     },
     computed: {
         isLoading() {
-            const store = useLoadingStore()
-            return store.pageLoading || store.dataLoading
+            const store = useLoadingStore();
+            return store.pageLoading || store.dataLoading;
         }
     },
     watch: {
         isLoading(val) {
-            document.body.style.overflow = val ? 'hidden' : ''
+            document.body.style.overflow = val ? 'hidden' : '';
         }
     },
 }

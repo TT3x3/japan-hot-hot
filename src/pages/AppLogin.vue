@@ -46,8 +46,8 @@
 </template>
 
 <script>
-import http from '@/api/http'
-import { login } from '@/utils/auth'
+import http from '@/api/http';
+import { login } from '@/utils/auth';
 import { useLoadingStore } from '@/stores/loading';
 import BaseModal from '@/components/base/BaseModal.vue';
 import BaseInput from '@/components/ui/BaseInput.vue';
@@ -82,8 +82,8 @@ export default {
         BaseRouterLink,
     },
     mounted() {
-        const loading = useLoadingStore()
-        loading.hidePage()
+        const loading = useLoadingStore();
+        loading.hidePage();
     },
     methods: {
         validateForm() {
@@ -110,8 +110,8 @@ export default {
         async postLogin() {
             this.validateForm();
             if (this.isError) return;
-            const loading = useLoadingStore()
-            loading.showPage()
+            const loading = useLoadingStore();
+            loading.showPage();
             try {
                 const res = await http.post(`/members/login`, this.loginInfo);
                 const token = res.data?.access_token;
@@ -127,7 +127,7 @@ export default {
                 this.loginInfo.email = '';
                 this.loginInfo.password = '';
             } finally {
-                loading.hidePage()
+                loading.hidePage();
             }
         },
         clearErrorInfo(key) {

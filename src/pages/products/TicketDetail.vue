@@ -252,7 +252,7 @@
 </template>
 
 <script>
-import http from '@/api/http'
+import http from '@/api/http';
 import { useOrderStore } from '@/stores/order';
 import { useLoadingStore } from '@/stores/loading';
 import BaseModal from '@/components/base/BaseModal.vue';
@@ -304,8 +304,8 @@ export default {
     },
     methods: {
         async findProduct(id) {
-            const loading = useLoadingStore()
-            loading.showPage()
+            const loading = useLoadingStore();
+            loading.showPage();
             try {
                 const res = await http.get(`/product/flight/${id}`);
                 this.ticket = res.data;
@@ -319,19 +319,19 @@ export default {
                     }
                 }, 1000);
             } finally {
-                loading.hidePage()
+                loading.hidePage();
             }
         },
         async createOrder() {
             this.confirmBooking();
             if (!this.isFormValid) return;
-            const loading = useLoadingStore()
-            loading.showPage()
+            const loading = useLoadingStore();
+            loading.showPage();
             if (!this.token) {
                 this.isModalOpen = true;
                 this.hasError = true;
                 this.modalContent = '此功能僅限會員使用，請先登入';
-                loading.hidePage()
+                loading.hidePage();
                 return;
             }
             try {
@@ -348,7 +348,7 @@ export default {
                 this.modalContent = '伺服器錯誤，將轉跳回首頁';
                 this.isCatchError = true;
             } finally {
-                loading.hidePage()
+                loading.hidePage();
             }
         },
         async getLikes() {
@@ -376,13 +376,13 @@ export default {
             }
         },
         async addToLikes(id) {
-            const loading = useLoadingStore()
-            loading.showData()
+            const loading = useLoadingStore();
+            loading.showData();
             if (!this.token) {
                 this.isModalOpen = true;
                 this.hasError = true;
                 this.modalContent = '哇！登入才能使用收藏功能唷！';
-                loading.hideData()
+                loading.hideData();
                 return;
             }
             try {
@@ -401,14 +401,14 @@ export default {
                 this.modalContent = '伺服器錯誤，將轉跳回首頁';
                 this.isCatchError = true;
             } finally {
-                loading.hideData()
+                loading.hideData();
             }
         },
         async delLike(id) {
             if (!this.token) return;
             if (this.findLike(id)) {
-                const loading = useLoadingStore()
-                loading.showData()
+                const loading = useLoadingStore();
+                loading.showData();
                 try {
                     await http.delete(`/cart/items`, {
                         headers: {
@@ -424,7 +424,7 @@ export default {
                     this.modalContent = '伺服器錯誤，將轉跳回首頁';
                     this.isCatchError = true;
                 } finally {
-                    loading.hideData()
+                    loading.hideData();
                 }
                 this.getLikes();
             }

@@ -86,8 +86,8 @@ export default {
         BaseButton,
     },
     mounted() {
-        const loading = useLoadingStore()
-        loading.hidePage()
+        const loading = useLoadingStore();
+        loading.hidePage();
     },
     methods: {
         validateForm() {
