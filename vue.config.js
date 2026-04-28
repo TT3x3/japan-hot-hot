@@ -6,4 +6,5 @@ module.exports = defineConfig({
     port: 8080,
   },
   runtimeCompiler: true,
+  publicPath: "/japan-hot-hot/",
 });
