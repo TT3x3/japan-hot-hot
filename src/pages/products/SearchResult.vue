@@ -88,7 +88,7 @@
 
                 </div>
             </div>
-            <CustomPagination class="w-full flex justify-center" :total-pages="totalPages"
+            <CustomPagination v-if = "filterCheckbox.length > 0" class="w-full flex justify-center" :total-pages="totalPages"
                 :current-page.sync="currentPage" />
         </div>
     </div>
@@ -302,6 +302,9 @@ export default {
                 this.getSearchResult(keyword, page);
             }
         },
+        checkList() {
+            this.currentPage = 1;
+        }
     }
 }
 </script>
