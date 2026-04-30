@@ -70,7 +70,7 @@ const router = new Router({
     },
     {
       path: "/member/password",
-      name: "password]",
+      name: "password",
       component: MemberPassword,
       meta: { requiresAuth: true },
     },
@@ -121,7 +121,7 @@ const router = new Router({
     },
     {
       path: "/checkout/passport/:id",
-      name: "checkoutPassport/:id",
+      name: "checkoutPassport",
       component: CheckoutPassport,
       meta: { requiresAuth: true },
     },
