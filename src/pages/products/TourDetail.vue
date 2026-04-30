@@ -132,8 +132,8 @@
                 </div>
                 <!-- 購買區 -->
                 <div v-if="tour.status === 'active'" ref="bookingSection"
-                    class="bg-gray-100 flex flex-col gap-8 md:p-14 p-6 border border-gray-200 transition-colors duration-500 text-base-heavy"
-                    :class="highlighted ? 'border-red-500' : 'border-red-500/0'">
+                    class="bg-gray-100 flex flex-col gap-8 md:p-14 p-6 border transition-colors duration-500 text-base-heavy"
+                    :class="highlighted ? 'border-red-500' : 'border-gray-200'">
                     <div class="flex flex-col gap-2">
                         <p class="text-sm text-gray-500">預定行程</p>
                         <p class="font-bold">{{ tour.title }}</p>
