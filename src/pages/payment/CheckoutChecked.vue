@@ -111,11 +111,11 @@
                         <div class="flex flex-col gap-1">
                             <div class="flex items-center gap-1">
                                 <p class="w-24 font-bold text-base-light ">姓氏</p>
-                                <p class="font-bold text-base-heavy">{{ passport.firstName }}</p>
+                                <p class="font-bold text-base-heavy">{{ passport.lastName }}</p>
                             </div>
                             <div class="flex items-center gap-1">
                                 <p class="w-24 font-bold text-base-light ">名稱</p>
-                                <p class=" font-bold text-base-heavy">{{ passport.lastName }}</p>
+                                <p class=" font-bold text-base-heavy">{{ passport.firstName }}</p>
                             </div>
                             <div class="flex items-center gap-1">
                                 <p class="w-24 font-bold text-base-light ">身分證字號</p>
